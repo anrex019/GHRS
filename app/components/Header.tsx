@@ -443,12 +443,12 @@ const Header: React.FC<HeaderProps> = ({
                           </div>
                         </section>
 
-                        <section className="mx-2 md:mt-5 md:mx-5 max-w-[729px]">
+                        <section className="mx-2 md:mt-5 md:mx-5 max-w-[750px]">
                           <div className="bg-[rgba(61,51,74,0.3)]  rounded-[20px] md:gap-[73.2px] gap-5 flex flex-col pl-[30px] pt-[30px] pb-[31px] mt-2">
                             <h2 className="text-[20px] md:text-[40px] leading-[120%] tracking-[-3%]">
                               Реабилитация
                             </h2>
-                            <p className="leading-[120%] font-[Pt] font-medium md:max-w-[719px] text-[24px] ">
+                            <p className="leading-[120%] font-[Pt]   font-medium md:max-w-[719px] text-[24px] ">
                               Современные израильские методики реабилитации по
                               направлениям ортопедия, неврология,
                               посттравматическая реабилитация походки и др.
@@ -670,7 +670,7 @@ const Header: React.FC<HeaderProps> = ({
 
             {variant == "complex" && (
               <div className="mb-5 md:mb-0 mx-auto">
-                <section className="mt-[122px] md:mt-[250px] mx-auto md:mx-5 flex flex-col md:flex-row md:items-center md:gap-2">
+                <section className="mt-[122px] md:mt-[283.5px] mx-auto md:mx-5 flex flex-col md:flex-row md:items-center md:gap-2">
                   {/* პირველი ბარათი */}
                   <Link
                     href={"/categories"}
@@ -902,7 +902,7 @@ const Header: React.FC<HeaderProps> = ({
             {variant == "complex" && (
               <div
                 className="bg-[#3D334A4D] py-4 px-5 rounded-[20px] text-white absolute max-w-[206px] text-center hidden md:flex 
-              font-medium leading-[120%] font-[Pt] right-10 top-[30px]"
+              font-medium leading-[120%] font-[Pt] right-10 top-[0px]"
               >
                 <p>
                   Внимание! На подписки сроком от 3-х месяцев действуют скидки

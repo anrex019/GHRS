@@ -22,7 +22,7 @@
 }
 
 @font-face {
-  font-family: "PT";
+  font-family: "Pt";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
@@ -32,18 +32,22 @@
 
 body {
   background: white;
-  color: white;  /* Main text color instead of white */
-  font-family: "Bowler", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: white; /* Main text color instead of white */
+  font-family: "Bowler", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
 }
 
 /* Ensure Bowler font is applied to all elements */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   font-family: inherit;
 }
 
 /* Bowler font utility class */
 .font-bowler {
-  font-family: "Bowler", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: "Bowler", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
 }
 
 /* ვარიანტები */
