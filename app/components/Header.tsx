@@ -10,7 +10,7 @@ import MobileNavbar from "./Navbar/MobileNavbar";
 import DesktopNavbar from "./Navbar/DesktopNavbar";
 import Link from "next/link";
 import { useI18n } from "../context/I18nContext";
-import useStatistics from '../hooks/useStatistics';
+import useStatistics from "../hooks/useStatistics";
 
 export interface MenuItem {
   id: number;
@@ -21,17 +21,17 @@ export interface MenuItem {
 interface HeaderProps {
   menuItems?: MenuItem[];
   variant?:
-  | "default"
-  | "rehabilitation"
-  | "professional"
-  | "complex"
-  | "category"
-  | "blog"
-  | "categories"
-  | "category-detail"
-  | "section"
-  | "allComplex"
-  | "about"
+    | "default"
+    | "rehabilitation"
+    | "professional"
+    | "complex"
+    | "category"
+    | "blog"
+    | "categories"
+    | "category-detail"
+    | "section"
+    | "allComplex"
+    | "about";
   title?: string;
   info?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   onPriceClick?: () => void;
@@ -54,9 +54,24 @@ const categoryDetailItems = [
 ];
 
 const complexItems = [
-  { id: 1, text: "15 категорий", image: "/assets/icons/card.svg", route: "/blogs" },
-  { id: 2, text: "36 комплексов", image: "/assets/icons/message.svg", route: "/blogs" },
-  { id: 3, text: "1000+ уроков", image: "/assets/icons/heat.svg", route: "/blogs" },
+  {
+    id: 1,
+    text: "15 категорий",
+    image: "/assets/icons/card.svg",
+    route: "/blogs",
+  },
+  {
+    id: 2,
+    text: "36 комплексов",
+    image: "/assets/icons/message.svg",
+    route: "/blogs",
+  },
+  {
+    id: 3,
+    text: "1000+ уроков",
+    image: "/assets/icons/heat.svg",
+    route: "/blogs",
+  },
 ];
 
 const Header: React.FC<HeaderProps> = ({
@@ -104,17 +119,19 @@ const Header: React.FC<HeaderProps> = ({
       id: 1,
       text: statistics ? `${statistics.total.sets} комплексов` : "Loading...",
       image: "/assets/images/book.svg",
-      route: "/categories"
+      route: "/categories",
     },
     {
       id: 2,
-      text: statistics ? `${statistics.total.exercises} упражнений` : "Loading...",
-      image: "/assets/icons/message.svg"
+      text: statistics
+        ? `${statistics.total.exercises} упражнений`
+        : "Loading...",
+      image: "/assets/icons/message.svg",
     },
     {
       id: 3,
       text: statistics ? `${statistics.total.hours} часов` : "Loading...",
-      image: "/assets/icons/video.svg"
+      image: "/assets/icons/video.svg",
     },
   ];
 
@@ -122,17 +139,19 @@ const Header: React.FC<HeaderProps> = ({
     {
       id: 1,
       text: statistics ? `${statistics.total.sets} комплексов` : "Loading...",
-      image: "/assets/icons/pulse.svg"
+      image: "/assets/icons/pulse.svg",
     },
     {
       id: 2,
-      text: statistics ? `${statistics.total.exercises} упражнений` : "Loading...",
-      image: "/assets/images/camera.svg"
+      text: statistics
+        ? `${statistics.total.exercises} упражнений`
+        : "Loading...",
+      image: "/assets/images/camera.svg",
     },
     {
       id: 3,
       text: statistics ? `${statistics.total.hours} часов` : "Loading...",
-      image: "/assets/icons/watch.png"
+      image: "/assets/icons/watch.png",
     },
   ];
 
@@ -140,29 +159,31 @@ const Header: React.FC<HeaderProps> = ({
     {
       id: 1,
       text: statistics ? `${statistics.total.sets} комплексов` : "Loading...",
-      image: "/assets/icons/pulse.svg"
+      image: "/assets/icons/pulse.svg",
     },
     {
       id: 2,
-      text: statistics ? `${statistics.total.exercises} упражнений` : "Loading...",
-      image: "/assets/images/camera.svg"
+      text: statistics
+        ? `${statistics.total.exercises} упражнений`
+        : "Loading...",
+      image: "/assets/images/camera.svg",
     },
     {
       id: 3,
       text: statistics ? `${statistics.total.hours} часов` : "Loading...",
-      image: "/assets/icons/watch.png"
+      image: "/assets/icons/watch.png",
     },
   ];
 
   return (
     <header
-      className={`md:m-5 rounded-[20px] ${variant == "rehabilitation" && "h-[438px]"
-
-        } ${variant == "rehabilitation" && "h-[438px]"
-
-        } ${variant == "default" && "h-[838px]"} ${variant == "blog" && "h-[218px] md:h-[518px]"
-        } ${variant == "category-detail" && "h-[338px]"} ${variant == "section" && "h-[838px]"
-        } 
+      className={`md:m-5 rounded-[20px] ${
+        variant == "rehabilitation" && "h-[438px]"
+      } ${variant == "rehabilitation" && "h-[438px]"} ${
+        variant == "default" && "h-[838px]"
+      } ${variant == "blog" && "h-[218px] md:h-[518px]"} ${
+        variant == "category-detail" && "h-[338px]"
+      } ${variant == "section" && "h-[838px]"} 
         } `}
     >
       <div className="relative w-full rounded-[20px]">
@@ -245,67 +266,57 @@ const Header: React.FC<HeaderProps> = ({
           </div>
         )}
 
-        {
-          variant == "rehabilitation" && (
-            <DesktopNavbar
-              menuItems={localizedMenuItems}
-              blogBg={false}
-              allCourseBg={false}
-            />
-          )
-        }
-
-
-        {
-          variant == "categories" && (
-            <DesktopNavbar
-              menuItems={localizedMenuItems}
-              blogBg={false}
-              allCourseBg={false}
-            />
-          )
-        }
-
-
-        {
-          variant == "complex" && (
-            <DesktopNavbar
-              menuItems={localizedMenuItems}
-              blogBg={false}
-              allCourseBg={false}
-            />
-          )
-        }
-
-        {
-          variant == "professional" && (
-            <DesktopNavbar
-              menuItems={localizedMenuItems}
-              blogBg={false}
-              allCourseBg={false}
-            />
-          )
-        }
-
-{
-          variant == "about" && (
-            <DesktopNavbar
-              menuItems={localizedMenuItems}
-              blogBg={false}
-              allCourseBg={false}
-            />
-          )
-        }
-
-
-
-        {variant == "category" || variant == "categories" || variant == "rehabilitation" || variant == "category-detail" || variant == "section" && (
+        {variant == "rehabilitation" && (
           <DesktopNavbar
             menuItems={localizedMenuItems}
             blogBg={false}
             allCourseBg={false}
           />
         )}
+
+        {variant == "categories" && (
+          <DesktopNavbar
+            menuItems={localizedMenuItems}
+            blogBg={false}
+            allCourseBg={false}
+          />
+        )}
+
+        {variant == "complex" && (
+          <DesktopNavbar
+            menuItems={localizedMenuItems}
+            blogBg={false}
+            allCourseBg={false}
+          />
+        )}
+
+        {variant == "professional" && (
+          <DesktopNavbar
+            menuItems={localizedMenuItems}
+            blogBg={false}
+            allCourseBg={false}
+          />
+        )}
+
+        {variant == "about" && (
+          <DesktopNavbar
+            menuItems={localizedMenuItems}
+            blogBg={false}
+            allCourseBg={false}
+          />
+        )}
+
+        {variant == "category" ||
+          variant == "categories" ||
+          variant == "rehabilitation" ||
+          variant == "category-detail" ||
+          (variant == "section" && (
+            <DesktopNavbar
+              menuItems={localizedMenuItems}
+              blogBg={false}
+              allCourseBg={false}
+            />
+          ))}
 
         {variant == "default" && (
           <DesktopNavbar
@@ -359,7 +370,6 @@ const Header: React.FC<HeaderProps> = ({
               </div>
             )}
 
-
             {/* Section */}
             {variant == "default" && (
               <div className={`${currentSlide === 0 ? "mt-[300px]" : ""}`}>
@@ -372,16 +382,18 @@ const Header: React.FC<HeaderProps> = ({
                       transition={{ duration: 0.3, ease: "easeOut" }}
                     >
                       <>
-                        <section className="mt-[50px] md:mt-[29px] mx-2 md:mx-5 flex flex-col md:flex-row md:items-center md:gap-2">
+                        <section className="mt-[50px] md:mt-[0px] mx-2 md:mx-5 flex flex-col md:flex-row md:items-center md:gap-2">
                           {/* პირველი ბარათი */}
-                          <Link href={"/categories"} className="z-50 hover:bg-[rgba(51,47,47,0.2)] cursor-pointer rounded-[12px]">
+                          <Link
+                            href={"/categories"}
+                            className="z-50 hover:bg-[rgba(51,47,47,0.2)] cursor-pointer rounded-[12px]"
+                          >
                             <motion.div
                               initial={{ opacity: 0, x: -100 }}
                               animate={{ opacity: 1, x: 0 }}
                               transition={{ duration: 0.6, ease: "easeOut" }}
                               className="flex items-center gap-2.5 bg-[rgba(61,51,74,0.3)] px-2.5 rounded-[12px] h-[64px] w-full md:w-[246px]"
                             >
-
                               <div className="bg-[rgba(255,255,255,0.2)]  cursor-pointer w-[46px] h-[46px] justify-center items-center flex rounded-[8px]">
                                 <Image
                                   src={homePageHeaderItems[0].image}
@@ -400,12 +412,18 @@ const Header: React.FC<HeaderProps> = ({
                           {/* მეორე და მესამე ბარათები */}
                           <div className="flex flex-row gap-2 mt-2 md:mt-0 w-full font-[Pt]">
                             {homePageHeaderItems.slice(1).map((item) => (
-                              <Link href={"/categories"} className="z-50 hover:bg-[rgba(51,47,47,0.2)] cursor-pointer rounded-[12px]">
+                              <Link
+                                key={item.id}
+                                href={"/categories"}
+                                className="z-50 hover:bg-[rgba(51,47,47,0.2)] cursor-pointer rounded-[12px]"
+                              >
                                 <motion.div
                                   initial={{ opacity: 0, x: -100 }}
                                   animate={{ opacity: 1, x: 0 }}
-                                  transition={{ duration: 0.6, ease: "easeOut" }}
-                                  key={item.id}
+                                  transition={{
+                                    duration: 0.6,
+                                    ease: "easeOut",
+                                  }}
                                   className="flex items-center gap-2.5 bg-[rgba(61,51,74,0.3)] px-2.5 rounded-[12px] h-[64px] w-full md:w-[246px]"
                                 >
                                   <div className="bg-[rgba(255,255,255,0.2)] w-[46px] h-[46px] justify-center items-center flex rounded-[8px]">
@@ -650,13 +668,14 @@ const Header: React.FC<HeaderProps> = ({
               </div>
             )}
 
-
-
             {variant == "complex" && (
               <div className="mb-5 md:mb-0 mx-auto">
                 <section className="mt-[122px] md:mt-[250px] mx-auto md:mx-5 flex flex-col md:flex-row md:items-center md:gap-2">
                   {/* პირველი ბარათი */}
-                  <Link href={"/categories"} className="z-50 hover:bg-[rgba(51,47,47,0.2)] cursor-pointer rounded-[12px]">
+                  <Link
+                    href={"/categories"}
+                    className="z-50 hover:bg-[rgba(51,47,47,0.2)] cursor-pointer rounded-[12px]"
+                  >
                     <motion.div
                       initial={{ opacity: 0, x: -100 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -680,7 +699,11 @@ const Header: React.FC<HeaderProps> = ({
                   {/* მეორე და მესამე ბარათები */}
                   <div className="flex flex-row gap-2 mt-2 md:mt-0 w-full font-[Pt]">
                     {complexItems.slice(1).map((item) => (
-                      <Link href={"/categories"} className="z-50 hover:bg-[rgba(51,47,47,0.2)] cursor-pointer rounded-[12px]">
+                      <Link
+                        key={item.id}
+                        href={"/categories"}
+                        className="z-50 hover:bg-[rgba(51,47,47,0.2)] cursor-pointer rounded-[12px]"
+                      >
                         <motion.div
                           initial={{ opacity: 0, x: -100 }}
                           animate={{ opacity: 1, x: 0 }}
@@ -721,17 +744,13 @@ const Header: React.FC<HeaderProps> = ({
                         setData?.description?.ka ||
                         "Современные израильские методики реабилитации по направлениям ортопедия, неврология, посттравматическая реабилитация походки и др."}
                     </p>
-
                   </div>
                 </section>
               </div>
             )}
 
-
             {variant == "professional" && (
               <div className="mb-5 md:mb-0 mx-auto md:mt-[385px]">
-
-
                 <section className="mx-2 md:mt-5 md:mx-5 max-w-[729px]">
                   <div className="bg-[rgba(61,51,74,0.3)]  rounded-[20px] md:gap-[11.2px] gap-5 flex flex-col pl-[30px] pt-[30px] pb-[90px] mt-2">
                     <h2 className="text-[20px] md:text-[40px] font-[Pt] max-w-[598px] leading-[120%] tracking-[-3%]">
@@ -746,17 +765,13 @@ const Header: React.FC<HeaderProps> = ({
                         setData?.description?.ka ||
                         "Раздел обучение и проф-развитие в области реабилитации, физиотерапии и лечебно-восстановительного массажа - это коллаборация с Израильскими центрами обучения."}
                     </p>
-
                   </div>
                 </section>
               </div>
             )}
 
-            
-{variant == "about" && (
+            {variant == "about" && (
               <div className="mb-5 md:mb-0 mx-auto md:mt-[325px]">
-
-
                 <section className="mx-2 md:mt-5 md:mx-5 max-w-[837px]">
                   <div className="bg-[rgba(61,51,74,0.3)]  rounded-[20px] md:gap-[11.2px] gap-5 flex flex-col pl-[30px] pt-[30px] pb-[90px] mt-2">
                     <h2 className="text-[20px] md:text-[40px] font-[Pt] max-w-[598px] leading-[120%] tracking-[-3%]">
@@ -771,12 +786,10 @@ const Header: React.FC<HeaderProps> = ({
                         setData?.description?.ka ||
                         "Команда единомышленников, объединившая на созданной нами платформе познания и преимущества Израиля, занимающего лидирующие позиции в мире в области реабилитации, с новейшими технологическими возможностями и профильным видео-контентом, чтобы сделать доступным для вас реабилитацию и обучение и проф-развитие в области реабилитации, физиотерапии и лечебно-восстановительного массажа."}
                     </p>
-
                   </div>
                 </section>
               </div>
             )}
-
 
             {variant == "default" && (
               <div className="flex md:hidden mt-60 mx-auto items-center justify-center gap-2">
@@ -797,84 +810,90 @@ const Header: React.FC<HeaderProps> = ({
               variant !== "section" && (
                 <header className="header">
                   <div
-                    className={`absolute w-full ${variant === "default" ? "mt-[11.7px]" : "top-[286.7px]"
-                      } hidden lg:flex ${currentSlide === 0 &&
+                    className={`absolute w-full ${
+                      variant === "default" ? "mt-[11.7px]" : "top-[286.7px]"
+                    } hidden lg:flex ${
+                      currentSlide === 0 &&
                       variant == "default" &&
                       " top-[80.9px]"
-                      } ${currentSlide === 0 &&
+                    } ${
+                      currentSlide === 0 &&
                       variant == "rehabilitation" &&
                       "top-[480px]"
-                      } ${currentSlide === 0 &&
+                    } ${
+                      currentSlide === 0 &&
                       variant == "rehabilitation" &&
                       "top-[480px]"
-
-                      } ${currentSlide === 1 &&
+                    } ${
+                      currentSlide === 1 &&
                       variant == "rehabilitation" &&
                       " bottom-0 top-[311px]"
-                      } ${currentSlide === 0 &&
+                    } ${
+                      currentSlide === 0 &&
                       variant == "complex" &&
                       "-mt-[260px]"
-                      } ${currentSlide === 0 &&
-                        variant == "professional" &&
-                        "mt-[-260px]"
-                        } `}
+                    } ${
+                      currentSlide === 0 &&
+                      variant == "professional" &&
+                      "mt-[-260px]"
+                    } `}
                   >
                     {variant !== "about" && (
-                      <><div className="sub-header1"></div><div className={`sub-header2 `}>
-                      <div className="purple-cutout "></div>
-                      <div className={`cutout-container `}>
-                        <div className="purp1">purpple1</div>
-                        <div className={`white-cutout `}>
-                          {(variant !== "complex" && variant !== "professional") && (
-                            <Link href={"/rehabilitation"}>
-                              <div
-                                className={`bg-[#3D334A] p-5 -mt-8 hover:scale-105 duration-700`}
-                              >
-                                <h3 className="text-[24px] ">
-                                  Изучить подробнее
-                                </h3>
-                              </div>
-                            </Link>
-                          )}
+                      <>
+                        <div className="sub-header1"></div>
+                        <div className={`sub-header2 `}>
+                          <div className="purple-cutout "></div>
+                          <div className={`cutout-container `}>
+                            <div className="purp1">purpple1</div>
+                            <div className={`white-cutout `}>
+                              {variant !== "complex" &&
+                                variant !== "professional" && (
+                                  <Link href={"/rehabilitation"}>
+                                    <div
+                                      className={`bg-[#3D334A] p-5 -mt-8 hover:scale-105 duration-700`}
+                                    >
+                                      <h3 className="text-[24px] ">
+                                        Изучить подробнее
+                                      </h3>
+                                    </div>
+                                  </Link>
+                                )}
 
-                          {variant == "default" && (
-                            <Link href={"/chapter"}>
-                              <div className="bg-[url('/assets/images/marketPlace.png')] hover:scale-105 duration-700 bg-cover bg-center p-5 -mt-8">
-                                <h3 className="text-[24px]">В каталог</h3>
-                              </div>
-                            </Link>
-                          )}
-                          {variant == "complex" && (
-                            <div
-                              className="bg-[url('/assets/images/categoryHeader.png')] hover:scale-105 duration-700 p-5 -mt-8 cursor-pointer"
-                              onClick={onPriceClick}
-                            >
-                              <h3 className="text-[42px] leading-[90%] uppercase">
-                                {setData?.price?.monthly || 500} ₽
-                              </h3>
-                              <span className="text-[18px] md:mb-[99px] md:mt-1.5 leading-[90%] uppercase">
-                                В месяц
-                              </span>
-                              <h2 className="text-[26px] md:mt-[99px] leading-[90%] uppercase">
-                                Приобрести
-                              </h2>
+                              {variant == "default" && (
+                                <Link href={"/chapter"}>
+                                  <div className="bg-[url('/assets/images/marketPlace.png')] hover:scale-105 duration-700 bg-cover bg-center p-5 -mt-8">
+                                    <h3 className="text-[24px]">В каталог</h3>
+                                  </div>
+                                </Link>
+                              )}
+                              {variant == "complex" && (
+                                <div
+                                  className="bg-[url('/assets/images/categoryHeader.png')] hover:scale-105 duration-700 p-5 -mt-8 cursor-pointer"
+                                  onClick={onPriceClick}
+                                >
+                                  <h3 className="text-[42px] leading-[90%] uppercase">
+                                    {setData?.price?.monthly || 500} ₽
+                                  </h3>
+                                  <span className="text-[18px] md:mb-[99px] md:mt-1.5 leading-[90%] uppercase">
+                                    В месяц
+                                  </span>
+                                  <h2 className="text-[26px] md:mt-[99px] leading-[90%] uppercase">
+                                    Приобрести
+                                  </h2>
+                                </div>
+                              )}
+
+                              {variant == "professional" && (
+                                <div className="bg-[#3D334A] bg-center bg-cover hover:scale-105 duration-700 p-5 -mt-8 cursor-pointer">
+                                  <span className="text-[18px] md:mb-[99px] md:mt-1.5 leading-[90%] uppercase">
+                                    Наши курсы
+                                  </span>
+                                </div>
+                              )}
                             </div>
-                          )}
-
-                          {variant == "professional" && (
-                            <div
-                              className="bg-[#3D334A] bg-center bg-cover hover:scale-105 duration-700 p-5 -mt-8 cursor-pointer"
-
-                            >
-                              <span className="text-[18px] md:mb-[99px] md:mt-1.5 leading-[90%] uppercase">
-                                Наши курсы
-                              </span>
-                            </div>
-                          )}
-
+                          </div>
                         </div>
-                      </div>
-                    </div></>
+                      </>
                     )}
                   </div>
                 </header>
@@ -893,24 +912,29 @@ const Header: React.FC<HeaderProps> = ({
 
             {/* Desktop Navigation Arrows */}
             {variant !== "category-detail" &&
-            variant !== "about" &&
+              variant !== "about" &&
               variant !== "categories" &&
-              variant !== "complex" && variant !== "professional" &&
+              variant !== "complex" &&
+              variant !== "professional" &&
               variant !== "section" && (
                 <div
-                  className={`hidden absolute md:flex flex-row items-center right-10 ${variant == "rehabilitation" ? "bottom-14" : "bottom-80"
-                    } ${currentSlide === 0 && " bottom-0 top-[282px]"} ${currentSlide === 0 &&
+                  className={`hidden absolute md:flex flex-row items-center right-10 ${
+                    variant == "rehabilitation" ? "bottom-14" : "bottom-80"
+                  } ${currentSlide === 0 && " bottom-0 top-[282px]"} ${
+                    currentSlide === 0 &&
                     variant == "rehabilitation" &&
                     " bottom-0 top-[360px]"
-                    } ${currentSlide === 1 &&
+                  } ${
+                    currentSlide === 1 &&
                     variant == "rehabilitation" &&
                     " bottom-0 top-[360px]"
-                    }  `}
+                  }  `}
                 >
                   <div
                     onClick={handleLeftArrowClick}
-                    className={`w-[70px] h-[70px] hidden ${currentSlide === 0 ? "bg-[#857b9299]" : "bg-[#3D334A99]"
-                      } rounded-[20px] md:flex items-center justify-center mr-2.5 cursor-pointer transition-all duration-200 hover:bg-[#3D334Acc] group`}
+                    className={`w-[70px] h-[70px] hidden ${
+                      currentSlide === 0 ? "bg-[#857b9299]" : "bg-[#3D334A99]"
+                    } rounded-[20px] md:flex items-center justify-center mr-2.5 cursor-pointer transition-all duration-200 hover:bg-[#3D334Acc] group`}
                   >
                     <Image
                       src={"/assets/images/rightIcon.svg"}
@@ -922,8 +946,9 @@ const Header: React.FC<HeaderProps> = ({
                   </div>
                   <div
                     onClick={handleRightArrowClick}
-                    className={`w-[70px] h-[70px] hidden group  hover:bg-[#2c243699] ${currentSlide === 0 ? "bg-[#3D334A99]" : "bg-[#857b9299]"
-                      } rounded-[20px] md:flex items-center justify-center cursor-pointer`}
+                    className={`w-[70px] h-[70px] hidden group  hover:bg-[#2c243699] ${
+                      currentSlide === 0 ? "bg-[#3D334A99]" : "bg-[#857b9299]"
+                    } rounded-[20px] md:flex items-center justify-center cursor-pointer`}
                   >
                     {" "}
                     <Image
@@ -940,16 +965,19 @@ const Header: React.FC<HeaderProps> = ({
             {/* Mobile Navigation Arrows */}
             {variant !== "category-detail" &&
               variant !== "categories" &&
-              variant !== "complex" && variant !== "professional" &&
+              variant !== "complex" &&
+              variant !== "professional" &&
               variant !== "section" && (
                 <div
-                  className={`hidden absolute flex-row items-center right-5 bottom-5 ${variant == "rehabilitation" ? "bottom-14" : "bottom-5"
-                    }`}
+                  className={`hidden absolute flex-row items-center right-5 bottom-5 ${
+                    variant == "rehabilitation" ? "bottom-14" : "bottom-5"
+                  }`}
                 >
                   <div
                     onClick={handleLeftArrowClick}
-                    className={`w-[50px] h-[50px]  ${currentSlide === 0 ? "bg-[#857b9299]" : "bg-[#3D334A99]"
-                      } rounded-[15px] flex items-center justify-center mr-2 cursor-pointer`}
+                    className={`w-[50px] h-[50px]  ${
+                      currentSlide === 0 ? "bg-[#857b9299]" : "bg-[#3D334A99]"
+                    } rounded-[15px] flex items-center justify-center mr-2 cursor-pointer`}
                   >
                     <Image
                       src={"/assets/images/rightIcon.svg"}
@@ -960,8 +988,9 @@ const Header: React.FC<HeaderProps> = ({
                   </div>
                   <div
                     onClick={handleRightArrowClick}
-                    className={`w-[50px] h-[50px]  ${currentSlide === 0 ? "bg-[#3D334A99]" : "bg-[#857b9299]"
-                      } rounded-[15px] flex items-center justify-center cursor-pointer`}
+                    className={`w-[50px] h-[50px]  ${
+                      currentSlide === 0 ? "bg-[#3D334A99]" : "bg-[#857b9299]"
+                    } rounded-[15px] flex items-center justify-center cursor-pointer`}
                   >
                     <Image
                       src={"/assets/images/leftIcon.svg"}
