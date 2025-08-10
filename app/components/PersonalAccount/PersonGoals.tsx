@@ -40,10 +40,8 @@ const PersonGoals: React.FC<Props> = ({ goals }) => {
   const { t } = useI18n();
 
   const handleDaySelection = (day: string) => {
-    setSelectedDays(prev => 
-      prev.includes(day) 
-        ? prev.filter(d => d !== day)
-        : [...prev, day]
+    setSelectedDays((prev) =>
+      prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day]
     );
   };
 
@@ -53,67 +51,71 @@ const PersonGoals: React.FC<Props> = ({ goals }) => {
   };
 
   const generateGoogleCalendarUrl = () => {
-    const selectedDayNames = selectedDays.map(day => 
-      weekDays.find(d => d.key === day)?.label
-    ).join(", ");
-    
-    const title = encodeURIComponent(`Бронирование календаря - ${selectedDayNames}`);
+    const selectedDayNames = selectedDays
+      .map((day) => weekDays.find((d) => d.key === day)?.label)
+      .join(", ");
+
+    const title = encodeURIComponent(
+      `Бронирование календаря - ${selectedDayNames}`
+    );
     const details = encodeURIComponent(
       `Забронированные дни: ${selectedDayNames}\n` +
-      `Время: ${timeFrom} - ${timeTo}\n` +
-      `Календарь: ${selectedCalendars[0]?.label || "Не выбран"}`
+        `Время: ${timeFrom} - ${timeTo}\n` +
+        `Календарь: ${selectedCalendars[0]?.label || "Не выбран"}`
     );
-    
+
     // Создаем дату на завтра как пример
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
-    const dateStr = tomorrow.toISOString().split('T')[0].replace(/-/g, '');
-    const timeFromFormatted = timeFrom.replace(':', '');
-    const timeToFormatted = timeTo.replace(':', '');
-    
+    const dateStr = tomorrow.toISOString().split("T")[0].replace(/-/g, "");
+    const timeFromFormatted = timeFrom.replace(":", "");
+    const timeToFormatted = timeTo.replace(":", "");
+
     return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dateStr}T${timeFromFormatted}00/${dateStr}T${timeToFormatted}00&details=${details}`;
   };
 
   const sendEmailAndCalendar = async () => {
-    const selectedDayNames = selectedDays.map(day => 
-      weekDays.find(d => d.key === day)?.label
-    ).join(", ");
-    
+    const selectedDayNames = selectedDays
+      .map((day) => weekDays.find((d) => d.key === day)?.label)
+      .join(", ");
+
     const emailBody = encodeURIComponent(
       `Здравствуйте!\n\n` +
-      `Ваше бронирование календаря подтверждено:\n\n` +
-      `Дни: ${selectedDayNames}\n` +
-      `Время: ${timeFrom} - ${timeTo}\n` +
-      `Календарь: ${selectedCalendars[0]?.label || "Не выбран"}\n\n` +
-      `Для добавления в Google Calendar перейдите по ссылке:\n` +
-      `${generateGoogleCalendarUrl()}\n\n` +
-      `С уважением,\nВаша команда`
+        `Ваше бронирование календаря подтверждено:\n\n` +
+        `Дни: ${selectedDayNames}\n` +
+        `Время: ${timeFrom} - ${timeTo}\n` +
+        `Календарь: ${selectedCalendars[0]?.label || "Не выбран"}\n\n` +
+        `Для добавления в Google Calendar перейдите по ссылке:\n` +
+        `${generateGoogleCalendarUrl()}\n\n` +
+        `С уважением,\nВаша команда`
     );
-    
-    const emailSubject = encodeURIComponent("Подтверждение бронирования календаря");
-    
+
+    const emailSubject = encodeURIComponent(
+      "Подтверждение бронирования календаря"
+    );
+
     // Открываем почтовый клиент
-    window.open(`mailto:?subject=${emailSubject}&body=${emailBody}`, '_blank');
-    
+    window.open(`mailto:?subject=${emailSubject}&body=${emailBody}`, "_blank");
+
     // Также открываем Google Calendar
-    window.open(generateGoogleCalendarUrl(), '_blank');
+    window.open(generateGoogleCalendarUrl(), "_blank");
   };
 
   const confirmBooking = async () => {
     setIsBooking(true);
-    
+
     // Симуляция API запроса
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
     setIsBooking(false);
     setIsConfirmOpen(false);
-    
+
     // Отправляем email и открываем Google Calendar
     await sendEmailAndCalendar();
-    
+
     // Сообщение об успехе
     alert("Календарь успешно забронирован! Проверьте почту и Google Calendar.");
-    
+
     // Сброс данных
     setSelectedDays([]);
     setTimeFrom("09:00");
@@ -144,7 +146,7 @@ const PersonGoals: React.FC<Props> = ({ goals }) => {
             {t("personal_account.person_goals.title")}
           </h2>
         </div>
-        <p className="mt-2.5 md:mb-[19px] px-5 py-3.5 font-[Pt] md:text-[18px] bg-[#3D334A33] rounded-[10px] text-[14px] font-medium backdrop-blur-[20px] text-center mb-2">
+        <p className="mt-2.5 md:mb-[19px] px-5 py-3.5 font-pt md:text-[18px] bg-[#3D334A33] rounded-[10px] text-[14px] font-medium backdrop-blur-[20px] text-center mb-2">
           {t("personal_account.person_goals.description")}
         </p>
         <button
@@ -171,14 +173,17 @@ const PersonGoals: React.FC<Props> = ({ goals }) => {
               {t("personal_account.person_goals.reminder_settings")}
             </h2>
             <p className="text-[#846FA0] text-[16px] mb-4">
-                              {t("personal_account.person_goals.reminder_description")}
+              {t("personal_account.person_goals.reminder_description")}
             </p>
             <p className="mb-[30px] text-[#846FA0]">
-                              {t("personal_account.person_goals.which_days")}
+              {t("personal_account.person_goals.which_days")}
             </p>
 
             <div className="w-full flex justify-center mb-[27px]">
-              <DayBoxes onDaySelect={handleDaySelection} selectedDays={selectedDays} />
+              <DayBoxes
+                onDaySelect={handleDaySelection}
+                selectedDays={selectedDays}
+              />
             </div>
 
             <div className="grid grid-cols-2 gap-4 w-full mb-4">
@@ -261,17 +266,23 @@ const PersonGoals: React.FC<Props> = ({ goals }) => {
             </div>
 
             <div className="bg-gray-50 p-4 rounded-[8px] mb-6">
-              <h3 className="text-[#3D334A] font-medium mb-2">Детали бронирования:</h3>
+              <h3 className="text-[#3D334A] font-medium mb-2">
+                Детали бронирования:
+              </h3>
               <p className="text-sm text-[#846FA0] mb-1">
-                <strong>Дни:</strong> {selectedDays.length > 0 ? selectedDays.map(day => 
-                  weekDays.find(d => d.key === day)?.label
-                ).join(", ") : "Не выбраны"}
+                <strong>Дни:</strong>{" "}
+                {selectedDays.length > 0
+                  ? selectedDays
+                      .map((day) => weekDays.find((d) => d.key === day)?.label)
+                      .join(", ")
+                  : "Не выбраны"}
               </p>
               <p className="text-sm text-[#846FA0] mb-1">
                 <strong>Время:</strong> {timeFrom} - {timeTo}
               </p>
               <p className="text-sm text-[#846FA0]">
-                <strong>Календарь:</strong> {selectedCalendars[0]?.label || "Не выбран"}
+                <strong>Календарь:</strong>{" "}
+                {selectedCalendars[0]?.label || "Не выбран"}
               </p>
             </div>
 

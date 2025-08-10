@@ -17,9 +17,9 @@ import { useI18n } from "../context/I18nContext";
 
 function ComplexContent() {
   const searchParams = useSearchParams();
-  const setId = searchParams.get('id') || '';
+  const setId = searchParams.get("id") || "";
   const { t } = useI18n();
-  
+
   // ვიყენებთ set-ის hook-ს
   const { set: setData, loading: setLoading, error: setError } = useSet(setId);
 
@@ -120,7 +120,11 @@ function ComplexContent() {
 
   return (
     <div>
-      <Header variant="complex" onPriceClick={() => setPopoverOpen(true)} setData={setData} />
+      <Header
+        variant="complex"
+        onPriceClick={() => setPopoverOpen(true)}
+        setData={setData}
+      />
       <div className="">
         <section className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-20 md:mt-40 px-4">
           <Tabs
@@ -159,7 +163,7 @@ function ComplexContent() {
                   <h1 className="md:text-[40px] leading-[120%] tracking-[-3%] text-[#3D334A]">
                     Дополнительно
                   </h1>
-                  <p className="font-[Pt] text-[18px] leading-[120%] text-[#846FA0] mt-10">
+                  <p className="font-pt text-[18px] leading-[120%] text-[#846FA0] mt-10">
                     {getLocalizedText(setData.description, locale)}
                   </p>
                 </div>
@@ -292,7 +296,13 @@ function ComplexContent() {
         <Subscribe />
         <ReviewSlider title={""} />
         <div className="md:my-10">
-          <Works title="Может понравиться" customMargin={""} customBorderRadius={""} seeAll={false} scrollable={false} />
+          <Works
+            title="Может понравиться"
+            customMargin={""}
+            customBorderRadius={""}
+            seeAll={false}
+            scrollable={false}
+          />
         </div>
         <div className="md:my-10">
           <Blog
@@ -316,16 +326,18 @@ function ComplexContent() {
 
 export default function Complex() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-4 border-purple-600 border-t-transparent mb-4 mx-auto"></div>
-          <h2 className="text-2xl font-cinzel font-semibold text-gray-700">
-            Loading...
-          </h2>
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-16 w-16 border-4 border-purple-600 border-t-transparent mb-4 mx-auto"></div>
+            <h2 className="text-2xl font-cinzel font-semibold text-gray-700">
+              Loading...
+            </h2>
+          </div>
         </div>
-      </div>
-    }>
+      }
+    >
       <ComplexContent />
     </Suspense>
   );

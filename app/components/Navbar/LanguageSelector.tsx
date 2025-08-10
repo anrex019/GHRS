@@ -33,7 +33,7 @@ const LanguageSelector: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative font-[Pt]">
+    <div className="relative font-pt">
       <div
         className="w-[70px] h-[70px] flex items-center gap-1 justify-center rounded-[20px] cursor-pointer bg-gradient-to-br from-[rgba(94,43,143,0.4)] to-[rgba(61,51,74,0.3)]"
         onClick={toggleDropdown}

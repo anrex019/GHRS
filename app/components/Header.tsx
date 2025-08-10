@@ -226,7 +226,7 @@ const Header: React.FC<HeaderProps> = ({
         )}
 
         {variant == "blog" && (
-          <div className="rounded-[20px] px-5 font-[Pt]">
+          <div className="rounded-[20px] px-5 font-pt">
             <Image
               width={1120}
               height={518}
@@ -351,7 +351,7 @@ const Header: React.FC<HeaderProps> = ({
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.6, ease: "easeOut" }}
                       exit={{ opacity: 0, x: -100 }}
-                      className="leading-[120%] hidden md:flex md:px-5 text-[32px] font-medium md:max-w-[592px] md:mt-[92px] font-[Pt] "
+                      className="leading-[120%] hidden md:flex md:px-5 text-[32px] font-medium  md:mt-[92px] font-pt md:max-w-[592px] "
                     >
                       Для восстановления и поддержания подвижности и
                       трудоспособности
@@ -360,7 +360,7 @@ const Header: React.FC<HeaderProps> = ({
                       <p className="text-[32px] leading-[100%] tracking-[-3%] text-white font-medium">
                         СОВРЕМЕННЫЕ ИЗРАИЛЬСКИЕ МЕТОДИКИ РЕАБИЛИТАЦИИ
                       </p>
-                      <span className="font-[Pt] font-medium leading-[100%]">
+                      <span className="font-pt font-medium leading-[100%]">
                         Для восстановления и поддержания подвижности и
                         трудоспособности
                       </span>
@@ -382,7 +382,7 @@ const Header: React.FC<HeaderProps> = ({
                       transition={{ duration: 0.3, ease: "easeOut" }}
                     >
                       <>
-                        <section className="mt-[50px] md:mt-[0px] mx-2 md:mx-5 flex flex-col md:flex-row md:items-center md:gap-2">
+                        <section className="mt-[50px] md:mt-[30px] mx-2 md:mx-5 flex flex-col md:flex-row md:items-center md:gap-2">
                           {/* პირველი ბარათი */}
                           <Link
                             href={"/categories"}
@@ -403,14 +403,14 @@ const Header: React.FC<HeaderProps> = ({
                                 />
                               </div>
 
-                              <h3 className="text-white text-sm font-medium font-[Pt]">
+                              <h3 className="text-white text-sm font-medium font-pt">
                                 {homePageHeaderItems[0].text}
                               </h3>
                             </motion.div>
                           </Link>
 
                           {/* მეორე და მესამე ბარათები */}
-                          <div className="flex flex-row gap-2 mt-2 md:mt-0 w-full font-[Pt]">
+                          <div className="flex flex-row gap-2 mt-2 md:mt-0 w-full font-pt">
                             {homePageHeaderItems.slice(1).map((item) => (
                               <Link
                                 key={item.id}
@@ -448,7 +448,7 @@ const Header: React.FC<HeaderProps> = ({
                             <h2 className="text-[20px] md:text-[40px] leading-[120%] tracking-[-3%]">
                               Реабилитация
                             </h2>
-                            <p className="leading-[120%] font-[Pt]   font-medium md:max-w-[719px] text-[24px] ">
+                            <p className="leading-[120%] font-pt   font-medium md:max-w-[719px] text-[24px] ">
                               Современные израильские методики реабилитации по
                               направлениям ортопедия, неврология,
                               посттравматическая реабилитация походки и др.
@@ -480,13 +480,13 @@ const Header: React.FC<HeaderProps> = ({
                         height={30}
                       />
                     </div>
-                    <h3 className="text-white text-sm font-medium font-[Pt]">
+                    <h3 className="text-white text-sm font-medium font-pt">
                       {categoryDetailItems[0].text}
                     </h3>
                   </motion.div>
 
                   {/* მეორე და მესამე ბარათები */}
-                  <div className="flex flex-row gap-2 mt-2 md:mt-0 w-full font-[Pt]">
+                  <div className="flex flex-row gap-2 mt-2 md:mt-0 w-full font-pt">
                     {categoryDetailItems.slice(1).map((item) => (
                       <motion.div
                         initial={{ opacity: 0, x: -100 }}
@@ -513,7 +513,7 @@ const Header: React.FC<HeaderProps> = ({
 
                 <section className="mx-2 md:mt-5 md:mx-5 max-w-[729px]">
                   <div className="bg-[rgba(61,51,74,0.3)]  rounded-[20px] md:gap-[73.2px] gap-5 flex flex-col pl-[30px] pt-[30px] pb-[90px] mt-2">
-                    <h2 className="text-[20px] md:text-[40px] font-[Pt] leading-[120%] tracking-[-3%]">
+                    <h2 className="text-[20px] md:text-[40px] font-pt leading-[120%] tracking-[-3%]">
                       Шейный отдел позвоночника
                     </h2>
                   </div>
@@ -538,13 +538,13 @@ const Header: React.FC<HeaderProps> = ({
                         height={30}
                       />
                     </div>
-                    <h3 className="text-white text-sm font-medium font-[Pt]">
+                    <h3 className="text-white text-sm font-medium font-pt">
                       {info?.subcategoriesCount || 0} საბკატეგორია
                     </h3>
                   </motion.div>
 
                   {/* მეორე და მესამე ბარათები */}
-                  <div className="flex flex-row gap-2 mt-2 md:mt-0 w-full font-[Pt]">
+                  <div className="flex flex-row gap-2 mt-2 md:mt-0 w-full font-pt">
                     <motion.div
                       initial={{ opacity: 0, x: -100 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -586,7 +586,7 @@ const Header: React.FC<HeaderProps> = ({
 
                 <section className="mx-2 md:mt-5 md:mx-5 max-w-[729px]">
                   <div className="bg-[rgba(61,51,74,0.3)]  rounded-[20px] md:gap-[73.2px] gap-5 flex flex-col pl-[30px] pt-[30px] pb-[90px] mt-2">
-                    <h2 className="text-[20px] md:text-[40px] font-[Pt] leading-[120%] tracking-[-3%]">
+                    <h2 className="text-[20px] md:text-[40px] font-pt leading-[120%] tracking-[-3%]">
                       {title}
                     </h2>
                   </div>
@@ -612,13 +612,13 @@ const Header: React.FC<HeaderProps> = ({
                         height={30}
                       />
                     </div>
-                    <h3 className="text-white text-sm font-medium font-[Pt] relative z-10">
+                    <h3 className="text-white text-sm font-medium font-pt relative z-10">
                       {info?.subcategoriesCount || 0} საბკატეგორია
                     </h3>
                   </motion.div>
 
                   {/* მეორე და მესამე ბარათები */}
-                  <div className="flex flex-row gap-2 mt-2 md:mt-0 w-full font-[Pt]">
+                  <div className="flex flex-row gap-2 mt-2 md:mt-0 w-full font-pt">
                     <motion.div
                       initial={{ opacity: 0, x: -100 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -660,7 +660,7 @@ const Header: React.FC<HeaderProps> = ({
 
                 <section className="mx-2 md:mt-5 md:mx-5 max-w-[729px]">
                   <div className="bg-[rgba(61,51,74,0.3)]  rounded-[20px] md:gap-[73.2px] gap-5 flex flex-col pl-[30px] pt-[30px] pb-[90px] mt-2">
-                    <h2 className="text-[20px] md:text-[40px] font-[Pt] leading-[120%] tracking-[-3%]">
+                    <h2 className="text-[20px] md:text-[40px] font-pt leading-[120%] tracking-[-3%]">
                       {title}
                     </h2>
                   </div>
@@ -670,7 +670,7 @@ const Header: React.FC<HeaderProps> = ({
 
             {variant == "complex" && (
               <div className="mb-5 md:mb-0 mx-auto">
-                <section className="mt-[122px] md:mt-[283.5px] mx-auto md:mx-5 flex flex-col md:flex-row md:items-center md:gap-2">
+                <section className="mt-[122px] md:mt-[250px] mx-auto md:mx-5 flex flex-col md:flex-row md:items-center md:gap-2">
                   {/* პირველი ბარათი */}
                   <Link
                     href={"/categories"}
@@ -690,14 +690,14 @@ const Header: React.FC<HeaderProps> = ({
                           height={30}
                         />
                       </div>
-                      <h3 className="text-white text-sm font-medium font-[Pt]">
+                      <h3 className="text-white text-sm font-medium font-pt">
                         {setData?.totalExercises || 0} упражнений
                       </h3>
                     </motion.div>
                   </Link>
 
                   {/* მეორე და მესამე ბარათები */}
-                  <div className="flex flex-row gap-2 mt-2 md:mt-0 w-full font-[Pt]">
+                  <div className="flex flex-row gap-2 mt-2 md:mt-0 w-full font-pt">
                     {complexItems.slice(1).map((item) => (
                       <Link
                         key={item.id}
@@ -732,13 +732,13 @@ const Header: React.FC<HeaderProps> = ({
 
                 <section className="mx-2 md:mt-5 md:mx-5 max-w-[729px]">
                   <div className="bg-[rgba(61,51,74,0.3)]  rounded-[20px] md:gap-[11.2px] gap-5 flex flex-col pl-[30px] pt-[30px] pb-[90px] mt-2">
-                    <h2 className="text-[20px] md:text-[40px] font-[Pt] leading-[120%] tracking-[-3%]">
+                    <h2 className="text-[20px] md:text-[40px] font-pt leading-[120%] tracking-[-3%]">
                       {setData?.name?.ru ||
                         setData?.name?.en ||
                         setData?.name?.ka ||
                         "Обще-восстановительный, поддерживающий комплекс"}
                     </h2>
-                    <p className="md:mt-[10px] text-[24px] font-medium leading-[120%] font-[Pt] break-words line-clamp-3">
+                    <p className="md:mt-[10px] text-[24px] font-medium leading-[120%] font-pt break-words line-clamp-3">
                       {setData?.description?.ru ||
                         setData?.description?.en ||
                         setData?.description?.ka ||
@@ -753,13 +753,13 @@ const Header: React.FC<HeaderProps> = ({
               <div className="mb-5 md:mb-0 mx-auto md:mt-[385px]">
                 <section className="mx-2 md:mt-5 md:mx-5 max-w-[729px]">
                   <div className="bg-[rgba(61,51,74,0.3)]  rounded-[20px] md:gap-[11.2px] gap-5 flex flex-col pl-[30px] pt-[30px] pb-[90px] mt-2">
-                    <h2 className="text-[20px] md:text-[40px] font-[Pt] max-w-[598px] leading-[120%] tracking-[-3%]">
+                    <h2 className="text-[20px] md:text-[40px] font-pt max-w-[598px] leading-[120%] tracking-[-3%]">
                       {setData?.name?.ru ||
                         setData?.name?.en ||
                         setData?.name?.ka ||
                         "ПРОФЕССИОНАЛЬНОЕ РАЗВИТИЕ, "}
                     </h2>
-                    <p className="md:mt-[10px] text-[24px] max-w-[719px] font-medium leading-[120%] font-[Pt] break-words line-clamp-3">
+                    <p className="md:mt-[10px] text-[24px] max-w-[719px] font-medium leading-[120%] font-pt break-words line-clamp-3">
                       {setData?.description?.ru ||
                         setData?.description?.en ||
                         setData?.description?.ka ||
@@ -771,16 +771,16 @@ const Header: React.FC<HeaderProps> = ({
             )}
 
             {variant == "about" && (
-              <div className="mb-5 md:mb-0 mx-auto md:mt-[325px]">
+              <div className="mb-5 md:mb-0 mx-auto md:mt-[375px]">
                 <section className="mx-2 md:mt-5 md:mx-5 max-w-[837px]">
                   <div className="bg-[rgba(61,51,74,0.3)]  rounded-[20px] md:gap-[11.2px] gap-5 flex flex-col pl-[30px] pt-[30px] pb-[90px] mt-2">
-                    <h2 className="text-[20px] md:text-[40px] font-[Pt] max-w-[598px] leading-[120%] tracking-[-3%]">
+                    <h2 className="text-[20px] md:text-[40px] font-pt max-w-[598px] leading-[120%] tracking-[-3%]">
                       {setData?.name?.ru ||
                         setData?.name?.en ||
                         setData?.name?.ka ||
                         "Мы GHRS"}
                     </h2>
-                    <p className="md:mt-[10px] text-[18px] max-w-[779px] font-medium leading-[120%] font-[Pt] ">
+                    <p className="md:mt-[10px] text-[18px] max-w-[779px] font-medium leading-[120%] font-pt ">
                       {setData?.description?.ru ||
                         setData?.description?.en ||
                         setData?.description?.ka ||
@@ -902,7 +902,7 @@ const Header: React.FC<HeaderProps> = ({
             {variant == "complex" && (
               <div
                 className="bg-[#3D334A4D] py-4 px-5 rounded-[20px] text-white absolute max-w-[206px] text-center hidden md:flex 
-              font-medium leading-[120%] font-[Pt] right-10 top-[0px]"
+              font-medium leading-[120%] font-pt right-10 top-[0px]"
               >
                 <p>
                   Внимание! На подписки сроком от 3-х месяцев действуют скидки

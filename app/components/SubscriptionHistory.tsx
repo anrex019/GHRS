@@ -84,19 +84,24 @@ const SubscriptionHistory: React.FC = () => {
           >
             <div className="flex justify-between items-center mb-2">
               <span className="font-bold text-lg md:text-[24px] text-[#3D334A]">
-                {t("personal_account.subscription_history.order_from", { date: order.date })}
+                {t("personal_account.subscription_history.order_from", {
+                  date: order.date,
+                })}
               </span>
               {order.action && !order.faded && (
                 <span className="ml-2 cursor-pointer text-sm md:text-base font-bold text-[#F36B6B]">
-                                      {t(`personal_account.subscription_history.${order.action}`)} <span className="text-[#F36B6B]">✖</span>
+                  {t(`personal_account.subscription_history.${order.action}`)}{" "}
+                  <span className="text-[#F36B6B]">✖</span>
                 </span>
               )}
             </div>
             <div className="flex items-center gap-4 mb-16">
               <span
-                className={`px-4 py-1 rounded-[8px] font-[Pt] text-xs md:text-sm font-bold ${order.statusColor}`}
+                className={`px-4 py-1 rounded-[8px] font-pt text-xs md:text-sm font-bold ${order.statusColor}`}
               >
-                                  {t(`personal_account.subscription_history.statuses.${order.status}`)}
+                {t(
+                  `personal_account.subscription_history.statuses.${order.status}`
+                )}
               </span>
             </div>
             <hr />
@@ -112,7 +117,7 @@ const SubscriptionHistory: React.FC = () => {
                 <div className="text-[#B1A1D9] font-bold text-base md:text-lg uppercase leading-[120%] tracking-[-3%] max-w-[275px]">
                   {order.product.title}
                 </div>
-                <div className="text-[#846FA0] font-[Pt] text-sm md:text-base mb-2 max-w-[275px]">
+                <div className="text-[#846FA0] font-pt text-sm md:text-base mb-2 max-w-[275px]">
                   {order.product.description}
                 </div>
               </div>
@@ -122,8 +127,15 @@ const SubscriptionHistory: React.FC = () => {
                 </span>
                 {order.product.action && !order.faded && (
                   <span className="text-[#B1A1D9] text-xs flex items-center gap-1 md:text-base font-bold mt-2 cursor-pointer">
-                                          {t(`personal_account.subscription_history.${order.product.action}`)}
-                                          <Image src={"/assets/icons/play.svg"} alt="play" width={14} height={14} />
+                    {t(
+                      `personal_account.subscription_history.${order.product.action}`
+                    )}
+                    <Image
+                      src={"/assets/icons/play.svg"}
+                      alt="play"
+                      width={14}
+                      height={14}
+                    />
                   </span>
                 )}
               </div>

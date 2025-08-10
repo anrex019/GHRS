@@ -107,7 +107,7 @@ const Register = () => {
         {/* Form */}
         <form
           onSubmit={handleSubmit}
-          className="font-[Pt] flex flex-col gap-5 text-[#3D334A] text-[18px] leading-[120%] font-medium"
+          className="font-pt flex flex-col gap-5 text-[#3D334A] text-[18px] leading-[120%] font-medium"
         >
           <input
             type="email"
@@ -145,11 +145,11 @@ const Register = () => {
         <div className="mt-5 text-center w-full">
           <Link
             href={"/auth/login"}
-            className="text-[#D4BAFC] tracking-[-1%] font-medium leading-[100%] font-[Pt]"
+            className="text-[#D4BAFC] tracking-[-1%] font-medium leading-[100%] font-pt"
           >
-            <p className="text-[#3D334A] text-[18px] leading-[120%] font-medium font-[Pt]">
+            <p className="text-[#3D334A] text-[18px] leading-[120%] font-medium font-pt">
               Уже есть аккаунт?{" "}
-              <span className="text-[#D4BAFC] tracking-[-1%] font-medium leading-[100%] font-[Pt]">
+              <span className="text-[#D4BAFC] tracking-[-1%] font-medium leading-[100%] font-pt">
                 Войти
               </span>
             </p>

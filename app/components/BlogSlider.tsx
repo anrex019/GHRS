@@ -25,24 +25,26 @@ interface Blog {
   };
   imageUrl: string;
   featuredImages: string[];
-  articles: Array<{
-    _id: string;
-    title: {
-      [key in "ka" | "en" | "ru"]: string;
-    };
-    excerpt: {
-      [key in "ka" | "en" | "ru"]: string;
-    };
-    author: {
-      name: string;
-      bio?: string;
-      avatar?: string;
-    };
-    readTime: string;
-    viewsCount: number;
-    likesCount: number;
-    createdAt: string;
-  }> | string[];  // Can be either array of objects or array of strings
+  articles:
+    | Array<{
+        _id: string;
+        title: {
+          [key in "ka" | "en" | "ru"]: string;
+        };
+        excerpt: {
+          [key in "ka" | "en" | "ru"]: string;
+        };
+        author: {
+          name: string;
+          bio?: string;
+          avatar?: string;
+        };
+        readTime: string;
+        viewsCount: number;
+        likesCount: number;
+        createdAt: string;
+      }>
+    | string[]; // Can be either array of objects or array of strings
 }
 
 interface BlogSliderProps {
@@ -55,7 +57,6 @@ interface BlogSliderProps {
 
 const useIsDesktop = (): boolean => {
   const [isDesktop, setIsDesktop] = useState(false);
-
 
   useEffect(() => {
     const handleResize = () => {
@@ -74,7 +75,7 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
   currentPage,
   blogsPerPage,
   blogs,
-  language
+  language,
 }) => {
   const isDesktop = useIsDesktop();
   const featuredBlog = blogs[0];
@@ -86,12 +87,12 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
     const endIndex = startIndex + blogsPerPage;
     return otherBlogs.slice(startIndex, endIndex);
   };
-  console.log(blogs)
+  console.log(blogs);
 
   // Helper function to get article link
   const getArticleLink = (blog: Blog) => {
     if (!blog || !blog._id) {
-      return '#';
+      return "#";
     }
 
     // For now, link directly to the blog article itself
@@ -107,7 +108,7 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
   // };
 
   return (
-    <div className="w-full font-[Pt]">
+    <div className="w-full font-pt">
       <div className="flex md:flex-row flex-col gap-2.5 mb-10 w-full px-0">
         {/* Featured Blog */}
         {featuredBlog && isDesktop && (
@@ -115,17 +116,27 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
             <div className="bg-white md:p-2 md:pb-5 hover:shadow-lg duration-300 transition-shadow md:h-[518px] w-[280px] md:w-auto flex-shrink-0 rounded-[20px] flex-col justify-between snap-center">
               <div className="relative min-w-[300px] max-w-[690px] ">
                 <Image
-                  src={featuredBlog.featuredImages?.[0] || featuredBlog.imageUrl || ''}
+                  src={
+                    featuredBlog.featuredImages?.[0] ||
+                    featuredBlog.imageUrl ||
+                    ""
+                  }
                   width={694}
                   height={232}
                   alt={featuredBlog.title[language]}
                   className="md:h-[232px] object-cover rounded-[20px]"
                 />
                 <div className="text-[#3D334A] tracking-[0%] md:mt-[10px] mt-0 md:mb-2 mb-2 text-[14px] md:text-[24px] leading-[120%] font-semibold px-3">
-                  <div className="line-clamp-2">{featuredBlog.title[language]?.trim()}</div>
+                  <div className="line-clamp-2">
+                    {featuredBlog.title[language]?.trim()}
+                  </div>
                 </div>
                 <div className="mt-0 text-[#846FA0] font-medium leading-[120%] tracking-[0%] px-3">
-                  <div dangerouslySetInnerHTML={{ __html: featuredBlog?.content[language].slice(0, 90) }} />
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: featuredBlog?.content[language].slice(0, 90),
+                    }}
+                  />
                 </div>
                 <div className="flex items-center gap-1.5 flex-col absolute top-2 right-2">
                   <div className="w-8 h-8 md:w-10 md:h-10 bg-[#F9F7FE]/30 rounded-[6px] flex justify-center items-center">
@@ -174,12 +185,15 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
             </div>
           </div>
         ) : (
-          <div ref={scrollRef} className="flex overflow-auto gap-5 flex-row overflow-x-auto snap-x snap-mandatory">
+          <div
+            ref={scrollRef}
+            className="flex overflow-auto gap-5 flex-row overflow-x-auto snap-x snap-mandatory"
+          >
             {otherBlogs.map((blog) => (
               <Link key={blog._id} href={getArticleLink(blog)}>
                 <div className="w-[200px] flex-shrink-0 p-3 bg-white flex flex-col justify-between rounded-[10px] snap-center">
                   <Image
-                    src={blog.featuredImages?.[0] || blog.imageUrl || ''}
+                    src={blog.featuredImages?.[0] || blog.imageUrl || ""}
                     width={189}
                     height={172}
                     alt={blog.title[language]}
@@ -207,7 +221,10 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
           </div>
         )}
       </div>
-      <span className="text-[#D4BAFC] leading-[90%] text-[15px] md:text-[24px] md:px-5 px-0 cursor-pointer" onClick={() => router.push("/blog")}>
+      <span
+        className="text-[#D4BAFC] leading-[90%] text-[15px] md:text-[24px] md:px-5 px-0 cursor-pointer"
+        onClick={() => router.push("/blog")}
+      >
         {t("blog.see_all")} {blogs.length} {t("navigation.rightArrow")}
       </span>
     </div>
@@ -215,4 +232,3 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
 };
 
 export default BlogSlider;
-

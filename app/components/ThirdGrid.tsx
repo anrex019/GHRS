@@ -45,10 +45,7 @@ interface ThirdGridProps {
   language: "ka" | "en" | "ru";
 }
 
-const ThirdGrid: React.FC<ThirdGridProps> = ({
-  blogs,
-  language
-}) => {
+const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
   // 7 ელემენტი
   const otherBlogs = blogs.slice(1, 8);
 
@@ -86,12 +83,18 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({
         <div className="col-span-2 row-span-2">
           {/* 1 */}
           {orderedBlogs[0] && (
-            <Link href={orderedBlogs[0].articles.length > 0 ? `/article/${orderedBlogs[0].articles[0]._id}` : '#'}>
+            <Link
+              href={
+                orderedBlogs[0].articles.length > 0
+                  ? `/article/${orderedBlogs[0].articles[0]._id}`
+                  : "#"
+              }
+            >
               <div className="h-[249px] flex flex-col justify-between bg-white rounded-[20px] p-2">
-                <p className="text-[#3D334A] font-[Pt] tracking-[0%] mt-0 mb-1 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
+                <p className="text-[#3D334A] font-pt tracking-[0%] mt-0 mb-1 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
                   {orderedBlogs[0].title[language]}
                 </p>
-                <p className="mt-0 text-[#846FA0] font-[Pt] font-medium leading-[120%] tracking-[0%] px-3">
+                <p className="mt-0 text-[#846FA0] font-pt font-medium leading-[120%] tracking-[0%] px-3">
                   {orderedBlogs[0].excerpt[language]}
                 </p>
                 <div className="px-3 pb-3 font-[Bowler] mt-2">
@@ -106,9 +109,15 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({
         <div className="row-span-2 col-start-1 row-start-3">
           {/* 2 */}
           {orderedBlogs[1] && (
-            <Link href={orderedBlogs[1].articles.length > 0 ? `/article/${orderedBlogs[1].articles[0]._id}` : '#'}>
+            <Link
+              href={
+                orderedBlogs[1].articles.length > 0
+                  ? `/article/${orderedBlogs[1].articles[0]._id}`
+                  : "#"
+              }
+            >
               <div className="h-[249px] flex flex-col justify-between bg-white rounded-[20px] p-2">
-                <p className="text-[#3D334A] font-[Pt] tracking-[0%] mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
+                <p className="text-[#3D334A] font-pt tracking-[0%] mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
                   {orderedBlogs[1].title[language]}
                 </p>
                 <div className="px-3 pb-3 font-[Bowler] mt-1">
@@ -123,9 +132,15 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({
         <div className="row-span-2 col-start-2 row-start-3">
           {/* 3 */}
           {orderedBlogs[2] && (
-            <Link href={orderedBlogs[2].articles.length > 0 ? `/article/${orderedBlogs[2].articles[0]._id}` : '#'}>
+            <Link
+              href={
+                orderedBlogs[2].articles.length > 0
+                  ? `/article/${orderedBlogs[2].articles[0]._id}`
+                  : "#"
+              }
+            >
               <div className="h-[249px] flex flex-col justify-between bg-white rounded-[20px] p-2">
-                <p className="text-[#3D334A] font-[Pt] tracking-[0%] mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
+                <p className="text-[#3D334A] font-pt tracking-[0%] mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
                   {orderedBlogs[2].title[language]}
                 </p>
                 <div className="px-3 pb-3 font-[Bowler] mt-1">
@@ -140,9 +155,15 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({
         <div className="row-span-2 col-start-3 row-start-1">
           {/* 4 */}
           {orderedBlogs[3] && (
-            <Link href={orderedBlogs[3].articles.length > 0 ? `/article/${orderedBlogs[3].articles[0]._id}` : '#'}>
+            <Link
+              href={
+                orderedBlogs[3].articles.length > 0
+                  ? `/article/${orderedBlogs[3].articles[0]._id}`
+                  : "#"
+              }
+            >
               <div className="h-[249px] flex flex-col justify-between bg-white rounded-[20px] p-2">
-                <p className="text-[#3D334A] font-[Pt] tracking-[0%] mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
+                <p className="text-[#3D334A] font-pt tracking-[0%] mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
                   {orderedBlogs[3].title[language]}
                 </p>
                 <div className="px-3 pb-3 font-[Bowler] mt-1">
@@ -157,7 +178,13 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({
         <div className="row-span-4 col-start-4 row-start-1">
           {/* 5 */}
           {orderedBlogs[4] && (
-            <Link href={orderedBlogs[4].articles.length > 0 ? `/article/${orderedBlogs[4].articles[0]._id}` : '#'}>
+            <Link
+              href={
+                orderedBlogs[4].articles.length > 0
+                  ? `/article/${orderedBlogs[4].articles[0]._id}`
+                  : "#"
+              }
+            >
               <div className="h-full flex flex-col justify-between bg-white rounded-[20px] p-2 min-h-[100%]">
                 <Image
                   src={orderedBlogs[4].imageUrl}
@@ -166,10 +193,10 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({
                   alt={orderedBlogs[4].title[language]}
                   className="rounded-[12px] object-cover w-full h-[247px] mb-3"
                 />
-                <p className="text-[#3D334A] font-[Pt] tracking-[0%] mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
+                <p className="text-[#3D334A] font-pt tracking-[0%] mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
                   {orderedBlogs[4].title[language]}
                 </p>
-                <p className="mt-0 text-[#846FA0] font-medium font-[Pt] leading-[120%] tracking-[0%] px-3">
+                <p className="mt-0 text-[#846FA0] font-medium font-pt leading-[120%] tracking-[0%] px-3">
                   {orderedBlogs[4].excerpt[language]}
                 </p>
                 <div className="px-3 pb-3 font-[Bowler] mt-1">
@@ -184,9 +211,15 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({
         <div className="row-span-2 row-start-3">
           {/* 6 */}
           {orderedBlogs[5] && (
-            <Link href={orderedBlogs[5].articles.length > 0 ? `/article/${orderedBlogs[5].articles[0]._id}` : '#'}>
+            <Link
+              href={
+                orderedBlogs[5].articles.length > 0
+                  ? `/article/${orderedBlogs[5].articles[0]._id}`
+                  : "#"
+              }
+            >
               <div className="h-[249px] flex flex-col justify-between bg-white rounded-[20px] p-2">
-                <p className="text-[#3D334A] font-[Pt] tracking-[0%] mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
+                <p className="text-[#3D334A] font-pt tracking-[0%] mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
                   {orderedBlogs[5].title[language]}
                 </p>
                 <div className="px-3 pb-3 font-[Bowler] mt-1">

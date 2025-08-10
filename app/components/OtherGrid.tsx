@@ -46,10 +46,7 @@ interface OtherGridProps {
   language: "ka" | "en" | "ru";
 }
 
-const OtherGrid: React.FC<OtherGridProps> = ({
-  blogs,
-  language
-}) => {
+const OtherGrid: React.FC<OtherGridProps> = ({ blogs, language }) => {
   const otherBlogs = blogs.slice(1, 6);
 
   if (otherBlogs.length < 5) {
@@ -93,10 +90,10 @@ const OtherGrid: React.FC<OtherGridProps> = ({
                   alt={orderedBlogs[0].title[language]}
                   className="rounded-[12px] object-cover w-full h-[247px] mb-3"
                 />
-                <p className="text-[#3D334A] font-[Pt] tracking-[0%] mt-0 mb-1 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
+                <p className="text-[#3D334A] font-pt tracking-[0%] mt-0 mb-1 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
                   {orderedBlogs[0].title[language]}
                 </p>
-                <p className="mt-0 text-[#846FA0] font-[Pt] font-medium leading-[120%] tracking-[0%] px-3">
+                <p className="mt-0 text-[#846FA0] font-pt font-medium leading-[120%] tracking-[0%] px-3">
                   {orderedBlogs[0].excerpt[language]}
                 </p>
                 <div className="flex items-center gap-1.5 flex-col absolute top-2 right-2">
@@ -128,10 +125,10 @@ const OtherGrid: React.FC<OtherGridProps> = ({
                   alt={orderedBlogs[1].title[language]}
                   className="rounded-[12px] object-cover w-full h-[247px] mb-3"
                 />
-                <p className="text-[#3D334A] tracking-[0%] font-[Pt] mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
+                <p className="text-[#3D334A] tracking-[0%] font-pt mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
                   {orderedBlogs[1].title[language]}
                 </p>
-                <p className="mt-0 text-[#846FA0] font-medium font-[Pt] leading-[120%] tracking-[0%] px-3">
+                <p className="mt-0 text-[#846FA0] font-medium font-pt leading-[120%] tracking-[0%] px-3">
                   {orderedBlogs[1].excerpt[language]}
                 </p>
                 <div className="flex items-center gap-1.5 flex-col absolute top-2 right-2">
@@ -156,10 +153,10 @@ const OtherGrid: React.FC<OtherGridProps> = ({
           {orderedBlogs[2] && (
             <Link href={`/blogs/${orderedBlogs[2]._id}`}>
               <div className="min-h-full relative h-full flex flex-col justify-between bg-white rounded-[20px] p-5">
-                <p className="text-[#3D334A] tracking-[0%] font-[Pt] mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
+                <p className="text-[#3D334A] tracking-[0%] font-pt mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
                   {orderedBlogs[2].title[language]}
                 </p>
-                <p className="mt-0 text-[#846FA0] font-[Pt] font-medium leading-[120%] tracking-[0%] px-3">
+                <p className="mt-0 text-[#846FA0] font-pt font-medium leading-[120%] tracking-[0%] px-3">
                   {orderedBlogs[2].excerpt[language]}
                 </p>
                 <div className="flex items-center gap-1.5 flex-col absolute top-2 right-2">
@@ -192,7 +189,7 @@ const OtherGrid: React.FC<OtherGridProps> = ({
           {orderedBlogs[3] && (
             <Link href={`/blogs/${orderedBlogs[3]._id}`}>
               <div className="min-h-full relative h-full flex flex-col justify-between bg-white rounded-[20px] p-5">
-                <p className="text-[#3D334A] font-[Pt] tracking-[0%] mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
+                <p className="text-[#3D334A] font-pt tracking-[0%] mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
                   {orderedBlogs[3].title[language]}
                 </p>
 
@@ -226,7 +223,7 @@ const OtherGrid: React.FC<OtherGridProps> = ({
           {orderedBlogs[4] && (
             <Link href={`/blogs/${orderedBlogs[4]._id}`}>
               <div className="min-h-full relative h-full flex flex-col justify-between bg-white rounded-[20px] p-5">
-                <p className="text-[#3D334A] font-[Pt] tracking-[0%] mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
+                <p className="text-[#3D334A] font-pt tracking-[0%] mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
                   {orderedBlogs[4].title[language]}
                 </p>
 
