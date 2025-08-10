@@ -155,25 +155,25 @@ const Header: React.FC<HeaderProps> = ({
     },
   ];
 
-  const singleComplexHeaderItems = [
-    {
-      id: 1,
-      text: statistics ? `${statistics.total.sets} комплексов` : "Loading...",
-      image: "/assets/icons/pulse.svg",
-    },
-    {
-      id: 2,
-      text: statistics
-        ? `${statistics.total.exercises} упражнений`
-        : "Loading...",
-      image: "/assets/images/camera.svg",
-    },
-    {
-      id: 3,
-      text: statistics ? `${statistics.total.hours} часов` : "Loading...",
-      image: "/assets/icons/watch.png",
-    },
-  ];
+  // const singleComplexHeaderItems = [
+  //   {
+  //     id: 1,
+  //     text: statistics ? `${statistics.total.sets} комплексов` : "Loading...",
+  //     image: "/assets/icons/pulse.svg",
+  //   },
+  //   {
+  //     id: 2,
+  //     text: statistics
+  //       ? `${statistics.total.exercises} упражнений`
+  //       : "Loading...",
+  //     image: "/assets/images/camera.svg",
+  //   },
+  //   {
+  //     id: 3,
+  //     text: statistics ? `${statistics.total.hours} часов` : "Loading...",
+  //     image: "/assets/icons/watch.png",
+  //   },
+  // ];
 
   return (
     <header
