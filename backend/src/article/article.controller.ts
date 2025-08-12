@@ -21,6 +21,19 @@ import * as streamifier from 'streamifier';
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
 
+  private parseIfString<T>(value: any, fallback: T): T {
+    if (value === undefined || value === null) return fallback;
+    if (typeof value === 'string') {
+      try {
+        return JSON.parse(value);
+      } catch {
+        // If it's a plain string that isn't JSON, return as-is (fallback if incompatible)
+        return (value as unknown) as T;
+      }
+    }
+    return value as T;
+  }
+
   private uploadToCloudinary = (file: Express.Multer.File, resource_type: 'image' | 'video') => {
     return new Promise((resolve, reject) => {
       const upload = cloudinary.uploader.upload_stream(
@@ -63,18 +76,24 @@ export class ArticleController {
   ) {
 
     try {
-      // Parse JSON strings from FormData
-      const parsedData = {
+      // Parse JSON strings from FormData only if necessary
+      const parsedData: any = {
         ...createArticleDto,
-        title: JSON.parse(createArticleDto.title),
-        excerpt: JSON.parse(createArticleDto.excerpt),
-        content: JSON.parse(createArticleDto.content),
-        author: JSON.parse(createArticleDto.author),
-        tableOfContents: createArticleDto.tableOfContents ? JSON.parse(createArticleDto.tableOfContents) : [],
-        tags: createArticleDto.tags ? JSON.parse(createArticleDto.tags) : [],
-        categoryId: createArticleDto.categoryId ? JSON.parse(createArticleDto.categoryId) : [],
-        featuredImages: createArticleDto.featuredImages ? JSON.parse(createArticleDto.featuredImages) : []
+        title: this.parseIfString(createArticleDto.title, {}),
+        excerpt: this.parseIfString(createArticleDto.excerpt, {}),
+        content: this.parseIfString(createArticleDto.content, {}),
+        author: this.parseIfString(createArticleDto.author, {}),
+        tableOfContents: this.parseIfString(createArticleDto.tableOfContents, []),
+        tags: this.parseIfString(createArticleDto.tags, []),
+        categoryId: this.parseIfString(createArticleDto.categoryId, []),
+        featuredImages: this.parseIfString(createArticleDto.featuredImages, []),
       };
+
+      // Normalize single categoryId to array
+      if (parsedData.categoryId && !Array.isArray(parsedData.categoryId)) {
+        parsedData.categoryId = [parsedData.categoryId];
+      }
+      if (!parsedData.categoryId) parsedData.categoryId = [];
 
       let featuredImages = parsedData.featuredImages || [];
 
@@ -149,17 +168,17 @@ export class ArticleController {
   ) {
 
     try {
-      // Parse JSON strings from FormData
+      // Parse JSON strings from FormData only if necessary
       const parsedData: any = {};
-      
-      if (updateArticleDto.title) parsedData.title = JSON.parse(updateArticleDto.title);
-      if (updateArticleDto.excerpt) parsedData.excerpt = JSON.parse(updateArticleDto.excerpt);
-      if (updateArticleDto.content) parsedData.content = JSON.parse(updateArticleDto.content);
-      if (updateArticleDto.author) parsedData.author = JSON.parse(updateArticleDto.author);
-      if (updateArticleDto.tableOfContents) parsedData.tableOfContents = JSON.parse(updateArticleDto.tableOfContents);
-      if (updateArticleDto.tags) parsedData.tags = JSON.parse(updateArticleDto.tags);
-      if (updateArticleDto.categoryId) parsedData.categoryId = JSON.parse(updateArticleDto.categoryId);
-      if (updateArticleDto.featuredImages) parsedData.featuredImages = JSON.parse(updateArticleDto.featuredImages);
+
+      if (updateArticleDto.title !== undefined) parsedData.title = this.parseIfString(updateArticleDto.title, {});
+      if (updateArticleDto.excerpt !== undefined) parsedData.excerpt = this.parseIfString(updateArticleDto.excerpt, {});
+      if (updateArticleDto.content !== undefined) parsedData.content = this.parseIfString(updateArticleDto.content, {});
+      if (updateArticleDto.author !== undefined) parsedData.author = this.parseIfString(updateArticleDto.author, {});
+      if (updateArticleDto.tableOfContents !== undefined) parsedData.tableOfContents = this.parseIfString(updateArticleDto.tableOfContents, []);
+      if (updateArticleDto.tags !== undefined) parsedData.tags = this.parseIfString(updateArticleDto.tags, []);
+      if (updateArticleDto.categoryId !== undefined) parsedData.categoryId = this.parseIfString(updateArticleDto.categoryId, []);
+      if (updateArticleDto.featuredImages !== undefined) parsedData.featuredImages = this.parseIfString(updateArticleDto.featuredImages, []);
       
       // Copy other simple fields
       ['readTime', 'isPublished', 'isFeatured', 'isActive', 'sortOrder'].forEach(field => {
@@ -167,6 +186,11 @@ export class ArticleController {
           parsedData[field] = updateArticleDto[field];
         }
       });
+
+      // Normalize single categoryId to array
+      if (parsedData.categoryId && !Array.isArray(parsedData.categoryId)) {
+        parsedData.categoryId = [parsedData.categoryId];
+      }
 
       let featuredImages = parsedData.featuredImages || [];
 

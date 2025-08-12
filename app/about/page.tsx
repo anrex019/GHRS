@@ -83,7 +83,7 @@ const About = () => {
           </h1>
           <div className="md:m-10 m-5">
             <div className="bg-[#F9F7FE]  md:py-[34px] md:pl-10 mb-5 p-4 rounded-[15px]">
-              <p className="text-[#846FA0] font-[Pt] leading-[120%] md:text-[24px] text-[14px] font-light">
+              <p className="text-[#3D334A] font-[Pt] leading-[120%] md:text-[24px] text-[14px] font-light">
                 Мы нацелены на постоянное расширение списка направлений
                 реабилитации и персонализацию программ реабилитации, и будем
                 рады обратной связи с нашими пользователями, чтобы определиться
@@ -93,7 +93,7 @@ const About = () => {
             </div>
             <div className="flex md:flex-row flex-col items-center gap-5">
               <div className="bg-[#F9F7FE] md:p-10 p-4 rounded-[15px]">
-                <p className="text-[#846FA0] font-[Pt] leading-[120%] md:text-[24px] text-[14px] font-light">
+                <p className="text-[#3D334A] font-[Pt] leading-[120%] md:text-[24px] text-[14px] font-light">
                   Мы обеспечим вам возможность бесплатных консультаций с
                   квалифицированными кураторами нашей платформы, а также
                   возможность консультаций с ведущими специалистами в клиниках
@@ -101,7 +101,7 @@ const About = () => {
                 </p>
               </div>
               <div className="bg-[#F9F7FE] md:p-10 p-4 rounded-[15px]">
-                <p className="text-[#846FA0] font-[Pt] leading-[120%] md:text-[24px] text-[14px] font-light">
+                <p className="text-[#3D334A] font-[Pt] leading-[120%] md:text-[24px] text-[14px] font-light">
                   Мы обеспечим вам возможность бесплатных консультаций с
                   квалифицированными кураторами нашей платформы, а также
                   возможность консультаций с ведущими специалистами в клиниках

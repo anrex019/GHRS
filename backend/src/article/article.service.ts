@@ -12,6 +12,21 @@ export class ArticleService {
     @InjectModel('Blog') private blogModel: Model<BlogDocument>,
   ) {}
 
+  // Estimate reading time in minutes from HTML content
+  private estimateReadTimeFromContent(content: { ka?: string; en?: string; ru?: string }): string {
+    const html = content?.en || content?.ka || content?.ru || '';
+    const cleanText = html
+      .replace(/<[^>]*>/g, ' ') // strip HTML tags
+      .replace(/&nbsp;/g, ' ') // nbsp to space
+      .replace(/&[a-zA-Z0-9#]+;/g, ' ') // other entities
+      .replace(/\s+/g, ' ') // collapse spaces
+      .trim();
+    const words = cleanText ? cleanText.split(' ').filter(Boolean).length : 0;
+    const wordsPerMinute = 220;
+    const minutes = Math.max(1, Math.ceil(words / wordsPerMinute));
+    return String(minutes);
+  }
+
   private generateSlug(title: string): string {
     return title
       .toLowerCase()
@@ -40,8 +55,13 @@ export class ArticleService {
         counter++;
       }
 
+      const readTime = createArticleDto.readTime && String(createArticleDto.readTime).trim().length > 0
+        ? String(createArticleDto.readTime)
+        : this.estimateReadTimeFromContent(createArticleDto.content as any);
+
       const createdArticle = new this.articleModel({
         ...createArticleDto,
+        readTime,
         slug,
         blogId: new Types.ObjectId(createArticleDto.blogId),
         categoryId: createArticleDto.categoryId.map(id => new Types.ObjectId(id)),
@@ -147,9 +167,14 @@ export class ArticleService {
         throw new BadRequestException('Invalid article ID');
       }
 
-      const updateData = { ...updateArticleDto };
+      const updateData: any = { ...updateArticleDto };
       if (updateArticleDto.categoryId) {
         updateData.categoryId = updateArticleDto.categoryId.map(id => new Types.ObjectId(id)) as any;
+      }
+
+      // If readTime missing but content provided, compute it
+      if ((!updateData.readTime || String(updateData.readTime).trim().length === 0) && updateData.content) {
+        updateData.readTime = this.estimateReadTimeFromContent(updateData.content as any);
       }
 
       const updatedArticle = await this.articleModel

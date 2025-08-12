@@ -65,8 +65,9 @@ export class CreateArticleDto {
   @Type(() => AuthorDto)
   author: AuthorDto;
 
+  @IsOptional()
   @IsString()
-  readTime: string;
+  readTime?: string;
 
   @IsOptional()
   @IsNumber()
