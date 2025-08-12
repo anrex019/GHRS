@@ -37,27 +37,33 @@ const AllCourse = () => {
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
-  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
-  const [selectedSubcategoryId, setSelectedSubcategoryId] = useState<string | null>(null);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
+    null
+  );
+  const [selectedSubcategoryId, setSelectedSubcategoryId] = useState<
+    string | null
+  >(null);
   const [sortBy, setSortBy] = useState<string>("По популярности");
-  
+
   const ITEMS_PER_PAGE = 9;
 
   // ყველა კურსის ჩამოტვირთვა ერთხელ
   const fetchAllCourses = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${API_CONFIG.BASE_URL}/courses?limit=1000&isPublished=true`);
-      
+      const response = await fetch(
+        `${API_CONFIG.BASE_URL}/courses?limit=1000&isPublished=true`
+      );
+
       if (!response.ok) {
-        throw new Error('Failed to fetch courses');
+        throw new Error("Failed to fetch courses");
       }
 
       const data = await response.json();
       setAllCourses(data.courses || []);
       setError(null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
       setLoading(false);
     }
@@ -70,23 +76,28 @@ const AllCourse = () => {
     // ძებნა
     if (searchTerm.trim()) {
       const searchLower = searchTerm.toLowerCase();
-      filtered = filtered.filter(course => 
-        course.title.ru.toLowerCase().includes(searchLower) ||
-        course.title.en.toLowerCase().includes(searchLower) ||
-        course.description.ru.toLowerCase().includes(searchLower) ||
-        course.description.en.toLowerCase().includes(searchLower) ||
-        course.instructor.name.toLowerCase().includes(searchLower)
+      filtered = filtered.filter(
+        (course) =>
+          course.title.ru.toLowerCase().includes(searchLower) ||
+          course.title.en.toLowerCase().includes(searchLower) ||
+          course.description.ru.toLowerCase().includes(searchLower) ||
+          course.description.en.toLowerCase().includes(searchLower) ||
+          course.instructor.name.toLowerCase().includes(searchLower)
       );
     }
 
     // კატეგორიის ფილტრი
     if (selectedCategoryId) {
-      filtered = filtered.filter(course => course.categoryId === selectedCategoryId);
+      filtered = filtered.filter(
+        (course) => course.categoryId === selectedCategoryId
+      );
     }
 
     // საბკატეგორიის ფილტრი
     if (selectedSubcategoryId) {
-      filtered = filtered.filter(course => course.subcategoryId === selectedSubcategoryId);
+      filtered = filtered.filter(
+        (course) => course.subcategoryId === selectedSubcategoryId
+      );
     }
 
     // სორტირება
@@ -95,7 +106,9 @@ const AllCourse = () => {
       filtered.sort((a, b) => b.price - a.price); // მაგალითად ფასის მიხედვით
     } else if (sortBy === "По новизне") {
       // თუ createdAt ველი გვაქვს
-      filtered.sort((a, b) => new Date(b._id).getTime() - new Date(a._id).getTime());
+      filtered.sort(
+        (a, b) => new Date(b._id).getTime() - new Date(a._id).getTime()
+      );
     } else if (sortBy === "По цене (возрастание)") {
       filtered.sort((a, b) => a.price - b.price);
     } else if (sortBy === "По цене (убывание)") {
@@ -103,7 +116,13 @@ const AllCourse = () => {
     }
 
     return filtered;
-  }, [allCourses, searchTerm, selectedCategoryId, selectedSubcategoryId, sortBy]);
+  }, [
+    allCourses,
+    searchTerm,
+    selectedCategoryId,
+    selectedSubcategoryId,
+    sortBy,
+  ]);
 
   // პაგინაცია
   const paginatedCourses = useMemo(() => {
@@ -189,7 +208,7 @@ const AllCourse = () => {
             value={searchTerm}
             onChange={handleSearch}
             placeholder="Введите название курса или имя инструктора"
-            className="w-full bg-white border focus:outline-purple-[#D4BAFC] font-[Pt] border-[#D4BAFC] rounded-[54px] px-[50px] py-[15px] mb-2 text-[#846FA0] text-[19px] font-medium"
+            className="w-full bg-white border focus:outline-purple-[#D4BAFC] font-pt border-[#D4BAFC] rounded-[54px] px-[50px] py-[15px] mb-2 text-[#846FA0] text-[19px] font-medium"
           />
           <CiSearch
             color="black"
@@ -197,12 +216,12 @@ const AllCourse = () => {
             className="absolute top-[16px] left-4"
           />
         </div>
-        <CategoryFilter 
+        <CategoryFilter
           onCategoryChange={handleCategoryChange}
           onSubcategoryChange={handleSubcategoryChange}
           onSortChange={handleSortChange}
         />
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
           {paginatedCourses.length > 0 ? (
             paginatedCourses.map((course) => (
@@ -226,7 +245,7 @@ const AllCourse = () => {
                   </p>
                   <div className="flex justify-end">
                     <div className="bg-[#D4BAFC] py-[10px] px-10 rounded-[6px] inline-block">
-                      <span className="text-2xl font-bold text-white leading-[100%] font-[Pt]">
+                      <span className="text-2xl font-bold text-white leading-[100%] font-pt">
                         ${course.price}
                       </span>
                     </div>
@@ -236,7 +255,9 @@ const AllCourse = () => {
             ))
           ) : (
             <div className="col-span-full text-center py-12">
-              <h3 className="text-xl text-[#846FA0] mb-4">კურსები არ მოიძებნა</h3>
+              <h3 className="text-xl text-[#846FA0] mb-4">
+                კურსები არ მოიძებნა
+              </h3>
               <p className="text-[#846FA0]">სცადეთ სხვა ძებნის პარამეტრები</p>
             </div>
           )}
@@ -262,7 +283,9 @@ const AllCourse = () => {
         )}
       </div>
       <div className="mb-40 flex items-center justify-center mx-auto bg-[#D4BAFC] cursor-pointer rounded-[8px] w-[300px] py-[12px] hover:bg-[#be9def] mt-20">
-        <button className="text-white text-[22px] leading-[100%] tracking-[-1%]">Показать еще</button>
+        <button className="text-white text-[22px] leading-[100%] tracking-[-1%]">
+          Показать еще
+        </button>
       </div>
       <Footer />
     </div>

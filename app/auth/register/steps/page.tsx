@@ -73,14 +73,14 @@ const Step2 = ({
       <h2 className="text-[32px] leading-[100%] tracking-[-3%] font-bold mb-2 text-start w-full pl-10 text-[#3D334A] ">
         Как вас зовут?
       </h2>
-      <p className="mb-10 mt-2 text-[#846FA0] text-start pl- text-[18px] font-medium leading-[100%] font-[Pt]">
+      <p className="mb-10 mt-2 text-[#846FA0] text-start pl- text-[18px] font-medium leading-[100%] font-pt">
         Имя и фамилия будут отображаться в вашем личном кабинете
       </p>
       <form
         onSubmit={handleNext}
         className="flex flex-col gap-4 w-full justify-center"
       >
-        <div className="flex flex-row font-[Pt] gap-6 items-center justify-center mb-2 w-full">
+        <div className="flex flex-row font-pt gap-6 items-center justify-center mb-2 w-full">
           <input
             type="text"
             placeholder="Имя"
@@ -96,7 +96,7 @@ const Step2 = ({
             className="w-[276px] h-[60px] border border-[#E9DFF6] rounded-lg px-4 text-xl focus:outline-none focus:border-[#846FA0] bg-white text-[#3D334A]"
           />
         </div>
-        <div className="flex justify-between mt-8 gap-4 px-10 font-[Pt]">
+        <div className="flex justify-between mt-8 gap-4 px-10 font-pt">
           <button
             type="button"
             onClick={onBack}
@@ -143,14 +143,14 @@ const Step3 = ({
       <h2 className="text-[32px] leading-[100%] tracking-[-3%] font-bold mb-2 text-start w-full pl-10 text-[#3D334A] ">
         Откуда вы?
       </h2>
-      <p className="mb-10 mt-2 text-[#846FA0] text-start items-start w-full pl-10 text-[18px] font-medium leading-[100%] font-[Pt]">
+      <p className="mb-10 mt-2 text-[#846FA0] text-start items-start w-full pl-10 text-[18px] font-medium leading-[100%] font-pt">
         Укажите название страны и населенного пункта
       </p>
       <form
         onSubmit={handleNext}
         className="flex flex-col gap-4 w-full justify-center"
       >
-        <div className="flex flex-row font-[Pt] gap-6 items-center justify-center mb-2 w-full px-10">
+        <div className="flex flex-row font-pt gap-6 items-center justify-center mb-2 w-full px-10">
           <input
             type="text"
             placeholder="Страна/Регион"
@@ -166,7 +166,7 @@ const Step3 = ({
             className="w-[276px] h-[60px] border border-[#E9DFF6] rounded-lg px-4 text-xl focus:outline-none focus:border-[#846FA0] bg-white text-[#3D334A]"
           />
         </div>
-        <div className="flex justify-between mt-8 gap-4 px-10 font-[Pt]">
+        <div className="flex justify-between mt-8 gap-4 px-10 font-pt">
           <button
             type="button"
             onClick={onBack}
@@ -230,14 +230,14 @@ const Step4 = ({
       <h2 className="text-[32px] leading-[100%] tracking-[-3%] font-bold mb-2 text-start w-full pl-10 text-[#3D334A] ">
         Как с вами связаться?
       </h2>
-      <p className="mb-10 mt-2 text-[#846FA0] text-start items-start w-full pl-10 text-[18px] font-medium leading-[100%] font-[Pt]">
+      <p className="mb-10 mt-2 text-[#846FA0] text-start items-start w-full pl-10 text-[18px] font-medium leading-[100%] font-pt">
         Укажите номер телефона или другой удобный вам способ связи.
       </p>
       <form
         onSubmit={handleNext}
         className="flex flex-col gap-4 w-full justify-center"
       >
-        <div className="flex flex-col font-[Pt] gap-6 items-center justify-center mb-2 w-full px-10">
+        <div className="flex flex-col font-pt gap-6 items-center justify-center mb-2 w-full px-10">
           <select
             value={selectedCountry.code}
             onChange={handleCountryChange}
@@ -270,7 +270,7 @@ const Step4 = ({
             className="w-full h-[60px] border border-[#E9DFF6] rounded-lg px-4 text-xl focus:outline-none focus:border-[#846FA0] bg-white text-[#3D334A]"
           />
         </div>
-        <div className="flex justify-between mt-8 gap-4 px-10 font-[Pt]">
+        <div className="flex justify-between mt-8 gap-4 px-10 font-pt">
           <button
             type="button"
             onClick={onBack}
@@ -321,7 +321,7 @@ const Step5 = ({
       <h2 className="text-[32px] leading-[100%] tracking-[-3%] font-bold mb-2 text-start w-full pl-10 text-[#3D334A] ">
         Расскажите о себе
       </h2>
-      <p className="mb-10 mt-2 text-[#846FA0] text-start items-start w-full pl-10 text-[18px] font-medium leading-[100%] font-[Pt]">
+      <p className="mb-10 mt-2 text-[#846FA0] text-start items-start w-full pl-10 text-[18px] font-medium leading-[100%] font-pt">
         Укажите ваш пол, примерный вес и рост. Это поможет нашим специалистам в
         дальнейшем.
       </p>
@@ -329,7 +329,7 @@ const Step5 = ({
         onSubmit={handleNext}
         className="flex flex-col gap-4 w-full justify-center"
       >
-        <div className="flex flex-col font-[Pt] gap-6 items-center justify-center mb-2 w-full px-10">
+        <div className="flex flex-col font-pt gap-6 items-center justify-center mb-2 w-full px-10">
           <select
             value={selectedDisease}
             onChange={(e) => setSelectedDisease(e.target.value)}
@@ -352,7 +352,7 @@ const Step5 = ({
             className="w-full h-[60px] border border-[#E9DFF6] rounded-lg px-4 text-xl focus:outline-none focus:border-[#846FA0] bg-white text-[#3D334A]"
           />
         </div>
-        <div className="flex justify-between mt-8 gap-4 px-10 font-[Pt]">
+        <div className="flex justify-between mt-8 gap-4 px-10 font-pt">
           <button
             type="button"
             onClick={onBack}
@@ -398,7 +398,7 @@ const Step6 = ({
       <h2 className="text-[32px] leading-[100%] tracking-[-3%] font-bold mb-2 text-start w-full pl-10 text-[#3D334A] ">
         Ваше заболевание
       </h2>
-      <p className="mb-10 mt-2 text-[#846FA0] text-start items-start w-full pl-10 text-[18px] font-medium leading-[100%] font-[Pt]">
+      <p className="mb-10 mt-2 text-[#846FA0] text-start items-start w-full pl-10 text-[18px] font-medium leading-[100%] font-pt">
         Выберите подходящее заболевание из предложенного списка или укажите его
         самостоятельно.
       </p>
@@ -406,7 +406,7 @@ const Step6 = ({
         onSubmit={handleNext}
         className="flex flex-col gap-4 w-full justify-center"
       >
-        <div className="flex flex-col font-[Pt] gap-6 items-center justify-center mb-2 w-full px-10">
+        <div className="flex flex-col font-pt gap-6 items-center justify-center mb-2 w-full px-10">
           <select
             value={additionalInfo}
             onChange={(e) => setAdditionalInfo(e.target.value)}
@@ -429,7 +429,7 @@ const Step6 = ({
             className="w-full h-[60px] border border-[#E9DFF6] rounded-lg px-4 text-xl focus:outline-none focus:border-[#846FA0] bg-white text-[#3D334A]"
           />
         </div>
-        <div className="flex justify-between mt-8 gap-4 px-10 font-[Pt]">
+        <div className="flex justify-between mt-8 gap-4 px-10 font-pt">
           <button
             type="button"
             onClick={onBack}
@@ -462,7 +462,7 @@ const CongratsStep = () => (
     <h2 className="text-[32px] leading-[100%] tracking-[-3%] font-bold mb-6 text-[#3D334A]">
       Регистрация завершена!
     </h2>
-    <p className="text-[#846FA0] text-center text-[20px] font-medium leading-[120%] font-[Pt] max-w-xl">
+    <p className="text-[#846FA0] text-center text-[20px] font-medium leading-[120%] font-pt max-w-xl">
       Теперь вы можете пользоваться всем спектром функций, предложенных нашей
       платформой.
     </p>

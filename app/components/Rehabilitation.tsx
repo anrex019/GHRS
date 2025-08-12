@@ -20,7 +20,7 @@ const Rehabilitation = () => {
             ? t("rehabilitation.title")
             : "Rehabilitation"}
         </h1>
-        <p className="text-[#846FA0] font-[Pt] text-[18px] md:text-[32px] font-medium leading-[120%] md:leading-[100%] mb-5">
+        <p className="text-[#846FA0] font-pt text-[18px] md:text-[32px] font-medium leading-[120%] md:leading-[100%] mb-5">
           {typeof t("rehabilitation.description") === "string"
             ? t("rehabilitation.description")
             : ""}

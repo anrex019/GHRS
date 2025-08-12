@@ -22,23 +22,23 @@ interface WorkItem {
 interface WorksSliderProps {
   title?: string;
   works: WorkItem[];
-  linkType?: 'sets' | 'complex' | 'section'; // დინამიური ლინკის ტიპი
+  linkType?: "sets" | "complex" | "section"; // დინამიური ლინკის ტიპი
   categoryData?: any;
-  fromMain: boolean
-  seeAll: boolean
-  scrollable: boolean,
+  fromMain: boolean;
+  seeAll: boolean;
+  scrollable: boolean;
 }
 
 const WorksSlider: React.FC<WorksSliderProps> = ({
   title,
   works,
-  linkType = 'sets', // default არის sets
+  linkType = "sets", // default არის sets
   fromMain,
   seeAll = true,
-  scrollable = true
+  scrollable = true,
 }) => {
   const { t } = useI18n();
-  const { language } = useLanguage(); 
+  const { language } = useLanguage();
   const scroll = (direction: "left" | "right") => {
     const slider = document.getElementById("works-slider");
     if (slider) {
@@ -56,20 +56,20 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
     <div className="md:px-5 px-2 py-2 bg-[#F9F7FE] md:mx-5 md:rounded-[20px] ">
       <div className="flex items-center justify-between">
         <div className="flex flex-col items-start">
-        <h2 className="text-[20px] md:py-4 md:text-[40px] text-[#3D334A] mb-2.5 md:mb-5">
-          {title}
-        </h2>
-       {seeAll && (
-         <span className="text-[#D4BAFC] text-[24px] md:mb-10 leading-[90%] uppercase cursor-pointer hover:text-[#B69EE8] transition-colors">
-          {t("common.see_all")} →
-         </span>
-       )}
+          <h2 className="text-[20px] md:py-4 md:text-[40px] text-[#3D334A] mb-2.5 md:mb-5">
+            {title}
+          </h2>
+          {seeAll && (
+            <span className="text-[#D4BAFC] text-[24px] md:mb-10 leading-[90%] uppercase cursor-pointer hover:text-[#B69EE8] transition-colors">
+              {t("common.see_all")} →
+            </span>
+          )}
         </div>
         {scrollable && (
           <SliderArrows
-          onScrollLeft={() => scroll("left")}
-          onScrollRight={() => scroll("right")}
-        />
+            onScrollLeft={() => scroll("left")}
+            onScrollRight={() => scroll("right")}
+          />
         )}
       </div>
 
@@ -84,10 +84,12 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
               href={
                 fromMain
                   ? `/complex/${work.id}?categoryId=${work.categoryId}`
-                  : linkType === 'complex'
+                  : linkType === "complex"
                   ? `/complex/${work.id}`
-                  : linkType === 'section'
-                  ? `/categories/section?categoryId=${work.categoryId || ''}&subcategoryId=${work.subcategoryId || ''}`
+                  : linkType === "section"
+                  ? `/categories/section?categoryId=${
+                      work.categoryId || ""
+                    }&subcategoryId=${work.subcategoryId || ""}`
                   : `/sets/${work.id}`
               }
               className="bg-white  w-[400px] h-[493px] flex-shrink-0 rounded-[20px] hover:shadow-lg transition-shadow flex flex-col"
@@ -105,13 +107,15 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
                     {work.categoryName}
                   </span>
                 </div>
-                <p className="line-clamp-4 font-[Pt] text-[#3D334A] leading-[120%] text-lg font-black  mx-4">
-                  {work.description}  
+                <p className="line-clamp-4 font-pt text-[#3D334A] leading-[120%] text-lg font-black  mx-4">
+                  {work.description}
                 </p>
               </div>
               <div className="flex items-center justify-end">
                 <span className="px-5 py-3 bg-[#D4BAFC] rounded-lg text-white text-[18px] leading-[100%] font-bold mb-8 mr-8 mt-6">
-                  {work.monthlyPrice}${language === "ka" ? "₾" : language === "ru" ? "₽" : "$"}/{t("common.month")}
+                  {work.monthlyPrice}$
+                  {language === "ka" ? "₾" : language === "ru" ? "₽" : "$"}/
+                  {t("common.month")}
                 </span>
               </div>
             </Link>

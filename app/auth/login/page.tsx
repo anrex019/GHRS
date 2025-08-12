@@ -96,7 +96,7 @@ const Login = () => {
         {/* Form */}
         <form
           onSubmit={handleSubmit}
-          className="font-[Pt] flex flex-col gap-5 text-[#3D334A] text-[18px] leading-[120%] font-medium"
+          className="font-pt flex flex-col gap-5 text-[#3D334A] text-[18px] leading-[120%] font-medium"
         >
           {error && <div className="text-red-500 text-center">{error}</div>}
           <input
@@ -127,14 +127,14 @@ const Login = () => {
           </button>
         </form>
         <div className="mt-5 text-center w-full">
-          <span className="text-[#D4BAFC] tracking-[-1%] font-medium leading-[100%] font-[Pt] cursor-pointer">
+          <span className="text-[#D4BAFC] tracking-[-1%] font-medium leading-[100%] font-pt cursor-pointer">
             Восстановить пароль
           </span>
-          <p className="text-[#3D334A] text-[18px] leading-[120%] font-medium font-[Pt]">
+          <p className="text-[#3D334A] text-[18px] leading-[120%] font-medium font-pt">
             Нет аккаунта?{" "}
             <Link
               href={"/auth/register"}
-              className="text-[#D4BAFC] tracking-[-1%] font-medium leading-[100%] font-[Pt]"
+              className="text-[#D4BAFC] tracking-[-1%] font-medium leading-[100%] font-pt"
             >
               Регистрация
             </Link>

@@ -101,7 +101,7 @@ const VerificationStep: React.FC<VerificationStepProps> = ({
       <h2 className="text-[32px] leading-[100%] tracking-[-3%] font-bold mb-2 text-[#3D334A] ">
         Верификация аккаунта
       </h2>
-      <p className="mb-10 mt-2 text-[#846FA0] text-start pl-12 text-[18px] font-medium leading-[100%] font-[Pt]">
+      <p className="mb-10 mt-2 text-[#846FA0] text-start pl-12 text-[18px] font-medium leading-[100%] font-pt">
         Для подтверждения аккаунта введите код, отправленный на ваш email{" "}
         {email}
       </p>
@@ -130,14 +130,14 @@ const VerificationStep: React.FC<VerificationStepProps> = ({
             />
           ))}
         </div>
-        <div className="text-[#846FA0] mt-5 text-[18px] leading-[100%] pl-10 font-bold font-[Pt]">
+        <div className="text-[#846FA0] mt-5 text-[18px] leading-[100%] pl-10 font-bold font-pt">
           Повторная отправка кода возможна через:{" "}
           <span className="text-[#D4BAFC]">{timer}</span> секунд
         </div>
         {error && (
           <span className="text-red-500 text-sm text-center">{error}</span>
         )}
-        <div className="flex justify-between mt-8 gap-4 px-10 font-[Pt]">
+        <div className="flex justify-between mt-8 gap-4 px-10 font-pt">
           <button
             type="button"
             onClick={onBack}

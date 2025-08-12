@@ -31,8 +31,10 @@ const DaysInRow: React.FC<DaysInRowProps> = ({
           <h4 className="text-[#D4BAFC] text-[18px] md:text-[24px] tracking-[-3%]">
             {currentStreak} {t("personal_account.days_in_row.days_streak")}
           </h4>
-          <span className="text-[#846FA0] font-[Pt] font-medium md:text-[18px] leading-[120%]">
-            {t("personal_account.days_in_row.record", { count: recordStreak.toString() })}
+          <span className="text-[#846FA0] font-pt font-medium md:text-[18px] leading-[120%]">
+            {t("personal_account.days_in_row.record", {
+              count: recordStreak.toString(),
+            })}
           </span>
         </div>
         <h4 className="text-[#D4BAFC] md:text-[24px] md:tracking-[-3%] md:w-full md:text-end">

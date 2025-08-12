@@ -32,7 +32,7 @@ const Statistics: React.FC<Props> = ({ statistics }) => {
                   <Icon className="text-[#D4BAFC] w-6 h-6 hidden md:block" />
                 )}
               </div>
-              <p className="text-[#846FA0] leading-[120%] mt-3 font-[Pt]">
+              <p className="text-[#846FA0] leading-[120%] mt-3 font-pt">
                 {item.text}
               </p>
             </div>

@@ -58,7 +58,7 @@ const PersonInfo: React.FC<Props> = ({ user }) => {
             {personalLinks.map((item, index) => (
               <div key={index} className="flex items-center gap-2">
                 {item.icon}
-                <span className="text-[#846FA0] font-[Pt] text-[14px] md:text-[18px] leading-[120%]">
+                <span className="text-[#846FA0] font-pt text-[14px] md:text-[18px] leading-[120%]">
                   {item.label}: {item.text}
                 </span>
               </div>

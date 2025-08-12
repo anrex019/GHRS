@@ -25,7 +25,17 @@ interface Course {
   };
 }
 
-const Professional = ({ withBanner, title, bgColor, withProfText }: { withBanner: boolean, title: string, bgColor: string, withProfText: boolean }) => {
+const Professional = ({
+  withBanner,
+  title,
+  bgColor,
+  withProfText,
+}: {
+  withBanner: boolean;
+  title: string;
+  bgColor: string;
+  withProfText: boolean;
+}) => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -49,14 +59,16 @@ const Professional = ({ withBanner, title, bgColor, withProfText }: { withBanner
     const fetchCourses = async (): Promise<void> => {
       try {
         setLoading(true);
-        const response = await fetch(`${API_CONFIG.BASE_URL}/courses?isPublished=true`);
+        const response = await fetch(
+          `${API_CONFIG.BASE_URL}/courses?isPublished=true`
+        );
         if (!response.ok) {
-          throw new Error('Failed to fetch courses');
+          throw new Error("Failed to fetch courses");
         }
         const data = await response.json();
         setCourses(data.courses);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'An error occurred');
+        setError(err instanceof Error ? err.message : "An error occurred");
       } finally {
         setLoading(false);
       }
@@ -68,11 +80,11 @@ const Professional = ({ withBanner, title, bgColor, withProfText }: { withBanner
   useEffect(() => {
     const container = sliderRef.current;
     if (container) {
-      container.addEventListener('scroll', checkScrollButtons);
+      container.addEventListener("scroll", checkScrollButtons);
       checkScrollButtons(); // Initial check
-      
+
       return () => {
-        container.removeEventListener('scroll', checkScrollButtons);
+        container.removeEventListener("scroll", checkScrollButtons);
       };
     }
   }, [courses]);
@@ -81,9 +93,9 @@ const Professional = ({ withBanner, title, bgColor, withProfText }: { withBanner
     if (sliderRef.current) {
       // Scroll by approximately half of container width
       const scrollAmount = sliderRef.current.clientWidth / 2;
-      sliderRef.current.scrollBy({ 
+      sliderRef.current.scrollBy({
         left: -scrollAmount,
-        behavior: "smooth" 
+        behavior: "smooth",
       });
     }
   };
@@ -92,15 +104,18 @@ const Professional = ({ withBanner, title, bgColor, withProfText }: { withBanner
     if (sliderRef.current) {
       // Scroll by approximately half of container width
       const scrollAmount = sliderRef.current.clientWidth / 2;
-      sliderRef.current.scrollBy({ 
+      sliderRef.current.scrollBy({
         left: scrollAmount,
-        behavior: "smooth" 
+        behavior: "smooth",
       });
     }
   };
 
   return (
-    <div style={{backgroundColor: bgColor}} className="mb-10 md:mx-5 md:rounded-[30px] ">
+    <div
+      style={{ backgroundColor: bgColor }}
+      className="mb-10 md:mx-5 md:rounded-[30px] "
+    >
       {withBanner && (
         <Banner
           backgroundUrl="/assets/images/bluebg.jpg"
@@ -113,28 +128,31 @@ const Professional = ({ withBanner, title, bgColor, withProfText }: { withBanner
       <div className="md:p-10 px-5">
         {withProfText && (
           <div className="">
-          <h1 className="text-[20px] md:mt-10 md:text-[40px] md:tracking-[-3%] text-[#3D334A] leading-[120%] mb-2.5 md:mb-5">
-            {typeof t("professional.title") === "string"
-              ? t("professional.title")
-              : "Professional Development"}
-          </h1>
-          <p className="text-[#3D334A] text-[18px] font-[Pt] font-medium md:max-w-[1320px] md:text-[24px] leading-[120%] md:leading-[120%] mb-5">
-            {typeof t("professional.description") === "string"
-              ? t("professional.description")
-              : ""}
-          </p>
-          <Link
-            className="text-[14px] md:text-[24px] leading-[90%] uppercase text-[#D4BAFC]"
-            href="/professional"
-          >
-            {typeof t("professional.learn_more") === "string"
-              ? t("professional.learn_more")
-              : ""}
-          </Link>
-          <hr className="md:mt-10 mt-5 bg-[#D5D1DB] text-[#D5D1DB]" />
+            <h1 className="text-[20px] md:mt-10 md:text-[40px] md:tracking-[-3%] text-[#3D334A] leading-[120%] mb-2.5 md:mb-5">
+              {typeof t("professional.title") === "string"
+                ? t("professional.title")
+                : "Professional Development"}
+            </h1>
+            <p className="text-[#3D334A] text-[18px] font-pt font-medium md:max-w-[1320px] md:text-[24px] leading-[120%] md:leading-[120%] mb-5">
+              {typeof t("professional.description") === "string"
+                ? t("professional.description")
+                : ""}
+            </p>
+            <Link
+              className="text-[14px] md:text-[24px] leading-[90%] uppercase text-[#D4BAFC]"
+              href="/professional"
+            >
+              {typeof t("professional.learn_more") === "string"
+                ? t("professional.learn_more")
+                : ""}
+            </Link>
+            <hr className="md:mt-10 mt-5 bg-[#D5D1DB] text-[#D5D1DB]" />
           </div>
         )}
-        <div style={{backgroundColor: bgColor}} className="bg-red-500 w-full mt-4 md:mt-[50px] md:mb-[45px] rounded-2xl">
+        <div
+          style={{ backgroundColor: bgColor }}
+          className="bg-red-500 w-full mt-4 md:mt-[50px] md:mb-[45px] rounded-2xl"
+        >
           <div className="flex items-center justify-between md:mb-[10px] ">
             <h1 className="text-[20px] md:text-[40px] md:tracking-[-3%] text-[#3D334A] leading-[120%] mb-2.5 md:mb-5">
               {typeof t("professional.courses.title") === "string"
@@ -157,9 +175,9 @@ const Professional = ({ withBanner, title, bgColor, withProfText }: { withBanner
               <p className="text-gray-500 text-sm">{error}</p>
             </div>
           ) : (
-                <div className="flex gap-4 md:mb-8">
-                  <CourseSlider courses={courses} />
-                </div>
+            <div className="flex gap-4 md:mb-8">
+              <CourseSlider courses={courses} />
+            </div>
           )}
 
           <Link

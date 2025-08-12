@@ -72,7 +72,9 @@ const AllComplex = () => {
   useEffect(() => {
     const fetchSubcategories = async () => {
       try {
-        const response = await fetch(`${API_CONFIG.BASE_URL}/categories/subcategories/all`);
+        const response = await fetch(
+          `${API_CONFIG.BASE_URL}/categories/subcategories/all`
+        );
         const data = await response.json();
         setSubcategories(data);
       } catch (error) {
@@ -81,8 +83,6 @@ const AllComplex = () => {
     };
     fetchSubcategories();
   }, []);
-
-
 
   const pageTexts = {
     title: {
@@ -158,7 +158,7 @@ const AllComplex = () => {
           <input
             type="text"
             placeholder="Введите название упражнения"
-            className="w-full font-[Pt] bg-white text-[#846FA0]  md:text-[19px] font-medium ml-2 md:ml-4"
+            className="w-full font-pt bg-white text-[#846FA0]  md:text-[19px] font-medium ml-2 md:ml-4"
           />
         </div>
 
@@ -198,20 +198,26 @@ const AllComplex = () => {
 
                 {isDropdown && isOpen && (
                   <div className="absolute left-0 top-full mt-1 z-20 bg-white rounded-[10px] shadow-lg min-w-[160px] py-2 animate-fade-in">
-                    {cat.subcategories.map((subcategoryId: string, i: number) => {
-                      // ვპოულობთ subcategory-ს ID-ის მიხედვით
-                      const subcategory = subcategories.find((sub: Subcategory) => sub._id === subcategoryId);
-                      const subcategoryName = subcategory ? getLocalizedText(subcategory.name) : subcategoryId;
-                      
-                      return (
-                        <div
-                          key={i}
-                          className="px-4 py-2 hover:bg-[#F3D57F] cursor-pointer text-[#3D334A] text-[13px]"
-                        >
-                          {subcategoryName}
-                        </div>
-                      );
-                    })}
+                    {cat.subcategories.map(
+                      (subcategoryId: string, i: number) => {
+                        // ვპოულობთ subcategory-ს ID-ის მიხედვით
+                        const subcategory = subcategories.find(
+                          (sub: Subcategory) => sub._id === subcategoryId
+                        );
+                        const subcategoryName = subcategory
+                          ? getLocalizedText(subcategory.name)
+                          : subcategoryId;
+
+                        return (
+                          <div
+                            key={i}
+                            className="px-4 py-2 hover:bg-[#F3D57F] cursor-pointer text-[#3D334A] text-[13px]"
+                          >
+                            {subcategoryName}
+                          </div>
+                        );
+                      }
+                    )}
                   </div>
                 )}
               </div>
@@ -242,16 +248,18 @@ const AllComplex = () => {
         customBorderRadius={""}
         seeAll={false}
         scrollable={false}
-        border={1} 
+        border={1}
         borderColor="#D4BAFC"
       />
 
       {/* Dynamic Works components for each category */}
       {categories.map((category) => {
-        const categorySets = sets.filter(set => set.categoryId === category._id);
+        const categorySets = sets.filter(
+          (set) => set.categoryId === category._id
+        );
         // Only render if category has sets
         if (categorySets.length === 0) return null;
-        
+
         return (
           <Works
             key={category._id}
@@ -262,13 +270,13 @@ const AllComplex = () => {
             customBorderRadius={""}
             seeAll={false}
             scrollable={false}
-            border={1} 
+            border={1}
             borderColor="#D4BAFC"
           />
         );
       })}
       {/* Works components with real data */}
-       {/* <Works
+      {/* <Works
         title={pageTexts.sections.popularSections[locale as keyof typeof pageTexts.sections.popularSections] || pageTexts.sections.popularSections.ru}
         sets={popularSets}
         fromMain={true} customMargin={""} customBorderRadius={""} seeAll={false} scrollable={false}      />
@@ -280,10 +288,8 @@ const AllComplex = () => {
         sets={orthopedicSets.length > 0 ? orthopedicSets : sets.slice(0, 4)}
         fromMain={true} customMargin={""} customBorderRadius={""} seeAll={false} scrollable={false}      /> */}
 
-    
       <div className="mt-40">
-
-      <Footer />
+        <Footer />
       </div>
     </div>
   );

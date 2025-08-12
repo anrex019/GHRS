@@ -26,7 +26,8 @@ const Rehabilitation = () => {
           <div className="md:absolute md:bottom-0 md:left-0 p-4 md:p-5">
             <div className="flex flex-col md:flex-row md:gap-5 gap-[10px] md:items-center items-start">
               <h3 className="md:text-[42px] text-2xl text-[rgba(255,255,255,1)] uppercase md:tracking-[-1%] tracking-[-3%] md:leading-[100%] leading-[120%]">
-                {typeof t("rehabilitation.page.subscription.payment.title") === "string"
+                {typeof t("rehabilitation.page.subscription.payment.title") ===
+                "string"
                   ? t("rehabilitation.page.subscription.payment.title")
                   : "Various Payment Methods"}
               </h3>
@@ -37,8 +38,10 @@ const Rehabilitation = () => {
                 height={21}
               />
             </div>
-            <p className="text-[rgba(255,255,255,1)] font-[Pt] text-[14px] md:text-[18px] tracking-[0%] leading-[120%] font-medium md:max-w-[413px] w-full md:mt-5 mt-[60px]">
-              {typeof t("rehabilitation.page.subscription.payment.description") === "string"
+            <p className="text-[rgba(255,255,255,1)] font-pt text-[14px] md:text-[18px] tracking-[0%] leading-[120%] font-medium md:max-w-[413px] w-full md:mt-5 mt-[60px]">
+              {typeof t(
+                "rehabilitation.page.subscription.payment.description"
+              ) === "string"
                 ? t("rehabilitation.page.subscription.payment.description")
                 : ""}
             </p>
@@ -51,7 +54,9 @@ const Rehabilitation = () => {
               <div className="md:absolute md:bottom-0 md:left-0 p-4 md:p-5">
                 <div className="flex flex-col md:flex-row md:gap-5 gap-[10px] md:items-center items-start">
                   <h3 className="md:text-[42px] text-2xl text-white uppercase md:tracking-[-1%] tracking-[-3%] md:leading-[100%] leading-[120%]">
-                    {typeof t("rehabilitation.page.subscription.planning.title") === "string"
+                    {typeof t(
+                      "rehabilitation.page.subscription.planning.title"
+                    ) === "string"
                       ? t("rehabilitation.page.subscription.planning.title")
                       : "Planning"}
                   </h3>
@@ -62,8 +67,10 @@ const Rehabilitation = () => {
                     height={39}
                   />
                 </div>
-                <p className="text-white font-[Pt] text-[14px] md:text-[18px] tracking-[0%] leading-[120%] font-medium md:max-w-[413px] w-full mt-[60px] md:mt-5">
-                  {typeof t("rehabilitation.page.subscription.planning.description") === "string"
+                <p className="text-white font-pt text-[14px] md:text-[18px] tracking-[0%] leading-[120%] font-medium md:max-w-[413px] w-full mt-[60px] md:mt-5">
+                  {typeof t(
+                    "rehabilitation.page.subscription.planning.description"
+                  ) === "string"
                     ? t("rehabilitation.page.subscription.planning.description")
                     : ""}
                 </p>
@@ -73,7 +80,9 @@ const Rehabilitation = () => {
               <div className="md:absolute md:bottom-0 md:left-0 p-4 md:p-5">
                 <div className="flex flex-col md:flex-row md:gap-5 gap-[10px] md:items-center items-start">
                   <h3 className="md:text-[42px] text-2xl text-white uppercase md:tracking-[-1%] tracking-[-3%] md:leading-[100%] leading-[120%]">
-                    {typeof t("rehabilitation.page.subscription.trial.title") === "string"
+                    {typeof t(
+                      "rehabilitation.page.subscription.trial.title"
+                    ) === "string"
                       ? t("rehabilitation.page.subscription.trial.title")
                       : "Trial Subscription"}
                   </h3>
@@ -84,8 +93,10 @@ const Rehabilitation = () => {
                     height={25}
                   />
                 </div>
-                <p className="text-white font-[Pt] text-[14px] md:text-[18px] tracking-[0%] leading-[120%] font-medium md:max-w-[413px] w-full mt-[60px] md:mt-5">
-                  {typeof t("rehabilitation.page.subscription.trial.description") === "string"
+                <p className="text-white font-pt text-[14px] md:text-[18px] tracking-[0%] leading-[120%] font-medium md:max-w-[413px] w-full mt-[60px] md:mt-5">
+                  {typeof t(
+                    "rehabilitation.page.subscription.trial.description"
+                  ) === "string"
                     ? t("rehabilitation.page.subscription.trial.description")
                     : ""}
                 </p>
@@ -97,8 +108,12 @@ const Rehabilitation = () => {
               <div className="md:absolute md:bottom-0 md:left-0 p-4 md:p-5">
                 <div className="flex flex-col md:flex-row md:gap-5 gap-[10px] md:items-center items-start">
                   <h3 className="md:text-[42px] text-2xl text-white uppercase md:tracking-[-1%] tracking-[-3%] md:leading-[100%] leading-[120%]">
-                    {typeof t("rehabilitation.page.subscription.course_access.title") === "string"
-                      ? t("rehabilitation.page.subscription.course_access.title")
+                    {typeof t(
+                      "rehabilitation.page.subscription.course_access.title"
+                    ) === "string"
+                      ? t(
+                          "rehabilitation.page.subscription.course_access.title"
+                        )
                       : "Course Access"}
                   </h3>
                   <Image
@@ -108,9 +123,13 @@ const Rehabilitation = () => {
                     height={41}
                   />
                 </div>
-                <p className="text-white font-[Pt] text-[14px] md:text-[18px] tracking-[0%] leading-[120%] font-medium md:max-w-[413px] w-full mt-[60px] md:mt-5">
-                  {typeof t("rehabilitation.page.subscription.course_access.description") === "string"
-                    ? t("rehabilitation.page.subscription.course_access.description")
+                <p className="text-white font-pt text-[14px] md:text-[18px] tracking-[0%] leading-[120%] font-medium md:max-w-[413px] w-full mt-[60px] md:mt-5">
+                  {typeof t(
+                    "rehabilitation.page.subscription.course_access.description"
+                  ) === "string"
+                    ? t(
+                        "rehabilitation.page.subscription.course_access.description"
+                      )
                     : ""}
                 </p>
               </div>
@@ -120,7 +139,9 @@ const Rehabilitation = () => {
               <div className="md:absolute md:bottom-0 md:left-0 p-4 md:p-5">
                 <div className="flex flex-col md:flex-row md:gap-5 gap-[10px] md:items-center items-start">
                   <h3 className="md:text-[42px] text-2xl text-white uppercase md:tracking-[-1%] tracking-[-3%] md:leading-[100%] leading-[120%]">
-                    {typeof t("rehabilitation.page.subscription.cancellation.title") === "string"
+                    {typeof t(
+                      "rehabilitation.page.subscription.cancellation.title"
+                    ) === "string"
                       ? t("rehabilitation.page.subscription.cancellation.title")
                       : "Cancel Subscription"}
                   </h3>
@@ -131,9 +152,13 @@ const Rehabilitation = () => {
                     height={54}
                   />
                 </div>
-                <p className="text-white font-[Pt] text-[14px] md:text-[18px] tracking-[0%] leading-[120%] font-medium md:max-w-[413px] w-full mt-[60px] md:mt-5">
-                  {typeof t("rehabilitation.page.subscription.cancellation.description") === "string"
-                    ? t("rehabilitation.page.subscription.cancellation.description")
+                <p className="text-white font-pt text-[14px] md:text-[18px] tracking-[0%] leading-[120%] font-medium md:max-w-[413px] w-full mt-[60px] md:mt-5">
+                  {typeof t(
+                    "rehabilitation.page.subscription.cancellation.description"
+                  ) === "string"
+                    ? t(
+                        "rehabilitation.page.subscription.cancellation.description"
+                      )
                     : ""}
                 </p>
               </div>
@@ -143,13 +168,15 @@ const Rehabilitation = () => {
 
         <div className="relative bg-[url('/assets/images/orangeBg.jpg')] bg-no-repeat bg-cover w-full overflow-hidden bg-center md:p-10 p-4 h-[260px] md:h-[386px] md:rounded-[20px] rounded-3xl">
           <h3 className="md:text-[42px] text-2xl text-[rgba(255,255,255,1)] md:tracking-[-1%] tracking-[-3%] md:leading-[100%] leading-[120%]">
-            {typeof t("rehabilitation.page.subscription.discount.title") === "string"
+            {typeof t("rehabilitation.page.subscription.discount.title") ===
+            "string"
               ? t("rehabilitation.page.subscription.discount.title")
               : ""}
           </h3>
           <div className="md:max-w-[862px] md:ml-4 cursor-pointer max-w-[327px] md:p-5 p-[10px] rounded-[10px] bg-[rgba(255,255,255,1)] flex items-center gap-5 absolute bottom-4 left-4">
             <span className="md:text-[32px] text-[rgba(61,51,74,1)]">
-              {typeof t("rehabilitation.page.subscription.discount.button") === "string"
+              {typeof t("rehabilitation.page.subscription.discount.button") ===
+              "string"
                 ? t("rehabilitation.page.subscription.discount.button")
                 : "Purchase Subscription"}
             </span>
