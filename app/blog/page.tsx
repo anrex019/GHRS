@@ -25,6 +25,7 @@ const BlogRoute = () => {
           withSlider={false}
           layoutType="other"
           title="Популярные статьи"
+          showCategories={false}
         />
         <Blog
           withBanner={false}

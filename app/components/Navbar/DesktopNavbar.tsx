@@ -8,22 +8,27 @@ import NavbarIconButton from "./NavbarIconButton";
 import LanguageSelector from "./LanguageSelector";
 import Link from "next/link";
 import { MenuItem } from "../Header";
+import BackgroundImage from './BackgroundImage';
 
 interface DesktopNavbarProps {
   menuItems: MenuItem[];
   blogBg: boolean;
   allCourseBg: boolean;
+  data?: {
+    featuredImages?: string[];
+  };
 }
 
 const DesktopNavbar: React.FC<DesktopNavbarProps> = ({
   menuItems,
   blogBg,
   allCourseBg,
+  data,
 }) => {
   const [language, setLanguage] = useState("RU");
   const { isAuthenticated } = useAuth();
   const router = useRouter();
-
+  console.log(data);
   const handleProtectedRouteClick = (e: React.MouseEvent, route: string) => {
     e.preventDefault();
     if (!isAuthenticated) {
@@ -48,8 +53,9 @@ const DesktopNavbar: React.FC<DesktopNavbarProps> = ({
               ? "bg-[url('/assets/images/blueBg.jpg')] bg-cover bg-center h-[70px]"
               : " bg-gradient-to-br from-[rgba(94,43,143,0.4)] to-[rgba(61,51,74,0.3)] shadow-xl"
           } 
-            border border-white/10`}
+          border border-white/10 relative`}
         >
+          <BackgroundImage imageUrl={data?.featuredImages?.[0]} />
           <Link href={"/"}>
             <SimpleLogo />
           </Link>

@@ -5,14 +5,14 @@ export type ArticleDocument = Article & Document;
 
 @Schema()
 export class LocalizedString {
-  @Prop({ required: false, default: '' })
-  ka: string;
-
   @Prop({ required: true })
   en: string;
 
   @Prop({ required: true })
   ru: string;
+
+  @Prop({ required: false })
+  ka?: string;
 }
 
 @Schema()
@@ -26,11 +26,11 @@ export class TableOfContentItem {
 
 @Schema()
 export class Author {
-  @Prop({ required: true })
-  name: string;
+  @Prop({ type: LocalizedString, required: true })
+  name: LocalizedString;
 
-  @Prop()
-  bio?: string;
+  @Prop({ type: LocalizedString })
+  bio?: LocalizedString;
 
   @Prop()
   avatar?: string;

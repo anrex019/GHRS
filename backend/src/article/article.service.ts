@@ -13,8 +13,8 @@ export class ArticleService {
   ) {}
 
   // Estimate reading time in minutes from HTML content
-  private estimateReadTimeFromContent(content: { ka?: string; en?: string; ru?: string }): string {
-    const html = content?.en || content?.ka || content?.ru || '';
+  private estimateReadTimeFromContent(content: { en?: string; ru?: string; ka?: string }): string {
+    const html = content?.en || content?.ru || content?.ka || '';
     const cleanText = html
       .replace(/<[^>]*>/g, ' ') // strip HTML tags
       .replace(/&nbsp;/g, ' ') // nbsp to space
@@ -43,8 +43,8 @@ export class ArticleService {
         author: createArticleDto.author.name
       });
 
-      // Generate slug from English title, fallback to Georgian if English is empty
-      const titleForSlug = createArticleDto.title.en || createArticleDto.title.ka;
+      // Generate slug from English title
+      const titleForSlug = createArticleDto.title.en;
       const baseSlug = this.generateSlug(titleForSlug);
       
       // Check if slug exists and append number if needed
@@ -168,8 +168,20 @@ export class ArticleService {
       }
 
       const updateData: any = { ...updateArticleDto };
+      
+      // Convert categoryId to ObjectId if present
       if (updateArticleDto.categoryId) {
         updateData.categoryId = updateArticleDto.categoryId.map(id => new Types.ObjectId(id)) as any;
+      }
+      
+      // Handle author data
+      if (updateArticleDto.author) {
+        const { name, bio, avatar } = updateArticleDto.author;
+        updateData.author = {
+          name: typeof name === 'string' ? { en: name, ru: name, ka: name } : name,
+          bio: typeof bio === 'string' ? { en: bio, ru: bio, ka: bio } : bio,
+          avatar
+        };
       }
 
       // If readTime missing but content provided, compute it
@@ -304,12 +316,12 @@ export class ArticleService {
           isActive: true,
           isPublished: true,
           $or: [
-            { 'title.ka': { $regex: searchTerm, $options: 'i' } },
             { 'title.en': { $regex: searchTerm, $options: 'i' } },
             { 'title.ru': { $regex: searchTerm, $options: 'i' } },
-            { 'excerpt.ka': { $regex: searchTerm, $options: 'i' } },
+            { 'title.ka': { $regex: searchTerm, $options: 'i' } },
             { 'excerpt.en': { $regex: searchTerm, $options: 'i' } },
             { 'excerpt.ru': { $regex: searchTerm, $options: 'i' } },
+            { 'excerpt.ka': { $regex: searchTerm, $options: 'i' } },
             { tags: { $in: [new RegExp(searchTerm, 'i')] } }
           ]
         })

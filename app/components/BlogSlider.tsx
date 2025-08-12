@@ -6,7 +6,7 @@ import { IoIosShareAlt } from "react-icons/io";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useI18n } from "../context/I18nContext";
-import router from "next/router";
+import { useRouter } from "next/navigation";
 // import { useCategories } from "../hooks/useCategories";
 
 interface Blog {
@@ -53,6 +53,7 @@ interface BlogSliderProps {
   blogsPerPage: number;
   blogs: Blog[];
   language: "ka" | "en" | "ru";
+  showHeader?: boolean;
 }
 
 const useIsDesktop = (): boolean => {
@@ -76,7 +77,9 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
   blogsPerPage,
   blogs,
   language,
+  showHeader = true,
 }) => {
+  const router = useRouter();
   const isDesktop = useIsDesktop();
   const featuredBlog = blogs[0];
   const otherBlogs = blogs.slice(1);
@@ -221,12 +224,12 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
           </div>
         )}
       </div>
-      <span
-        className="text-[#D4BAFC] leading-[90%] text-[15px] md:text-[24px] md:px-5 px-0 cursor-pointer"
-        onClick={() => router.push("/blog")}
+      <Link
+        href="/blog"
+        className="text-[#D4BAFC] leading-[90%] text-[15px] md:text-[24px] md:px-5 px-0 cursor-pointer hover:text-[#734ea4] transition-colors duration-300"
       >
-        {t("blog.see_all")} {blogs.length} {t("navigation.rightArrow")}
-      </span>
+        {t("blog.see_all")} {blogs?.length} {t("navigation.rightArrow")}
+      </Link>
     </div>
   );
 };

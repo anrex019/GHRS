@@ -51,6 +51,7 @@ interface GridLayoutsProps {
   currentPage: number;
   blogsPerPage: number;
   blogs: Article[];
+  showHeader?: boolean;
 }
 
 const GridLayouts: React.FC<GridLayoutsProps> = ({
@@ -59,6 +60,7 @@ const GridLayouts: React.FC<GridLayoutsProps> = ({
   currentPage,
   blogsPerPage,
   blogs,
+  showHeader = true,
 }) => {
   const { locale } = useI18n();
   // Mobile horizontal scroll wrapper
@@ -68,35 +70,38 @@ const GridLayouts: React.FC<GridLayoutsProps> = ({
       {(() => {
         switch (layoutType) {
           case "default":
-            return (
-              <BlogSlider
-                blogs={blogs as unknown as Blog[]}
-                scrollRef={scrollRef}
-                currentPage={currentPage}
-                blogsPerPage={blogsPerPage}
-                language={locale}
-              />
-            );
+                          return (
+                <BlogSlider
+                  blogs={blogs as unknown as Blog[]}
+                  scrollRef={scrollRef}
+                  currentPage={currentPage}
+                  blogsPerPage={blogsPerPage}
+                  language={locale}
+                  showHeader={showHeader}
+                />
+              );
           case "other":
-            return (
-              <OtherGrid
-                blogs={blogs as unknown as Blog[]}
-                scrollRef={scrollRef}
-                currentPage={currentPage}
-                blogsPerPage={blogsPerPage}
-                language={locale}
-              />
-            );
+                          return (
+                <OtherGrid
+                  blogs={blogs as unknown as Blog[]}
+                  scrollRef={scrollRef}
+                  currentPage={currentPage}
+                  blogsPerPage={blogsPerPage}
+                  language={locale}
+                  showHeader={showHeader}
+                />
+              );
           case "thirdGrid":
-            return (
-              <ThirdGrid
-                blogs={blogs as unknown as Blog[]}
-                scrollRef={scrollRef}
-                currentPage={currentPage}
-                blogsPerPage={blogsPerPage}
-                language={locale}
-              />
-            );
+                          return (
+                <ThirdGrid
+                  blogs={blogs as unknown as Blog[]}
+                  scrollRef={scrollRef}
+                  currentPage={currentPage}
+                  blogsPerPage={blogsPerPage}
+                  language={locale}
+                  showHeader={showHeader}
+                />
+              );
           default:
             return null;
         }

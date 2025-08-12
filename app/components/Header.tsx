@@ -230,14 +230,13 @@ const Header: React.FC<HeaderProps> = ({
             <Image
               width={1120}
               height={518}
-              src={"/assets/images/blogbg.jpg"}
+              src={info?.image || "/assets/images/blogbg.jpg"}
               alt="blogBg"
               className="md:h-[518px] md:w-full h-[217px] w-[359px] bg-cover bg-center rounded-[20px] relative"
             />
             <div className="pt-[27px] md:pl-[32px] pl-4 pr-[20px] md:pb-[20px] pb-3 md:bg-[#3D334A4D] md:backdrop-blur-sm absolute bottom-0 md:bottom-5 md:ml-5 rounded-[20px]">
               <h2 className="hidden md:flex text-white text-[40px] leading-[120%] tracking-[-3%] md:w-[945px] w-[327px]">
-                Курсы и мастер-классы для опытных терапевтов. Практикум по
-                лечению ортопедических проблем
+                {info?.title || "Курсы и мастер-классы для опытных терапевтов. Практикум по лечению ортопедических проблем"}
               </h2>
               <h2 className="flex md:hidden font-[Bowler] text-white text-[18px] leading-[120%] tracking-[-3%] mb-2.5">
                 БОЛЬ В СПИНЕ И ШЕЕ:КАК УЛУЧШИТЬ ОСАНКУ ЕСТЕСТВЕННО.

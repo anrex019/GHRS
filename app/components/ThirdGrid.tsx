@@ -43,6 +43,7 @@ interface ThirdGridProps {
   blogsPerPage: number;
   blogs: Blog[];
   language: "ka" | "en" | "ru";
+  showHeader?: boolean;
 }
 
 const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
@@ -85,7 +86,7 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
           {orderedBlogs[0] && (
             <Link
               href={
-                orderedBlogs[0].articles.length > 0
+                orderedBlogs[0]?.articles?.length > 0
                   ? `/article/${orderedBlogs[0].articles[0]._id}`
                   : "#"
               }
@@ -99,7 +100,7 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
                 </p>
                 <div className="px-3 pb-3 font-[Bowler] mt-2">
                   <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%] bg-[#E9DFF6] rounded-[6px] text-[14px] uppercase">
-                    {orderedBlogs[0].articles.length} სტატია
+                    {orderedBlogs[0]?.articles?.length} სტატია
                   </span>
                 </div>
               </div>
@@ -111,7 +112,7 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
           {orderedBlogs[1] && (
             <Link
               href={
-                orderedBlogs[1].articles.length > 0
+                orderedBlogs[1]?.articles?.length > 0
                   ? `/article/${orderedBlogs[1].articles[0]._id}`
                   : "#"
               }
@@ -122,7 +123,7 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
                 </p>
                 <div className="px-3 pb-3 font-[Bowler] mt-1">
                   <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%]  rounded-[6px] text-[14px] uppercase">
-                    {orderedBlogs[1].articles.length} სტატია
+                    {orderedBlogs[1]?.articles?.length} სტატია
                   </span>
                 </div>
               </div>
@@ -134,7 +135,7 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
           {orderedBlogs[2] && (
             <Link
               href={
-                orderedBlogs[2].articles.length > 0
+                orderedBlogs[2]?.articles?.length > 0
                   ? `/article/${orderedBlogs[2].articles[0]._id}`
                   : "#"
               }
@@ -145,7 +146,7 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
                 </p>
                 <div className="px-3 pb-3 font-[Bowler] mt-1">
                   <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%]  rounded-[6px] text-[14px] uppercase">
-                    {orderedBlogs[2].articles.length} სტატია
+                    {orderedBlogs[2]?.articles?.length} სტატია
                   </span>
                 </div>
               </div>
@@ -157,7 +158,7 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
           {orderedBlogs[3] && (
             <Link
               href={
-                orderedBlogs[3].articles.length > 0
+                orderedBlogs[3]?.articles?.length > 0
                   ? `/article/${orderedBlogs[3].articles[0]._id}`
                   : "#"
               }
@@ -168,7 +169,7 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
                 </p>
                 <div className="px-3 pb-3 font-[Bowler] mt-1">
                   <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%]  rounded-[6px] text-[14px] uppercase">
-                    {orderedBlogs[3].articles.length} სტატია
+                    {orderedBlogs[3]?.articles?.length} სტატია
                   </span>
                 </div>
               </div>
@@ -180,7 +181,7 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
           {orderedBlogs[4] && (
             <Link
               href={
-                orderedBlogs[4].articles.length > 0
+                orderedBlogs[4]?.articles?.length > 0
                   ? `/article/${orderedBlogs[4].articles[0]._id}`
                   : "#"
               }
@@ -201,7 +202,7 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
                 </p>
                 <div className="px-3 pb-3 font-[Bowler] mt-1">
                   <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%] rounded-[6px] text-[14px] uppercase">
-                    {orderedBlogs[4].articles.length} სტატია
+                    {orderedBlogs[4]?.articles?.length} სტატია
                   </span>
                 </div>
               </div>
@@ -213,7 +214,7 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
           {orderedBlogs[5] && (
             <Link
               href={
-                orderedBlogs[5].articles.length > 0
+                orderedBlogs[5]?.articles?.length > 0
                   ? `/article/${orderedBlogs[5].articles[0]._id}`
                   : "#"
               }
@@ -224,7 +225,7 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
                 </p>
                 <div className="px-3 pb-3 font-[Bowler] mt-1">
                   <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%] rounded-[6px] text-[14px] uppercase">
-                    {orderedBlogs[5].articles.length} სტატია
+                    {orderedBlogs[5]?.articles?.length} სტატია
                   </span>
                 </div>
               </div>
@@ -250,7 +251,7 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
               {blog.title[language]}
             </p>
             <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%] rounded-[6px] text-[14px] uppercase mt-2 inline-block">
-              {blog.articles.length} სტატია
+              {blog?.articles?.length} სტატია
             </span>
             <div className="flex items-center gap-1.5 mt-3">
               <div className="w-10 h-10  rounded-[6px] flex justify-center items-center">

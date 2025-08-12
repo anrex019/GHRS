@@ -9,19 +9,46 @@ import { MdStar } from "react-icons/md";
 import { FaUserCircle } from "react-icons/fa";
 import Link from "next/link";
 import { useLanguage, useI18n } from "../context/I18nContext";
+import { useCategories } from "../hooks/useCategories";
 import { RiTwitterXFill } from "react-icons/ri";
 import { FaLinkedin } from "react-icons/fa6";
 import { BsYoutube } from "react-icons/bs";
 import { BsInstagram } from "react-icons/bs";
+
 interface ArticleProps {
   article: ArticleType;
 }
+
+const extractImageUrl = (input?: string): string | null => {
+  if (!input) return null;
+  
+  // If input is a simple URL, return it
+  if (!input.includes('[') && !input.includes('"')) {
+    return input;
+  }
+
+  try {
+    // Try to parse as JSON
+    let parsed = input;
+    while (typeof parsed === 'string' && (parsed.includes('[') || parsed.includes('"'))) {
+      parsed = JSON.parse(parsed);
+      if (Array.isArray(parsed)) {
+        parsed = parsed[0];
+      }
+    }
+    return typeof parsed === 'string' ? parsed : null;
+  } catch (e) {
+    console.error('Failed to parse image URL:', e);
+    return null;
+  }
+};
 
 const Article: React.FC<ArticleProps> = ({ article }) => {
   const [similarArticles, setSimilarArticles] = useState<ArticleType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { language } = useLanguage();
   const { t } = useI18n();
+  const { categories } = useCategories();
 
   // Calculate reading time based on content
   const calculateReadingTime = (content: string): number => {
@@ -58,6 +85,9 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
     const headings = [];
     let match;
     let index = 1;
+    let mainIndex = 1;
+    let subIndex = 1;
+    let currentMainHeading = null;
     
     while ((match = headingRegex.exec(content)) !== null) {
       const level = parseInt(match[1]);
@@ -79,16 +109,31 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
         // Add index to make it unique
         anchor = `${anchor}-${index}`;
         
+        // Create numbered prefix based on heading level
+        let prefix = '';
+        if (level <= 2) { // Main heading
+          prefix = `${mainIndex}. `;
+          currentMainHeading = mainIndex;
+          mainIndex++;
+          subIndex = 1;
+        } else { // Sub heading
+          if (currentMainHeading !== null) {
+            prefix = `${currentMainHeading}.${subIndex}. `;
+            subIndex++;
+          }
+        }
+        
         headings.push({
           anchor,
           title: {
-            [language]: headingText,
-            en: headingText,
-            ru: headingText,
-            ka: headingText
+            [language]: prefix + headingText,
+            en: prefix + headingText,
+            ru: prefix + headingText,
+            ka: prefix + headingText
           },
           level,
-          index
+          index,
+          isSubHeading: level > 2
         });
         index++;
       }
@@ -113,32 +158,40 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
     const fetchSimilarArticles = async () => {
       try {
         setIsLoading(true);
-        // Get the first category ID for fetching similar articles
-        let categoryId: string;
         
-        if (Array.isArray(article.categoryId)) {
-          // If it's an array, use the first non-empty category ID
-          categoryId = article.categoryId.find(id => id && id.trim() !== '') || '';
-        } else if (article.categoryId && typeof article.categoryId === "object" && "_id" in article.categoryId) {
-          // Check if category is an object with _id property
-          categoryId = (article.categoryId as { _id: string })._id;
-        } else {
-          categoryId = article.categoryId as string;
-        }
-
-        if (!categoryId) {
+        // Get all category IDs
+        const categoryIds = Array.isArray(article.categoryId) ? article.categoryId : [article.categoryId];
+        console.log("Category IDs:", categoryIds);
+        
+        // Filter out empty IDs
+        const validCategoryIds = categoryIds.filter(id => id && id.trim() !== '');
+        console.log("Valid Category IDs:", validCategoryIds);
+        
+        if (validCategoryIds.length === 0) {
+          console.log("No valid category IDs found");
           setSimilarArticles([]);
           return;
         }
 
-        const articles = await getArticlesByCategory(categoryId);
-        // Filter out the current article and limit to 3
-        const filtered = articles
-          .filter((a) => a._id !== article._id)
-          .slice(0, 3);
-        setSimilarArticles(filtered);
+        // Fetch articles for each category
+        console.log("Fetching articles for categories:", validCategoryIds);
+        const allArticlesPromises = validCategoryIds.map(id => getArticlesByCategory(id));
+        const allArticlesArrays = await Promise.all(allArticlesPromises);
+        console.log("Articles from all categories:", allArticlesArrays);
+        
+        // Flatten and deduplicate articles
+        const allArticles = Array.from(new Set(allArticlesArrays.flat()))
+          .filter(a => a._id !== article._id) // Remove current article
+          .slice(0, 3); // Limit to 3 articles
+        
+        console.log("Final similar articles:", allArticles);
+        setSimilarArticles(allArticles);
       } catch (error) {
         console.error("Error fetching similar articles:", error);
+        console.error("Error details:", {
+          categoryId: article.categoryId,
+          error: error instanceof Error ? error.message : error
+        });
       } finally {
         setIsLoading(false);
       }
@@ -157,6 +210,16 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
     if (article.category?.name) {
       return [article.category.name[language]];
     }
+    
+    // If we have categoryId but no category name, try to find it in categories
+    if (article.categoryId) {
+      const categoryIds = Array.isArray(article.categoryId) ? article.categoryId : [article.categoryId];
+      const foundCategories = categories.filter(cat => categoryIds.includes(cat._id));
+      if (foundCategories.length > 0) {
+        return foundCategories.map(cat => cat.name[language]);
+      }
+    }
+    
     return ["Category"];
   };
 
@@ -171,50 +234,43 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
     <>
       <div className="relative w-full h-[518px]">
         <Image
-          src="/assets/images/article.jpg"
-          alt="article"
+          src={extractImageUrl(article.featuredImages?.[0]) || '/assets/images/default-article.jpg'}
+          alt={article.title[language]}
           fill
           className="object-cover rounded-[40px]"
         />
-        <div className=" absolute flex bottom-5 right-5 gap-[10px]">
-          <div className="bg-[#3D334A4D] hover:bg-[#5447654d] duration-300 cursor-pointer w-[70px] h-[70px] flex items-center justify-center rounded-[20px]">
-            <Image
-              src="/assets/images/rightIcon.svg"
-              alt="vallet"
-              width={15}
-              height={15}
-            />
-          </div>
-          <div className="bg-[#3D334A4D] hover:bg-[#5447654d] duration-300 cursor-pointer w-[70px] h-[70px] flex items-center justify-center rounded-[20px]">
-            <Image
-              src="/assets/images/leftIcon.svg"
-              alt="vallet"
-              width={15}
-              height={15}
-            />
-          </div>
-        </div>
       </div>
 
       <main className="flex justify-between gap-[30px] text-[#3D334A] mt-10">
         {/* Left Sidebar - Table of Contents */}
         {tableOfContents.length > 0 && (
-          <div className="p-5 bg-[rgba(255,255,255,1)] min-h-[700px] h-[700px] rounded-[20px] max-w-[335px] hidden md:block">
-            <h2 className="text-lg font-semibold mb-4 text-[rgba(61,51,74,1)]">
+          <div className="sticky top-24 p-6 bg-[rgba(255,255,255,1)] rounded-[20px] max-w-[335px] hidden md:block shadow-lg">
+            <h2 className="text-xl font-bold mb-6 text-[#3D334A] border-b pb-4">
               {t("article.table_of_contents")}
             </h2>
 
-            <div className="space-y-3">
-              {tableOfContents.map((item, index) => (
+            <div className="space-y-4">
+              {tableOfContents.map((item) => (
                 <div
                   key={item.anchor}
-                  className="flex items-start gap-3 cursor-pointer hover:opacity-80 transition-opacity"
+                  className={`group relative flex items-start cursor-pointer transition-all duration-200 ${
+                    item.isSubHeading ? 'ml-8 pl-4 border-l-2 border-purple-100' : ''
+                  }`}
                   onClick={() => handleScrollToSection(item.anchor)}
                 >
-                  <span className="text-[rgba(61,51,74,1)]">{index + 1}.</span>
-                  <span className="text-[rgba(61,51,74,1)] underline tracking-[-2%]">
-                    {item.title[language]}
-                  </span>
+                  {/* Hover Effect Line */}
+                  <div className="absolute left-0 top-0 h-full w-1 bg-purple-500 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-200 ease-in-out" />
+                  
+                  {/* Content */}
+                  <div className="flex-1">
+                    <span className={`block text-[#3D334A] tracking-[-0.5px] ${
+                      item.isSubHeading 
+                        ? 'text-sm font-medium hover:text-purple-600' 
+                        : 'text-base font-semibold hover:text-purple-700'
+                    }`}>
+                      {item.title[language]}
+                    </span>
+                  </div>
                 </div>
               ))}
             </div>
@@ -565,19 +621,38 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
             `}</style>
 
             {/* Featured Images */}
-            {article.featuredImages?.map((image, index) => (
-              <section key={index} className="p-4 hidden md:block">
-                <div className="max-w-[630px] max-h-[309px] rounded-[10px] overflow-hidden">
-                  <Image
-                    src={image}
-                    alt={`Article image ${index + 1}`}
-                    className="w-full h-full rounded-[10px] object-cover"
-                    width={630}
-                    height={309}
-                  />
-                </div>
-              </section>
-            ))}
+            {article.featuredImages?.map((image, index) => {
+              // Try to parse JSON string if it contains array-like structure
+              let imageUrl = image;
+              if (typeof image === 'string' && image.includes('[')) {
+                try {
+                  const parsed = JSON.parse(image);
+                  imageUrl = Array.isArray(parsed) ? parsed[0] : image;
+                } catch (e) {
+                  // If parsing fails, use the original string
+                  console.error('Failed to parse image URL:', e);
+                }
+              }
+              
+              // Skip if image URL is not a valid string or contains array-like structure
+              if (typeof imageUrl !== 'string' || imageUrl.includes('[')) {
+                return null;
+              }
+
+              return (
+                <section key={index} className="p-4 hidden md:block">
+                  <div className="max-w-[630px] max-h-[309px] rounded-[10px] overflow-hidden">
+                    <Image
+                      src={imageUrl}
+                      alt={`Article image ${index + 1}`}
+                      className="w-full h-full rounded-[10px] object-cover"
+                      width={630}
+                      height={309}
+                    />
+                  </div>
+                </section>
+              );
+            })}
           </section>
 
           {/* Rating Section */}
@@ -717,7 +792,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
                   <div className="w-[100px] h-[100px] rounded-[10px] overflow-hidden">
                     <Image
                       src={
-                        similarArticle.featuredImages?.[0] ||
+                        extractImageUrl(similarArticle.featuredImages?.[0]) ||
                         "/assets/images/article.jpg"
                       }
                       alt={similarArticle.title[language]}

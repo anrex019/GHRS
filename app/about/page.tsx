@@ -3,7 +3,7 @@ import React from "react";
 import Header from "../components/Header";
 import Category from "../components/Category";
 import Rehabilitation from "../components/Rehabilitation";
-import Works from "../components/Works";
+// import Works from "../components/Works";
 import { Footer } from "../components/Footer";
 
 import { useInstructors } from "../hooks/useInstructor";

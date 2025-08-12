@@ -56,6 +56,7 @@ export default function ArticlePage() {
         menuItems={defaultMenuItems}
         blogBg={true}
         allCourseBg={false}
+        data={article}
       />
       <MobileNavbar />
 

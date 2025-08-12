@@ -58,6 +58,7 @@ const Home = () => {
             withSlider={true}
             layoutType="default"
             title={t("navigation.blog")}
+            showCategories={false}
           />
         </div>
         <MarketPlace />

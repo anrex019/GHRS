@@ -44,9 +44,10 @@ interface OtherGridProps {
   blogsPerPage: number;
   blogs: Blog[];
   language: "ka" | "en" | "ru";
+  showHeader?: boolean;
 }
 
-const OtherGrid: React.FC<OtherGridProps> = ({ blogs, language }) => {
+const OtherGrid: React.FC<OtherGridProps> = ({ blogs, language, showHeader = true }) => {
   const otherBlogs = blogs.slice(1, 6);
 
   if (otherBlogs.length < 5) {
@@ -71,17 +72,24 @@ const OtherGrid: React.FC<OtherGridProps> = ({ blogs, language }) => {
 
   return (
     <div>
-      <h1 className="px-5 text-[#3D334A] text-[40px] leading-[120%] tracking-[-3%] mb-2">
-        პოპულარული სტატიები
-      </h1>
-      <span className="text-[#D4BAFC] px-5 text-[24px] leading-[90%] uppercase mt-2">
-        ყველას ნახვა →
-      </span>
+      {showHeader && (
+        <>
+          <h1 className="px-5 text-[#3D334A] text-[40px] leading-[120%] tracking-[-3%] mb-2">
+            პოპულარული სტატიები
+          </h1>
+          <Link 
+            href="/blog"
+            className="text-[#D4BAFC] px-5 text-[24px] leading-[90%] uppercase mt-2 hover:text-[#734ea4] transition-colors duration-300 block"
+          >
+            ყველას ნახვა →
+          </Link>
+        </>
+      )}
       <div className="grid grid-cols-4 grid-rows-5 gap-4 p-2 max-h-[518px]">
         <div className="row-span-5">
           {/* ბლოგი 1 */}
           {orderedBlogs[0] && (
-            <Link href={`/blogs/${orderedBlogs[0]._id}`}>
+            <Link href={`/article/${orderedBlogs[0]._id}`}>
               <div className="min-h-full h-full flex flex-col justify-between bg-white rounded-[20px] p-2">
                 <Image
                   src={orderedBlogs[0].imageUrl}
@@ -106,7 +114,7 @@ const OtherGrid: React.FC<OtherGridProps> = ({ blogs, language }) => {
                 </div>
                 <div className="px-3 pb-3 font-[Bowler] mt-2">
                   <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%] bg-[#E9DFF6] rounded-[6px] text-[14px] uppercase">
-                    {orderedBlogs[0].articles.length} სტატია
+                    {orderedBlogs[0]?.articles?.length} სტატია
                   </span>
                 </div>
               </div>
@@ -116,7 +124,7 @@ const OtherGrid: React.FC<OtherGridProps> = ({ blogs, language }) => {
         <div className="row-span-5">
           {/* ბლოგი 2 */}
           {orderedBlogs[1] && (
-            <Link href={`/blogs/${orderedBlogs[1]._id}`}>
+            <Link href={`/article/${orderedBlogs[1]._id}`}>
               <div className="min-h-full h-full flex flex-col justify-between bg-white rounded-[20px] p-2">
                 <Image
                   src={orderedBlogs[1].imageUrl}
@@ -141,7 +149,7 @@ const OtherGrid: React.FC<OtherGridProps> = ({ blogs, language }) => {
                 </div>
                 <div className="px-3 pb-3 font-[Bowler] mt-1">
                   <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%] bg-[#E9DFF6] rounded-[6px] text-[14px] uppercase">
-                    {orderedBlogs[1].articles.length} სტატია
+                    {orderedBlogs[1]?.articles?.length} სტატია
                   </span>
                 </div>
               </div>
@@ -151,7 +159,7 @@ const OtherGrid: React.FC<OtherGridProps> = ({ blogs, language }) => {
         <div className="col-span-2 row-span-3">
           {/* ბლოგი 3 */}
           {orderedBlogs[2] && (
-            <Link href={`/blogs/${orderedBlogs[2]._id}`}>
+            <Link href={`/article/${orderedBlogs[2]._id}`}>
               <div className="min-h-full relative h-full flex flex-col justify-between bg-white rounded-[20px] p-5">
                 <p className="text-[#3D334A] tracking-[0%] font-pt mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
                   {orderedBlogs[2].title[language]}
@@ -169,7 +177,7 @@ const OtherGrid: React.FC<OtherGridProps> = ({ blogs, language }) => {
                 </div>
                 <div className="px-3 pb-3 font-[Bowler] mt-4">
                   <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%] bg-[#E9DFF6] rounded-[6px] text-[14px] uppercase">
-                    {orderedBlogs[2].articles.length} სტატია
+                    {orderedBlogs[2]?.articles?.length} სტატია
                   </span>
                 </div>
                 <div className="absolute flex items-center right-5 bottom-[25px] gap-2">
@@ -187,7 +195,7 @@ const OtherGrid: React.FC<OtherGridProps> = ({ blogs, language }) => {
         <div className="row-span-2 col-start-3 row-start-4">
           {/* ბლოგი 4 */}
           {orderedBlogs[3] && (
-            <Link href={`/blogs/${orderedBlogs[3]._id}`}>
+            <Link href={`/article/${orderedBlogs[3]._id}`}>
               <div className="min-h-full relative h-full flex flex-col justify-between bg-white rounded-[20px] p-5">
                 <p className="text-[#3D334A] font-pt tracking-[0%] mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
                   {orderedBlogs[3].title[language]}
@@ -203,7 +211,7 @@ const OtherGrid: React.FC<OtherGridProps> = ({ blogs, language }) => {
                 </div>
                 <div className="px-3 pb-3 font-[Bowler] mt-4">
                   <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%] bg-[#E9DFF6] rounded-[6px] text-[14px] uppercase">
-                    {orderedBlogs[3].articles.length} სტატია
+                    {orderedBlogs[3]?.articles?.length} სტატია
                   </span>
                 </div>
                 <div className="absolute flex items-center right-5 bottom-[25px] gap-2">
@@ -221,7 +229,7 @@ const OtherGrid: React.FC<OtherGridProps> = ({ blogs, language }) => {
         <div className="row-span-2 col-start-4 row-start-4">
           {/* ბლოგი 5 */}
           {orderedBlogs[4] && (
-            <Link href={`/blogs/${orderedBlogs[4]._id}`}>
+            <Link href={`/article/${orderedBlogs[4]._id}`}>
               <div className="min-h-full relative h-full flex flex-col justify-between bg-white rounded-[20px] p-5">
                 <p className="text-[#3D334A] font-pt tracking-[0%] mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
                   {orderedBlogs[4].title[language]}
@@ -237,7 +245,7 @@ const OtherGrid: React.FC<OtherGridProps> = ({ blogs, language }) => {
                 </div>
                 <div className="px-3 pb-3 font-[Bowler] mt-4">
                   <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%] bg-[#E9DFF6] rounded-[6px] text-[14px] uppercase">
-                    {orderedBlogs[4].articles.length} სტატია
+                    {orderedBlogs[4]?.articles?.length} სტატია
                   </span>
                 </div>
                 <div className="absolute flex items-center right-5 bottom-[25px] gap-2">
@@ -256,7 +264,7 @@ const OtherGrid: React.FC<OtherGridProps> = ({ blogs, language }) => {
       {/* Mobile: horizontal scroll */}
       <div className="flex sm:hidden gap-4 overflow-x-auto p-2">
         {orderedBlogs.map((blog, idx) => (
-          <Link key={blog._id} href={`/blogs/${blog._id}`}>
+          <Link key={blog._id} href={`/article/${blog._id}`}>
             <div
               className={`min-w-[200px] max-w-full p-5 bg-white flex flex-col justify-between rounded-[20px] ${gridClasses[idx]}`}
             >
@@ -283,7 +291,7 @@ const OtherGrid: React.FC<OtherGridProps> = ({ blogs, language }) => {
               </div>
               <div className="px-3 pb-3 font-[Bowler] mt-4">
                 <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%] bg-[#E9DFF6] rounded-[6px] text-[14px] uppercase">
-                  {blog.articles.length} სტატია
+                  {blog?.articles?.length} სტატია
                 </span>
               </div>
             </div>
