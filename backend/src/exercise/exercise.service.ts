@@ -52,6 +52,7 @@ export class ExerciseService {
       .populate('set', 'name description')
       .populate('category', 'name')
       .populate('subcategory', 'name')
+      .select('+videoUrlEn')
       .sort({ sortOrder: 1, createdAt: -1 })
       .exec();
   }
@@ -62,6 +63,7 @@ export class ExerciseService {
       .populate('set', 'name description')
       .populate('category', 'name')
       .populate('subcategory', 'name')
+      .select('+videoUrlEn')
       .exec();
 
     if (!exercise) {
@@ -91,6 +93,7 @@ export class ExerciseService {
       .populate('set', 'name description')
       .populate('category', 'name')
       .populate('subcategory', 'name')
+      .select('+videoUrlEn')
       .exec();
 
     if (!exercise) {
@@ -114,6 +117,7 @@ export class ExerciseService {
       .populate('set', 'name description')
       .populate('category', 'name')
       .populate('subcategory', 'name')
+      .select('+videoUrlEn')
       .sort({ sortOrder: 1, createdAt: -1 })
       .exec();
   }
@@ -124,6 +128,7 @@ export class ExerciseService {
       .populate('set', 'name description')
       .populate('category', 'name')
       .populate('subcategory', 'name')
+      .select('+videoUrlEn')
       .sort({ sortOrder: 1, createdAt: -1 })
       .exec();
   }
@@ -134,6 +139,7 @@ export class ExerciseService {
       .populate('set', 'name description')
       .populate('category', 'name')
       .populate('subcategory', 'name')
+      .select('+videoUrlEn')
       .sort({ sortOrder: 1, createdAt: -1 })
       .exec();
   }
@@ -145,6 +151,7 @@ export class ExerciseService {
       .populate('set', 'name description')
       .populate('category', 'name')
       .populate('subcategory', 'name')
+      .select('+videoUrlEn')
       .sort({ sortOrder: 1, createdAt: -1 })
       .exec();
   }
@@ -157,6 +164,7 @@ export class ExerciseService {
       .populate('set', 'name description')
       .populate('category', 'name')
       .populate('subcategory', 'name')
+      .select('+videoUrlEn')
       .exec();
 
     console.log('🔥 ExerciseService.setPopular result:', exercise);

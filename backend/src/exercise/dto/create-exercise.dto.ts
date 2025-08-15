@@ -29,6 +29,10 @@ export class CreateExerciseDto {
 
   @IsOptional()
   @IsString()
+  videoUrlEn?: string;
+
+  @IsOptional()
+  @IsString()
   thumbnailUrl?: string;
 
   @IsString()

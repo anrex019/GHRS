@@ -64,8 +64,9 @@ export class CreateSetDto {
   additional?: LocalizedStringDto;
 
   @IsOptional()
-  @IsString()
-  demoVideoUrl?: string;
+  @ValidateNested()
+  @Type(() => LocalizedStringDto)
+  demoVideoUrl?: LocalizedStringDto;
 
   @IsOptional()
   @IsString()
@@ -111,7 +112,17 @@ export class CreateSetDto {
   @IsOptional()
   @ValidateNested()
   @Type(() => PriceDto)
+  priceEn?: PriceDto;
+
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => PriceDto)
   discountedPrice?: PriceDto;
+
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => PriceDto)
+  discountedPriceEn?: PriceDto;
 
   @IsOptional()
   @IsBoolean()

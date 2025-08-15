@@ -70,8 +70,14 @@ export class Set {
   })
   additional: LocalizedString;
 
-  @Prop({ required: false })
-  demoVideoUrl: string;
+  @Prop({
+    type: {
+      en: { type: String, required: false },
+      ru: { type: String, required: false }
+    },
+    required: false
+  })
+  demoVideoUrl: LocalizedString;
 
   @Prop({ required: false })
   duration: string;
@@ -147,6 +153,18 @@ export class Set {
 
   @Prop({
     type: {
+      monthly: { type: Number, required: true },
+      threeMonths: { type: Number, required: true },
+      sixMonths: { type: Number, required: true },
+      yearly: { type: Number, required: true }
+    },
+    required: false,
+    _id: false
+  })
+  priceEn: Price;
+
+  @Prop({
+    type: {
       monthly: { type: Number, required: false },
       threeMonths: { type: Number, required: false },
       sixMonths: { type: Number, required: false },
@@ -156,6 +174,18 @@ export class Set {
     _id: false
   })
   discountedPrice: Price;
+
+  @Prop({
+    type: {
+      monthly: { type: Number, required: false },
+      threeMonths: { type: Number, required: false },
+      sixMonths: { type: Number, required: false },
+      yearly: { type: Number, required: false }
+    },
+    required: false,
+    _id: false
+  })
+  discountedPriceEn: Price;
 
   @Prop({ default: true })
   isActive: boolean;

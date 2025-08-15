@@ -10,10 +10,28 @@ export class SetService {
     @InjectModel(Set.name) private setModel: Model<SetDocument>
   ) {}
 
+  private transformPrice(price: any): any {
+    if (typeof price === 'string') {
+      try {
+        return JSON.parse(price);
+      } catch (e) {
+        return price;
+      }
+    }
+    return price;
+  }
+
   async create(createSetDto: CreateSetDto): Promise<Set> {
-    // დავამატოთ default მნიშვნელობები
+    // დავამატოთ default მნიშვნელობები და გარდავქმნათ მონაცემები
     const setData = {
       ...createSetDto,
+      // თუ demoVideoUrl სტრინგია, გადავაკეთოთ ობიექტად
+      demoVideoUrl: typeof createSetDto.demoVideoUrl === 'string' 
+        ? { en: createSetDto.demoVideoUrl, ru: createSetDto.demoVideoUrl }
+        : createSetDto.demoVideoUrl,
+      // ფასების ტრანსფორმაცია
+      priceEn: this.transformPrice(createSetDto.priceEn),
+      discountedPriceEn: this.transformPrice(createSetDto.discountedPriceEn),
       levels: {
         beginner: { exerciseCount: 0, isLocked: false, ...createSetDto.levels?.beginner },
         intermediate: { exerciseCount: 0, isLocked: true, ...createSetDto.levels?.intermediate },
@@ -39,6 +57,22 @@ export class SetService {
     }
     if (updateData.subCategoryId) {
       updateData.subCategoryId = new Types.ObjectId(updateData.subCategoryId);
+    }
+
+    // demoVideoUrl-ის ტრანსფორმაცია
+    if (typeof updateData.demoVideoUrl === 'string') {
+      updateData.demoVideoUrl = {
+        en: updateData.demoVideoUrl,
+        ru: updateData.demoVideoUrl
+      };
+    }
+
+    // ფასების ტრანსფორმაცია
+    if (updateData.priceEn) {
+      updateData.priceEn = this.transformPrice(updateData.priceEn);
+    }
+    if (updateData.discountedPriceEn) {
+      updateData.discountedPriceEn = this.transformPrice(updateData.discountedPriceEn);
     }
 
     const updatedSet = await this.setModel

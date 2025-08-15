@@ -203,6 +203,9 @@ export class ExerciseController {
       if (data.videoUrl && data.videoUrl.trim() !== 'thumbnailFile' && data.videoUrl.trim() !== 'videoFile') {
         updateData.videoUrl = data.videoUrl.trim();
       }
+      if (data.videoUrlEn && data.videoUrlEn.trim() !== 'thumbnailFile' && data.videoUrlEn.trim() !== 'videoFile') {
+        updateData.videoUrlEn = data.videoUrlEn.trim();
+      }
       if (data.thumbnailUrl) {
         updateData.thumbnailUrl = data.thumbnailUrl.trim();
       }

@@ -11,8 +11,8 @@ interface LocalizedString {
 
 @Schema({ 
   timestamps: true,
-  toJSON: { virtuals: true },
-  toObject: { virtuals: true }
+  toJSON: { virtuals: true, getters: true },
+  toObject: { virtuals: true, getters: true }
 })
 export class Exercise {
   @Prop({
@@ -35,6 +35,9 @@ export class Exercise {
 
   @Prop({ required: false })
   videoUrl: string;
+
+  @Prop({ required: false })
+  videoUrlEn: string;
 
   @Prop({ required: false })
   thumbnailUrl: string;
