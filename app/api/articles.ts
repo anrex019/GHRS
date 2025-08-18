@@ -62,6 +62,7 @@ export interface Article {
       ru: string;
     };
     anchor: string;
+    level: number;
   }[];
   tags: string[];
   isPublished: boolean;
@@ -111,6 +112,7 @@ export interface CreateArticleDto {
       ru: string;
     };
     anchor: string;
+    level: number;
   }[];
   tags?: string[];
   isPublished?: boolean;
@@ -202,10 +204,13 @@ export const createArticleWithImages = async (data: FormData) => {
 };
 
 // Update article
-export const updateArticle = async (id: string, data: Partial<CreateArticleDto>) => {
+export const updateArticle = async (id: string, data: Partial<CreateArticleDto> | FormData) => {
+  // თუ data არის FormData, პირდაპირ გავგზავნოთ
+  const body = data instanceof FormData ? data : JSON.stringify(data);
+  
   return apiRequest<Article>(`${API_CONFIG.ENDPOINTS.ARTICLES.ALL}/${id}`, {
     method: 'PATCH',
-    body: JSON.stringify(data)
+    body
   });
 };
 

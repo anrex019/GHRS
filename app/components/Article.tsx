@@ -80,8 +80,8 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
   const extractHeadingsFromContent = (content: string) => {
     if (!content) return [];
     
-    // Find all h1-h6 tags and extract their text content
-    const headingRegex = /<h([1-6])[^>]*>(.*?)<\/h[1-6]>/gi;
+    // Find only h2 and h3 tags and extract their text content
+    const headingRegex = /<h([23])[^>]*>(.*?)<\/h[23]>/gi;
     const headings = [];
     let match;
     let index = 1;
@@ -91,33 +91,64 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
     
     while ((match = headingRegex.exec(content)) !== null) {
       const level = parseInt(match[1]);
-      const headingText = match[2]
-        .replace(/<[^>]*>/g, '') // Remove any HTML tags inside heading
-        .replace(/&lt;/g, '<')
-        .replace(/&gt;/g, '>')
-        .replace(/&amp;/g, '&')
-        .trim();
+      const decodeHtmlEntities = (text: string) => {
+        const entities = {
+          '&ndash;': '–',
+          '&mdash;': '—',
+          '&laquo;': '«',
+          '&raquo;': '»',
+          '&lt;': '<',
+          '&gt;': '>',
+          '&amp;': '&',
+          '&quot;': '"',
+          '&nbsp;': ' '
+        };
+        return text.replace(/&[^;]+;/g, (entity) => entities[entity] || entity);
+      };
+
+      const headingText = decodeHtmlEntities(
+        match[2]
+          .replace(/<[^>]*>/g, '') // Remove any HTML tags inside heading
+          .trim()
+      );
       
       if (headingText) {
         // Create anchor ID from text with unique index to avoid duplicates
         let anchor = headingText
           .toLowerCase()
-          .replace(/<[^>]+>/g, "")
-          .replace(/[^a-z0-9\s-]/g, "")
-          .replace(/\s+/g, "-");
+          .replace(/<[^>]+>/g, "") // Remove HTML tags
+          .replace(/[^\w\s-]/g, "") // Remove special characters but keep Cyrillic
+          .replace(/\s+/g, "-") // Replace spaces with hyphens
+          .replace(/^-+|-+$/g, ""); // Remove leading/trailing hyphens
         
         // Add index to make it unique
         anchor = `${anchor}-${index}`;
         
-        // Create numbered prefix based on heading level
+        // Create numbered prefix based on heading level and content
         let prefix = '';
-        if (level <= 2) { // Main heading
-          prefix = `${mainIndex}. `;
-          currentMainHeading = mainIndex;
-          mainIndex++;
-          subIndex = 1;
-        } else { // Sub heading
-          if (currentMainHeading !== null) {
+        const isNumberedHeading = /^\d+(\.\d+)*\.?\s+/.test(headingText);
+        
+        if (isNumberedHeading) {
+          // Use the existing number from the heading
+          const match = headingText.match(/^\d+(\.\d+)*\.?\s+/);
+          if (!match) return;
+          prefix = match[0];
+          const parts = prefix.split('.');
+          if (parts.length === 1) {
+            currentMainHeading = parseInt(parts[0]);
+            mainIndex = currentMainHeading + 1;
+            subIndex = 1;
+          } else if (parts.length === 2) {
+            subIndex = parseInt(parts[1]) + 1;
+          }
+        } else {
+          // Generate number if not present in heading
+          if (level === 2) {
+            prefix = `${mainIndex}. `;
+            currentMainHeading = mainIndex;
+            mainIndex++;
+            subIndex = 1;
+          } else if (level === 3 && currentMainHeading !== null) {
             prefix = `${currentMainHeading}.${subIndex}. `;
             subIndex++;
           }
@@ -243,18 +274,18 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
 
       <main className="flex justify-between gap-[30px] text-[#3D334A] mt-10">
         {/* Left Sidebar - Table of Contents */}
-        {tableOfContents.length > 0 && (
+        {(tableOfContents || []).length > 0 && (
           <div className="sticky top-24 p-6 bg-[rgba(255,255,255,1)] rounded-[20px] max-w-[335px] hidden md:block shadow-lg">
             <h2 className="text-xl font-bold mb-6 text-[#3D334A] border-b pb-4">
               {t("article.table_of_contents")}
             </h2>
 
             <div className="space-y-4">
-              {tableOfContents.map((item) => (
+              {(tableOfContents || []).map((item) => (
                 <div
                   key={item.anchor}
                   className={`group relative flex items-start cursor-pointer transition-all duration-200 ${
-                    item.isSubHeading ? 'ml-8 pl-4 border-l-2 border-purple-100' : ''
+                    item.level === 3 ? 'ml-8 pl-4 border-l-2 border-purple-100' : ''
                   }`}
                   onClick={() => handleScrollToSection(item.anchor)}
                 >
@@ -264,7 +295,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
                   {/* Content */}
                   <div className="flex-1">
                     <span className={`block text-[#3D334A] tracking-[-0.5px] ${
-                      item.isSubHeading 
+                      item.level === 3 
                         ? 'text-sm font-medium hover:text-purple-600' 
                         : 'text-base font-semibold hover:text-purple-700'
                     }`}>
@@ -278,7 +309,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
         )}
 
         {/* Main Content */}
-        <div className={`mt-0 ${tableOfContents.length > 0 ? 'md:max-w-[890px] w-[890px]' : 'w-full max-w-full'}`}>
+        <div className={`mt-0 ${(tableOfContents || []).length > 0 ? 'md:max-w-[890px] w-[890px]' : 'w-full max-w-full'}`}>
           <section className="bg-[rgba(255,255,255,1)] rounded-[20px] p-4">
             <header className="hidden md:flex flex-col gap-[30px]">
               <div className="flex justify-between items-center">

@@ -90,6 +90,34 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
     const endIndex = startIndex + blogsPerPage;
     return otherBlogs.slice(startIndex, endIndex);
   };
+
+  // მთლიანი გვერდების რაოდენობა
+  const totalPages = Math.ceil(otherBlogs.length / blogsPerPage);
+  
+  // სქროლის შემდეგ გადავამოწმოთ თუ საჭიროა გვერდის განახლება
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!scrollRef?.current) return;
+      
+      const { scrollLeft, clientWidth } = scrollRef.current;
+      const currentPageFromScroll = Math.round(scrollLeft / clientWidth);
+      
+      if (currentPageFromScroll !== currentPage) {
+        // განვაახლოთ გვერდის ნომერი სქროლის პოზიციიდან
+        const newPage = Math.min(Math.max(0, currentPageFromScroll), totalPages - 1);
+        if (newPage !== currentPage) {
+          // აქ არ ვიძახებთ setCurrentPage-ს რადგან ეს prop არის
+          console.log('Current visible page:', newPage);
+        }
+      }
+    };
+
+    const scrollContainer = scrollRef?.current;
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', handleScroll);
+      return () => scrollContainer.removeEventListener('scroll', handleScroll);
+    }
+  }, [currentPage, totalPages]);
   console.log(blogs);
 
   // Helper function to get article link
@@ -190,11 +218,11 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
         ) : (
           <div
             ref={scrollRef}
-            className="flex overflow-auto gap-5 flex-row overflow-x-auto snap-x snap-mandatory"
+            className="flex overflow-auto gap-5 flex-row overflow-x-auto scroll-smooth scrollbar-hide"
           >
-            {otherBlogs.map((blog) => (
+            {getCurrentBlogs().map((blog) => (
               <Link key={blog._id} href={getArticleLink(blog)}>
-                <div className="w-[200px] flex-shrink-0 p-3 bg-white flex flex-col justify-between rounded-[10px] snap-center">
+                <div className="w-[200px] flex-shrink-0 p-3 bg-white flex flex-col justify-between rounded-[10px]">
                   <Image
                     src={blog.featuredImages?.[0] || blog.imageUrl || ""}
                     width={189}

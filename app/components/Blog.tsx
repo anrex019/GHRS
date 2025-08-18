@@ -4,7 +4,7 @@ import Banner from "./Banner";
 import SliderArrows from "./SliderArrows";
 import GridLayouts, { LayoutType } from "./GridLayouts";
 import { useI18n } from "../context/I18nContext";
-import { API_CONFIG, apiRequest } from "../config/api";
+
 import { useArticles } from "../hooks/useArticles";
 import { useCategories } from "../hooks/useCategories";
 
@@ -61,18 +61,15 @@ const Blog: React.FC<BlogProps> = ({
 }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [currentPage, setCurrentPage] = useState<number>(0);
-  const [blogs, setBlogs] = useState<Blog[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+
+
   const { t, locale } = useI18n();
   const { categories } = useCategories();
   const blogsPerPage = 4;
   console.log(title)
 
-  const { articles } = useArticles({
-    page: currentPage,
-    limit: 6, // ზედა სექციაში მეტი სტატია გამოჩნდება
-    isFeatured: true, // მხოლოდ featured სტატიები
+  const { articles, loading: articlesLoading } = useArticles({
+    isFeatured: true, 
   });
 
   console.log('Blog Categories:', categories);
@@ -94,28 +91,15 @@ const Blog: React.FC<BlogProps> = ({
 
 
 
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        setLoading(true);
-        const data = await apiRequest<Blog[]>(API_CONFIG.ENDPOINTS.BLOGS.WITH_ARTICLES);
-        setBlogs(data);
-      } catch (error) {
-        console.error('Error fetching blogs:', error);
-        setError(error instanceof Error ? error.message : 'Failed to fetch blogs');
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    fetchBlogs();
-  }, []);
 
 
   const totalPages = useMemo(() => {
-    const otherBlogs = blogs?.slice(1) || [];
-    return Math.ceil(otherBlogs.length / blogsPerPage);
-  }, [blogs, blogsPerPage]);
+    if (!articles?.length) return 0;
+    // პირველი სტატია არის featured, დანარჩენი მიდის გრიდში
+    const otherArticles = articles.slice(1);
+    return Math.max(1, Math.ceil(otherArticles.length / blogsPerPage));
+  }, [articles, blogsPerPage]);
 
   const scrollLeft = (): void => {
     if (currentPage > 0) {
@@ -136,12 +120,8 @@ const Blog: React.FC<BlogProps> = ({
 
 
 
-  if (loading) {
+  if (articlesLoading) {
     return <div>{t("common.loading")}</div>;
-  }
-
-  if (error) {
-    return <div>{t("common.error")}: {error}</div>;
   }
 
   return (

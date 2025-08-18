@@ -19,11 +19,9 @@ export function useUserAccess(setId?: string, courseId?: string): UseUserAccessR
   const { isAuthenticated, user } = useAuth();
 
   const checkAccess = async (targetSetId: string) => {
-    if (!isAuthenticated || !user) {
-      setHasAccess(false);
-      setError('მომხმარებელი არ არის ავტორიზებული');
-      return;
-    }
+    // დროებით ყველას მივცეთ წვდომა
+    setHasAccess(true);
+    return;
 
     try {
       setLoading(true);
@@ -44,11 +42,9 @@ export function useUserAccess(setId?: string, courseId?: string): UseUserAccessR
   };
 
   const checkCourseAccess = async (targetCourseId: string) => {
-    if (!isAuthenticated || !user) {
-      setHasAccess(false);
-      setError('მომხმარებელი არ არის ავტორიზებული');
-      return;
-    }
+    // დროებით ყველას მივცეთ წვდომა
+    setHasAccess(true);
+    return;
 
     try {
       setLoading(true);
