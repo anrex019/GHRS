@@ -144,16 +144,16 @@ const getExercises = (
     });
 
     // ვქმნით steps მასივს
-        // Split description by {new paragraph} marker
-    const description = getLocalizedText(exercise.description);
+        const description = getLocalizedText(exercise.description);
     const paragraphs = description.split('{new paragraph}').map(p => p.trim());
     
-    const steps = paragraphs.map((paragraph, index) => ({
-      step: index + 1,
-      title: t("exercise.description") + (paragraphs.length > 1 ? ` ${index + 1}` : ''),
-      list: [paragraph],
-      image: index === 0 ? exercise.thumbnailUrl : undefined,
-    }));
+    // ერთი საერთო step ყველა პარაგრაფით
+    const steps = [{
+      step: 1,
+      title: t("exercise.description"),
+      list: paragraphs,
+      image: exercise.thumbnailUrl,
+    }];
 
     return {
       id: index + 1,
