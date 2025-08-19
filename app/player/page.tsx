@@ -820,7 +820,7 @@ function PlayerContent() {
 
                     {exercise.steps.map((step) => (
                       <div key={step.step} className="mb-6 last:mb-0">
-                        <h4 className="text-[#6D28D9] font-semibold mb-3 text-base">
+                        <h4 className="text-[#6D28D9] font-pt font-extrabold  text-2xl mb-3 ">
                           {step.title}
                         </h4>
                         <div className="flex gap-4">
