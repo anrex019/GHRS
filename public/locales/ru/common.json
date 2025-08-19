@@ -132,5 +132,14 @@
     "access_granted": "✓ У ВАС ЕСТЬ ДОСТУП",
     "purchase_course": "ПРИОБРЕСТИ КУРС",
     "login_to_purchase": "ВОЙТИ ДЛЯ ПОКУПКИ"
+  },
+  "exercise": {
+    "title": "Упражнение",
+    "description": "Описание упражнения",
+    "status": {
+      "completed": "Просмотрено",
+      "waiting": "Ожидает просмотра",
+      "locked": "Посмотрите предыдущее упражнение"
+    }
   }
 } 

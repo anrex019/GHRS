@@ -16,6 +16,15 @@
     "sets": "კომპლექსები და სეტები",
     "rightArrow": "→"
   },
+  "exercise": {
+    "title": "ვარჯიში",
+    "description": "ვარჯიშის აღწერა",
+    "status": {
+      "completed": "დასრულებულია",
+      "waiting": "მიმდინარე",
+      "locked": "ჯერ წინა ვარჯიში შეასრულეთ"
+    }
+  },
   "buttons": {
     "subscribe": "გამოწერა",
     "continue_watching": "ნახვის გაგრძელება",
@@ -58,7 +67,8 @@
     "set_not_found": "სეტი ვერ მოიძებნა",
     "see_all": "ყველას ნახვა",
     "article": "სტატია",
-    "articles": "სტატია"
+    "articles": "სტატია",
+    "noVideo": "ვიდეო არ არის ხელმისაწვდომი"
   },
   "sections": {
     "professional": "პროფესიონალური"
@@ -133,4 +143,4 @@
     "purchase_course": "კურსის შეძენა",
     "login_to_purchase": "შესვლა შეძენისთვის"
   }
-} 
+}

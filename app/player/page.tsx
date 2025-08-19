@@ -22,7 +22,15 @@ interface LocalizedString {
   id?: string;
 }
 
+interface LocalizedVideoUrl {
+  en: string;
+  ru: string;
+  _id: string;
+  id: string;
+}
+
 interface BackendExercise {
+  videoUrlEn?: string;
   _id: string;
   name: LocalizedString;
   description: LocalizedString;
@@ -76,11 +84,22 @@ type Exercise = {
 };
 
 // ლოკალიზაციის ფუნქცია
+const getLocale = () => {
+  if (typeof window !== "undefined") {
+    const storedLocale = localStorage.getItem("locale");
+    return storedLocale && ["ka", "ru", "en"].includes(storedLocale)
+      ? storedLocale
+      : "ru";
+  }
+  return "ru";
+};
+
 const getLocalizedText = (
   field: LocalizedString | undefined,
-  locale: string = "ru"
+  forcedLocale?: string
 ): string => {
   if (!field) return "";
+  const locale = forcedLocale || getLocale();
   return (
     field[locale as keyof typeof field] ||
     field.ru ||
@@ -91,29 +110,55 @@ const getLocalizedText = (
 };
 
 // ვქმნით exercises მასივს setData-დან
-const getExercises = (exercises: BackendExercise[]): Exercise[] => {
+const getExercises = (
+  exercises: BackendExercise[], 
+  t: (key: string) => string,
+  completedExercises: string[] = []
+): Exercise[] => {
+  console.log('🔍 getExercises input:', {
+    exercises: exercises.map(e => ({ id: e._id, name: e.name, difficulty: e.difficulty })),
+    completedExercises
+  });
+  
   if (!exercises) return [];
 
   return exercises.map((exercise: BackendExercise, index: number) => {
     // სტატუსის განსაზღვრა
     let status: ExerciseStatus = "locked";
-    if (index === 0) status = "done";
-    else if (index === 1) status = "waiting";
+    
+    // თუ წინა ყველა სავარჯიშო შესრულებულია, ეს სავარჯიშო ხელმისაწვდომია
+    const prevExercises = exercises.slice(0, index);
+    const allPreviousCompleted = prevExercises.every(ex => completedExercises.includes(ex._id));
+    
+    if (allPreviousCompleted) {
+      status = "waiting";
+    }
+    if (completedExercises.includes(exercise._id)) {
+      status = "done";
+    }
+    
+    console.log(`🎯 Exercise ${index + 1} (${exercise._id}):`, {
+      allPreviousCompleted,
+      isCompleted: completedExercises.includes(exercise._id),
+      status
+    });
 
     // ვქმნით steps მასივს
-    const steps = [
-      {
-        step: 1,
-        title: "Описание упражнения",
-        list: [getLocalizedText(exercise.description, "ru")],
-        image: exercise.thumbnailUrl,
-      },
-    ];
+        // Split description by {new paragraph} marker
+    const description = getLocalizedText(exercise.description);
+    const paragraphs = description.split('{new paragraph}').map(p => p.trim());
+    
+    const steps = paragraphs.map((paragraph, index) => ({
+      step: index + 1,
+      title: t("exercise.description") + (paragraphs.length > 1 ? ` ${index + 1}` : ''),
+      list: [paragraph],
+      image: index === 0 ? exercise.thumbnailUrl : undefined,
+    }));
 
     return {
       id: index + 1,
       _id: exercise._id, // დავამატოთ _id
-      title: `УПРАЖНЕНИЕ ${index + 1}. ${getLocalizedText(exercise.name, "ru").toUpperCase()}`,
+      title: `${t("exercise.title")} ${index + 1}. ${getLocalizedText(exercise.name).toUpperCase()}`,
       steps,
       status,
     };
@@ -132,9 +177,11 @@ const getVideoType = (url: string): 'youtube' | 'direct' | 'unknown' => {
   if (!url) return 'unknown';
   
   // Invalid URLs check
-  if (url === 'thumbnailFile' || url === 'videoFile' || url.length < 10) {
+  if (!url || url === 'thumbnailFile' || url === 'videoFile' || url.length < 10) {
+    console.log('❌ Invalid URL:', url);
     return 'unknown';
   }
+  console.log('✅ Checking URL:', url);
   
   // YouTube URL პატერნები
   const youtubePatterns = [
@@ -149,7 +196,9 @@ const getVideoType = (url: string): 'youtube' | 'direct' | 'unknown' => {
 
   // პირდაპირი ვიდეო URL-ის პატერნები
   const videoExtensions = /\.(mp4|webm|ogg|m4v|mov|avi|mkv)$/i;
-  if (videoExtensions.test(url)) {
+  const videoHosts = /(ghrs-group\.com|ghrs-group\.ru)/i;
+  
+  if (videoExtensions.test(url) || videoHosts.test(url)) {
     return 'direct';
   }
 
@@ -243,7 +292,7 @@ const VideoPlayer = ({
         <div className="relative w-full h-0 pb-[56.25%]">
           <iframe
             className="absolute top-0 left-0 w-full h-full rounded-[20px] md:rounded-[30px]"
-            src={`https://www.youtube.com/embed/${getYouTubeVideoId(url)}?autoplay=1&modestbranding=1&rel=0&enablejsapi=1`}
+            src={`https://www.youtube.com/embed/${getYouTubeVideoId(url)}?autoplay=1&mute=0&modestbranding=1&rel=0&enablejsapi=1&playlist=${getYouTubeVideoId(url)}`}
             title={title}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
@@ -263,19 +312,40 @@ const VideoPlayer = ({
     
     case 'direct':
       return (
-        <video
-          ref={videoRef}
-          className="w-full h-full rounded-[20px] md:rounded-[30px]"
-          src={url}
-          title={title}
-          controls
-          autoPlay
-          playsInline
-          onTimeUpdate={handleTimeUpdate}
-          onEnded={handleEnded}
-        >
-          Your browser does not support the video tag.
-        </video>
+        <div className="w-full h-full">
+          <video
+            ref={videoRef}
+            className="w-full h-full rounded-[20px] md:rounded-[30px]"
+            src={url}
+            title={title}
+            controls
+            autoPlay
+            playsInline
+            onTimeUpdate={handleTimeUpdate}
+            onEnded={handleEnded}
+            onError={(e) => {
+              console.error('Video error:', e);
+              const video = e.target as HTMLVideoElement;
+              console.log('Video error details:', {
+                error: video.error,
+                networkState: video.networkState,
+                readyState: video.readyState
+              });
+            }}
+            onLoadedData={() => {
+              console.log('✅ Video loaded successfully');
+              if (videoRef.current) {
+                videoRef.current.play()
+                  .then(() => console.log('▶️ Video playing'))
+                  .catch(e => console.error('❌ Video autoplay failed:', e));
+              }
+            }}
+          >
+            <source src={url} type="video/mp4" />
+            <source src={url} type="video/webm" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
       );
     
     default:
@@ -327,6 +397,11 @@ function PlayerContent() {
   // ვარჯიშის დასრულების ფუნქცია
   const handleExerciseComplete = useCallback(async (exerciseId: string) => {
     console.log('✅ Completing exercise:', exerciseId);
+    console.log('📊 Current state:', {
+      completedExercises,
+      currentExercise: currentExercise?._id,
+      exerciseId
+    });
     
     // გამოვთვალოთ დახარჯული დრო
     const timeSpent = exerciseStartTime ? Math.floor((Date.now() - exerciseStartTime) / 1000 / 60) : 0; // წუთებში
@@ -365,10 +440,13 @@ function PlayerContent() {
     difficulty ? ex.difficulty === difficulty : true
   ) || []).reverse(); // ამოვაბრუნოთ რიგი რომ 1, 2, 3, 4 იყოს
 
-  // Set first exercise as current by default
+  // Set first exercise as current by default and scroll to it
   useEffect(() => {
     if (exercises.length > 0 && !currentExercise) {
       setCurrentExercise(exercises[0]);
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.scrollLeft = 0;
+      }
     }
   }, [exercises, currentExercise]);
 
@@ -382,10 +460,21 @@ function PlayerContent() {
   });
 
   // Function to change current exercise
-  const handleExerciseChange = (exercise: BackendExercise) => {
+  const handleExerciseChange = (exercise: BackendExercise, index: number) => {
     setCurrentExercise(exercise);
     // Reset start time when changing exercise
     setExerciseStartTime(null);
+
+    // სქროლი აქტიურ ქარდზე
+    if (scrollContainerRef.current) {
+      const cardWidth = 280; // ქარდის სიგანე
+      const gap = 12; // gap-3 = 12px
+      const scrollPosition = index * (cardWidth + gap);
+      scrollContainerRef.current.scrollTo({
+        left: scrollPosition,
+        behavior: 'smooth'
+      });
+    }
   };
 
   // Check if set is completed and record set activity
@@ -413,7 +502,13 @@ function PlayerContent() {
     if (!completedExercises.includes(currentExercise._id)) {
       handleExerciseComplete(currentExercise._id);
     }
-  }, [currentExercise, completedExercises, handleExerciseComplete]);
+
+    // გადავდივართ შემდეგ ვარჯიშზე
+    const currentIndex = exercises.findIndex(ex => ex._id === currentExercise._id);
+    if (currentIndex < exercises.length - 1) {
+      handleExerciseChange(exercises[currentIndex + 1], currentIndex + 1);
+    }
+  }, [currentExercise, completedExercises, handleExerciseComplete, exercises]);
 
   // ვიდეოს პროგრესის ჰენდლერი
   const handleVideoProgress = useCallback((progress: number) => {
@@ -424,15 +519,14 @@ function PlayerContent() {
   const loading = setLoading || exercisesLoading;
 
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  // const [centers, setCenters] = useState<number[]>([]);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // useLayoutEffect(() => {
-  //   setCenters(
-  //     cardRefs.current.map((el) =>
-  //       el ? el.offsetTop + markerOffset + markerSize / 2 : 0
-  //     )
-  //   );
-  // }, []);
+  // სქროლი პირველ ქარდზე კომპონენტის ჩატვირთვისას
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollLeft = 0;
+    }
+  }, []);
 
   // Access control checks
   if (accessLoading) {
@@ -452,7 +546,6 @@ function PlayerContent() {
   if (!isAuthenticated || !hasAccess) {
     return (
       <div className="min-h-screen bg-gray-50">
-        {/* Simple header for unauthorized view */}
         <div className="bg-white shadow-sm border-b">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center py-4">
@@ -504,7 +597,7 @@ function PlayerContent() {
       <DesktopNavbar menuItems={defaultMenuItems} blogBg={false} allCourseBg={true} />
       <MobileNavbar />
       <div className="flex flex-col items-center md:overflow-hidden">
-        <div className="w-full max-w-[1400px] aspect-video md:mx-auto px-1 rounded-[20px] md:rounded-[30px] overflow-hidden">
+                 <div className="w-full h-[calc(100vh-200px)] rounded-[20px] md:rounded-[30px] overflow-hidden">
           {(() => {
             if (!currentExercise) {
               return (
@@ -514,13 +607,51 @@ function PlayerContent() {
               );
             }
 
-            // Get video URL - use exercise videoUrl if valid, otherwise use set demoVideoUrl
-            let videoUrl = currentExercise.videoUrl;
-            const videoType = getVideoType(videoUrl || '');
+            // Get video URL based on language and availability
+            const locale = getLocale();
+            let videoUrl = locale === 'en' ? currentExercise.videoUrlEn : currentExercise.videoUrl;
+            // Convert .ru URLs to .com
+            if (videoUrl && videoUrl.includes('ghrs-group.ru')) {
+              videoUrl = videoUrl.replace('ghrs-group.ru', 'ghrs-group.com');
+            }
+            let videoType = getVideoType(videoUrl || '');
             
-            // If exercise videoUrl is invalid, use set's demoVideoUrl as fallback
-            if (videoType === 'unknown' && setData && 'demoVideoUrl' in setData) {
-              videoUrl = (setData as { demoVideoUrl: string }).demoVideoUrl;
+            console.log('🎥 Initial Video URL:', {
+              locale,
+              videoUrl,
+              videoType,
+              exercise: {
+                id: currentExercise._id,
+                videoUrl: currentExercise.videoUrl,
+                videoUrlEn: currentExercise.videoUrlEn
+              }
+            });
+            
+            // If language-specific URL is invalid, try the other language
+            if (videoType === 'unknown') {
+              videoUrl = locale === 'en' ? currentExercise.videoUrl : currentExercise.videoUrlEn;
+              // Convert .ru URLs to .com
+              if (videoUrl && videoUrl.includes('ghrs-group.ru')) {
+                videoUrl = videoUrl.replace('ghrs-group.ru', 'ghrs-group.com');
+              }
+              videoType = getVideoType(videoUrl || '');
+            }
+            
+            // If both exercise URLs are invalid, try set's demo video
+            if (videoType === 'unknown' && setData && 'demoVideoUrl' in setData) {  
+              console.log('🎥 Trying demo video:', {
+                demoVideoUrl: setData.demoVideoUrl,
+                type: typeof setData.demoVideoUrl
+              });
+              
+              const demoUrl = typeof setData.demoVideoUrl === 'object' 
+                ? (locale === 'en' ? (setData.demoVideoUrl as LocalizedVideoUrl).en : (setData.demoVideoUrl as LocalizedVideoUrl).ru)
+                : (setData.demoVideoUrl as string);
+              
+              if (demoUrl) {
+                videoUrl = demoUrl;
+                videoType = getVideoType(videoUrl || '');
+              }
             }
             
             return videoUrl && getVideoType(videoUrl) !== 'unknown' ? (
@@ -553,45 +684,48 @@ function PlayerContent() {
         {/* Exercise Details */}
        
 
-        <div className="flex flex-col gap-3 md:flex-row md:items-center md:m-5 md:gap-5 mx-auto justify-center md:w-auto mt-4 md:mt-8">
-          {exercises.map((exercise, index) => {
-            const isWatching = currentExercise?._id === exercise._id;
-            const isCompleted = completedExercises.includes(exercise._id);
-            
-            // Determine background color based on status
-            let bgColor = 'bg-gray-200'; // Default/locked
-            let textColor = 'text-gray-600';
-            
-            if (isCompleted) {
-              bgColor = 'bg-[#F3D57F]'; // Yellow for completed
-              textColor = 'text-[#92400E]';
-            } else if (isWatching) {
-              bgColor = 'bg-[#E8D5FF]'; // Purple for watching
-              textColor = 'text-[#6D28D9]';
-            } else {
-              bgColor = 'bg-[#F9F7FE]'; // Light purple for available
-              textColor = 'text-[#3D334A]';
-            }
-            
-            return (
-              <button
-                key={exercise._id}
-                type="button"
-                onClick={() => handleExerciseChange(exercise)}
-                className={`flex flex-col items-center justify-center min-w-[120px] h-[80px] rounded-[10px] px-4 py-2 ${bgColor} transition-all duration-200 hover:scale-105`}
-              >
-                <span className={`text-xs font-medium ${textColor} mb-1 uppercase`}>
-                  УПРАЖНЕНИЕ {index + 1}
-                </span>
-                <span className={`text-xs font-normal ${textColor} text-center leading-tight`}>
-                  {getLocalizedText(exercise.description, "ru").length > 40 
-                    ? getLocalizedText(exercise.description, "ru").substring(0, 40) + "..."
-                    : getLocalizedText(exercise.description, "ru")
-                  }
-                </span>
-              </button>
-            );
-          })}
+        <div ref={scrollContainerRef} className="w-full mt-5 ml-2.5 mr-2.5 px-4 overflow-x-auto scrollbar-hide">
+          <div className="flex gap-3 md:gap-5 pb-4" style={{ scrollSnapType: 'x mandatory' }}>
+            {exercises.map((exercise, index) => {
+              const isWatching = currentExercise?._id === exercise._id;
+              const isCompleted = completedExercises.includes(exercise._id);
+              
+              // Determine background color based on status
+              let bgColor = 'bg-gray-200'; // Default/locked
+              let textColor = 'text-gray-600';
+              
+              if (isCompleted) {
+                bgColor = 'bg-[#F3D57F]'; // Yellow for completed
+                textColor = 'text-[#92400E]';
+              } else if (isWatching) {
+                bgColor = 'bg-[#E8D5FF]'; // Purple for watching
+                textColor = 'text-[#6D28D9]';
+              } else {
+                bgColor = 'bg-[#F9F7FE]'; // Light purple for available
+                textColor = 'text-[#3D334A]';
+              }
+              
+              return (
+                <button
+                  key={exercise._id}
+                  type="button"
+                  onClick={() => handleExerciseChange(exercise, index)}
+                  className={`flex-shrink-0 flex flex-col items-center justify-center rounded-[10px] px-4 py-2 ${bgColor} transition-all duration-200 hover:scale-105 w-[280px] h-[100px]`}
+                  style={{ scrollSnapAlign: 'start' }}
+                >
+                  <span className={`text-xs font-medium ${textColor} mb-1 uppercase`}>
+                    {t("exercise.title")} {index + 1}
+                  </span>
+                  <span className={`text-xs font-normal ${textColor} text-center leading-tight`}>
+                    {getLocalizedText(exercise.name).length > 40 
+                      ? getLocalizedText(exercise.name).substring(0, 40) + "..."
+                      : getLocalizedText(exercise.name)
+                    }
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 
@@ -600,7 +734,7 @@ function PlayerContent() {
         <div className="relative w-full flex flex-col gap-4 md:gap-6">
           {/* ვერტიკალური ხაზების კონტეინერი */}
           <div className="hidden md:block absolute left-6 w-[2px] h-full">
-            {getExercises(exercises || []).map((exercise, idx, arr) => {
+            {getExercises(exercises || [], t, completedExercises).map((exercise, idx, arr) => {
               const nextExercise = arr[idx + 1];
               if (!nextExercise) return null;
               
@@ -636,7 +770,7 @@ function PlayerContent() {
             })}
           </div>
           
-          {getExercises(exercises || []).map((exercise, idx, arr) => {
+          {getExercises(exercises || [], t, completedExercises).map((exercise, idx, arr) => {
             // ვამოწმებთ წინა ვარჯიშების დასრულების სტატუსს
             const prevExercises = arr.slice(0, idx);
             const allPreviousCompleted = prevExercises.every(ex => 
@@ -677,33 +811,23 @@ function PlayerContent() {
                             : 'bg-gray-200 text-gray-600'
                       }`}>
                         {completedExercises.includes(exercise._id)
-                          ? "Просмотрено"
+                          ? t("exercise.status.completed")
                           : currentExercise?._id === exercise._id && allPreviousCompleted
-                            ? "Ожидает просмотра"
-                            : "Посмотрите предыдущее упражнение"}
+                            ? t("exercise.status.waiting")
+                            : t("exercise.status.locked")}
                       </span>
                     </div>
 
                     {exercise.steps.map((step) => (
                       <div key={step.step} className="mb-6 last:mb-0">
                         <h4 className="text-[#6D28D9] font-semibold mb-3 text-base">
-                          Шаг {step.step}: {step.title}
+                          {step.title}
                         </h4>
                         <div className="flex gap-4">
-                          {step.image && (
-                            <div className="w-20 h-20 flex-shrink-0">
-                              <Image
-                                src={step.image}
-                                alt={step.title}
-                                width={80}
-                                height={80}
-                                className="w-full h-full object-cover rounded-[8px]"
-                              />
-                            </div>
-                          )}
+                          
                           <div className="flex-1">
                             {step.list.map((item, i) => (
-                              <p key={i} className="text-sm text-[#3D334A] mb-2 last:mb-0 leading-relaxed">
+                              <p key={i} className="text-md text-[#3D334A] mb-2 last:mb-0 leading-relaxed font-pt font-normal">
                                 {i + 1}. {item}
                               </p>
                             ))}
