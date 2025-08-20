@@ -81,6 +81,47 @@ function ComplexContent() {
 
   const locale = getLocale();
 
+  interface PriceObject {
+    monthly: number;
+    threeMonths: number;
+    sixMonths: number;
+    yearly: number;
+  }
+
+  interface ExtendedSetPrices {
+    price?: PriceObject;
+    priceEn?: PriceObject;
+    priceKa?: PriceObject;
+    discountedPrice?: PriceObject;
+    discountedPriceEn?: PriceObject;
+    discountedPriceKa?: PriceObject;
+  }
+
+  const getPriceByPeriod = (
+    period: keyof PriceObject,
+    base: PriceObject | undefined,
+    en: PriceObject | undefined,
+    ka: PriceObject | undefined,
+    discountedBase: PriceObject | undefined,
+    discountedEn: PriceObject | undefined,
+    discountedKa: PriceObject | undefined,
+    locale: string
+  ): number => {
+    if (locale === "en") {
+      if (discountedEn && typeof discountedEn[period] === "number") return discountedEn[period];
+      if (en && typeof en[period] === "number") return en[period];
+    }
+    if (locale === "ka") {
+      if (discountedKa && typeof discountedKa[period] === "number") return discountedKa[period];
+      if (ka && typeof ka[period] === "number") return ka[period];
+    }
+    if (discountedBase && typeof discountedBase[period] === "number") return discountedBase[period];
+    if (base && typeof base[period] === "number") return base[period];
+    return 0;
+  };
+
+  const prices: ExtendedSetPrices = (setData as unknown as ExtendedSetPrices);
+
   // Loading state
   if (setLoading) {
     return (
@@ -207,50 +248,95 @@ function ComplexContent() {
                     ref={popoverRef}
                     className="absolute right-0 -top-72 mt-2 bg-white shadow-lg rounded-2xl p-0 min-w-[320px] max-w-[90vw] border border-purple-200 z-20 flex flex-col items-stretch"
                   >
-                    {/* 1 месяц */}
-                    <div className="flex justify-between items-center px-6 py-4 border-b border-[rgba(132,111,160,0.12)]">
-                      <span className="font-bold cursor-pointer text-[18px] leading-[120%] tracking-[-2%] text-[rgba(61,51,74,1)] uppercase">
-                        1 месяц
+                  {/* 1 месяц */}
+                  <div className="flex justify-between items-center px-6 py-4 border-b border-[rgba(132,111,160,0.12)]">
+                    <span className="font-bold cursor-pointer text-[18px] leading-[120%] tracking-[-2%] text-[rgba(61,51,74,1)] uppercase">
+                      {t("header.subscription_period.one_month")}
+                    </span>
+                    <span className="text-[16px] text-[rgba(132,111,160,1)] font-medium">
+                      {getPriceByPeriod(
+                        "monthly",
+                        prices.price,
+                        prices.priceEn,
+                        prices.priceKa,
+                        prices.discountedPrice,
+                        prices.discountedPriceEn,
+                        prices.discountedPriceKa,
+                        locale
+                      )} {t("header.currency")}/{t("header.per_month")}
+                    </span>
+                  </div>
+                  {/* 3 месяца - highlight */}
+                  <div className="flex justify-between items-center px-6 py-4 border-b border-[rgba(132,111,160,0.12)] bg-[rgba(132,111,160,0.08)]">
+                    <span className="font-bold cursor-pointer text-[18px] leading-[120%] tracking-[-2%] text-[rgba(132,111,160,1)] uppercase">
+                      {t("header.subscription_period.three_months")}
+                    </span>
+                    <div className="flex flex-col items-end">
+                      <span className="text-[20px] cursor-pointer font-bold text-[rgba(132,111,160,1)] leading-[120%]">
+                        {getPriceByPeriod(
+                          "threeMonths",
+                          prices.price,
+                          prices.priceEn,
+                          prices.priceKa,
+                          prices.discountedPrice,
+                          prices.discountedPriceEn,
+                          prices.discountedPriceKa,
+                          locale
+                        )} {t("header.currency")}/{t("header.per_month")}
                       </span>
-                      <span className="text-[16px] text-[rgba(132,111,160,1)] font-medium">
-                        {setData.price.monthly} ₽/мес
-                      </span>
-                    </div>
-                    {/* 3 месяца - highlight */}
-                    <div className="flex justify-between items-center px-6 py-4 border-b border-[rgba(132,111,160,0.12)] bg-[rgba(132,111,160,0.08)]">
-                      <span className="font-bold cursor-pointer text-[18px] leading-[120%] tracking-[-2%] text-[rgba(132,111,160,1)] uppercase">
-                        3 месяца
-                      </span>
-                      <div className="flex flex-col items-end">
-                        <span className="text-[20px] cursor-pointer font-bold text-[rgba(132,111,160,1)] leading-[120%]">
-                          {setData.price.threeMonths} ₽/мес
-                        </span>
-                        <span className="text-[14px] cursor-pointer text-[rgba(132,111,160,0.5)] line-through font-medium">
-                          {setData.price.monthly * 3} ₽/мес
-                        </span>
-                      </div>
-                    </div>
-                    {/* 6 месяцев */}
-                    <div className="flex justify-between items-center px-6 py-4 border-b border-[rgba(132,111,160,0.12)]">
-                      <span className="font-bold text-[18px] cursor-pointer leading-[120%] tracking-[-2%] text-[rgba(61,51,74,1)] uppercase">
-                        6 месяцев
-                      </span>
-                      <span className="text-[16px] cursor-pointer text-[rgba(132,111,160,1)] font-medium">
-                        {setData.price.sixMonths} ₽/мес
-                      </span>
-                    </div>
-                    {/* 12 месяцев */}
-                    <div className="flex justify-between items-center px-6 py-4">
-                      <span className="font-bold text-[18px] cursor-pointer leading-[120%] tracking-[-2%] text-[rgba(61,51,74,1)] uppercase">
-                        12 месяцев
-                      </span>
-                      <span className="text-[16px] cursor-pointer text-[rgba(132,111,160,1)] font-medium">
-                        {setData.price.yearly} ₽/мес
+                      <span className="text-[14px] cursor-pointer text-[rgba(132,111,160,0.5)] line-through font-medium">
+                        {getPriceByPeriod(
+                          "monthly",
+                          prices.price,
+                          prices.priceEn,
+                          prices.priceKa,
+                          undefined,
+                          undefined,
+                          undefined,
+                          locale
+                        ) * 3} {t("header.currency")}/{t("header.per_month")}
                       </span>
                     </div>
                   </div>
-                )}
-              </div>
+                  {/* 6 месяцев */}
+                  <div className="flex justify-between items-center px-6 py-4 border-b border-[rgba(132,111,160,0.12)]">
+                    <span className="font-bold text-[18px] cursor-pointer leading-[120%] tracking-[-2%] text-[rgba(61,51,74,1)] uppercase">
+                      {t("header.subscription_period.six_months")}
+                    </span>
+                    <span className="text-[16px] cursor-pointer text-[rgba(132,111,160,1)] font-medium">
+                      {getPriceByPeriod(
+                        "sixMonths",
+                        prices.price,
+                        prices.priceEn,
+                        prices.priceKa,
+                        prices.discountedPrice,
+                        prices.discountedPriceEn,
+                        prices.discountedPriceKa,
+                        locale
+                      )} {t("header.currency")}/{t("header.per_month")}
+                    </span>
+                  </div>
+                  {/* 12 месяцев */}
+                  <div className="flex justify-between items-center px-6 py-4">
+                    <span className="font-bold text-[18px] cursor-pointer leading-[120%] tracking-[-2%] text-[rgba(61,51,74,1)] uppercase">
+                      {t("header.subscription_period.twelve_months")}
+                    </span>
+                    <span className="text-[16px] cursor-pointer text-[rgba(132,111,160,1)] font-medium">
+                      {getPriceByPeriod(
+                        "yearly",
+                        prices.price,
+                        prices.priceEn,
+                        prices.priceKa,
+                        prices.discountedPrice,
+                        prices.discountedPriceEn,
+                        prices.discountedPriceKa,
+                        locale
+                      )} {t("header.currency")}/{t("header.per_month")}
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
 
               {/* Intermediate Level */}
               <div className="bg-[rgba(249,247,254,1)] p-5 rounded-[10px] flex justify-between items-center">
@@ -313,12 +399,13 @@ function ComplexContent() {
           />
         </div>
 
-        <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
-          <div className="flex flex-col items-center justify-center min-w-[250px] min-h-[120px]">
-            <h2 className="text-xl font-bold mb-4">Модальное окно</h2>
-            <p>Здесь будет ваш контент (например, видео ან სხვა ინფორმაცია).</p>
-          </div>
-        </Modal>
+        <Modal 
+          isOpen={modalOpen}
+          onClose={() => setModalOpen(false)}
+          title="Модальное окно"
+          message="Здесь будет ваш контент (например, видео ან სხვა ინფორმაცია)."
+          type="info"
+        />
       </div>
     </div>
   );

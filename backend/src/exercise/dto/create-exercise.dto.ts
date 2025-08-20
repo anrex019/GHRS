@@ -1,4 +1,4 @@
-import { IsString, IsEnum, IsBoolean, IsOptional, IsNumber, IsMongoId, ValidateNested } from 'class-validator';
+import { IsString, IsEnum, IsBoolean, IsOptional, IsNumber, IsMongoId, ValidateNested, IsObject } from 'class-validator';
 import { Type, Transform } from 'class-transformer';
 
 class LocalizedStringDto {
@@ -13,6 +13,31 @@ class LocalizedStringDto {
   ka?: string;
 }
 
+class PriceObjectDto {
+  @IsNumber()
+  monthly: number;
+
+  @IsNumber()
+  threeMonths: number;
+
+  @IsNumber()
+  sixMonths: number;
+
+  @IsNumber()
+  yearly: number;
+}
+
+class LevelsObjectDto {
+  @IsBoolean()
+  beginner: boolean;
+
+  @IsBoolean()
+  intermediate: boolean;
+
+  @IsBoolean()
+  advanced: boolean;
+}
+
 export class CreateExerciseDto {
   @ValidateNested()
   @Type(() => LocalizedStringDto)
@@ -24,6 +49,26 @@ export class CreateExerciseDto {
   description?: LocalizedStringDto;
 
   @IsOptional()
+  @ValidateNested()
+  @Type(() => LocalizedStringDto)
+  recommendations?: LocalizedStringDto;
+
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => LocalizedStringDto)
+  additional?: LocalizedStringDto;
+
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => LocalizedStringDto)
+  equipment?: LocalizedStringDto;
+
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => LocalizedStringDto)
+  warnings?: LocalizedStringDto;
+
+  @IsOptional()
   @IsString()
   videoUrl?: string;
 
@@ -33,7 +78,15 @@ export class CreateExerciseDto {
 
   @IsOptional()
   @IsString()
+  demoVideoUrl?: string;
+
+  @IsOptional()
+  @IsString()
   thumbnailUrl?: string;
+
+  @IsOptional()
+  @IsString()
+  thumbnailImage?: string;
 
   @IsString()
   videoDuration: string;
@@ -43,6 +96,60 @@ export class CreateExerciseDto {
 
   @IsEnum(['easy', 'medium', 'hard'])
   difficulty: 'easy' | 'medium' | 'hard';
+
+  @IsOptional()
+  @IsNumber()
+  difficultyLevels?: number;
+
+  @IsOptional()
+  @IsObject()
+  @ValidateNested()
+  @Type(() => LevelsObjectDto)
+  levels?: LevelsObjectDto;
+
+  @IsOptional()
+  @IsObject()
+  @ValidateNested()
+  @Type(() => PriceObjectDto)
+  price?: PriceObjectDto;
+
+  @IsOptional()
+  @IsObject()
+  @ValidateNested()
+  @Type(() => PriceObjectDto)
+  priceKa?: PriceObjectDto;
+
+  @IsOptional()
+  @IsObject()
+  @ValidateNested()
+  @Type(() => PriceObjectDto)
+  priceEn?: PriceObjectDto;
+
+  @IsOptional()
+  @IsObject()
+  @ValidateNested()
+  @Type(() => PriceObjectDto)
+  discountedPrice?: PriceObjectDto;
+
+  @IsOptional()
+  @IsObject()
+  @ValidateNested()
+  @Type(() => PriceObjectDto)
+  discountedPriceKa?: PriceObjectDto;
+
+  @IsOptional()
+  @IsObject()
+  @ValidateNested()
+  @Type(() => PriceObjectDto)
+  discountedPriceEn?: PriceObjectDto;
+
+  @IsOptional()
+  @IsNumber()
+  totalExercises?: number;
+
+  @IsOptional()
+  @IsString()
+  totalDuration?: string;
 
   @IsString()
   repetitions: string;
@@ -86,4 +193,4 @@ export class CreateExerciseDto {
   @IsMongoId()
   @IsOptional()
   subCategoryId?: string;
-} 
+}

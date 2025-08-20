@@ -87,9 +87,12 @@ type Exercise = {
 const getLocale = () => {
   if (typeof window !== "undefined") {
     const storedLocale = localStorage.getItem("locale");
-    return storedLocale && ["ka", "ru", "en"].includes(storedLocale)
+    console.log('🔍 Stored locale in localStorage:', storedLocale);
+    const result = storedLocale && ["ka", "ru", "en"].includes(storedLocale)
       ? storedLocale
       : "ru";
+    console.log('🔍 Final locale result:', result);
+    return result;
   }
   return "ru";
 };
@@ -599,21 +602,65 @@ function PlayerContent() {
       <div className="flex flex-col items-center md:overflow-hidden">
                  <div className="w-full h-[calc(100vh-200px)] rounded-[20px] md:rounded-[30px] overflow-hidden">
           {(() => {
+            console.log('🎯 currentExercise:', currentExercise);
             if (!currentExercise) {
+              console.log('❌ No currentExercise');
               return (
                 <div className="w-full h-full flex items-center justify-center bg-gray-100 rounded-[20px] md:rounded-[30px]">
                   <p className="text-gray-500">{t("common.noVideo")}</p>
                 </div>
               );
             }
+            console.log('✅ currentExercise exists, proceeding with video selection');
 
             // Get video URL based on language and availability
+            console.log('🚀 Starting video URL selection...');
             const locale = getLocale();
-            let videoUrl = locale === 'en' ? currentExercise.videoUrlEn : currentExercise.videoUrl;
-            // Convert .ru URLs to .com
-            if (videoUrl && videoUrl.includes('ghrs-group.ru')) {
-              videoUrl = videoUrl.replace('ghrs-group.ru', 'ghrs-group.com');
+            console.log('🌍 Current locale:', locale);
+            console.log('🎯 currentExercise._id:', currentExercise._id);
+            let videoUrl: string | undefined;
+            
+            // პირველად ვცდილობთ შესაბამისი ენის ვიდეოს
+            console.log('🎬 Available video URLs:', {
+              videoUrl: currentExercise.videoUrl,
+              videoUrlEn: currentExercise.videoUrlEn,
+              locale: locale,
+              videoUrlType: typeof currentExercise.videoUrl,
+              videoUrlEnType: typeof currentExercise.videoUrlEn
+            });
+            console.log('🔍 About to check video URL conditions...');
+            
+            console.log('🔍 Checking conditions:');
+            console.log('  - locale === "en":', locale === 'en');
+            console.log('  - currentExercise.videoUrlEn exists:', !!currentExercise.videoUrlEn);
+            console.log('  - locale === "ru":', locale === 'ru');
+            console.log('  - currentExercise.videoUrl exists:', !!currentExercise.videoUrl);
+            console.log('  - locale === "ka":', locale === 'ka');
+            
+            if (locale === 'en' && currentExercise.videoUrlEn) {
+              videoUrl = currentExercise.videoUrlEn;
+              console.log('✅ Selected EN video:', videoUrl);
+            } else if (locale === 'ru' && currentExercise.videoUrl) {
+              videoUrl = currentExercise.videoUrl;
+              console.log('✅ Selected RU video:', videoUrl);
+            } else if (locale === 'ka' && currentExercise.videoUrl) {
+              videoUrl = currentExercise.videoUrl;
+              console.log('✅ Selected KA video:', videoUrl);
+            } else {
+              console.log('❌ No matching video found for locale:', locale);
+              console.log('  - videoUrl:', currentExercise.videoUrl);
+              console.log('  - videoUrlEn:', currentExercise.videoUrlEn);
             }
+            
+            // Convert .ru URLs to .com only for non-Russian locales
+            if (videoUrl && videoUrl.includes('ghrs-group.ru') && locale !== 'ru') {
+              console.log('🔄 Converting .ru to .com for non-Russian locale:', locale);
+              videoUrl = videoUrl.replace('ghrs-group.ru', 'ghrs-group.com');
+              console.log('✅ Converted URL:', videoUrl);
+            } else {
+              console.log('✅ Keeping original URL for locale:', locale, 'URL:', videoUrl);
+            }
+            
             let videoType = getVideoType(videoUrl || '');
             
             console.log('🎥 Initial Video URL:', {
@@ -627,12 +674,35 @@ function PlayerContent() {
               }
             });
             
-            // If language-specific URL is invalid, try the other language
+            // If language-specific URL is invalid, try fallback URLs
             if (videoType === 'unknown') {
-              videoUrl = locale === 'en' ? currentExercise.videoUrl : currentExercise.videoUrlEn;
-              // Convert .ru URLs to .com
-              if (videoUrl && videoUrl.includes('ghrs-group.ru')) {
+              console.log('🔄 Trying fallback URLs...');
+              console.log('  - videoType is unknown, trying fallback');
+              console.log('  - locale === "en":', locale === 'en');
+              console.log('  - currentExercise.videoUrl exists:', !!currentExercise.videoUrl);
+              console.log('  - locale !== "en":', locale !== 'en');
+              console.log('  - currentExercise.videoUrlEn exists:', !!currentExercise.videoUrlEn);
+              console.log('  - currentExercise.videoUrl:', currentExercise.videoUrl);
+              console.log('  - currentExercise.videoUrlEn:', currentExercise.videoUrlEn);
+              
+              // ვცდილობთ სხვა ენის ვიდეოს fallback-ად
+              if (locale === 'en' && currentExercise.videoUrl) {
+                videoUrl = currentExercise.videoUrl;
+                console.log('✅ Fallback to RU video:', videoUrl);
+              } else if (locale !== 'en' && currentExercise.videoUrlEn) {
+                videoUrl = currentExercise.videoUrlEn;
+                console.log('✅ Fallback to EN video:', videoUrl);
+              } else {
+                console.log('❌ No fallback video found');
+              }
+              
+              // Convert .ru URLs to .com only for non-Russian locales
+              if (videoUrl && videoUrl.includes('ghrs-group.ru') && locale !== 'ru') {
+                console.log('🔄 Converting .ru to .com for fallback (non-Russian locale):', locale);
                 videoUrl = videoUrl.replace('ghrs-group.ru', 'ghrs-group.com');
+                console.log('✅ Converted fallback URL:', videoUrl);
+              } else {
+                console.log('✅ Keeping original fallback URL for locale:', locale, 'URL:', videoUrl);
               }
               videoType = getVideoType(videoUrl || '');
             }
@@ -644,9 +714,25 @@ function PlayerContent() {
                 type: typeof setData.demoVideoUrl
               });
               
-              const demoUrl = typeof setData.demoVideoUrl === 'object' 
-                ? (locale === 'en' ? (setData.demoVideoUrl as LocalizedVideoUrl).en : (setData.demoVideoUrl as LocalizedVideoUrl).ru)
-                : (setData.demoVideoUrl as string);
+              let demoUrl: string | undefined;
+              
+              if (typeof setData.demoVideoUrl === 'object') {
+                // ვცდილობთ შესაბამისი ენის demo ვიდეოს
+                if (locale === 'en' && (setData.demoVideoUrl as LocalizedVideoUrl).en) {
+                  demoUrl = (setData.demoVideoUrl as LocalizedVideoUrl).en;
+                } else if (locale === 'ru' && (setData.demoVideoUrl as LocalizedVideoUrl).ru) {
+                  demoUrl = (setData.demoVideoUrl as LocalizedVideoUrl).ru;
+                } else if (locale === 'ka' && (setData.demoVideoUrl as LocalizedVideoUrl).ru) {
+                  demoUrl = (setData.demoVideoUrl as LocalizedVideoUrl).ru; // KA-სთვის ვიყენებთ RU-ს
+                }
+                
+                // fallback-ად ვცდილობთ სხვა ენის ვიდეოს
+                if (!demoUrl) {
+                  demoUrl = (setData.demoVideoUrl as LocalizedVideoUrl).en || (setData.demoVideoUrl as LocalizedVideoUrl).ru;
+                }
+              } else {
+                demoUrl = setData.demoVideoUrl as string;
+              }
               
               if (demoUrl) {
                 videoUrl = demoUrl;

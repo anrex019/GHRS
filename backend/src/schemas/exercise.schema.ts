@@ -9,6 +9,25 @@ interface LocalizedString {
   ru: string;
 }
 
+interface PriceObject {
+  monthly: number;
+  threeMonths: number;
+  sixMonths: number;
+  yearly: number;
+}
+
+interface LocalizedPriceObject {
+  ka: PriceObject;
+  en: PriceObject;
+  ru: PriceObject;
+}
+
+interface LevelsObject {
+  beginner: boolean;
+  intermediate: boolean;
+  advanced: boolean;
+}
+
 @Schema({ 
   timestamps: true,
   toJSON: { virtuals: true, getters: true },
@@ -33,6 +52,42 @@ export class Exercise {
   })
   description: LocalizedString;
 
+  @Prop({
+    type: {
+      en: { type: String, required: false },
+      ru: { type: String, required: false }
+    },
+    required: false
+  })
+  recommendations: LocalizedString;
+
+  @Prop({
+    type: {
+      en: { type: String, required: false },
+      ru: { type: String, required: false }
+    },
+    required: false
+  })
+  additional: LocalizedString;
+
+  @Prop({
+    type: {
+      en: { type: String, required: false },
+      ru: { type: String, required: false }
+    },
+    required: false
+  })
+  equipment: LocalizedString;
+
+  @Prop({
+    type: {
+      en: { type: String, required: false },
+      ru: { type: String, required: false }
+    },
+    required: false
+  })
+  warnings: LocalizedString;
+
   @Prop({ required: false })
   videoUrl: string;
 
@@ -40,7 +95,13 @@ export class Exercise {
   videoUrlEn: string;
 
   @Prop({ required: false })
+  demoVideoUrl: string;
+
+  @Prop({ required: false })
   thumbnailUrl: string;
+
+  @Prop({ required: false })
+  thumbnailImage: string;
 
   @Prop({ required: true })
   videoDuration: string;
@@ -54,6 +115,36 @@ export class Exercise {
     required: true 
   })
   difficulty: 'easy' | 'medium' | 'hard';
+
+  @Prop({ required: false, default: 0 })
+  difficultyLevels: number;
+
+  @Prop({ type: Object, required: false })
+  levels: LevelsObject;
+
+  @Prop({ type: Object, required: false })
+  price: PriceObject;
+
+  @Prop({ type: Object, required: false })
+  priceKa: PriceObject;
+
+  @Prop({ type: Object, required: false })
+  priceEn: PriceObject;
+
+  @Prop({ type: Object, required: false })
+  discountedPrice: PriceObject;
+
+  @Prop({ type: Object, required: false })
+  discountedPriceKa: PriceObject;
+
+  @Prop({ type: Object, required: false })
+  discountedPriceEn: PriceObject;
+
+  @Prop({ required: false, default: 0 })
+  totalExercises: number;
+
+  @Prop({ required: false, default: "00:00" })
+  totalDuration: string;
 
   @Prop({ required: true })
   repetitions: string;
@@ -117,4 +208,4 @@ ExerciseSchema.index({ subCategoryId: 1 });
 ExerciseSchema.index({ isActive: 1 });
 ExerciseSchema.index({ isPublished: 1 });
 ExerciseSchema.index({ sortOrder: 1 });
-ExerciseSchema.index({ difficulty: 1 }); 
+ExerciseSchema.index({ difficulty: 1 });

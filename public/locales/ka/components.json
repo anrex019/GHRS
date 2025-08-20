@@ -77,6 +77,56 @@
     "similar_articles": "მსგავსი სტატიები",
     "no_similar_articles": "მსგავსი სტატიები არ მოიძებნა"
   },
+  "complex_description": "აღწერა",
+  "complex_additional": "დამატებითი",
+  "complex_demo_video": "დემო-ვიდეო",
+  "complex_general_instructions": "ზოგადი მითითებები:",
+  "complex_recommendations": "რეკომენდაციები:",
+  "complex_equipment": "აღჭურვილობა:",
+  "complex_warnings": "გაფრთხილებები:",
+  "complex_total_duration": "კომპლექსის საერთო ხანგრძლივობა {{duration}} წთ",
+  "complex_exercises_count": "{{count}} ვარჯიში",
+  "complex_beginner_level": "საწყისი დონე",
+  "complex_intermediate_level": "საშუალო დონე",
+  "complex_advanced_level": "მოწინავე დონე",
+  "header": {
+    "ecosystem_title": "პროდუქტების ეკოსისტემა მიმართული თქვენი ჯანმრთელობის ფორმირებისკენ",
+    "rehabilitation_title": "თანამედროვე ისრაელის რეაბილიტაციის მეთოდები",
+    "rehabilitation_subtitle": "მობილობისა და შრომისუნარიანობის აღდგენისა და შენარჩუნებისთვის",
+    "rehabilitation": "რეაბილიტაცია",
+    "rehabilitation_description": "თანამედროვე ისრაელის რეაბილიტაციის მეთოდები ორთოპედიის, ნევროლოგიის, პოსტტრავმული რეაბილიტაციის და სხვა მიმართულებებით",
+    "neck_spine": "კისრის მალები",
+    "learn_more": "მეტის გაგება",
+    "to_catalog": "კატალოგში",
+    "per_month": "თვეში",
+    "purchase": "შეძენა",
+    "our_courses": "ჩვენი კურსები",
+    "subscription_discount_notice": "ყურადღება! 3 თვეზე მეტი ვადით გამოწერაზე მოქმედებს ფასდაკლებები",
+    "categories_count": "15 კატეგორია",
+    "online_chat": "ონლაინ ჩატი",
+    "lessons_count": "1000+ გაკვეთილი",
+    "complexes_count": "36 კომპლექსი",
+    "sets_count": "{{count}} კომპლექსი",
+    "exercises_count": "{{count}} ვარჯიში",
+    "hours_count": "{{count}} საათი",
+    "loading": "იტვირთება...",
+    "duration_minutes": "{{duration}} წთ",
+    "currency": "₾",
+    "subscription_period": {
+      "one_month": "1 თვე",
+      "three_months": "3 თვე",
+      "six_months": "6 თვე",
+      "twelve_months": "12 თვე"
+    },
+    "pricing": {
+      "title": "ფასები",
+      "monthly": "თვიური",
+      "three_months": "3 თვე",
+      "six_months": "6 თვე",
+      "yearly": "წლიური",
+      "discount_notice": "ყურადღება! 3 თვეზე მეტი ვადით გამოწერაზე მოქმედებს ფასდაკლებები"
+    }
+  },
   "video_notification": {
     "title": "ვიდეო ვარჯიშები",
     "exercise_complexes": {
@@ -103,4 +153,4 @@
       "browse_courses": "კურსების დათვალიერება"
     }
   }
-} 
+}

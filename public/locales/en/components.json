@@ -77,6 +77,56 @@
     "similar_articles": "Similar articles",
     "no_similar_articles": "No similar articles found"
   },
+  "complex_description": "Description",
+  "complex_additional": "Additional",
+  "complex_demo_video": "Demo Video",
+  "complex_general_instructions": "General Instructions:",
+  "complex_recommendations": "Recommendations:",
+  "complex_equipment": "Equipment:",
+  "complex_warnings": "Warnings:",
+  "complex_total_duration": "Total complex duration {{duration}} min",
+  "complex_exercises_count": "{{count}} exercises",
+  "complex_beginner_level": "Beginner Level",
+  "complex_intermediate_level": "Intermediate Level",
+  "complex_advanced_level": "Advanced Level",
+  "header": {
+    "ecosystem_title": "product ecosystem aimed at shaping your health",
+    "rehabilitation_title": "MODERN ISRAELI REHABILITATION METHODS",
+    "rehabilitation_subtitle": "For restoring and maintaining mobility and work capacity",
+    "rehabilitation": "Rehabilitation",
+    "rehabilitation_description": "Modern Israeli rehabilitation methods in orthopedics, neurology, post-traumatic gait rehabilitation, and more",
+    "neck_spine": "Cervical spine",
+    "learn_more": "Learn more",
+    "to_catalog": "To catalog",
+    "per_month": "Per month",
+    "purchase": "Purchase",
+    "our_courses": "Our courses",
+    "subscription_discount_notice": "Attention! Discounts apply to subscriptions of 3 months or more",
+    "categories_count": "15 categories",
+    "online_chat": "Online chat",
+    "lessons_count": "1000+ lessons",
+    "complexes_count": "36 complexes",
+    "sets_count": "{{count}} sets",
+    "exercises_count": "{{count}} exercises",
+    "hours_count": "{{count}} hours",
+    "loading": "Loading...",
+    "duration_minutes": "{{duration}} min",
+    "currency": "$",
+    "subscription_period": {
+      "one_month": "1 month",
+      "three_months": "3 months",
+      "six_months": "6 months",
+      "twelve_months": "12 months"
+    },
+    "pricing": {
+      "title": "Pricing",
+      "monthly": "Monthly",
+      "three_months": "3 months",
+      "six_months": "6 months",
+      "yearly": "Yearly",
+      "discount_notice": "Attention! Discounts apply to subscriptions of 3 months or more"
+    }
+  },
   "video_notification": {
     "title": "Video Exercises",
     "exercise_complexes": {
@@ -103,4 +153,4 @@
       "browse_courses": "Browse Courses"
     }
   }
-} 
+}

@@ -77,6 +77,56 @@
     "similar_articles": "Похожие статьи",
     "no_similar_articles": "Похожих статей не найдено"
   },
+  "complex_description": "Описание",
+  "complex_additional": "Дополнительно",
+  "complex_demo_video": "Демо-видео",
+  "complex_general_instructions": "Общие указания:",
+  "complex_recommendations": "Рекомендации:",
+  "complex_equipment": "Оборудование:",
+  "complex_warnings": "Предупреждения:",
+  "complex_total_duration": "Общая длительность комплекса {{duration}} мин",
+  "complex_exercises_count": "{{count}} упражнений",
+  "complex_beginner_level": "Начальный уровень",
+  "complex_intermediate_level": "Средний уровень",
+  "complex_advanced_level": "Продвинутый уровень",
+  "header": {
+    "ecosystem_title": "экосистема продуктов направленная на формирование вашего здоровья",
+    "rehabilitation_title": "СОВРЕМЕННЫЕ ИЗРАИЛЬСКИЕ МЕТОДИКИ РЕАБИЛИТАЦИИ",
+    "rehabilitation_subtitle": "Для восстановления и поддержания подвижности и трудоспособности",
+    "rehabilitation": "Реабилитация",
+    "rehabilitation_description": "Современные израильские методики реабилитации по направлениям ортопедия, неврология, посттравматическая реабилитация походки и др.",
+    "neck_spine": "Шейный отдел позвоночника",
+    "learn_more": "Узнать больше",
+    "to_catalog": "В каталог",
+    "per_month": "В месяц",
+    "purchase": "Приобрести",
+    "our_courses": "Наши курсы",
+    "subscription_discount_notice": "Внимание! На подписки сроком от 3-х месяцев действуют скидки",
+    "categories_count": "15 категорий",
+    "online_chat": "Онлайн-чат",
+    "lessons_count": "1000+ уроков",
+    "complexes_count": "36 комплексов",
+    "sets_count": "{{count}} комплексов",
+    "exercises_count": "{{count}} упражнений",
+    "hours_count": "{{count}} часов",
+    "loading": "Загрузка...",
+    "duration_minutes": "{{duration}} мин",
+    "currency": "₽",
+    "subscription_period": {
+      "one_month": "1 месяц",
+      "three_months": "3 месяца",
+      "six_months": "6 месяцев",
+      "twelve_months": "12 месяцев"
+    },
+    "pricing": {
+      "title": "Цены",
+      "monthly": "Ежемесячно",
+      "three_months": "3 месяца",
+      "six_months": "6 месяцев",
+      "yearly": "Годовой",
+      "discount_notice": "Внимание! На подписки сроком от 3-х месяцев действуют скидки"
+    }
+  },
   "video_notification": {
     "title": "Видеоупражнения",
     "exercise_complexes": {
@@ -103,4 +153,4 @@
       "browse_courses": "Просмотр курсов"
     }
   }
-} 
+}

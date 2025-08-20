@@ -47,32 +47,7 @@ export const defaultMenuItems: MenuItem[] = [
   { id: 4, name: "Контакты", route: "contact" },
 ];
 
-const categoryDetailItems = [
-  { id: 1, text: "15 категорий", image: "/assets/icons/pulse.svg" },
-  { id: 2, text: "Онлайн-чат", image: "/assets/images/camera.svg" },
-  { id: 3, text: "1000+ уроков", image: "/assets/icons/watch.png" },
-];
 
-const complexItems = [
-  {
-    id: 1,
-    text: "15 категорий",
-    image: "/assets/icons/card.svg",
-    route: "/blogs",
-  },
-  {
-    id: 2,
-    text: "36 комплексов",
-    image: "/assets/icons/message.svg",
-    route: "/blogs",
-  },
-  {
-    id: 3,
-    text: "1000+ уроков",
-    image: "/assets/icons/heat.svg",
-    route: "/blogs",
-  },
-];
 
 const Header: React.FC<HeaderProps> = ({
   variant = "default",
@@ -81,9 +56,89 @@ const Header: React.FC<HeaderProps> = ({
   onPriceClick,
   setData,
 }) => {
+  const getLocale = () => {
+    if (typeof window !== "undefined") {
+      const storedLocale = localStorage.getItem("locale");
+      return storedLocale && ["ka", "ru", "en"].includes(storedLocale)
+        ? storedLocale
+        : "ru";
+    }
+    return "ru";
+  };
+
+  interface PriceObject {
+    monthly: number;
+    threeMonths: number;
+    sixMonths: number;
+    yearly: number;
+  }
+
+  const getLocalizedPrice = (
+    fallbackMonthly: number,
+    priceEn?: PriceObject | null,
+    priceKa?: PriceObject | null,
+    discountedEn?: PriceObject | null,
+    discountedKa?: PriceObject | null,
+    locale: string = "ru"
+  ): number => {
+    if (locale === "en") {
+      if (discountedEn && typeof discountedEn.monthly === "number") return discountedEn.monthly;
+      if (priceEn && typeof priceEn.monthly === "number") return priceEn.monthly;
+      return fallbackMonthly;
+    }
+    if (locale === "ka") {
+      if (discountedKa && typeof discountedKa.monthly === "number") return discountedKa.monthly;
+      if (priceKa && typeof priceKa.monthly === "number") return priceKa.monthly;
+      return fallbackMonthly;
+    }
+    return fallbackMonthly;
+  };
+
+  const getLocalizedText = (
+    field: { ka: string; en: string; ru: string } | undefined,
+    locale: string = "ru"
+  ): string => {
+    if (!field) return "";
+    return (
+      field[locale as keyof typeof field] ||
+      field.ru ||
+      field.en ||
+      field.ka ||
+      ""
+    );
+  };
+
+  const locale = getLocale();
   const [currentSlide, setCurrentSlide] = useState<0 | 1>(0);
   const { t } = useI18n();
   const { statistics } = useStatistics();
+
+  const categoryDetailItems = [
+    { id: 1, text: t("header.categories_count"), image: "/assets/icons/pulse.svg" },
+    { id: 2, text: t("header.online_chat"), image: "/assets/images/camera.svg" },
+    { id: 3, text: t("header.lessons_count"), image: "/assets/icons/watch.png" },
+  ];
+
+  const complexItems = [
+    {
+      id: 1,
+      text: t("header.categories_count"),
+      image: "/assets/icons/card.svg",
+      route: "/blogs",
+    },
+    {
+      id: 2,
+      text: t("header.complexes_count"),
+      image: "/assets/icons/message.svg",
+      route: "/blogs",
+    },
+    {
+      id: 3,
+      text: t("header.lessons_count"),
+      image: "/assets/icons/heat.svg",
+      route: "/blogs",
+    },
+  ];
 
   // ლოკალიზებული მენიუ items
   const localizedMenuItems = [
@@ -117,20 +172,20 @@ const Header: React.FC<HeaderProps> = ({
   const homePageHeaderItems = [
     {
       id: 1,
-      text: statistics ? `${statistics.total.sets} комплексов` : "Loading...",
+      text: statistics ? t("header.sets_count", { count: String(statistics.total.sets) }) : t("header.loading"),
       image: "/assets/images/book.svg",
       route: "/categories",
     },
     {
       id: 2,
       text: statistics
-        ? `${statistics.total.exercises} упражнений`
-        : "Loading...",
+        ? t("header.exercises_count", { count: String(statistics.total.exercises) })
+        : t("header.loading"),
       image: "/assets/icons/message.svg",
     },
     {
       id: 3,
-      text: statistics ? `${statistics.total.hours} часов` : "Loading...",
+      text: statistics ? t("header.hours_count", { count: String(statistics.total.hours) }) : t("header.loading"),
       image: "/assets/icons/video.svg",
     },
   ];
@@ -138,19 +193,19 @@ const Header: React.FC<HeaderProps> = ({
   const sectionItems = [
     {
       id: 1,
-      text: statistics ? `${statistics.total.sets} комплексов` : "Loading...",
+      text: statistics ? t("header.sets_count", { count: String(statistics.total.sets) }) : t("header.loading"),
       image: "/assets/icons/pulse.svg",
     },
     {
       id: 2,
       text: statistics
-        ? `${statistics.total.exercises} упражнений`
-        : "Loading...",
+        ? t("header.exercises_count", { count: String(statistics.total.exercises) })
+        : t("header.loading"),
       image: "/assets/images/camera.svg",
     },
     {
       id: 3,
-      text: statistics ? `${statistics.total.hours} часов` : "Loading...",
+      text: statistics ? t("header.hours_count", { count: String(statistics.total.hours) }) : t("header.loading"),
       image: "/assets/icons/watch.png",
     },
   ];
@@ -332,15 +387,14 @@ const Header: React.FC<HeaderProps> = ({
             {/* HeroTitle */}
             {variant == "default" && (
               <h2 className="mx-5  hidden md:flex text-[64px] mt-20 leading-[100%]  tracking-[-3%] max-w-[994px]">
-                экосистема продуктов направленная на формирование вашего
-                здоровья
+                {t("header.ecosystem_title")}
               </h2>
             )}
 
             {variant == "rehabilitation" && (
               <div className="flex flex-col gap-0 px-5">
                 <h2 className="mx-5  hidden md:flex text-[64px] md:mt-[40px] leading-[100%] tracking-[-3%] max-w-[994px]">
-                  СОВРЕМЕННЫЕ ИЗРАИЛЬСКИЕ МЕТОДИКИ РЕАБИЛИТАЦИИ
+                  {t("header.rehabilitation_title")}
                 </h2>
                 {currentSlide === 1 && (
                   <>
@@ -352,16 +406,14 @@ const Header: React.FC<HeaderProps> = ({
                       exit={{ opacity: 0, x: -100 }}
                       className="leading-[120%] hidden md:flex md:px-5 text-[32px] font-medium  md:mt-[92px] font-pt md:max-w-[592px] "
                     >
-                      Для восстановления и поддержания подвижности и
-                      трудоспособности
+                      {t("header.rehabilitation_subtitle")}
                     </motion.p>
                     <div className="flex md:hidden flex-col items-end justify-end h-[680px]">
                       <p className="text-[32px] leading-[100%] tracking-[-3%] text-white font-medium">
-                        СОВРЕМЕННЫЕ ИЗРАИЛЬСКИЕ МЕТОДИКИ РЕАБИЛИТАЦИИ
+                        {t("header.rehabilitation_title")}
                       </p>
                       <span className="font-pt font-medium leading-[100%]">
-                        Для восстановления и поддержания подвижности и
-                        трудоспособности
+                        {t("header.rehabilitation_subtitle")}
                       </span>
                     </div>
                   </>
@@ -445,12 +497,10 @@ const Header: React.FC<HeaderProps> = ({
                         <section className="mx-2 md:mt-5 md:mx-5 max-w-[750px]">
                           <div className="bg-[rgba(61,51,74,0.3)]  rounded-[20px] md:gap-[73.2px] gap-5 flex flex-col pl-[30px] pt-[30px] pb-[31px] mt-2">
                             <h2 className="text-[20px] md:text-[40px] leading-[120%] tracking-[-3%]">
-                              Реабилитация
+                              {t("header.rehabilitation")}
                             </h2>
                             <p className="leading-[120%] font-pt   font-medium md:max-w-[719px] text-[24px] ">
-                              Современные израильские методики реабилитации по
-                              направлениям ортопедия, неврология,
-                              посттравматическая реабилитация походки и др.
+                              {t("header.rehabilitation_description")}
                             </p>
                           </div>
                         </section>
@@ -513,7 +563,7 @@ const Header: React.FC<HeaderProps> = ({
                 <section className="mx-2 md:mt-5 md:mx-5 max-w-[729px]">
                   <div className="bg-[rgba(61,51,74,0.3)]  rounded-[20px] md:gap-[73.2px] gap-5 flex flex-col pl-[30px] pt-[30px] pb-[90px] mt-2">
                     <h2 className="text-[20px] md:text-[40px] font-pt leading-[120%] tracking-[-3%]">
-                      Шейный отдел позвоночника
+                      {t("header.neck_spine")}
                     </h2>
                   </div>
                 </section>
@@ -538,7 +588,7 @@ const Header: React.FC<HeaderProps> = ({
                       />
                     </div>
                     <h3 className="text-white text-sm font-medium font-pt">
-                      {info?.subcategoriesCount || 0} საბკატეგორია
+                      {t("header.subcategories_count", { count: info?.subcategoriesCount || 0 })}
                     </h3>
                   </motion.div>
 
@@ -559,7 +609,7 @@ const Header: React.FC<HeaderProps> = ({
                         />
                       </div>
                       <h3 className="text-white text-sm font-medium">
-                        {info?.setsCount || 0} კომპლექსი
+                        {t("header.sets_count", { count: info?.setsCount || 0 })}
                       </h3>
                     </motion.div>
                     <motion.div
@@ -577,7 +627,7 @@ const Header: React.FC<HeaderProps> = ({
                         />
                       </div>
                       <h3 className="text-white text-sm font-medium">
-                        {info?.exercisesCount || 0} სავარჯიშო
+                        {t("header.exercises_count", { count: info?.exercisesCount || 0 })}
                       </h3>
                     </motion.div>
                   </div>
@@ -612,7 +662,7 @@ const Header: React.FC<HeaderProps> = ({
                       />
                     </div>
                     <h3 className="text-white text-sm font-medium font-pt relative z-10">
-                      {info?.subcategoriesCount || 0} საბკატეგორია
+                      {t("header.subcategories_count", { count: info?.subcategoriesCount || 0 })}
                     </h3>
                   </motion.div>
 
@@ -633,7 +683,7 @@ const Header: React.FC<HeaderProps> = ({
                         />
                       </div>
                       <h3 className="text-white text-sm font-medium relative z-10">
-                        {info?.setsCount || 0} კომპლექსი
+                        {t("header.sets_count", { count: info?.setsCount || 0 })}
                       </h3>
                     </motion.div>
                     <motion.div
@@ -651,7 +701,7 @@ const Header: React.FC<HeaderProps> = ({
                         />
                       </div>
                       <h3 className="text-white text-sm font-medium relative z-10">
-                        {info?.exercisesCount || 0} სავარჯიშო
+                        {t("header.exercises_count", { count: info?.exercisesCount || 0 })}
                       </h3>
                     </motion.div>
                   </div>
@@ -690,7 +740,7 @@ const Header: React.FC<HeaderProps> = ({
                         />
                       </div>
                       <h3 className="text-white text-sm font-medium font-pt">
-                        {setData?.totalExercises || 0} упражнений
+                        {t("header.exercises_count", { count: setData?.totalExercises || 0 })}
                       </h3>
                     </motion.div>
                   </Link>
@@ -720,7 +770,7 @@ const Header: React.FC<HeaderProps> = ({
                           </div>
                           <h3 className="text-white text-sm font-medium">
                             {item.id === 2
-                              ? `${setData?.totalDuration || "00:00"} мин`
+                              ? t("header.duration_minutes", { duration: setData?.totalDuration || "00:00" })
                               : item.text}
                           </h3>
                         </motion.div>
@@ -730,18 +780,12 @@ const Header: React.FC<HeaderProps> = ({
                 </section>
 
                 <section className="mx-2 md:mt-5 md:mx-5 max-w-[729px]">
-                  <div className="bg-[rgba(61,51,74,0.3)]  rounded-[20px] md:gap-[11.2px] gap-5 flex flex-col pl-[30px] pt-[30px] pb-[90px] mt-2">
-                    <h2 className="text-[20px] md:text-[40px] font-pt leading-[120%] tracking-[-3%]">
-                      {setData?.name?.ru ||
-                        setData?.name?.en ||
-                        setData?.name?.ka ||
-                        "Обще-восстановительный, поддерживающий комплекс"}
+                  <div className="bg-[rgba(61,51,74,0.3)]  rounded-[20px] md:gap-[11.2px] gap-5 flex flex-col pl-[30px] pt-[30px] pb-[32px] mt-2">
+                    <h2 className={`text-[20px] md:text-[${locale === 'ru' ? '32' : locale === 'en' ? '38' : '36'}px] leading-[120%] tracking-[-3%]`}>
+                      {getLocalizedText(setData?.name, locale)}
                     </h2>
-                    <p className="md:mt-[10px] text-[24px] font-medium leading-[120%] font-pt break-words line-clamp-3">
-                      {setData?.description?.ru ||
-                        setData?.description?.en ||
-                        setData?.description?.ka ||
-                        "Современные израильские методики реабилитации по направлениям ортопедия, неврология, посттравматическая реабилитация походки и др."}
+                    <p className="md:mt-[10px] text-[24px] leading-[120%] font-pt break-words line-clamp-3  font-bold mt-20">
+                    {t("header.rehabilitation_description")}
                     </p>
                   </div>
                 </section>
@@ -753,16 +797,10 @@ const Header: React.FC<HeaderProps> = ({
                 <section className="mx-2 md:mt-5 md:mx-5 max-w-[729px]">
                   <div className="bg-[rgba(61,51,74,0.3)]  rounded-[20px] md:gap-[11.2px] gap-5 flex flex-col pl-[30px] pt-[30px] pb-[90px] mt-2">
                     <h2 className="text-[20px] md:text-[40px] font-pt max-w-[598px] leading-[120%] tracking-[-3%]">
-                      {setData?.name?.ru ||
-                        setData?.name?.en ||
-                        setData?.name?.ka ||
-                        "ПРОФЕССИОНАЛЬНОЕ РАЗВИТИЕ, "}
+                      {getLocalizedText(setData?.name, locale)}
                     </h2>
                     <p className="md:mt-[10px] text-[24px] max-w-[719px] font-medium leading-[120%] font-pt break-words line-clamp-3">
-                      {setData?.description?.ru ||
-                        setData?.description?.en ||
-                        setData?.description?.ka ||
-                        "Раздел обучение и проф-развитие в области реабилитации, физиотерапии и лечебно-восстановительного массажа - это коллаборация с Израильскими центрами обучения."}
+                      {getLocalizedText(setData?.description, locale)}
                     </p>
                   </div>
                 </section>
@@ -774,16 +812,10 @@ const Header: React.FC<HeaderProps> = ({
                 <section className="mx-2 md:mt-5 md:mx-5 max-w-[837px]">
                   <div className="bg-[rgba(61,51,74,0.3)]  rounded-[20px] md:gap-[11.2px] gap-5 flex flex-col pl-[30px] pt-[30px] pb-[90px] mt-2">
                     <h2 className="text-[20px] md:text-[40px] font-pt max-w-[598px] leading-[120%] tracking-[-3%]">
-                      {setData?.name?.ru ||
-                        setData?.name?.en ||
-                        setData?.name?.ka ||
-                        "Мы GHRS"}
+                      {getLocalizedText(setData?.name, locale)}
                     </h2>
                     <p className="md:mt-[10px] text-[18px] max-w-[779px] font-medium leading-[120%] font-pt ">
-                      {setData?.description?.ru ||
-                        setData?.description?.en ||
-                        setData?.description?.ka ||
-                        "Команда единомышленников, объединившая на созданной нами платформе познания и преимущества Израиля, занимающего лидирующие позиции в мире в области реабилитации, с новейшими технологическими возможностями и профильным видео-контентом, чтобы сделать доступным для вас реабилитацию и обучение и проф-развитие в области реабилитации, физиотерапии и лечебно-восстановительного массажа."}
+                      {getLocalizedText(setData?.description, locale)}
                     </p>
                   </div>
                 </section>
@@ -794,11 +826,11 @@ const Header: React.FC<HeaderProps> = ({
               <div className="flex md:hidden mt-60 mx-auto items-center justify-center gap-2">
                 <Link href={"/rehabilitation"}>
                   <div className="bg-[#3D334A] p-4 rounded-[20px] w-[176px] h-[166px]">
-                    Изучить подробнее
+                    {t("header.learn_more")}
                   </div>
                 </Link>
                 <div className="bg-[url('/assets/images/categorySliderBgs/bg4.jpg')] bg-cover bg-center p-4 rounded-[20px] w-[176px] h-[166px] ">
-                  В каталог
+                  {t("header.to_catalog")}
                 </div>
               </div>
             )}
@@ -852,7 +884,7 @@ const Header: React.FC<HeaderProps> = ({
                                       className={`bg-[#3D334A] p-5 -mt-8 hover:scale-105 duration-700`}
                                     >
                                       <h3 className="text-[24px] ">
-                                        Изучить подробнее
+                                        {t("header.learn_more")}
                                       </h3>
                                     </div>
                                   </Link>
@@ -871,13 +903,20 @@ const Header: React.FC<HeaderProps> = ({
                                   onClick={onPriceClick}
                                 >
                                   <h3 className="text-[42px] leading-[90%] uppercase">
-                                    {setData?.price?.monthly || 500} ₽
+                                    {getLocalizedPrice(
+                                      setData?.price?.monthly || 500,
+                                      setData?.priceEn || null,
+                                      setData?.priceKa || null,
+                                      setData?.discountedPriceEn || null,
+                                      setData?.discountedPriceKa || null,
+                                      locale
+                                    )}{t("header.currency")}
                                   </h3>
                                   <span className="text-[18px] md:mb-[99px] md:mt-1.5 leading-[90%] uppercase">
-                                    В месяц
+                                    {t("header.per_month")}
                                   </span>
                                   <h2 className="text-[26px] md:mt-[99px] leading-[90%] uppercase">
-                                    Приобрести
+                                    {t("header.purchase")}
                                   </h2>
                                 </div>
                               )}
@@ -885,7 +924,7 @@ const Header: React.FC<HeaderProps> = ({
                               {variant == "professional" && (
                                 <div className="bg-[#3D334A] bg-center bg-cover hover:scale-105 duration-700 p-5 -mt-8 cursor-pointer">
                                   <span className="text-[18px] md:mb-[99px] md:mt-1.5 leading-[90%] uppercase">
-                                    Наши курсы
+                                    {t("header.our_courses")}
                                   </span>
                                 </div>
                               )}
@@ -904,7 +943,7 @@ const Header: React.FC<HeaderProps> = ({
               font-medium leading-[120%] font-pt right-10 top-[0px]"
               >
                 <p>
-                  Внимание! На подписки сроком от 3-х месяцев действуют скидки
+                  {t("header.subscription_discount_notice")}
                 </p>
               </div>
             )}

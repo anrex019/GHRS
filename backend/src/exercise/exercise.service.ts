@@ -49,9 +49,9 @@ export class ExerciseService {
 
     return this.exerciseModel
       .find(filter)
-      .populate('set', 'name description')
-      .populate('category', 'name')
-      .populate('subcategory', 'name')
+      .populate('set', 'name description recommendations additional demoVideoUrl duration difficulty equipment warnings thumbnailImage totalExercises totalDuration difficultyLevels levels price priceKa priceEn discountedPrice discountedPriceKa discountedPriceEn isActive isPublished sortOrder categoryId subCategoryId createdAt updatedAt')
+      .populate('category', 'name isActive isPublished sortOrder createdAt updatedAt')
+      .populate('subcategory', 'name isActive isPublished sortOrder categoryId createdAt updatedAt')
       .select('+videoUrlEn')
       .sort({ sortOrder: 1, createdAt: -1 })
       .exec();
@@ -60,9 +60,9 @@ export class ExerciseService {
   async findOne(id: string): Promise<Exercise> {
     const exercise = await this.exerciseModel
       .findById(id)
-      .populate('set', 'name description')
-      .populate('category', 'name')
-      .populate('subcategory', 'name')
+      .populate('set', 'name description recommendations additional demoVideoUrl duration difficulty equipment warnings thumbnailImage totalExercises totalDuration difficultyLevels levels price priceKa priceEn discountedPrice discountedPriceKa discountedPriceEn isActive isPublished sortOrder categoryId subCategoryId createdAt updatedAt')
+      .populate('category', 'name isActive isPublished sortOrder createdAt updatedAt')
+      .populate('subcategory', 'name isActive isPublished sortOrder categoryId createdAt updatedAt')
       .select('+videoUrlEn')
       .exec();
 
@@ -90,9 +90,9 @@ export class ExerciseService {
 
     const exercise = await this.exerciseModel
       .findByIdAndUpdate(id, updateData, { new: true })
-      .populate('set', 'name description')
-      .populate('category', 'name')
-      .populate('subcategory', 'name')
+      .populate('set', 'name description recommendations additional demoVideoUrl duration difficulty equipment warnings thumbnailImage totalExercises totalDuration difficultyLevels levels price priceKa priceEn discountedPrice discountedPriceKa discountedPriceEn isActive isPublished sortOrder categoryId subCategoryId createdAt updatedAt')
+      .populate('category', 'name isActive isPublished sortOrder createdAt updatedAt')
+      .populate('subcategory', 'name isActive isPublished sortOrder categoryId createdAt updatedAt')
       .select('+videoUrlEn')
       .exec();
 
@@ -114,9 +114,9 @@ export class ExerciseService {
   async findBySet(setId: string): Promise<Exercise[]> {
     return this.exerciseModel
       .find({ setId: new Types.ObjectId(setId) })
-      .populate('set', 'name description')
-      .populate('category', 'name')
-      .populate('subcategory', 'name')
+      .populate('set', 'name description recommendations additional demoVideoUrl duration difficulty equipment warnings thumbnailImage totalExercises totalDuration difficultyLevels levels price priceKa priceEn discountedPrice discountedPriceKa discountedPriceEn isActive isPublished sortOrder categoryId subCategoryId createdAt updatedAt')
+      .populate('category', 'name isActive isPublished sortOrder createdAt updatedAt')
+      .populate('subcategory', 'name isActive isPublished sortOrder categoryId createdAt updatedAt')
       .select('+videoUrlEn')
       .sort({ sortOrder: 1, createdAt: -1 })
       .exec();
@@ -125,9 +125,9 @@ export class ExerciseService {
   async findByCategory(categoryId: string): Promise<Exercise[]> {
     return this.exerciseModel
       .find({ categoryId: new Types.ObjectId(categoryId) })
-      .populate('set', 'name description')
-      .populate('category', 'name')
-      .populate('subcategory', 'name')
+      .populate('set', 'name description recommendations additional demoVideoUrl duration difficulty equipment warnings thumbnailImage totalExercises totalDuration difficultyLevels levels price priceKa priceEn discountedPrice discountedPriceKa discountedPriceEn isActive isPublished sortOrder categoryId subCategoryId createdAt updatedAt')
+      .populate('category', 'name isActive isPublished sortOrder createdAt updatedAt')
+      .populate('subcategory', 'name isActive isPublished sortOrder categoryId createdAt updatedAt')
       .select('+videoUrlEn')
       .sort({ sortOrder: 1, createdAt: -1 })
       .exec();
@@ -136,9 +136,9 @@ export class ExerciseService {
   async findByDifficulty(difficulty: 'easy' | 'medium' | 'hard'): Promise<Exercise[]> {
     return this.exerciseModel
       .find({ difficulty, isActive: true, isPublished: true })
-      .populate('set', 'name description')
-      .populate('category', 'name')
-      .populate('subcategory', 'name')
+      .populate('set', 'name description recommendations additional demoVideoUrl duration difficulty equipment warnings thumbnailImage totalExercises totalDuration difficultyLevels levels price priceKa priceEn discountedPrice discountedPriceKa discountedPriceEn isActive isPublished sortOrder categoryId subCategoryId createdAt updatedAt')
+      .populate('category', 'name isActive isPublished sortOrder createdAt updatedAt')
+      .populate('subcategory', 'name isActive isPublished sortOrder categoryId createdAt updatedAt')
       .select('+videoUrlEn')
       .sort({ sortOrder: 1, createdAt: -1 })
       .exec();
@@ -148,9 +148,9 @@ export class ExerciseService {
   async findPopular(): Promise<Exercise[]> {
     return this.exerciseModel
       .find({ isPopular: true, isActive: true, isPublished: true })
-      .populate('set', 'name description')
-      .populate('category', 'name')
-      .populate('subcategory', 'name')
+      .populate('set', 'name description recommendations additional demoVideoUrl duration difficulty equipment warnings thumbnailImage totalExercises totalDuration difficultyLevels levels price priceKa priceEn discountedPrice discountedPriceKa discountedPriceEn isActive isPublished sortOrder categoryId subCategoryId createdAt updatedAt')
+      .populate('category', 'name isActive isPublished sortOrder createdAt updatedAt')
+      .populate('subcategory', 'name isActive isPublished sortOrder categoryId createdAt updatedAt')
       .select('+videoUrlEn')
       .sort({ sortOrder: 1, createdAt: -1 })
       .exec();
@@ -161,9 +161,9 @@ export class ExerciseService {
     
     const exercise = await this.exerciseModel
       .findByIdAndUpdate(id, { isPopular }, { new: true })
-      .populate('set', 'name description')
-      .populate('category', 'name')
-      .populate('subcategory', 'name')
+      .populate('set', 'name description recommendations additional demoVideoUrl duration difficulty equipment warnings thumbnailImage totalExercises totalDuration difficultyLevels levels price priceKa priceEn discountedPrice discountedPriceKa discountedPriceEn isActive isPublished sortOrder categoryId subCategoryId createdAt updatedAt')
+      .populate('category', 'name isActive isPublished sortOrder createdAt updatedAt')
+      .populate('subcategory', 'name isActive isPublished sortOrder categoryId createdAt updatedAt')
       .select('+videoUrlEn')
       .exec();
 
