@@ -633,10 +633,14 @@ const Header: React.FC<HeaderProps> = ({
                 </section>
 
                 <section className="mx-2 md:mt-5 md:mx-5 max-w-[729px]">
-                  <div className="bg-[rgba(61,51,74,0.3)]  rounded-[20px] md:gap-[73.2px] gap-5 flex flex-col pl-[30px] pt-[30px] pb-[90px] mt-2">
-                    <h2 className="text-[20px] md:text-[40px] font-pt leading-[120%] tracking-[-3%]">
+                  <div className="bg-[rgba(61,51,74,0.3)]  rounded-[20px] gap-5 flex flex-col pl-[30px] pt-[30px] pb-[90px] mt-2">
+                    <h2 className="text-[20px] md:text-[40px] leading-[120%] tracking-[-3%]">
                       {title}
+                      Title
                     </h2>
+                    <p>
+                        {t("header.category_description")}
+                    </p>
                   </div>
                 </section>
               </div>
