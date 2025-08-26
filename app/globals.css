@@ -165,19 +165,31 @@ header {
   width: 100%;
   bottom: 0;
 }
-.cutout-container {
+/* .cutout-container {
   position: absolute;
   bottom: 0;
   right: 0;
   background-color: white;
+} */
+
+.cutout-container {
+  background-color: #fff;
+  border-top-left-radius: 40px;
+  flex-direction: column;
+  padding: 20px;
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
+
 .white-cutout {
   position: relative;
   z-index: 999;
   display: flex;
   gap: 20px;
   /* background-color: white; */
-  padding: 42px 10px 10px;
+  padding: 42px 0px 0px 10px;
 }
 .white-cutout div {
   /* background-color: blue; */
@@ -215,7 +227,7 @@ button {
   content: "";
   position: absolute;
   bottom: 0;
-  right: 532px;
+  right: 562px;
   width: 40px;
   height: 40px;
   background: radial-gradient(circle at top left, transparent 40px, white 40px);
@@ -223,7 +235,7 @@ button {
 .sub-header1::before {
   content: "";
   position: absolute;
-  bottom: 0;
+  bottom: 30px;
   right: 0;
   width: 40px;
   height: 40px;
