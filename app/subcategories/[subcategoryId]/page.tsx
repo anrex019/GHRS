@@ -2,7 +2,7 @@
 
 import { use } from "react";
 import { useCategoryComplete } from "../../hooks/useCategoryComplete";
-import Header from "../../components/Header";
+import Header from "../../components/Header/Header";
 import WorksSlider from "../../components/WorksSlider";
 import Subscribe from "../../components/Subscribe";
 import ReviewSlider from "../../components/ReviewSlider";
@@ -24,14 +24,13 @@ export default function SubcategoryPage({
 
   // ვპოულობთ ამ კონკრეტულ subcategory-ს
   const selectedSubcategory = categoryData?.subcategories?.find(
-    sub => sub._id === subcategoryId
+    (sub) => sub._id === subcategoryId
   );
 
   // ვპოულობთ ამ subcategory-ს სეტებს
-  const subcategorySets = categoryData?.sets?.filter(
-    set => set.subCategoryId === subcategoryId
-  ) || [];
-
+  const subcategorySets =
+    categoryData?.sets?.filter((set) => set.subCategoryId === subcategoryId) ||
+    [];
 
   if (loading) {
     return (
@@ -109,28 +108,41 @@ export default function SubcategoryPage({
     description: getLocalizedText(set?.description, locale),
     image: set.thumbnailImage || "/assets/images/workMan.png",
     exerciseCount: set.exercises?.length || 0,
-    categoryName: getLocalizedText(selectedSubcategory?.name as { ka: string; en: string; ru: string }, locale),
+    categoryName: getLocalizedText(
+      selectedSubcategory?.name as { ka: string; en: string; ru: string },
+      locale
+    ),
     price: `${set.price?.monthly || 920}₾/თვე`,
     monthlyPrice: set.price?.monthly || 920,
-    categoryId: set.categoryId || '',
+    categoryId: set.categoryId || "",
     subcategoryId: subcategoryId,
   }));
 
   return (
     <div className="">
-     <Header
+      <Header
         variant="categories"
-        title={getLocalizedText(selectedSubcategory?.name as { ka: string; en: string; ru: string }, locale)}
+        title={getLocalizedText(
+          selectedSubcategory?.name as { ka: string; en: string; ru: string },
+          locale
+        )}
         info={{
           setsCount,
           subcategoriesCount: 0, // subcategory-ს ქვეკატეგორიები არ აქვს
           exercisesCount,
         }}
-      /> 
+      />
       <div className="md:pt-[100px] pt-[400px]">
         {Array.isArray(formattedSets) && formattedSets.length > 0 && (
           <div>
-            <WorksSlider title={t("common.complexes")} works={formattedSets} linkType="complex" fromMain={false} seeAll={false} scrollable={false} />
+            <WorksSlider
+              title={t("common.complexes")}
+              works={formattedSets}
+              linkType="complex"
+              fromMain={false}
+              seeAll={false}
+              scrollable={false}
+            />
           </div>
         )}
 
@@ -140,9 +152,7 @@ export default function SubcategoryPage({
             <h3 className="text-2xl font-cinzel text-gray-600 mb-2">
               {t("common.no_sets_found")}
             </h3>
-            <p className="text-gray-500">
-              {t("common.no_sets_description")}
-            </p>
+            <p className="text-gray-500">{t("common.no_sets_description")}</p>
           </div>
         )}
 
@@ -158,4 +168,4 @@ export default function SubcategoryPage({
       </div>
     </div>
   );
-} 
+}

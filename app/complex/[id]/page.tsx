@@ -2,7 +2,7 @@
 "use client";
 import React from "react";
 import { CiPlay1 } from "react-icons/ci";
-import Header from "../../components/Header";
+import Header from "../../components/Header/Header";
 import Subscribe from "../../components/Subscribe";
 import ReviewSlider from "../../components/ReviewSlider";
 import Tabs from "../../components/Tabs";
@@ -179,7 +179,6 @@ const Complex = ({ params }: ComplexPageProps) => {
 
   const locale = getLocale();
 
-
   // Loading state
   if (loading || exercisesLoading) {
     return (
@@ -283,7 +282,9 @@ const Complex = ({ params }: ComplexPageProps) => {
                       {getLocalizedText(setData.description, locale)}
                     </span>
                     <p className="text-[rgba(132,111,160,1)] md:text-2xl text-[16px] leading-[120%] font-medium">
-                      {t("complex_total_duration", { duration: setData.totalDuration })}
+                      {t("complex_total_duration", {
+                        duration: setData.totalDuration,
+                      })}
                     </p>
                   </div>
                   <div>
@@ -332,37 +333,50 @@ const Complex = ({ params }: ComplexPageProps) => {
                   </h1>
                   <div className="rounded-[15px] overflow-hidden shadow-lg">
                     <ReactPlayer
-                      src={
-                        (() => {
-                          // Get video URL based on language and availability
-                          let videoUrl: string | undefined;
-                          
-                          if (typeof setData.demoVideoUrl === 'object') {
-                            // პირველად ვცდილობთ შესაბამისი ენის ვიდეოს
-                            if (locale === 'en' && setData.demoVideoUrl.en) {
-                              videoUrl = setData.demoVideoUrl.en;
-                            } else if (locale === 'ru' && setData.demoVideoUrl.ru) {
-                              videoUrl = setData.demoVideoUrl.ru;
-                            } else if (locale === 'ka' && setData.demoVideoUrl.ru) {
-                              videoUrl = setData.demoVideoUrl.ru; // KA-სთვის ვიყენებთ RU-ს
-                            }
-                            
-                            // fallback-ად ვცდილობთ სხვა ენის ვიდეოს
-                            if (!videoUrl) {
-                              videoUrl = setData.demoVideoUrl.en || setData.demoVideoUrl.ru;
-                            }
-                          } else {
-                            videoUrl = setData.demoVideoUrl as string;
+                      src={(() => {
+                        // Get video URL based on language and availability
+                        let videoUrl: string | undefined;
+
+                        if (typeof setData.demoVideoUrl === "object") {
+                          // პირველად ვცდილობთ შესაბამისი ენის ვიდეოს
+                          if (locale === "en" && setData.demoVideoUrl.en) {
+                            videoUrl = setData.demoVideoUrl.en;
+                          } else if (
+                            locale === "ru" &&
+                            setData.demoVideoUrl.ru
+                          ) {
+                            videoUrl = setData.demoVideoUrl.ru;
+                          } else if (
+                            locale === "ka" &&
+                            setData.demoVideoUrl.ru
+                          ) {
+                            videoUrl = setData.demoVideoUrl.ru; // KA-სთვის ვიყენებთ RU-ს
                           }
-                          
-                          // Convert .ru URLs to .com only for non-Russian locales
-                          if (videoUrl && videoUrl.includes('ghrs-group.ru') && locale !== 'ru') {
-                            videoUrl = videoUrl.replace('ghrs-group.ru', 'ghrs-group.com');
+
+                          // fallback-ად ვცდილობთ სხვა ენის ვიდეოს
+                          if (!videoUrl) {
+                            videoUrl =
+                              setData.demoVideoUrl.en ||
+                              setData.demoVideoUrl.ru;
                           }
-                          
-                          return videoUrl || "/videos/hero.mp4";
-                        })()
-                      }
+                        } else {
+                          videoUrl = setData.demoVideoUrl as string;
+                        }
+
+                        // Convert .ru URLs to .com only for non-Russian locales
+                        if (
+                          videoUrl &&
+                          videoUrl.includes("ghrs-group.ru") &&
+                          locale !== "ru"
+                        ) {
+                          videoUrl = videoUrl.replace(
+                            "ghrs-group.ru",
+                            "ghrs-group.com"
+                          );
+                        }
+
+                        return videoUrl || "/videos/hero.mp4";
+                      })()}
                       controls
                       width="100%"
                       height="360px"
@@ -373,13 +387,27 @@ const Complex = ({ params }: ComplexPageProps) => {
             </div>
             <div className="order-1 md:order-3 flex flex-col md:gap-4 gap-5">
               {/* Beginner Level */}
-              <div className={`relative ${exercisesByDifficulty?.easy ? "bg-[#846FA0]" : "bg-[rgba(249,247,254,1)]"} bg-no-repeat p-5 rounded-[10px] flex justify-between items-center`}>
+              <div
+                className={`relative ${
+                  exercisesByDifficulty?.easy
+                    ? "bg-[#846FA0]"
+                    : "bg-[rgba(249,247,254,1)]"
+                } bg-no-repeat p-5 rounded-[10px] flex justify-between items-center`}
+              >
                 <div className="flex md:flex-row md:gap-[40px] flex-col md:items-center">
-                  <h3 className={`md:text-2xl text-[18px] leading-[120%] tracking-[-3%] uppercase ${exercisesByDifficulty?.easy ? "text-[rgba(255,255,255,1)]" : "text-[rgba(132,111,160,1)]"}`}>
+                  <h3
+                    className={`md:text-2xl text-[18px] leading-[120%] tracking-[-3%] uppercase ${
+                      exercisesByDifficulty?.easy
+                        ? "text-[rgba(255,255,255,1)]"
+                        : "text-[rgba(132,111,160,1)]"
+                    }`}
+                  >
                     {t("complex_beginner_level")}
                   </h3>
                   <span className="text-[rgba(132,111,160,1)] md:text-[14px] text-xs leading-[90%] tracking-[0%] uppercase">
-                    {t("complex_exercises_count", { count: String(exercisesByDifficulty?.easy || 0) })}
+                    {t("complex_exercises_count", {
+                      count: String(exercisesByDifficulty?.easy || 0),
+                    })}
                   </span>
                 </div>
                 {shouldShowPlayButton("easy") && (
@@ -427,16 +455,20 @@ const Complex = ({ params }: ComplexPageProps) => {
                         <span className="text-[20px] cursor-pointer font-bold text-[rgba(132,111,160,1)] leading-[120%]">
                           {setData.discountedPrice?.monthly ? (
                             <>
-                              {setData.discountedPrice.monthly}{t("header.currency")}/{t("header.per_month")}
+                              {setData.discountedPrice.monthly}
+                              {t("header.currency")}/{t("header.per_month")}
                               <span className="text-[14px] text-[rgba(132,111,160,0.5)] line-through block">
-                                {setData.price.monthly}{t("header.currency")}/{t("header.per_month")}
+                                {setData.price.monthly}
+                                {t("header.currency")}/{t("header.per_month")}
                               </span>
                             </>
                           ) : (
                             <>
-                              {setData.price.monthly}{t("header.currency")}/{t("header.per_month")}
+                              {setData.price.monthly}
+                              {t("header.currency")}/{t("header.per_month")}
                               <span className="text-[14px] text-[rgba(132,111,160,0.5)] line-through block">
-                                {setData.price.monthly}{t("header.currency")}/{t("header.per_month")}
+                                {setData.price.monthly}
+                                {t("header.currency")}/{t("header.per_month")}
                               </span>
                             </>
                           )}
@@ -461,16 +493,20 @@ const Complex = ({ params }: ComplexPageProps) => {
                         <span className="text-[20px] cursor-pointer font-bold text-[rgba(132,111,160,1)] leading-[120%]">
                           {setData.discountedPrice?.threeMonths ? (
                             <>
-                              {setData.discountedPrice.threeMonths}{t("header.currency")}/{t("header.per_month")}
+                              {setData.discountedPrice.threeMonths}
+                              {t("header.currency")}/{t("header.per_month")}
                               <span className="text-[14px] text-[rgba(132,111,160,0.5)] line-through block">
-                                {setData.price.threeMonths}{t("header.currency")}/{t("header.per_month")}
+                                {setData.price.threeMonths}
+                                {t("header.currency")}/{t("header.per_month")}
                               </span>
                             </>
                           ) : (
                             <>
-                              {setData.price.threeMonths}{t("header.currency")}/{t("header.per_month")}
+                              {setData.price.threeMonths}
+                              {t("header.currency")}/{t("header.per_month")}
                               <span className="text-[14px] text-[rgba(132,111,160,0.5)] line-through block">
-                                {setData.price.monthly * 3}{t("header.currency")}/{t("header.per_month")}
+                                {setData.price.monthly * 3}
+                                {t("header.currency")}/{t("header.per_month")}
                               </span>
                             </>
                           )}
@@ -495,16 +531,20 @@ const Complex = ({ params }: ComplexPageProps) => {
                         <span className="text-[20px] cursor-pointer font-bold text-[rgba(132,111,160,1)] leading-[120%]">
                           {setData.discountedPrice?.sixMonths ? (
                             <>
-                              {setData.discountedPrice.sixMonths}{t("header.currency")}/{t("header.per_month")}
+                              {setData.discountedPrice.sixMonths}
+                              {t("header.currency")}/{t("header.per_month")}
                               <span className="text-[14px] text-[rgba(132,111,160,0.5)] line-through block">
-                                {setData.price.sixMonths}{t("header.currency")}/{t("header.per_month")}
+                                {setData.price.sixMonths}
+                                {t("header.currency")}/{t("header.per_month")}
                               </span>
                             </>
                           ) : (
                             <>
-                              {setData.price.sixMonths}{t("header.currency")}/{t("header.per_month")}
+                              {setData.price.sixMonths}
+                              {t("header.currency")}/{t("header.per_month")}
                               <span className="text-[14px] text-[rgba(132,111,160,0.5)] line-through block">
-                                {setData.price.monthly * 6}{t("header.currency")}/{t("header.per_month")}
+                                {setData.price.monthly * 6}
+                                {t("header.currency")}/{t("header.per_month")}
                               </span>
                             </>
                           )}
@@ -529,16 +569,20 @@ const Complex = ({ params }: ComplexPageProps) => {
                         <span className="text-[20px] cursor-pointer font-bold text-[rgba(132,111,160,1)] leading-[120%]">
                           {setData.discountedPrice?.yearly ? (
                             <>
-                              {setData.discountedPrice.yearly}{t("header.currency")}/{t("header.per_month")}
+                              {setData.discountedPrice.yearly}
+                              {t("header.currency")}/{t("header.per_month")}
                               <span className="text-[14px] text-[rgba(132,111,160,0.5)] line-through block">
-                                {setData.price.yearly}{t("header.currency")}/{t("header.per_month")}
+                                {setData.price.yearly}
+                                {t("header.currency")}/{t("header.per_month")}
                               </span>
                             </>
                           ) : (
                             <>
-                              {setData.price.yearly}{t("header.currency")}/{t("header.per_month")}
+                              {setData.price.yearly}
+                              {t("header.currency")}/{t("header.per_month")}
                               <span className="text-[14px] text-[rgba(132,111,160,0.5)] line-through block">
-                                {setData.price.monthly * 12}{t("header.currency")}/{t("header.per_month")}
+                                {setData.price.monthly * 12}
+                                {t("header.currency")}/{t("header.per_month")}
                               </span>
                             </>
                           )}
@@ -568,7 +612,9 @@ const Complex = ({ params }: ComplexPageProps) => {
                     {t("complex_intermediate_level")}
                   </h3>
                   <span className="text-[rgba(132,111,160,1)] md:text-[14px] text-xs leading-[90%] tracking-[0%] uppercase">
-                    {t("complex_exercises_count", { count: String(exercisesByDifficulty?.medium || 0) })}
+                    {t("complex_exercises_count", {
+                      count: String(exercisesByDifficulty?.medium || 0),
+                    })}
                   </span>
                   {shouldShowLockIcon("medium") && (
                     <CiLock
@@ -612,7 +658,9 @@ const Complex = ({ params }: ComplexPageProps) => {
                     {t("complex_advanced_level")}
                   </h3>
                   <span className="text-[rgba(132,111,160,1)] md:text-[14px] text-xs leading-[90%] tracking-[0%] uppercase">
-                    {t("complex_exercises_count", { count: String(exercisesByDifficulty?.hard || 0) })}
+                    {t("complex_exercises_count", {
+                      count: String(exercisesByDifficulty?.hard || 0),
+                    })}
                   </span>
                   {shouldShowLockIcon("hard") && (
                     <CiLock
@@ -669,8 +717,8 @@ const Complex = ({ params }: ComplexPageProps) => {
           />
         </div>
 
-        <Modal 
-          isOpen={modalOpen} 
+        <Modal
+          isOpen={modalOpen}
           onClose={() => setModalOpen(false)}
           title="მოდალური ფანჯარა"
           message="აქ იქნება თქვენი კონტენტი (მაგალითად, ვიდეო ან სხვა ინფორმაცია)."

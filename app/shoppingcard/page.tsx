@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import DesktopNavbar from "../components/Navbar/DesktopNavbar";
 import MobileNavbar from "../components/Navbar/MobileNavbar";
-import { defaultMenuItems } from "../components/Header";
+import { defaultMenuItems } from "../components/Header/Header";
 import Image from "next/image";
 import PayPalButton from "../components/PayPalButton";
 import type { PaymentResponse } from "../components/PayPalButton";

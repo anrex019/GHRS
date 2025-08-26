@@ -3,7 +3,7 @@ import React, { Suspense } from "react";
 import { useRouter } from "next/navigation";
 import DesktopNavbar from "../components/Navbar/DesktopNavbar";
 import MobileNavbar from "../components/Navbar/MobileNavbar";
-import { defaultMenuItems } from "../components/Header";
+import { defaultMenuItems } from "../components/Header/Header";
 import PersonInfo from "../components/PersonalAccount/PersonInfo";
 import PersonGoals from "../components/PersonalAccount/PersonGoals";
 import Achievements from "../components/Achievements";
@@ -83,31 +83,31 @@ const PersonalAccountContent: React.FC = () => {
   // Test functions for achievements
   const testExerciseCompletion = async () => {
     try {
-      await recordActivity('exercise', 'test-exercise-1', 5);
-      alert('Exercise activity recorded! Check achievements.');
+      await recordActivity("exercise", "test-exercise-1", 5);
+      alert("Exercise activity recorded! Check achievements.");
     } catch (error) {
-      console.error('Failed to record exercise:', error);
-      alert('Failed to record exercise activity.');
+      console.error("Failed to record exercise:", error);
+      alert("Failed to record exercise activity.");
     }
   };
 
   const testSetCompletion = async () => {
     try {
-      await recordActivity('set', 'test-set-1', 30);
-      alert('Set activity recorded! Check achievements.');
+      await recordActivity("set", "test-set-1", 30);
+      alert("Set activity recorded! Check achievements.");
     } catch (error) {
-      console.error('Failed to record set:', error);
-      alert('Failed to record set activity.');
+      console.error("Failed to record set:", error);
+      alert("Failed to record set activity.");
     }
   };
 
   const testCourseCompletion = async () => {
     try {
-      await recordActivity('course', 'test-course-1', 120);
-      alert('Course activity recorded! Check achievements.');
+      await recordActivity("course", "test-course-1", 120);
+      alert("Course activity recorded! Check achievements.");
     } catch (error) {
-      console.error('Failed to record course:', error);
-      alert('Failed to record course activity.');
+      console.error("Failed to record course:", error);
+      alert("Failed to record course activity.");
     }
   };
 
@@ -156,7 +156,11 @@ const PersonalAccountContent: React.FC = () => {
 
   return (
     <div className="md:gap-20 px-4 md:px-5">
-      <DesktopNavbar menuItems={defaultMenuItems} blogBg={false} allCourseBg={false} />
+      <DesktopNavbar
+        menuItems={defaultMenuItems}
+        blogBg={false}
+        allCourseBg={false}
+      />
       <MobileNavbar />
       <ContinueWatchingBanner />
       <div className="mx-2 md:mx-10 md:mt-10 mt-0  flex flex-col gap-3 md:flex-row-reverse">
@@ -203,7 +207,7 @@ const PersonalAccountContent: React.FC = () => {
         ) : activeTab === 1 ? (
           <div>
             <Achievements alwaysShowAll />
-            
+
             {/* Test buttons for achievements - Development only */}
             {/* {process.env.NODE_ENV === 'development' && (
               <div className="p-4 md:px-10 md:mx-10 rounded-[20px] bg-yellow-50 border border-yellow-200 mt-6">
@@ -237,42 +241,52 @@ const PersonalAccountContent: React.FC = () => {
         ) : (
           <>
             {renderTabContent()}
-            <WorksSlider 
+            <WorksSlider
               title={t("personal_account.recommendations")}
-              works={sets?.map(set => {
-                const category = categories?.find(cat => cat._id === set.categoryId);
-                
-                const getCategoryName = () => {
-                  if (!category) return 'კატეგორია';
-                  if (locale === 'ka') return category.name.ka || category.name.ru || category.name.en;
-                  if (locale === 'ru') return category.name.ru || category.name.en;
-                  return category.name.en || category.name.ru;
-                };
-                
-                const getSetTitle = () => {
-                  if (locale === 'ka') return set.name.ru || set.name.en; // Use Russian as fallback for Georgian
-                  if (locale === 'ru') return set.name.ru || set.name.en;
-                  return set.name.en || set.name.ru;
-                };
-                
-                const getSetDescription = () => {
-                  if (locale === 'ka') return set.description.ru || set.description.en; // Use Russian as fallback for Georgian
-                  if (locale === 'ru') return set.description.ru || set.description.en;
-                  return set.description.en || set.description.ru;
-                };
-                
-                return {
-                  id: set._id,
-                  title: getSetTitle(),
-                  description: getSetDescription(),
-                  image: set.thumbnailImage || '',
-                  exerciseCount: set.totalExercises,
-                  categoryName: getCategoryName(),
-                  monthlyPrice: set.price?.monthly || 0,
-                  categoryId: set.categoryId,
-                  subcategoryId: set.subCategoryId
-                };
-              }) || []} 
+              works={
+                sets?.map((set) => {
+                  const category = categories?.find(
+                    (cat) => cat._id === set.categoryId
+                  );
+
+                  const getCategoryName = () => {
+                    if (!category) return "კატეგორია";
+                    if (locale === "ka")
+                      return (
+                        category.name.ka || category.name.ru || category.name.en
+                      );
+                    if (locale === "ru")
+                      return category.name.ru || category.name.en;
+                    return category.name.en || category.name.ru;
+                  };
+
+                  const getSetTitle = () => {
+                    if (locale === "ka") return set.name.ru || set.name.en; // Use Russian as fallback for Georgian
+                    if (locale === "ru") return set.name.ru || set.name.en;
+                    return set.name.en || set.name.ru;
+                  };
+
+                  const getSetDescription = () => {
+                    if (locale === "ka")
+                      return set.description.ru || set.description.en; // Use Russian as fallback for Georgian
+                    if (locale === "ru")
+                      return set.description.ru || set.description.en;
+                    return set.description.en || set.description.ru;
+                  };
+
+                  return {
+                    id: set._id,
+                    title: getSetTitle(),
+                    description: getSetDescription(),
+                    image: set.thumbnailImage || "",
+                    exerciseCount: set.totalExercises,
+                    categoryName: getCategoryName(),
+                    monthlyPrice: set.price?.monthly || 0,
+                    categoryId: set.categoryId,
+                    subcategoryId: set.subCategoryId,
+                  };
+                }) || []
+              }
               linkType="complex"
               fromMain={false}
               seeAll={false}
@@ -289,7 +303,7 @@ const PersonalAccountContent: React.FC = () => {
 
 const PersonalAccount: React.FC = () => {
   const { t } = useI18n();
-  
+
   return (
     <Suspense
       fallback={

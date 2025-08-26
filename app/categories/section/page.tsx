@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useCategoryComplete } from "../../hooks/useCategoryComplete";
 import { usePopularExercises } from "../../hooks/useExercises";
-import Header from "../../components/Header";
+import Header from "../../components/Header/Header";
 import WorksSlider from "../../components/WorksSlider";
 import Works from "../../components/Works";
 import Subscribe from "../../components/Subscribe";
@@ -40,8 +40,6 @@ function SectionContent() {
   const subcategorySets =
     categoryData?.sets?.filter((set) => set.subCategoryId === subcategoryId) ||
     [];
-
-
 
   if (loading) {
     return (
@@ -157,7 +155,10 @@ function SectionContent() {
               )}
               works={formattedSets}
               linkType="complex"
-              fromMain={false} seeAll={false} scrollable={false}            />
+              fromMain={false}
+              seeAll={false}
+              scrollable={false}
+            />
           </div>
         )}
 
@@ -199,7 +200,7 @@ function SectionContent() {
           </div>
         )}
 
-<Subscribe
+        <Subscribe
           backgroundImage="/assets/images/categorySliderBgs/bg1.jpg"
           titleKey="subscription.test_title"
           buttonTextKey="buttons.take_test"
@@ -232,7 +233,12 @@ function SectionContent() {
           />
         </div>
 
-        <Professional withBanner={false} title={""} bgColor={"#F9F7FE"} withProfText={true} />
+        <Professional
+          withBanner={false}
+          title={""}
+          bgColor={"#F9F7FE"}
+          withProfText={true}
+        />
       </div>
       <Footer />
     </div>

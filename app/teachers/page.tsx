@@ -2,13 +2,17 @@ import React from "react";
 import TeacherInfo from "../components/TeacherInfo";
 import DesktopNavbar from "../components/Navbar/DesktopNavbar";
 import MobileNavbar from "../components/Navbar/MobileNavbar";
-import { defaultMenuItems } from "../components/Header";
+import { defaultMenuItems } from "../components/Header/Header";
 
 const Teachers = () => {
   return (
     <div>
       <div className="bg-[#F9F7FE]">
-        <DesktopNavbar menuItems={defaultMenuItems} blogBg={false} allCourseBg={false} />
+        <DesktopNavbar
+          menuItems={defaultMenuItems}
+          blogBg={false}
+          allCourseBg={false}
+        />
         <MobileNavbar />
         <TeacherInfo />
       </div>

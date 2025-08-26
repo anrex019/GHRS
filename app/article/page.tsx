@@ -2,7 +2,7 @@
 
 import React from "react";
 import DesktopNavbar from "../components/Navbar/DesktopNavbar";
-import { defaultMenuItems } from "../components/Header";
+import { defaultMenuItems } from "../components/Header/Header";
 import MobileNavbar from "../components/Navbar/MobileNavbar";
 import ArticleWithSlider from "../components/ArticleWithSlider";
 import Article from "../components/Article";
@@ -13,17 +13,17 @@ const defaultArticle: ArticleType = {
   title: {
     ka: "სტატია",
     en: "Article",
-    ru: "Статья"
+    ru: "Статья",
   },
   content: {
     ka: "კონტენტი",
     en: "Content",
-    ru: "Контент"
+    ru: "Контент",
   },
   excerpt: {
     ka: "მოკლე აღწერა",
     en: "Short description",
-    ru: "Краткое описание"
+    ru: "Краткое описание",
   },
   categoryId: "1",
   category: {
@@ -31,20 +31,24 @@ const defaultArticle: ArticleType = {
     name: {
       ka: "კატეგორია",
       en: "Category",
-      ru: "Категория"
-    }
+      ru: "Категория",
+    },
   },
   commentsCount: 0,
   readTime: "5",
   tableOfContents: [],
   comments: [],
-  featuredImages: []
+  featuredImages: [],
 };
 
 const ArticlePage = () => {
   return (
     <div className="bg-[#F9F7FE] py-1">
-      <DesktopNavbar menuItems={defaultMenuItems} blogBg={true} allCourseBg={true} />
+      <DesktopNavbar
+        menuItems={defaultMenuItems}
+        blogBg={true}
+        allCourseBg={true}
+      />
       <MobileNavbar />
       <div className="mx-10">
         <ArticleWithSlider />

@@ -1,6 +1,6 @@
 "use client";
 
-import Header, { defaultMenuItems } from "../components/Header";
+import Header, { defaultMenuItems } from "../components/Header/Header";
 
 import Blog from "../components/Blog";
 import DesktopNavbar from "../components/Navbar/DesktopNavbar";
@@ -10,7 +10,11 @@ import { Footer } from "../components/Footer";
 const BlogRoute = () => {
   return (
     <div className="bg-[#F9F7FE]">
-      <DesktopNavbar menuItems={defaultMenuItems} blogBg={true} allCourseBg={false} />
+      <DesktopNavbar
+        menuItems={defaultMenuItems}
+        blogBg={true}
+        allCourseBg={false}
+      />
       <MobileNavbar />
       <Header variant="blog" />
       <div className="flex flex-col gap-10 mb-10">

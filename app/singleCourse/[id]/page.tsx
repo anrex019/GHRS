@@ -3,10 +3,10 @@
 import Image from "next/image";
 import { FaBullhorn, FaBookOpen } from "react-icons/fa";
 import DesktopNavbar from "../../components/Navbar/DesktopNavbar";
-import { defaultMenuItems } from "../../components/Header";
+import { defaultMenuItems } from "../../components/Header/Header";
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { fetchCourse, fetchRelatedCourses } from '../../config/api';
+import { fetchCourse, fetchRelatedCourses } from "../../config/api";
 import CourseSlider from "@/app/components/CourseSlider";
 import SliderArrows from "@/app/components/SliderArrows";
 import { Footer } from "@/app/components/Footer";
@@ -94,11 +94,11 @@ export default function SingleCourse() {
   const params = useParams();
   const router = useRouter();
   const courseId = params.id as string;
-  
-  console.log('Course ID from params:', courseId);
+
+  console.log("Course ID from params:", courseId);
 
   const [course, setCourse] = useState<Course | null>(null);
-  
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [relatedCourses, setRelatedCourses] = useState<Course[]>([]);
@@ -106,15 +106,18 @@ export default function SingleCourse() {
 
   // Auth context
   const { isAuthenticated } = useAuth();
-  
+
   // I18n context
   const { t } = useI18n();
-  
+
   // Modal context
   const { showError, showSuccess } = useModal();
-  
+
   // Course access check
-  const { hasAccess, loading: accessLoading } = useUserAccess(undefined, courseId);
+  const { hasAccess, loading: accessLoading } = useUserAccess(
+    undefined,
+    courseId
+  );
 
   const sliderRef = useRef<HTMLDivElement>(null);
 
@@ -133,16 +136,20 @@ export default function SingleCourse() {
   // კურსის ყიდვის ფუნქცია
   const handlePurchaseCourse = () => {
     if (!course) return;
-    
+
     // Check if user already has access
     if (hasAccess) {
-      showError(t('course.already_purchased') || 'You already have access to this course!', t('course.already_purchased_title') || 'Already Purchased');
+      showError(
+        t("course.already_purchased") ||
+          "You already have access to this course!",
+        t("course.already_purchased_title") || "Already Purchased"
+      );
       return;
     }
-    
+
     // Check if user is authenticated
     if (!isAuthenticated) {
-      router.push('/auth/login');
+      router.push("/auth/login");
       return;
     }
 
@@ -150,75 +157,93 @@ export default function SingleCourse() {
     const courseItem = {
       id: course._id,
       title: course.title.ru || course.title.en, // ✅ title ველი
-      desc: course.shortDescription?.ru || course.description?.ru || 'No description', // ✅ desc ველი
+      desc:
+        course.shortDescription?.ru ||
+        course.description?.ru ||
+        "No description", // ✅ desc ველი
       img: course.thumbnail, // ✅ img ველი
       price: course.price,
       subscription: 1, // ✅ default subscription
       totalExercises: course.syllabus?.length || 0,
-      totalDuration: course.duration ? `${course.duration} წუთი` : '0:00',
-      itemType: 'course', // ✅ itemType ველი
-      type: 'course' // ✅ backward compatibility
+      totalDuration: course.duration ? `${course.duration} წუთი` : "0:00",
+      itemType: "course", // ✅ itemType ველი
+      type: "course", // ✅ backward compatibility
     };
 
     // არსებული cart-ის მოძებნა ან ცარიელი array-ის შექმნა
-    const existingCart = localStorage.getItem('cart');
+    const existingCart = localStorage.getItem("cart");
     const cart = existingCart ? JSON.parse(existingCart) : [];
-    
+
     // Check if item already exists in cart
-    const existingItemIndex = cart.findIndex((item: any) => item.id === courseId);
+    const existingItemIndex = cart.findIndex(
+      (item: any) => item.id === courseId
+    );
     if (existingItemIndex !== -1) {
       // Update existing item with new data
       cart[existingItemIndex] = courseItem;
-      showSuccess(t('course.updated_in_cart') || 'Course updated in cart!', t('course.success_title') || 'Success');
+      showSuccess(
+        t("course.updated_in_cart") || "Course updated in cart!",
+        t("course.success_title") || "Success"
+      );
     } else {
       // Add new item
       cart.push(courseItem);
-      showSuccess(t('course.added_to_cart') || 'Course added to cart!', t('course.success_title') || 'Success');
+      showSuccess(
+        t("course.added_to_cart") || "Course added to cart!",
+        t("course.success_title") || "Success"
+      );
     }
-    
+
     // localStorage-ში შენახვა
-    localStorage.setItem('cart', JSON.stringify(cart));
-    
+    localStorage.setItem("cart", JSON.stringify(cart));
+
     // shopping cart გვერდზე გადასვლა
-    router.push('/shoppingcard');
+    router.push("/shoppingcard");
   };
 
   useEffect(() => {
     const loadCourse = async () => {
       if (!courseId) {
-        console.log('No courseId found in params');
-        setError('Course ID is required');
+        console.log("No courseId found in params");
+        setError("Course ID is required");
         setLoading(false);
         return;
       }
 
       try {
         setLoading(true);
-        console.log('Loading course with ID:', courseId);
+        console.log("Loading course with ID:", courseId);
         const data = await fetchCourse(courseId);
-        console.log('Loaded course data:', data);
+        console.log("Loaded course data:", data);
         setCourse(data);
         setError(null);
-        
+
         // Load related courses if categoryId exists
         if (data.categoryId) {
           await loadRelatedCourses(courseId, data.categoryId);
         }
       } catch (err) {
-        console.error('Error loading course:', err);
-        setError(err instanceof Error ? err.message : 'Failed to load course');
+        console.error("Error loading course:", err);
+        setError(err instanceof Error ? err.message : "Failed to load course");
       } finally {
         setLoading(false);
       }
     };
 
-    const loadRelatedCourses = async (currentCourseId: string, categoryId: string) => {
+    const loadRelatedCourses = async (
+      currentCourseId: string,
+      categoryId: string
+    ) => {
       try {
         setRelatedLoading(true);
-        const relatedData = await fetchRelatedCourses(currentCourseId, categoryId, 4);
+        const relatedData = await fetchRelatedCourses(
+          currentCourseId,
+          categoryId,
+          4
+        );
         setRelatedCourses(relatedData.courses || []);
       } catch (err) {
-        console.error('Error loading related courses:', err);
+        console.error("Error loading related courses:", err);
       } finally {
         setRelatedLoading(false);
       }
@@ -247,7 +272,7 @@ export default function SingleCourse() {
           <h2 className="text-xl text-red-600 mb-4">
             შეცდომა კურსის ჩატვირთვაში
           </h2>
-          <p className="text-gray-600">{error || 'Course not found'}</p>
+          <p className="text-gray-600">{error || "Course not found"}</p>
         </div>
       </div>
     );
@@ -255,8 +280,8 @@ export default function SingleCourse() {
 
   return (
     <>
-      <DesktopNavbar 
-        menuItems={defaultMenuItems} 
+      <DesktopNavbar
+        menuItems={defaultMenuItems}
         blogBg={false}
         allCourseBg={false}
       />
@@ -285,7 +310,7 @@ export default function SingleCourse() {
               </span>
             </div>
             <div className="border-t border-[#EEEAFB]" />
-            
+
             {/* Duration Info */}
             <div className="flex gap-[10px] py-[18px] items-center">
               <span className="w-[48px] h-[48px] flex items-center justify-center bg-[#E1D7FA] rounded-[12px]">
@@ -293,13 +318,15 @@ export default function SingleCourse() {
               </span>
               <div className="flex flex-col">
                 <span className="font-semibold text-[18px] text-[rgba(132,111,160,1)]">
-                  {course.duration ? `${course.duration} минут` : 'Не указано'}
+                  {course.duration ? `${course.duration} минут` : "Не указано"}
                 </span>
-                <span className="text-sm text-[#A9A6B4]">Продолжительность</span>
+                <span className="text-sm text-[#A9A6B4]">
+                  Продолжительность
+                </span>
               </div>
             </div>
             <div className="border-t border-[#EEEAFB]" />
-            
+
             {/* Lessons Count */}
             <div className="flex gap-[10px] py-[18px] items-center">
               <span className="w-[48px] h-[48px] flex items-center justify-center bg-[#E1D7FA] rounded-[12px]">
@@ -307,12 +334,16 @@ export default function SingleCourse() {
               </span>
               <div className="flex flex-col">
                 <span className="font-semibold text-[18px] text-[rgba(132,111,160,1)]">
-                  {course.syllabus ? `${course.syllabus.length} уроков` : 'Не указано'}
+                  {course.syllabus
+                    ? `${course.syllabus.length} уроков`
+                    : "Не указано"}
                 </span>
-                <span className="text-sm text-[#A9A6B4]">Количество уроков</span>
+                <span className="text-sm text-[#A9A6B4]">
+                  Количество уроков
+                </span>
               </div>
             </div>
-            
+
             {/* Languages */}
             {course.languages && course.languages.length > 0 && (
               <>
@@ -324,8 +355,12 @@ export default function SingleCourse() {
                   <div className="flex flex-col">
                     <div className="flex gap-1 flex-wrap">
                       {course.languages.map((lang, index) => (
-                        <span key={index} className="text-[rgba(132,111,160,1)] font-semibold text-[14px]">
-                          {lang.toUpperCase()}{index < course.languages!.length - 1 ? ', ' : ''}
+                        <span
+                          key={index}
+                          className="text-[rgba(132,111,160,1)] font-semibold text-[14px]"
+                        >
+                          {lang.toUpperCase()}
+                          {index < course.languages!.length - 1 ? ", " : ""}
                         </span>
                       ))}
                     </div>
@@ -354,21 +389,21 @@ export default function SingleCourse() {
               </div>
             ) : hasAccess ? (
               <div className="bg-green-500 h-[48px] rounded-lg flex items-center justify-center px-5 py-3 font-bold text-white mb-1 text-lg w-full">
-                <h2>{t('course.access_granted') || '✓ YOU HAVE ACCESS'}</h2>
+                <h2>{t("course.access_granted") || "✓ YOU HAVE ACCESS"}</h2>
               </div>
             ) : isAuthenticated ? (
-              <button 
+              <button
                 onClick={handlePurchaseCourse}
                 className="bg-[url('/assets/images/bluebg.jpg')] bg-cover bg-center h-[48px] rounded-lg flex items-center justify-center px-5 py-3 font-bold text-white duration-300 hover:text-[#8D7EF3] mb-1 text-lg cursor-pointer hover:bg-[#e2dbff] transition-colors w-full"
               >
-                <h2>{t('course.purchase_course') || 'PURCHASE COURSE'}</h2>
+                <h2>{t("course.purchase_course") || "PURCHASE COURSE"}</h2>
               </button>
             ) : (
-              <button 
-                onClick={() => router.push('/auth/login')}
+              <button
+                onClick={() => router.push("/auth/login")}
                 className="bg-gray-500 h-[48px] rounded-lg flex items-center justify-center px-5 py-3 font-bold text-white duration-300 hover:bg-gray-600 mb-1 text-lg cursor-pointer transition-colors w-full"
               >
-                <h2>{t('course.login_to_purchase') || 'LOGIN TO PURCHASE'}</h2>
+                <h2>{t("course.login_to_purchase") || "LOGIN TO PURCHASE"}</h2>
               </button>
             )}
             <div className="hidden md:flex flex-col gap-4">
@@ -441,68 +476,94 @@ export default function SingleCourse() {
                     <h1 className="text-2xl font-bold uppercase text-[#302A3A]">
                       {course.title.ru}
                     </h1>
-                    
+
                     {/* Short Description */}
                     {course.shortDescription && (
                       <div className="bg-[#F1EEFF] p-4 rounded-lg">
-                        <h3 className="font-semibold text-[#8D7EF3] mb-2">Краткое описание:</h3>
-                        <div 
+                        <h3 className="font-semibold text-[#8D7EF3] mb-2">
+                          Краткое описание:
+                        </h3>
+                        <div
                           className="text-[#8D7EF3]"
-                          dangerouslySetInnerHTML={{ __html: course.shortDescription.ru }}
+                          dangerouslySetInnerHTML={{
+                            __html: course.shortDescription.ru,
+                          }}
                         />
                       </div>
                     )}
-                    
+
                     {/* Main Description */}
-                    <div 
+                    <div
                       className="text-[#A9A6B4]"
-                      dangerouslySetInnerHTML={{ __html: course.description.ru }}
+                      dangerouslySetInnerHTML={{
+                        __html: course.description.ru,
+                      }}
                     />
-                    
+
                     {/* Prerequisites */}
                     {course.prerequisites && (
                       <div className="bg-[#FFF9E6] p-4 rounded-lg">
-                        <h3 className="font-semibold text-[#B8860B] mb-2">Требования:</h3>
-                        <div 
+                        <h3 className="font-semibold text-[#B8860B] mb-2">
+                          Требования:
+                        </h3>
+                        <div
                           className="text-[#8B7355]"
-                          dangerouslySetInnerHTML={{ __html: course.prerequisites.ru }}
+                          dangerouslySetInnerHTML={{
+                            __html: course.prerequisites.ru,
+                          }}
                         />
                       </div>
                     )}
-                    
+
                     {/* Learning Outcomes */}
-                    {course.learningOutcomes && course.learningOutcomes.length > 0 && (
-                      <div>
-                        <h3 className="font-semibold text-[#302A3A] mb-3">Результаты обучения:</h3>
-                        <ul className="list-disc list-inside space-y-2 text-[#A9A6B4]">
-                          {course.learningOutcomes.map((outcome, index) => (
-                            <li key={index} dangerouslySetInnerHTML={{ __html: outcome.ru }} />
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    
+                    {course.learningOutcomes &&
+                      course.learningOutcomes.length > 0 && (
+                        <div>
+                          <h3 className="font-semibold text-[#302A3A] mb-3">
+                            Результаты обучения:
+                          </h3>
+                          <ul className="list-disc list-inside space-y-2 text-[#A9A6B4]">
+                            {course.learningOutcomes.map((outcome, index) => (
+                              <li
+                                key={index}
+                                dangerouslySetInnerHTML={{ __html: outcome.ru }}
+                              />
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
                     {/* Languages */}
                     {course.languages && course.languages.length > 0 && (
                       <div className="flex items-center gap-2">
-                        <span className="font-semibold text-[#302A3A]">Языки курса:</span>
+                        <span className="font-semibold text-[#302A3A]">
+                          Языки курса:
+                        </span>
                         <div className="flex gap-2">
                           {course.languages.map((lang, index) => (
-                            <span key={index} className="bg-[#E1D7FA] text-[#8D7EF3] px-2 py-1 rounded text-sm">
+                            <span
+                              key={index}
+                              className="bg-[#E1D7FA] text-[#8D7EF3] px-2 py-1 rounded text-sm"
+                            >
                               {lang.toUpperCase()}
                             </span>
                           ))}
                         </div>
                       </div>
                     )}
-                    
+
                     {/* Tags */}
                     {course.tags && course.tags.length > 0 && (
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-semibold text-[#302A3A]">Теги:</span>
+                        <span className="font-semibold text-[#302A3A]">
+                          Теги:
+                        </span>
                         <div className="flex gap-2 flex-wrap">
                           {course.tags.map((tag, index) => (
-                            <span key={index} className="bg-[#F0F0F0] text-[#666] px-2 py-1 rounded text-sm">
+                            <span
+                              key={index}
+                              className="bg-[#F0F0F0] text-[#666] px-2 py-1 rounded text-sm"
+                            >
                               {tag}
                             </span>
                           ))}
@@ -510,7 +571,7 @@ export default function SingleCourse() {
                       </div>
                     )}
                   </article>
-                  
+
                   {/* Related Courses Section */}
                   {relatedCourses.length > 0 && (
                     <div className="mt-8">
@@ -523,7 +584,7 @@ export default function SingleCourse() {
                           onScrollRight={scrollRight}
                         />
                       </div>
-                      
+
                       {relatedLoading ? (
                         <div className="flex justify-center py-8">
                           <div className="animate-spin rounded-full h-8 w-8 border-4 border-purple-600 border-t-transparent"></div>
@@ -533,7 +594,9 @@ export default function SingleCourse() {
                           ref={sliderRef}
                           className="overflow-x-auto scrollbar-hide flex gap-4 mb-6"
                         >
-                          <CourseSlider courses={relatedCourses as unknown as any[]} />
+                          <CourseSlider
+                            courses={relatedCourses as unknown as any[]}
+                          />
                         </div>
                       )}
                     </div>
@@ -549,29 +612,41 @@ export default function SingleCourse() {
                         className="bg-white rounded-2xl px-6 py-4 font-bold text-[#302A3A] text-[15px] mb-2"
                       >
                         <div className="flex items-center justify-between mb-2">
-                          <span className="text-[#8D7EF3]">Урок {index + 1}</span>
+                          <span className="text-[#8D7EF3]">
+                            Урок {index + 1}
+                          </span>
                           {item.duration > 0 && (
                             <span className="text-[#A9A6B4] text-sm font-normal">
                               {item.duration} мин
                             </span>
                           )}
                         </div>
-                        <div dangerouslySetInnerHTML={{ __html: item.title.ru }} />
+                        <div
+                          dangerouslySetInnerHTML={{ __html: item.title.ru }}
+                        />
                         {item.description && (
-                          <div 
+                          <div
                             className="font-normal mt-2 text-[#A9A6B4]"
-                            dangerouslySetInnerHTML={{ __html: item.description.ru }}
+                            dangerouslySetInnerHTML={{
+                              __html: item.description.ru,
+                            }}
                           />
                         )}
                       </div>
                     ))}
-                    
+
                     {/* Total Duration */}
                     <div className="bg-[#F1EEFF] rounded-2xl px-6 py-4 mt-4">
                       <div className="flex items-center justify-between">
-                        <span className="font-bold text-[#8D7EF3]">Общая продолжительность:</span>
+                        <span className="font-bold text-[#8D7EF3]">
+                          Общая продолжительность:
+                        </span>
                         <span className="text-[#8D7EF3] font-semibold">
-                          {course.syllabus.reduce((total, item) => total + (item.duration || 0), 0)} минут
+                          {course.syllabus.reduce(
+                            (total, item) => total + (item.duration || 0),
+                            0
+                          )}{" "}
+                          минут
                         </span>
                       </div>
                       <div className="text-[#A9A6B4] text-sm mt-1">
@@ -579,7 +654,7 @@ export default function SingleCourse() {
                       </div>
                     </div>
                   </div>
-                  
+
                   {/* Related Courses Section */}
                   {relatedCourses.length > 0 && (
                     <div className="mt-8">
@@ -592,7 +667,7 @@ export default function SingleCourse() {
                           onScrollRight={scrollRight}
                         />
                       </div>
-                      
+
                       {relatedLoading ? (
                         <div className="flex justify-center py-8">
                           <div className="animate-spin rounded-full h-8 w-8 border-4 border-purple-600 border-t-transparent"></div>
@@ -602,7 +677,9 @@ export default function SingleCourse() {
                           ref={sliderRef}
                           className="overflow-x-auto scrollbar-hide flex gap-4 mb-6"
                         >
-                          <CourseSlider courses={relatedCourses as unknown as any[]} />
+                          <CourseSlider
+                            courses={relatedCourses as unknown as any[]}
+                          />
                         </div>
                       )}
                     </div>
@@ -613,21 +690,27 @@ export default function SingleCourse() {
                 <div>
                   <div className="flex flex-col gap-2">
                     {course.announcements
-                      .filter(announcement => announcement.isActive)
+                      .filter((announcement) => announcement.isActive)
                       .map((announcement, index) => (
-                      <div
-                        key={index}
-                        className="bg-[#F1EEFF] rounded-2xl px-6 py-4 text-[#8D7EF3] text-[15px] mb-2"
-                      >
-                        <h3 
-                          className="font-bold mb-2"
-                          dangerouslySetInnerHTML={{ __html: announcement.title.ru }}
-                        />
-                        <div dangerouslySetInnerHTML={{ __html: announcement.content.ru }} />
-                      </div>
-                    ))}
+                        <div
+                          key={index}
+                          className="bg-[#F1EEFF] rounded-2xl px-6 py-4 text-[#8D7EF3] text-[15px] mb-2"
+                        >
+                          <h3
+                            className="font-bold mb-2"
+                            dangerouslySetInnerHTML={{
+                              __html: announcement.title.ru,
+                            }}
+                          />
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: announcement.content.ru,
+                            }}
+                          />
+                        </div>
+                      ))}
                   </div>
-                  
+
                   {/* Related Courses Section */}
                   {relatedCourses.length > 0 && (
                     <div className="mt-8">
@@ -640,7 +723,7 @@ export default function SingleCourse() {
                           onScrollRight={scrollRight}
                         />
                       </div>
-                      
+
                       {relatedLoading ? (
                         <div className="flex justify-center py-8">
                           <div className="animate-spin rounded-full h-8 w-8 border-4 border-purple-600 border-t-transparent"></div>
@@ -650,7 +733,9 @@ export default function SingleCourse() {
                           ref={sliderRef}
                           className="overflow-x-auto scrollbar-hide flex gap-4 mb-6"
                         >
-                          <CourseSlider courses={relatedCourses as unknown as any[]} />
+                          <CourseSlider
+                            courses={relatedCourses as unknown as any[]}
+                          />
                         </div>
                       )}
                     </div>
@@ -663,11 +748,9 @@ export default function SingleCourse() {
                     <div className="font-bold text-[#302A3A] text-[15px] mb-4">
                       ОТЗЫВЫ УЧЕНИКОВ
                     </div>
-                    <div className="text-[#A9A6B4]">
-                      Пока нет отзывов
-                    </div>
+                    <div className="text-[#A9A6B4]">Пока нет отзывов</div>
                   </div>
-                  
+
                   {/* Related Courses Section */}
                   {relatedCourses.length > 0 && (
                     <div className="mt-8">
@@ -680,7 +763,7 @@ export default function SingleCourse() {
                           onScrollRight={scrollRight}
                         />
                       </div>
-                      
+
                       {relatedLoading ? (
                         <div className="flex justify-center py-8">
                           <div className="animate-spin rounded-full h-8 w-8 border-4 border-purple-600 border-t-transparent"></div>
@@ -690,7 +773,9 @@ export default function SingleCourse() {
                           ref={sliderRef}
                           className="overflow-x-auto scrollbar-hide flex gap-4 mb-6"
                         >
-                          <CourseSlider courses={relatedCourses as unknown as any[]} />
+                          <CourseSlider
+                            courses={relatedCourses as unknown as any[]}
+                          />
                         </div>
                       )}
                     </div>
@@ -698,13 +783,10 @@ export default function SingleCourse() {
                 </div>
               )}
             </div>
-            
           </main>
-          
         </div>
-       
       </div>
       <Footer />
     </>
   );
-} 
+}

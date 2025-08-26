@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Article from "../../components/Article";
 import DesktopNavbar from "../../components/Navbar/DesktopNavbar";
-import { defaultMenuItems } from "../../components/Header";
+import { defaultMenuItems } from "@/app/components/Header/Header";
 import MobileNavbar from "../../components/Navbar/MobileNavbar";
 import { getArticleById } from "../../api/articles";
 import type { Article as ArticleType } from "../../api/articles";

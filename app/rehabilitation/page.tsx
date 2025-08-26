@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Header from "../components/Header";
+import Header from "../components/Header/Header";
 import VideoNotification from "../components/VideoNotification";
 import Advantages from "../components/Advantages";
 import Image from "next/image";

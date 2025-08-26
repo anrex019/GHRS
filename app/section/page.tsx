@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../components/Header";
+import Header from "../components/Header/Header";
 import WorksSlider from "../components/WorksSlider";
 import Subscribe from "../components/Subscribe";
 import ReviewSlider from "../components/ReviewSlider";
@@ -64,35 +64,35 @@ const Section = () => {
         }}
       />
       <div className="md:my-4">
-      <WorksSlider works={homePageWorks} title="Subcategories"/>
+        <WorksSlider works={homePageWorks} title="Subcategories" />
       </div>
       <div className="md:mb-8">
-      <WorksSlider works={homePageWorks} />
+        <WorksSlider works={homePageWorks} />
       </div>
       <Subscribe
-          backgroundImage="/assets/images/categorySliderBgs/bg1.jpg"
-          titleKey="subscription.test_title"
-          buttonTextKey="buttons.take_test"
-          buttonTextColor="#3D334A"
-          buttonBgColor="#FFFFFF"
-          bgCenter={true}
-          containerStyles="custom-class"
-          titleStyles="text-white"
-          buttonStyles="hover:opacity-80"
-        />
+        backgroundImage="/assets/images/categorySliderBgs/bg1.jpg"
+        titleKey="subscription.test_title"
+        buttonTextKey="buttons.take_test"
+        buttonTextColor="#3D334A"
+        buttonBgColor="#FFFFFF"
+        bgCenter={true}
+        containerStyles="custom-class"
+        titleStyles="text-white"
+        buttonStyles="hover:opacity-80"
+      />
       <div className="md:mb-8">
-      <ReviewSlider title={""} />
+        <ReviewSlider title={""} />
       </div>
       <div className="md:my-8">
-      <Blog
-        title="GRS МЕДИА"
-        withSlider={true}
-        layoutType="default"
-        withBanner={false}
+        <Blog
+          title="GRS МЕДИА"
+          withSlider={true}
+          layoutType="default"
+          withBanner={false}
         />
-        </div>
-        <Professional withBanner={false} title="" />
-        <Footer />
+      </div>
+      <Professional withBanner={false} title="" />
+      <Footer />
     </div>
   );
 };

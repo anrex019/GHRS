@@ -1,6 +1,6 @@
 "use client";
 // import { useCategories } from "../context/CategoryContext";
-import Header from "../components/Header";
+import Header from "../components/Header/Header";
 import WorksSlider from "../components/WorksSlider";
 import Subscribe from "../components/Subscribe";
 import ReviewSlider from "../components/ReviewSlider";
@@ -63,7 +63,13 @@ export default function CategoriesPage() {
       <div className="md:pt-[100px] pt-[400px]">
         {/*  */}
         <Section border={0} borderColor="none" />
-        <WorksSlider title="Комплексы" works={homePageWorks} fromMain={false} seeAll={true} scrollable={true} />
+        <WorksSlider
+          title="Комплексы"
+          works={homePageWorks}
+          fromMain={false}
+          seeAll={true}
+          scrollable={true}
+        />
         <div className="md:my-10">
           <Subscribe
             backgroundImage="/assets/images/categorySliderBgs/bg4.jpg"
@@ -96,7 +102,9 @@ export default function CategoriesPage() {
         <Professional
           title={"GRS Профразвитие"}
           bgColor={"#F9F7FE"}
-          withProfText={true} withBanner={false} />
+          withProfText={true}
+          withBanner={false}
+        />
       </div>
       <Footer />
     </div>

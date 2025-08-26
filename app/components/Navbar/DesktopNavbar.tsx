@@ -8,7 +8,7 @@ import NavbarIconButton from "./NavbarIconButton";
 import LanguageSelector from "./LanguageSelector";
 import Link from "next/link";
 import { MenuItem } from "../Header";
-import BackgroundImage from './BackgroundImage';
+import BackgroundImage from "./BackgroundImage";
 
 interface DesktopNavbarProps {
   menuItems: MenuItem[];
@@ -78,10 +78,20 @@ const DesktopNavbar: React.FC<DesktopNavbarProps> = ({
             />
           </div>
           <div onClick={(e) => handleProtectedRouteClick(e, "/shoppingcard")}>
-            <NavbarIconButton className="hover:scale-105 duration-300 cursor-pointer" src="/assets/images/store.svg" alt="Store" />
+            <NavbarIconButton
+              className="hover:scale-105 duration-300 cursor-pointer"
+              src="/assets/images/store.svg"
+              alt="Store"
+            />
           </div>
-          <div onClick={(e) => handleProtectedRouteClick(e, "/personalAccount")}>
-            <NavbarIconButton className="hover:scale-105 duration-300 cursor-pointer" src={"/assets/images/person.svg"} alt="Person" />
+          <div
+            onClick={(e) => handleProtectedRouteClick(e, "/personalAccount")}
+          >
+            <NavbarIconButton
+              className="hover:scale-105 duration-300 cursor-pointer"
+              src={"/assets/images/person.svg"}
+              alt="Person"
+            />
           </div>
         </div>
       </header>

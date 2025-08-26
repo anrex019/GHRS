@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef, useEffect, useState } from "react";
 import DesktopNavbar from "../components/Navbar/DesktopNavbar";
-import { defaultMenuItems } from "../components/Header";
+import { defaultMenuItems } from "../components/Header/Header";
 import MobileNavbar from "../components/Navbar/MobileNavbar";
 import Category from "../components/Category";
 import { CiSearch } from "react-icons/ci";
