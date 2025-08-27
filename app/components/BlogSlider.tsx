@@ -140,11 +140,10 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
 
   return (
     <div className="w-full font-pt">
-      {/* <div className="flex md:flex-row flex-col gap-2.5 mb-10 w-full px-0"> */}
-      <div className="grid md:grid-cols-4 grid-cols-1 gap-5 mb-10 w-full px-0">
+      <div className="flex md:flex-row flex-col gap-2.5 mb-10 w-full px-0">
         {/* Featured Blog */}
         {featuredBlog && isDesktop && (
-          <Link href={getArticleLink(featuredBlog)} className="md:col-span-2">
+          <Link href={getArticleLink(featuredBlog)}>
             <div className="bg-white md:p-2 md:pb-5 hover:shadow-lg duration-300 transition-shadow md:h-[518px] w-[280px] md:w-auto flex-shrink-0 rounded-[20px] flex-col justify-between snap-center">
               <div className="relative min-w-[300px] max-w-[690px] ">
                 <Image
@@ -180,7 +179,9 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
                 </div>
               </div>
               <div className="px-3 pb-3 font-[Bowler] mt-4">
-                
+                {/* <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%] bg-[#E9DFF6] rounded-[6px] text-[14px] uppercase">
+                  {getArticleCount(featuredBlog.articles?.length || 0)}
+                </span> */}
               </div>
             </div>
           </Link>
@@ -188,7 +189,7 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
 
         {/* Desktop Grid */}
         {isDesktop ? (
-          <div className="relative col-span-2">
+          <div className="relative">
             <div className="grid grid-cols-2 grid-rows-2 gap-5">
               {getCurrentBlogs().map((blog) => (
                 <Link key={blog._id} href={getArticleLink(blog)}>

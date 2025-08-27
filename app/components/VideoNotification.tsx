@@ -20,7 +20,7 @@ const VideoNotification = ({ variant }: VideoNotificationProps) => {
           ? t("video_notification.title")
           : "Video Exercises"}
       </h2>
-      <div className="flex flex-col md:flex-row gap-4 md:gap-5 w-full items-center md:justify-between mx-auto">
+      <div className="flex flex-col md:flex-row gap-4 w-full items-center md:justify-between mx-auto px-20">
         <div
           className="md:p-[30px] p-4 md:w-[456px] md:h-[505px] md:rounded-[40px] w-[359px] h-[397px] rounded-3xl"
           style={{
