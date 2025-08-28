@@ -4,7 +4,7 @@ import { PiStudent } from "react-icons/pi";
 import { FaCertificate } from "react-icons/fa6";
 import { MdOutlineWeb } from "react-icons/md";
 import DesktopNavbar from "./Navbar/DesktopNavbar";
-import { defaultMenuItems } from "./Header";
+import { defaultMenuItems } from "./Header/Header";
 import { useI18n } from "../context/I18nContext";
 
 import Professional from "./Professional";
