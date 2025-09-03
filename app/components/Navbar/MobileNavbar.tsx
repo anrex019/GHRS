@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { MobileLogo } from "../Logo";
 import NavbarIconButton from "./NavbarIconButton";
-import { defaultMenuItems } from "../Header";
+import { defaultMenuItems } from "../Header/Header";
 import Link from "next/link";
 
 const MobileNavbar = () => {

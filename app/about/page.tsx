@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Header from "../components/Header";
+import Header from "../components/Header/Header";
 import Category from "../components/Category";
 import Rehabilitation from "../components/Rehabilitation";
 // import Works from "../components/Works";

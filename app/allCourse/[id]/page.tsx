@@ -2,7 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import DesktopNavbar from "@/app/components/Navbar/DesktopNavbar";
-import { defaultMenuItems } from "@/app/components/Header";
+import { defaultMenuItems } from "@/app/components/Header/Header";
 
 const staticCourse = {
   title: "Ортопедия",

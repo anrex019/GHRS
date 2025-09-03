@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useMemo } from "react";
 import DesktopNavbar from "../components/Navbar/DesktopNavbar";
-import { defaultMenuItems } from "../components/Header";
+import { defaultMenuItems } from "../components/Header/Header";
 import MobileNavbar from "../components/Navbar/MobileNavbar";
 import { CiSearch } from "react-icons/ci";
 import CategoryFilter from "../components/CategoryFilter";

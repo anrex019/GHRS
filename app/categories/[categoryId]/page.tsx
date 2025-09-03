@@ -4,7 +4,7 @@ import { use } from "react";
 import { useCategoryComplete } from "../../hooks/useCategoryComplete";
 import Image from "next/image";
 import Link from "next/link";
-import Header from "../../components/Header";
+import Header from "../../components/Header/Header";
 import SliderArrows from "../../components/SliderArrows";
 import WorksSlider from "../../components/WorksSlider";
 import Subscribe from "../../components/Subscribe";
@@ -24,10 +24,8 @@ export default function CategoriesPage({
   const { categoryData, loading, error } = useCategoryComplete(categoryId);
   const { t } = useI18n();
 
-
   // ახლა სრული მონაცემები გვაქვს
   const selectedCategory = categoryData?.category;
-
 
   if (loading) {
     return (
@@ -122,7 +120,6 @@ export default function CategoriesPage({
     subcategoryId: set.subCategoryId || "",
   }));
 
-
   return (
     <div className="">
       <Header
@@ -207,11 +204,13 @@ export default function CategoriesPage({
               title={t("common.complexes")}
               seeAll={true}
               categoryData={categoryData?.category?._id}
-              fromMain={false} scrollable={false} />
+              fromMain={false}
+              scrollable={false}
+            />
           </div>
         )}
 
-         <Subscribe
+        <Subscribe
           backgroundImage="/assets/images/categorySliderBgs/bg1.jpg"
           titleKey="subscription.test_title"
           buttonTextKey="buttons.take_test"
@@ -229,10 +228,15 @@ export default function CategoriesPage({
           withBanner={false}
           withSlider={true}
           layoutType="default"
-          title={'GRS МЕДИА'}
+          title={"GRS МЕДИА"}
         />
         <div className="mt-10">
-          <Professional withBanner={false} title={""} bgColor={"#F9F7FE"} withProfText={true} />
+          <Professional
+            withBanner={false}
+            title={""}
+            bgColor={"#F9F7FE"}
+            withProfText={true}
+          />
         </div>
         <Footer />
       </div>

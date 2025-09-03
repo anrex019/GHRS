@@ -6,11 +6,11 @@ import { CiBookmark } from "react-icons/ci";
 import { RiShareForwardLine } from "react-icons/ri";
 
 import Image from "next/image";
-import MobileNavbar from "./Navbar/MobileNavbar";
-import DesktopNavbar from "./Navbar/DesktopNavbar";
+import MobileNavbar from "../Navbar/MobileNavbar";
+import DesktopNavbar from "../Navbar/DesktopNavbar";
 import Link from "next/link";
-import { useI18n } from "../context/I18nContext";
-import useStatistics from "../hooks/useStatistics";
+import { useI18n } from "@/app/context/I18nContext";
+import useStatistics from "@/app/hooks/useStatistics";
 
 export interface MenuItem {
   id: number;
@@ -304,7 +304,6 @@ const Header: React.FC<HeaderProps> = ({
                 Ортопедия
               </span>
             </div>
-            {/*  */}
             <div className="absolute md:top-5 top-2 md:right-5 right-2 mr-5 flex flex-col gap-2">
               <CiBookmark
                 size={40}
@@ -634,10 +633,14 @@ const Header: React.FC<HeaderProps> = ({
                 </section>
 
                 <section className="mx-2 md:mt-5 md:mx-5 max-w-[729px]">
-                  <div className="bg-[rgba(61,51,74,0.3)]  rounded-[20px] md:gap-[73.2px] gap-5 flex flex-col pl-[30px] pt-[30px] pb-[90px] mt-2">
-                    <h2 className="text-[20px] md:text-[40px] font-pt leading-[120%] tracking-[-3%]">
+                  <div className="bg-[rgba(61,51,74,0.3)]  rounded-[20px] gap-5 flex flex-col pl-[30px] pt-[30px] pb-[90px] mt-2">
+                    <h2 className="text-[20px] md:text-[40px] leading-[120%] tracking-[-3%]">
                       {title}
+                      Title
                     </h2>
+                    <p>
+                        {t("header.category_description")}
+                    </p>
                   </div>
                 </section>
               </div>
@@ -875,7 +878,7 @@ const Header: React.FC<HeaderProps> = ({
                         <div className={`sub-header2 `}>
                           <div className="purple-cutout "></div>
                           <div className={`cutout-container `}>
-                            <div className="purp1">purpple1</div>
+                            {/* <div className="purp1">purpple1</div> */}
                             <div className={`white-cutout `}>
                               {variant !== "complex" &&
                                 variant !== "professional" && (
