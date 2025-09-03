@@ -189,4 +189,18 @@ export class SetController {
   remove(@Param('id') id: string) {
     return this.setService.remove(id);
   }
+
+  @Post(':id/duplicate')
+  async duplicate(@Param('id') id: string) {
+    console.log('🔄 Set duplication started for ID:', id);
+    
+    try {
+      const duplicatedSet = await this.setService.duplicate(id);
+      console.log('✅ Set duplicated successfully:', duplicatedSet.name?.en || 'Set');
+      return duplicatedSet;
+    } catch (error) {
+      console.error('❌ Set duplication error:', error);
+      throw new BadRequestException(error.message);
+    }
+  }
 } 

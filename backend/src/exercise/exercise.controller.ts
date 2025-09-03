@@ -263,4 +263,18 @@ export class ExerciseController {
   remove(@Param('id') id: string) {
     return this.exerciseService.remove(id);
   }
+
+  @Post(':id/duplicate')
+  async duplicate(@Param('id') id: string) {
+    console.log('🔄 Exercise duplication started for ID:', id);
+    
+    try {
+      const duplicatedExercise = await this.exerciseService.duplicate(id);
+      console.log('✅ Exercise duplicated successfully:', duplicatedExercise.name?.en || 'Exercise');
+      return duplicatedExercise;
+    } catch (error) {
+      console.error('❌ Exercise duplication error:', error);
+      throw new BadRequestException(error.message);
+    }
+  }
 } 

@@ -122,4 +122,56 @@ export class SetService {
       throw new NotFoundException(`Set with ID ${id} not found`);
     }
   }
+
+  async duplicate(id: string): Promise<Set> {
+    // აიღე არსებული სეტი
+    const originalSet = await this.setModel.findById(id).exec();
+    if (!originalSet) {
+      throw new NotFoundException(`Set with ID "${id}" not found`);
+    }
+
+    // შექმენი დუპლიკატი - ვშლით MongoDB-ს სპეციფიურ ველებს
+    const originalData = originalSet.toObject();
+    
+    // ვქმნით ახალ ობიექტს MongoDB-ს ველების გარეშე
+    const cleanData = {
+      name: originalData.name,
+      description: originalData.description,
+      recommendations: originalData.recommendations,
+      additional: originalData.additional,
+      demoVideoUrl: originalData.demoVideoUrl,
+      duration: originalData.duration,
+      difficulty: originalData.difficulty,
+      equipment: originalData.equipment,
+      warnings: originalData.warnings,
+      thumbnailImage: originalData.thumbnailImage,
+      totalExercises: originalData.totalExercises,
+      totalDuration: originalData.totalDuration,
+      difficultyLevels: originalData.difficultyLevels,
+      levels: originalData.levels,
+      price: originalData.price,
+      priceEn: originalData.priceEn,
+      discountedPrice: originalData.discountedPrice,
+      discountedPriceEn: originalData.discountedPriceEn,
+      isActive: originalData.isActive,
+      sortOrder: originalData.sortOrder,
+      categoryId: originalData.categoryId,
+      subCategoryId: originalData.subCategoryId
+    };
+    
+    const duplicatedSetData = {
+      ...cleanData,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      name: {
+        ka: cleanData.name.ka + ' (დუპლიკატი)',
+        en: cleanData.name.en + ' (Copy)',
+        ru: cleanData.name.ru + ' (Копия)'
+      },
+      isPublished: false
+    };
+
+    const duplicatedSet = new this.setModel(duplicatedSetData);
+    return duplicatedSet.save();
+  }
 } 

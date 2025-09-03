@@ -179,6 +179,18 @@ const Complex = ({ params }: ComplexPageProps) => {
 
   const locale = getLocale();
 
+  // Helper: გადაყავს `{new paragraph}` (ან `{new paragraph }`) მაკერი ახალ პარაგრაფებად
+  const renderParagraphs = (text: string | undefined): React.ReactNode => {
+    if (!text) return null;
+    const parts = text
+      .split(/\{new paragraph\s*\}/i)
+      .map((p) => p.trim())
+      .filter(Boolean);
+    return parts.map((part, index) => (
+      <p key={index}>{part}</p>
+    ));
+  };
+
 
   // Loading state
   if (loading || exercisesLoading) {
@@ -293,9 +305,9 @@ const Complex = ({ params }: ComplexPageProps) => {
                     <h4 className="mb-[10px] text-[rgba(61,51,74,1)] tracking-[-1%] leading-[100%] text-[18px] mt-10">
                       {t("complex_recommendations")}
                     </h4>
-                    <p className="text-[rgba(132,111,160,1)] md:text-[18px] tex-[14px] leading-[150%] font-pt ">
-                      {getLocalizedText(setData.recommendations, locale)}
-                    </p>
+                    <div className="text-[rgba(132,111,160,1)] md:text-[18px] tex-[14px] leading-[150%] font-pt space-y-4">
+                      {renderParagraphs(getLocalizedText(setData.recommendations, locale))}
+                    </div>
                     <h4 className="mb-[10px] text-[rgba(61,51,74,1)] tracking-[-1%] leading-[100%] text-[18px] mt-10">
                       {t("complex_equipment")}
                     </h4>
@@ -334,32 +346,22 @@ const Complex = ({ params }: ComplexPageProps) => {
                     <ReactPlayer
                       src={
                         (() => {
-                          // Get video URL based on language and availability
                           let videoUrl: string | undefined;
-                          
                           if (typeof setData.demoVideoUrl === 'object') {
-                            // პირველად ვცდილობთ შესაბამისი ენის ვიდეოს
                             if (locale === 'en' && setData.demoVideoUrl.en) {
                               videoUrl = setData.demoVideoUrl.en;
                             } else if (locale === 'ru' && setData.demoVideoUrl.ru) {
                               videoUrl = setData.demoVideoUrl.ru;
                             } else if (locale === 'ka' && setData.demoVideoUrl.ru) {
-                              videoUrl = setData.demoVideoUrl.ru; // KA-სთვის ვიყენებთ RU-ს
+                              videoUrl = setData.demoVideoUrl.ru; // KA-სთვის იყენებთ RU-ს
                             }
-                            
-                            // fallback-ად ვცდილობთ სხვა ენის ვიდეოს
                             if (!videoUrl) {
                               videoUrl = setData.demoVideoUrl.en || setData.demoVideoUrl.ru;
                             }
                           } else {
                             videoUrl = setData.demoVideoUrl as string;
                           }
-                          
-                          // Convert .ru URLs to .com only for non-Russian locales
-                          if (videoUrl && videoUrl.includes('ghrs-group.ru') && locale !== 'ru') {
-                            videoUrl = videoUrl.replace('ghrs-group.ru', 'ghrs-group.com');
-                          }
-                          
+                          // ვტოვებთ ზუსტად იმ URL-ს და ფორმატს, რაც მოდელშია მითითებული
                           return videoUrl || "/videos/hero.mp4";
                         })()
                       }

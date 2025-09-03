@@ -187,4 +187,52 @@ export class ExerciseService {
 
     return { modifiedCount: result.modifiedCount };
   }
+
+  async duplicate(id: string): Promise<Exercise> {
+    // აიღე არსებული სავარჯიშო
+    const originalExercise = await this.exerciseModel.findById(id).exec();
+    if (!originalExercise) {
+      throw new NotFoundException(`Exercise with ID "${id}" not found`);
+    }
+
+    // შექმენი დუპლიკატი - ვშლით MongoDB-ს სპეციფიურ ველებს
+    const originalData = originalExercise.toObject();
+    
+    // ვქმნით ახალ ობიექტს MongoDB-ს ველების გარეშე
+    const cleanData = {
+      name: originalData.name,
+      description: originalData.description,
+      videoUrl: originalData.videoUrl,
+      videoUrlEn: originalData.videoUrlEn,
+      thumbnailUrl: originalData.thumbnailUrl,
+      videoDuration: originalData.videoDuration,
+      duration: originalData.duration,
+      difficulty: originalData.difficulty,
+      repetitions: originalData.repetitions,
+      sets: originalData.sets,
+      restTime: originalData.restTime,
+      isActive: originalData.isActive,
+      isPopular: originalData.isPopular,
+      sortOrder: originalData.sortOrder,
+      setId: originalData.setId,
+      categoryId: originalData.categoryId,
+      subCategoryId: originalData.subCategoryId
+    };
+    
+    const duplicatedExerciseData = {
+      ...cleanData,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      name: {
+        ka: cleanData.name.ka + ' (დუპლიკატი)',
+        en: cleanData.name.en + ' (Copy)',
+        ru: cleanData.name.ru + ' (Копия)'
+      },
+      isPublished: false,
+      isPopular: false
+    };
+
+    const duplicatedExercise = new this.exerciseModel(duplicatedExerciseData);
+    return duplicatedExercise.save();
+  }
 } 
