@@ -7,7 +7,7 @@ import { SimpleLogo } from "../Logo";
 import NavbarIconButton from "./NavbarIconButton";
 import LanguageSelector from "./LanguageSelector";
 import Link from "next/link";
-import { MenuItem } from "../Header";
+import { MenuItem } from "../Header/Header";
 import BackgroundImage from "./BackgroundImage";
 
 interface DesktopNavbarProps {
@@ -56,7 +56,7 @@ const DesktopNavbar: React.FC<DesktopNavbarProps> = ({
           border border-white/10 relative`}
         >
           <BackgroundImage imageUrl={data?.featuredImages?.[0]} />
-          <Link href={"/"}>
+          <Link href={"/"} className="hover:brightness-0 hover:invert duration-700">
             <SimpleLogo />
           </Link>
           <ul className="flex ml-[89px] mr-[73px] justify-between w-full">

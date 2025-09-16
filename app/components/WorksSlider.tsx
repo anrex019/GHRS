@@ -107,9 +107,12 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
                     {work.categoryName}
                   </span>
                 </div>
-                <p className="line-clamp-4 font-pt text-[#3D334A] leading-[120%] text-lg font-black  mx-4">
+                <h3 className="line-clamp-2 text-[#3D334A] text-[18px] font-bold leading-[120%] uppercase mx-4 mb-2">
+                  {work.title}
+                </h3>
+                {/* <p className="line-clamp-3 font-pt text-[#846FA0] leading-[120%] text-sm mx-4">
                   {work.description}
-                </p>
+                </p> */}
               </div>
               <div className="flex items-center justify-end">
                 <span className="px-5 py-3 bg-[#D4BAFC] rounded-lg text-white text-[18px] leading-[100%] font-bold mb-8 mr-8 mt-6">

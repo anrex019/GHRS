@@ -72,8 +72,7 @@ const Blog: React.FC<BlogProps> = ({
     isFeatured: true, 
   });
 
-  console.log('Blog Categories:', categories);
-  console.log('Blog Articles:', articles);
+
 
   // Helper to get localized text
   const getLocalizedText = (

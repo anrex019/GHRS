@@ -37,14 +37,6 @@ interface Certificate {
 const About = () => {
   const { instructors, loading } = useInstructors();
 
-  // Debug ინფორმაცია
-  console.log("About page - instructors:", instructors);
-  console.log("About page - loading:", loading);
-  console.log(
-    "About page - Array.isArray(instructors):",
-    Array.isArray(instructors)
-  );
-
   // instructors მონაცემების კონვერტაცია Teacher format-ში
   const teacherData: Teacher[] = (
     Array.isArray(instructors) ? instructors : []

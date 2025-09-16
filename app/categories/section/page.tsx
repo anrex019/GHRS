@@ -157,7 +157,7 @@ function SectionContent() {
               linkType="complex"
               fromMain={false}
               seeAll={false}
-              scrollable={false}
+              scrollable={true}
             />
           </div>
         )}

@@ -122,6 +122,7 @@ const Complex = ({ params }: ComplexPageProps) => {
       }
     : null;
 
+    console.log(setData?.duration, 'სეტის დატა');
   const [popoverOpen, setPopoverOpen] = useState(false);
   const playBtnRef = useRef<HTMLButtonElement>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
@@ -296,7 +297,7 @@ const Complex = ({ params }: ComplexPageProps) => {
                     </span>
                     <p className="text-[rgba(132,111,160,1)] md:text-2xl text-[16px] leading-[120%] font-medium">
                       {t("complex_total_duration", {
-                        duration: setData.totalDuration,
+                        duration: setData.duration,
                       })}
                     </p>
                   </div>
@@ -331,7 +332,7 @@ const Complex = ({ params }: ComplexPageProps) => {
                     {t("complex_additional")}
                   </h1>
                   <div
-                    className="font-pt text-[18px] leading-[120%] text-[#846FA0] mt-10"
+                    className="font-pt text-[18px] leading-[120%] text-[#846FA0] mt-10 [&_a]:text-purple-600 [&_a]:underline [&_a]:decoration-purple-400 [&_a]:underline-offset-2 [&_a]:hover:text-purple-800 [&_a]:hover:decoration-purple-600 [&_a]:transition-colors [&_a]:duration-200 [&_a]:font-bold"
                     dangerouslySetInnerHTML={{
                       __html:
                         getLocalizedText(setData.additional, locale) || "",
@@ -379,15 +380,15 @@ const Complex = ({ params }: ComplexPageProps) => {
               {/* Beginner Level */}
               <div
                 className={`relative ${
-                  exercisesByDifficulty?.easy
-                    ? "bg-[#846FA0]"
+                  shouldShowPlayButton("easy")
+                    ? "bg-[url('/assets/images/categorySliderBgs/bg1.jpg')] bg-cover bg-center bg-no-repeat"
                     : "bg-[rgba(249,247,254,1)]"
-                } bg-no-repeat p-5 rounded-[10px] flex justify-between items-center`}
+                } p-5 rounded-[10px] flex justify-between items-center`}
               >
                 <div className="flex md:flex-row md:gap-[40px] flex-col md:items-center">
                   <h3
                     className={`md:text-2xl text-[18px] leading-[120%] tracking-[-3%] uppercase ${
-                      exercisesByDifficulty?.easy
+                      shouldShowPlayButton("easy")
                         ? "text-[rgba(255,255,255,1)]"
                         : "text-[rgba(132,111,160,1)]"
                     }`}
@@ -586,7 +587,7 @@ const Complex = ({ params }: ComplexPageProps) => {
               {/* Intermediate Level */}
               <div
                 className={`p-5 rounded-[10px] flex justify-between items-center ${
-                  exercisesByDifficulty?.medium
+                  shouldShowPlayButton("medium")
                     ? "bg-[url('/assets/images/categorySliderBgs/bg1.jpg')] bg-cover bg-center bg-no-repeat"
                     : "bg-[rgba(249,247,254,1)]"
                 }`}
@@ -594,7 +595,7 @@ const Complex = ({ params }: ComplexPageProps) => {
                 <div className="flex md:flex-row md:gap-[40px] flex-col md:items-center">
                   <h3
                     className={`md:text-2xl text-[18px] leading-[120%] tracking-[-3%] uppercase ${
-                      exercisesByDifficulty?.medium
+                      shouldShowPlayButton("medium")
                         ? "text-[rgba(255,255,255,1)]"
                         : "text-[rgba(132,111,160,1)]"
                     }`}
@@ -632,15 +633,15 @@ const Complex = ({ params }: ComplexPageProps) => {
               {/* Advanced Level */}
               <div
                 className={`p-5 rounded-[10px] flex justify-between items-center ${
-                  exercisesByDifficulty?.hard
-                    ? "bg-[#846FA0]"
+                  shouldShowPlayButton("hard")
+                    ? "bg-[url('/assets/images/categorySliderBgs/bg1.jpg')] bg-cover bg-center bg-no-repeat"
                     : "bg-[rgba(249,247,254,1)]"
                 }`}
               >
                 <div className="flex md:flex-row md:gap-[40px] flex-col md:items-center">
                   <h3
                     className={`md:text-2xl text-[18px] leading-[120%] tracking-[-3%] uppercase ${
-                      exercisesByDifficulty?.hard
+                      shouldShowPlayButton("hard")
                         ? "text-[rgba(255,255,255,1)]"
                         : "text-[rgba(132,111,160,1)]"
                     }`}

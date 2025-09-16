@@ -106,6 +106,7 @@
     "online_chat": "Online chat",
     "lessons_count": "1000+ lessons",
     "complexes_count": "36 complexes",
+    "subcategories_count": "{{count}} subcategories",
     "sets_count": "{{count}} sets",
     "exercises_count": "{{count}} exercises",
     "hours_count": "{{count}} hours",

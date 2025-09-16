@@ -235,9 +235,7 @@ export const searchArticles = async (query: string) => {
 
 // Get articles by category
 export const getArticlesByCategory = async (categoryId: string) => {
-  console.log("Fetching articles for category:", categoryId);
   const result = await apiRequest<Article[]>(`${API_CONFIG.ENDPOINTS.ARTICLES.BY_CATEGORY}/${categoryId}`);
-  console.log("Articles result:", result);
   return result;
 };
 

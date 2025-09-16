@@ -116,11 +116,31 @@ export class SetService {
   }
 
   async remove(id: string): Promise<void> {
-    const result = await this.setModel.findByIdAndDelete(id).exec();
-
-    if (!result) {
+    // 1. იპოვე სეტი წაშლამდე, რომ მივიღოთ categoryId და subCategoryId
+    const setToDelete = await this.setModel.findById(id).exec();
+    
+    if (!setToDelete) {
       throw new NotFoundException(`Set with ID ${id} not found`);
     }
+
+    // 2. წაშალე სეტი
+    await this.setModel.findByIdAndDelete(id).exec();
+
+    // 3. წაშალე კატეგორიიდან sets array-იდან
+    await this.setModel.db.model('Category').updateOne(
+      { _id: setToDelete.categoryId },
+      { $pull: { sets: new Types.ObjectId(id) } }
+    ).exec();
+
+    // 4. თუ არსებობს საბკატეგორია, წაშალე მისგანაც
+    if (setToDelete.subCategoryId) {
+      await this.setModel.db.model('Category').updateOne(
+        { _id: setToDelete.subCategoryId },
+        { $pull: { sets: new Types.ObjectId(id) } }
+      ).exec();
+    }
+
+    console.log(`✅ Set ${id} deleted from category ${setToDelete.categoryId}${setToDelete.subCategoryId ? ` and subcategory ${setToDelete.subCategoryId}` : ''}`);
   }
 
   async duplicate(id: string): Promise<Set> {
