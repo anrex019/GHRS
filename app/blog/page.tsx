@@ -5,6 +5,7 @@ import Link from "next/link";
 import DesktopNavbar from "../components/Navbar/DesktopNavbar";
 import MobileNavbar from "../components/Navbar/MobileNavbar";
 import { Footer } from "../components/Footer";
+import SubHeader from "../components/Header/SubHeader";
 
 const BlogCard = () => {
   return (
@@ -131,14 +132,12 @@ const BigBlogCard = () => {
   );
 };
 
-const BlogHeader = () => {
+const BlogHeader = ({ BlogCategory }) => {
   return (
     <div className="bg-[#F9F7FE] md:mx-5 md:px-10 px-4 md:pb-10">
       <div className="flex items-center justify-between">
         <h1 className="text-[20px] mt-5 md:text-[40px] pt-10 text-[#3D334A] md:mb-5">
-          {typeof "category.title" === "string"
-            ? "category.title"
-            : "Categories"}
+          {BlogCategory}
         </h1>
         <div className="md:mt-16"></div>
       </div>
@@ -147,9 +146,7 @@ const BlogHeader = () => {
         href="/categories"
         className="text-[14px] md:text-[24px] uppercase text-[#D4BAFC] hover:text-[#734ea4] transition-colors duration-300"
       >
-        {typeof "category.view_all" === "string"
-          ? "category.view_all"
-          : "View all"}
+        {"View all"}
       </Link>
     </div>
   );
@@ -164,9 +161,10 @@ const BlogRoute = () => {
         allCourseBg={false}
       />
       <MobileNavbar />
-      <Header variant="blog" />
+      {/* <Header variant="blog" /> */}
+      <SubHeader />
       {/* First comp */}
-      <BlogHeader />
+      <BlogHeader BlogCategory="" />
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full mb-12 px-10">
         <div className="col-span-2">
           <BigBlogCard />
@@ -180,7 +178,7 @@ const BlogRoute = () => {
         </div>
       </div>
       {/* Second comp */}
-      <BlogHeader />
+      <BlogHeader BlogCategory="Популярные статьи" />
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full mb-12 px-10">
         <BigBlogCard />
@@ -194,7 +192,7 @@ const BlogRoute = () => {
         </div>
       </div>
       {/* Third comp */}
-      <BlogHeader />
+      <BlogHeader BlogCategory="Неврология" />
 
       <div className="grid grid-cols-2 md:grid-cols-4  gap-6 w-full mb-12 px-10">
         <div className="col-span-2">
@@ -209,7 +207,7 @@ const BlogRoute = () => {
         </div>
       </div>
       {/* Fourth comp */}
-      <BlogHeader />
+      <BlogHeader BlogCategory="Ортопедия" />
 
       <div className="grid grid-cols-2 md:grid-cols-4  gap-6 w-full mb-12 px-10">
         <div className="col-span-2 gap-6 grid  grid-cols-1 md:grid-cols-2 h-[500px]">

@@ -18,9 +18,10 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useExercisesBySet } from "../../hooks/useExercises";
 import { useUserAccess } from "../../hooks/useUserAccess";
-
+import { FaBook, FaDumbbell, FaClock } from "react-icons/fa";
 import { Footer } from "@/app/components/Footer";
 import WorksSlider from "@/app/components/WorksSlider";
+import MainHeader from "@/app/components/Header/MainHeader";
 
 interface Params {
   id: string;
@@ -253,12 +254,51 @@ const Complex = ({ params }: ComplexPageProps) => {
     window.location.href = "/shoppingcard";
   };
 
+  const statsData = [
+    {
+      icon: <FaBook size={24} />,
+      value: "20 sets",
+      label: "Training sets",
+    },
+    {
+      icon: <FaDumbbell size={24} />,
+      value: "181 exercises",
+      label: "Total exercises",
+    },
+    {
+      icon: <FaClock size={24} />,
+      value: "null hours",
+      label: "Duration",
+    },
+  ];
+
+  const CustomBlock = (
+    <>
+      <div className="absolute hidden text-white text-sm bg-[#3D334A4D] p-4 rounded-2xl md:w-54 w-full right-8 top-1/2 z-10 md:flex items-center justify-center">
+        <p className="text-center">
+          Внимание! На подписки сроком от 3-х месяцев действуют скидки
+        </p>
+      </div>
+      <div className="md:absolute flex bottom-0 right-0 md:bg-white rounded-tl-4xl p-8 justify-center mt-16">
+        <div className="text-white bg-amber-950 p-12 rounded-2xl h-54 md:w-54 w-full items-center justify-center transition-transform duration-300 hover:scale-105">
+          Optional
+        </div>
+      </div>
+    </>
+  );
+
   return (
     <div>
-      <Header
+      {/* <Header
         variant="complex"
         onPriceClick={() => setPopoverOpen(true)}
         setData={setData}
+      /> */}
+      <MainHeader
+        ShowBlock={true}
+        OptionalComponent={CustomBlock}
+        stats={statsData}
+        showArrows={false}
       />
       <div className="">
         <section className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-20 md:mt-40 px-4">

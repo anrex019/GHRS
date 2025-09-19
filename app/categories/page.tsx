@@ -8,6 +8,7 @@ import Professional from "../components/Professional";
 import Blog from "../components/Blog";
 import Section from "../components/Section";
 import { Footer } from "../components/Footer";
+import MainHeader from "../components/Header/MainHeader";
 export default function CategoriesPage() {
   const homePageWorks = [
     {
@@ -59,7 +60,8 @@ export default function CategoriesPage() {
   return (
     <div className="">
       {/* Header Section */}
-      <Header variant="categories" />
+      {/* <Header variant="categories" /> */}
+      <MainHeader ShowBlock={false} OptionalComponent={null} stats={[]} showArrows={false}/>
       <div className="md:pt-[100px] pt-[400px]">
         {/*  */}
         <Section border={0} borderColor="none" />

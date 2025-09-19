@@ -7,7 +7,7 @@ import { SimpleLogo } from "../Logo";
 import NavbarIconButton from "./NavbarIconButton";
 import LanguageSelector from "./LanguageSelector";
 import Link from "next/link";
-import { MenuItem } from "../Header";
+import { MenuItem } from "../Header/Header";
 import BackgroundImage from "./BackgroundImage";
 
 interface DesktopNavbarProps {

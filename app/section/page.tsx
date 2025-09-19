@@ -7,6 +7,7 @@ import Blog from "../components/Blog";
 import CourseSlider from "../components/CourseSlider";
 import Professional from "../components/Professional";
 import { Footer } from "../components/Footer";
+import MainHeader from "../components/Header/MainHeader";
 
 const homePageWorks = [
   {
@@ -54,7 +55,7 @@ const homePageWorks = [
 const Section = () => {
   return (
     <div>
-      <Header
+      {/* <Header
         variant="section"
         title="Название секции"
         info={{
@@ -62,7 +63,8 @@ const Section = () => {
           setsCount: 12,
           exercisesCount: 48,
         }}
-      />
+      /> */}
+      <MainHeader ShowBlock={false} OptionalComponent={null} stats={[]} showArrows={false}/>
       <div className="md:my-4">
         <WorksSlider works={homePageWorks} title="Subcategories" />
       </div>

@@ -13,6 +13,7 @@ import Professional from "../../components/Professional";
 import Blog from "@/app/components/Blog";
 import { useI18n } from "../../context/I18nContext";
 import { Footer } from "@/app/components/Footer";
+import MainHeader from "@/app/components/Header/MainHeader";
 // import DesktopNavbar from "@/app/components/Navbar/DesktopNavbar";
 
 export default function CategoriesPage({
@@ -122,7 +123,7 @@ export default function CategoriesPage({
 
   return (
     <div className="">
-      <Header
+      {/* <Header
         variant="categories"
         title={getLocalizedText(selectedCategory?.name, locale)}
         info={{
@@ -130,7 +131,8 @@ export default function CategoriesPage({
           subcategoriesCount,
           exercisesCount,
         }}
-      />
+      /> */}
+      <MainHeader ShowBlock={false} OptionalComponent={null} stats={[]} showArrows={false}/>
       <div className="md:pt-[100px] pt-[400px]">
         <div className="px-10 py-[50px] rounded-[30px] bg-[#F9F7FE] md:mb-10 mx-6">
           <div className="flex items-center justify-between mb-[20px]">

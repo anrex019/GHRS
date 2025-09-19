@@ -47,8 +47,6 @@ export const defaultMenuItems: MenuItem[] = [
   { id: 4, name: "Контакты", route: "contact" },
 ];
 
-
-
 const Header: React.FC<HeaderProps> = ({
   variant = "default",
   title,
@@ -82,13 +80,17 @@ const Header: React.FC<HeaderProps> = ({
     locale: string = "ru"
   ): number => {
     if (locale === "en") {
-      if (discountedEn && typeof discountedEn.monthly === "number") return discountedEn.monthly;
-      if (priceEn && typeof priceEn.monthly === "number") return priceEn.monthly;
+      if (discountedEn && typeof discountedEn.monthly === "number")
+        return discountedEn.monthly;
+      if (priceEn && typeof priceEn.monthly === "number")
+        return priceEn.monthly;
       return fallbackMonthly;
     }
     if (locale === "ka") {
-      if (discountedKa && typeof discountedKa.monthly === "number") return discountedKa.monthly;
-      if (priceKa && typeof priceKa.monthly === "number") return priceKa.monthly;
+      if (discountedKa && typeof discountedKa.monthly === "number")
+        return discountedKa.monthly;
+      if (priceKa && typeof priceKa.monthly === "number")
+        return priceKa.monthly;
       return fallbackMonthly;
     }
     return fallbackMonthly;
@@ -114,9 +116,21 @@ const Header: React.FC<HeaderProps> = ({
   const { statistics } = useStatistics();
 
   const categoryDetailItems = [
-    { id: 1, text: t("header.categories_count"), image: "/assets/icons/pulse.svg" },
-    { id: 2, text: t("header.online_chat"), image: "/assets/images/camera.svg" },
-    { id: 3, text: t("header.lessons_count"), image: "/assets/icons/watch.png" },
+    {
+      id: 1,
+      text: t("header.categories_count"),
+      image: "/assets/icons/pulse.svg",
+    },
+    {
+      id: 2,
+      text: t("header.online_chat"),
+      image: "/assets/images/camera.svg",
+    },
+    {
+      id: 3,
+      text: t("header.lessons_count"),
+      image: "/assets/icons/watch.png",
+    },
   ];
 
   const complexItems = [
@@ -172,20 +186,26 @@ const Header: React.FC<HeaderProps> = ({
   const homePageHeaderItems = [
     {
       id: 1,
-      text: statistics ? t("header.sets_count", { count: String(statistics.total.sets) }) : t("header.loading"),
+      text: statistics
+        ? t("header.sets_count", { count: String(statistics.total.sets) })
+        : t("header.loading"),
       image: "/assets/images/book.svg",
       route: "/categories",
     },
     {
       id: 2,
       text: statistics
-        ? t("header.exercises_count", { count: String(statistics.total.exercises) })
+        ? t("header.exercises_count", {
+            count: String(statistics.total.exercises),
+          })
         : t("header.loading"),
       image: "/assets/icons/message.svg",
     },
     {
       id: 3,
-      text: statistics ? t("header.hours_count", { count: String(statistics.total.hours) }) : t("header.loading"),
+      text: statistics
+        ? t("header.hours_count", { count: String(statistics.total.hours) })
+        : t("header.loading"),
       image: "/assets/icons/video.svg",
     },
   ];
@@ -193,19 +213,25 @@ const Header: React.FC<HeaderProps> = ({
   const sectionItems = [
     {
       id: 1,
-      text: statistics ? t("header.sets_count", { count: String(statistics.total.sets) }) : t("header.loading"),
+      text: statistics
+        ? t("header.sets_count", { count: String(statistics.total.sets) })
+        : t("header.loading"),
       image: "/assets/icons/pulse.svg",
     },
     {
       id: 2,
       text: statistics
-        ? t("header.exercises_count", { count: String(statistics.total.exercises) })
+        ? t("header.exercises_count", {
+            count: String(statistics.total.exercises),
+          })
         : t("header.loading"),
       image: "/assets/images/camera.svg",
     },
     {
       id: 3,
-      text: statistics ? t("header.hours_count", { count: String(statistics.total.hours) }) : t("header.loading"),
+      text: statistics
+        ? t("header.hours_count", { count: String(statistics.total.hours) })
+        : t("header.loading"),
       image: "/assets/icons/watch.png",
     },
   ];
@@ -248,7 +274,7 @@ const Header: React.FC<HeaderProps> = ({
             muted
             loop
             playsInline
-            className="video-bg absolute h-[838px] object-cover z-[-1] md:rounded-[20px]"
+            className="video-bg absolute h-full object-cover z-[-1] md:rounded-[20px]"
           >
             <source src="/videos/hero.mp4" type="video/mp4" />
             Your browser does not support the video tag.
@@ -291,7 +317,8 @@ const Header: React.FC<HeaderProps> = ({
             />
             <div className="pt-[27px] md:pl-[32px] pl-4 pr-[20px] md:pb-[20px] pb-3 md:bg-[#3D334A4D] md:backdrop-blur-sm absolute bottom-0 md:bottom-5 md:ml-5 rounded-[20px]">
               <h2 className="hidden md:flex text-white text-[40px] leading-[120%] tracking-[-3%] md:w-[945px] w-[327px]">
-                {info?.title || "Курсы и мастер-классы для опытных терапевтов. Практикум по лечению ортопедических проблем"}
+                {info?.title ||
+                  "Курсы и мастер-классы для опытных терапевтов. Практикум по лечению ортопедических проблем"}
               </h2>
               <h2 className="flex md:hidden font-[Bowler] text-white text-[18px] leading-[120%] tracking-[-3%] mb-2.5">
                 БОЛЬ В СПИНЕ И ШЕЕ:КАК УЛУЧШИТЬ ОСАНКУ ЕСТЕСТВЕННО.
@@ -587,7 +614,9 @@ const Header: React.FC<HeaderProps> = ({
                       />
                     </div>
                     <h3 className="text-white text-sm font-medium font-pt">
-                      {t("header.subcategories_count", { count: info?.subcategoriesCount || 0 })}
+                      {t("header.subcategories_count", {
+                        count: info?.subcategoriesCount || 0,
+                      })}
                     </h3>
                   </motion.div>
 
@@ -608,7 +637,9 @@ const Header: React.FC<HeaderProps> = ({
                         />
                       </div>
                       <h3 className="text-white text-sm font-medium">
-                        {t("header.sets_count", { count: info?.setsCount || 0 })}
+                        {t("header.sets_count", {
+                          count: info?.setsCount || 0,
+                        })}
                       </h3>
                     </motion.div>
                     <motion.div
@@ -626,7 +657,9 @@ const Header: React.FC<HeaderProps> = ({
                         />
                       </div>
                       <h3 className="text-white text-sm font-medium">
-                        {t("header.exercises_count", { count: info?.exercisesCount || 0 })}
+                        {t("header.exercises_count", {
+                          count: info?.exercisesCount || 0,
+                        })}
                       </h3>
                     </motion.div>
                   </div>
@@ -638,9 +671,7 @@ const Header: React.FC<HeaderProps> = ({
                       {title}
                       Title
                     </h2>
-                    <p>
-                        {t("header.category_description")}
-                    </p>
+                    <p>{t("header.category_description")}</p>
                   </div>
                 </section>
               </div>
@@ -665,7 +696,9 @@ const Header: React.FC<HeaderProps> = ({
                       />
                     </div>
                     <h3 className="text-white text-sm font-medium font-pt relative z-10">
-                      {t("header.subcategories_count", { count: info?.subcategoriesCount || 0 })}
+                      {t("header.subcategories_count", {
+                        count: info?.subcategoriesCount || 0,
+                      })}
                     </h3>
                   </motion.div>
 
@@ -686,7 +719,9 @@ const Header: React.FC<HeaderProps> = ({
                         />
                       </div>
                       <h3 className="text-white text-sm font-medium relative z-10">
-                        {t("header.sets_count", { count: info?.setsCount || 0 })}
+                        {t("header.sets_count", {
+                          count: info?.setsCount || 0,
+                        })}
                       </h3>
                     </motion.div>
                     <motion.div
@@ -704,7 +739,9 @@ const Header: React.FC<HeaderProps> = ({
                         />
                       </div>
                       <h3 className="text-white text-sm font-medium relative z-10">
-                        {t("header.exercises_count", { count: info?.exercisesCount || 0 })}
+                        {t("header.exercises_count", {
+                          count: info?.exercisesCount || 0,
+                        })}
                       </h3>
                     </motion.div>
                   </div>
@@ -743,7 +780,9 @@ const Header: React.FC<HeaderProps> = ({
                         />
                       </div>
                       <h3 className="text-white text-sm font-medium font-pt">
-                        {t("header.exercises_count", { count: setData?.totalExercises || 0 })}
+                        {t("header.exercises_count", {
+                          count: setData?.totalExercises || 0,
+                        })}
                       </h3>
                     </motion.div>
                   </Link>
@@ -773,7 +812,9 @@ const Header: React.FC<HeaderProps> = ({
                           </div>
                           <h3 className="text-white text-sm font-medium">
                             {item.id === 2
-                              ? t("header.duration_minutes", { duration: setData?.totalDuration || "00:00" })
+                              ? t("header.duration_minutes", {
+                                  duration: setData?.totalDuration || "00:00",
+                                })
                               : item.text}
                           </h3>
                         </motion.div>
@@ -784,11 +825,15 @@ const Header: React.FC<HeaderProps> = ({
 
                 <section className="mx-2 md:mt-5 md:mx-5 max-w-[729px]">
                   <div className="bg-[rgba(61,51,74,0.3)]  rounded-[20px] md:gap-[11.2px] gap-5 flex flex-col pl-[30px] pt-[30px] pb-[32px] mt-2">
-                    <h2 className={`text-[20px] md:text-[${locale === 'ru' ? '32' : locale === 'en' ? '38' : '36'}px] leading-[120%] tracking-[-3%]`}>
+                    <h2
+                      className={`text-[20px] md:text-[${
+                        locale === "ru" ? "32" : locale === "en" ? "38" : "36"
+                      }px] leading-[120%] tracking-[-3%]`}
+                    >
                       {getLocalizedText(setData?.name, locale)}
                     </h2>
                     <p className="md:mt-[10px] text-[24px] leading-[120%] font-pt break-words line-clamp-3  font-bold mt-20">
-                    {t("header.rehabilitation_description")}
+                      {t("header.rehabilitation_description")}
                     </p>
                   </div>
                 </section>
@@ -913,7 +958,8 @@ const Header: React.FC<HeaderProps> = ({
                                       setData?.discountedPriceEn || null,
                                       setData?.discountedPriceKa || null,
                                       locale
-                                    )}{t("header.currency")}
+                                    )}
+                                    {t("header.currency")}
                                   </h3>
                                   <span className="text-[18px] md:mb-[99px] md:mt-1.5 leading-[90%] uppercase">
                                     {t("header.per_month")}
@@ -945,9 +991,7 @@ const Header: React.FC<HeaderProps> = ({
                 className="bg-[#3D334A4D] py-4 px-5 rounded-[20px] text-white absolute max-w-[206px] text-center hidden md:flex 
               font-medium leading-[120%] font-pt right-10 top-[0px]"
               >
-                <p>
-                  {t("header.subscription_discount_notice")}
-                </p>
+                <p>{t("header.subscription_discount_notice")}</p>
               </div>
             )}
 

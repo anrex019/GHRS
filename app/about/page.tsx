@@ -9,6 +9,7 @@ import { Footer } from "../components/Footer";
 import { useInstructors } from "../hooks/useInstructor";
 import Image from "next/image";
 import Banner from "../components/Banner";
+import MainHeader from "../components/Header/MainHeader";
 
 interface Teacher {
   id: string;
@@ -73,7 +74,8 @@ const About = () => {
 
   return (
     <div>
-      <Header variant="about" />
+      {/* <Header variant="about" /> */}
+      <MainHeader ShowBlock={false} OptionalComponent={null} stats={[]} showArrows={false}/>
       <div className="mt-40">
         <Rehabilitation />
         <Category bgColor="#F9F7FE" customRounded="30px" customMx="20px" />

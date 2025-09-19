@@ -23,11 +23,13 @@
     }
   },
   "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "app/editprofile",
-    "next-env.d.ts",
-    ".next/types/**/*.ts"
+  "**/*.ts",
+  "**/*.tsx",
+  "**/*.js",
+  "**/*.jsx",
+  "app/editprofile",
+  "next-env.d.ts",
+  ".next/types/**/*.ts"
   ],
   "exclude": ["node_modules", ".next", "backend"]
 }

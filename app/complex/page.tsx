@@ -14,6 +14,8 @@ import Blog from "../components/Blog";
 import Works from "../components/Works";
 import { useSet } from "../hooks/useSet";
 import { useI18n } from "../context/I18nContext";
+import { Main } from "next/document";
+import MainHeader from "../components/Header/MainHeader";
 
 function ComplexContent() {
   const searchParams = useSearchParams();
@@ -169,6 +171,7 @@ function ComplexContent() {
         onPriceClick={() => setPopoverOpen(true)}
         setData={setData}
       />
+      {/* <MainHeader ShowBlock={false} OptionalComponent={null} stats={[]} showArrows={false}/> */}
       <div className="">
         <section className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-20 md:mt-40 px-4">
           <Tabs

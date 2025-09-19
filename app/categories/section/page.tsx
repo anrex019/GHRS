@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useCategoryComplete } from "../../hooks/useCategoryComplete";
 import { usePopularExercises } from "../../hooks/useExercises";
 import Header from "../../components/Header/Header";
+import MainHeader from "@/app/components/Header/MainHeader";
 import WorksSlider from "../../components/WorksSlider";
 import Works from "../../components/Works";
 import Subscribe from "../../components/Subscribe";
@@ -129,7 +130,7 @@ function SectionContent() {
 
   return (
     <div className="">
-      <Header
+      {/* <Header
         variant="categories"
         title={getLocalizedText(
           selectedSubcategory?.name as { ka: string; en: string; ru: string },
@@ -140,7 +141,8 @@ function SectionContent() {
           subcategoriesCount: 0, // subcategory-ს ქვეკატეგორიები არ აქვს
           exercisesCount,
         }}
-      />
+      /> */}
+      <MainHeader ShowBlock={false} OptionalComponent={null} stats={[]} showArrows={false}/>
       <div className="md:pt-[100px] pt-[400px]">
         {Array.isArray(formattedSets) && formattedSets.length > 0 && (
           <div className="md:mb-10">
