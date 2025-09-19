@@ -141,6 +141,7 @@ const Complex = ({ params }: ComplexPageProps) => {
       ) {
         setPopoverOpen(false);
       }
+      setPopoverOpen(false);
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -290,8 +291,11 @@ const Complex = ({ params }: ComplexPageProps) => {
           Внимание! На подписки сроком от 3-х месяцев действуют скидки
         </p>
       </div>
-      <div className="flex bottom-0 right-0 md:bg-white rounded-tl-4xl p-8 justify-center cursor-pointer">
-        <div className="flex flex-col text-white bg-gradient-to-br from-[#FFDAB9] via-[#F7A8C1] to-[#C4A6F1] p-4 rounded-2xl h-54 md:w-54 w-full justify-center transition-transform duration-300 hover:scale-105">
+      <div
+        className="flex bottom-0 right-0 md:bg-white rounded-tl-4xl p-8 justify-center cursor-pointer"
+        onClick={() => setPopoverOpen(true)}
+      >
+        <div className="flex flex-col text-white bg-gradient-to-br from-[#FFDAB9] via-[#C4A6F1] to-[#C4A6F1] p-4 rounded-2xl h-54 md:w-54 w-full justify-center transition-transform duration-300 hover:scale-105">
           {/* Price */}
           <p className="text-white font-bold text-4xl leading-[90%] uppercase">
             500 ₽

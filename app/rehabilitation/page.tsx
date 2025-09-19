@@ -10,7 +10,6 @@ import { useI18n } from "../context/I18nContext";
 import MainHeader from "../components/Header/MainHeader";
 import { FaBook, FaDumbbell, FaClock } from "react-icons/fa"; // Add this import
 
-
 const Rehabilitation = () => {
   const statsData = [
     {
@@ -33,8 +32,8 @@ const Rehabilitation = () => {
 
   const CustomBlock = (
     <div className="md:absolute flex bottom-0 right-0 md:bg-white rounded-tl-4xl p-8 justify-center mt-16">
-      <div className="text-white bg-amber-950 p-12 rounded-2xl h-54 md:w-54 w-full items-center justify-center transition-transform duration-300 hover:scale-105">
-        Optional
+      <div className="text-white bg-[#3D334A] p-4 rounded-2xl h-54 md:w-54 w-full items-center justify-center transition-transform duration-300 hover:scale-105">
+        все Упражнения
       </div>
     </div>
   );
@@ -42,7 +41,11 @@ const Rehabilitation = () => {
   return (
     <div className="">
       {/* <Header variant="rehabilitation" /> */}
-      <MainHeader ShowBlock={true} stats={statsData} OptionalComponent={CustomBlock} />
+      <MainHeader
+        ShowBlock={true}
+        stats={statsData}
+        OptionalComponent={CustomBlock}
+      />
       <VideoNotification variant="default" />
       <Advantages />
       <section className="md:max-w-full flex flex-col gap-5 px-2 md:px-8">

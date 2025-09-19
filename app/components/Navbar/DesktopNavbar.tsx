@@ -56,7 +56,7 @@ const DesktopNavbar: React.FC<DesktopNavbarProps> = ({
           border border-white/10 relative`}
         >
           <BackgroundImage imageUrl={data?.featuredImages?.[0]} />
-          <Link href={"/"} className="hover:brightness-0 hover:invert duration-700">
+          <Link href={"/"} className="hover:brightness-0 duration-700">
             <SimpleLogo />
           </Link>
           <ul className="flex ml-[89px] mr-[73px] justify-between w-full">
