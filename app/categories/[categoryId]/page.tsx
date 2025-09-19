@@ -25,7 +25,7 @@ export default function CategoriesPage({
   const { categoryData, loading, error } = useCategoryComplete(categoryId);
   const { t } = useI18n();
 
-  // ახლა სრული მონაცემები გვაქვს
+
   const selectedCategory = categoryData?.category;
 
   if (loading) {
@@ -126,6 +126,7 @@ export default function CategoriesPage({
       {/* <Header
         variant="categories"
         title={getLocalizedText(selectedCategory?.name, locale)}
+        description={getLocalizedText(selectedCategory?.description, locale)}
         info={{
           setsCount,
           subcategoriesCount,
@@ -146,17 +147,23 @@ export default function CategoriesPage({
             </div>
             <div>
               <SliderArrows
-                onScrollLeft={function (): void {
-                  throw new Error("Function not implemented.");
+                onScrollLeft={() => {
+                  const slider = document.getElementById('subcategories-slider');
+                  if (slider) {
+                    slider.scrollBy({ left: -500, behavior: 'smooth' });
+                  }
                 }}
-                onScrollRight={function (): void {
-                  throw new Error("Function not implemented.");
+                onScrollRight={() => {
+                  const slider = document.getElementById('subcategories-slider');
+                  if (slider) {
+                    slider.scrollBy({ left: 500, behavior: 'smooth' });
+                  }
                 }}
               />
             </div>
           </div>
 
-          <div className="flex flex-row items-center gap-[28px] overflow-x-auto">
+          <div id="subcategories-slider" className="flex flex-row items-center gap-[28px] overflow-x-auto">
             {categoryData?.subcategories?.map((subcategory) => (
               <Link
                 key={subcategory._id}
@@ -207,7 +214,7 @@ export default function CategoriesPage({
               seeAll={true}
               categoryData={categoryData?.category?._id}
               fromMain={false}
-              scrollable={false}
+              scrollable={true}
             />
           </div>
         )}

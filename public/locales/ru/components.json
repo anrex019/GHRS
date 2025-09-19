@@ -106,6 +106,7 @@
     "online_chat": "Онлайн-чат",
     "lessons_count": "1000+ уроков",
     "complexes_count": "36 комплексов",
+    "subcategories_count": "{{count}} подкатегорий",
     "sets_count": "{{count}} комплексов",
     "exercises_count": "{{count}} упражнений",
     "hours_count": "{{count}} часов",

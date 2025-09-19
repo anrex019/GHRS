@@ -25,6 +25,8 @@ function ComplexContent() {
   // ვიყენებთ set-ის hook-ს
   const { set: setData, loading: setLoading, error: setError } = useSet(setId);
 
+  console.log(setData, 'ბევრი დატა');
+
   const [popoverOpen, setPopoverOpen] = useState(false);
   const playBtnRef = useRef<HTMLButtonElement>(null);
   const popoverRef = useRef<HTMLDivElement>(null);

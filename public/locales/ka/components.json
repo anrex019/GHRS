@@ -106,6 +106,7 @@
     "online_chat": "ონლაინ ჩატი",
     "lessons_count": "1000+ გაკვეთილი",
     "complexes_count": "36 კომპლექსი",
+    "subcategories_count": "{{count}} საბკატეგორია",
     "sets_count": "{{count}} კომპლექსი",
     "exercises_count": "{{count}} ვარჯიში",
     "hours_count": "{{count}} საათი",

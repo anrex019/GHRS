@@ -38,6 +38,7 @@ interface HeaderProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setData?: any; // set-ის მონაცემები complex variant-ისთვის
   statistics?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  description?: string;
 }
 
 export const defaultMenuItems: MenuItem[] = [
@@ -52,6 +53,7 @@ const Header: React.FC<HeaderProps> = ({
   title,
   info,
   onPriceClick,
+  description,
   setData,
 }) => {
   const getLocale = () => {
@@ -63,6 +65,9 @@ const Header: React.FC<HeaderProps> = ({
     }
     return "ru";
   };
+
+  console.log(description, 'მიღებული დატა');
+  console.log('🎯 Header info data:', info);
 
   interface PriceObject {
     monthly: number;
@@ -669,7 +674,6 @@ const Header: React.FC<HeaderProps> = ({
                   <div className="bg-[rgba(61,51,74,0.3)]  rounded-[20px] gap-5 flex flex-col pl-[30px] pt-[30px] pb-[90px] mt-2">
                     <h2 className="text-[20px] md:text-[40px] leading-[120%] tracking-[-3%]">
                       {title}
-                      Title
                     </h2>
                     <p>{t("header.category_description")}</p>
                   </div>

@@ -116,10 +116,82 @@ export class SetService {
   }
 
   async remove(id: string): Promise<void> {
-    const result = await this.setModel.findByIdAndDelete(id).exec();
-
-    if (!result) {
+    // 1. იპოვე სეტი წაშლამდე, რომ მივიღოთ categoryId და subCategoryId
+    const setToDelete = await this.setModel.findById(id).exec();
+    
+    if (!setToDelete) {
       throw new NotFoundException(`Set with ID ${id} not found`);
     }
+
+    // 2. წაშალე სეტი
+    await this.setModel.findByIdAndDelete(id).exec();
+
+    // 3. წაშალე კატეგორიიდან sets array-იდან
+    await this.setModel.db.model('Category').updateOne(
+      { _id: setToDelete.categoryId },
+      { $pull: { sets: new Types.ObjectId(id) } }
+    ).exec();
+
+    // 4. თუ არსებობს საბკატეგორია, წაშალე მისგანაც
+    if (setToDelete.subCategoryId) {
+      await this.setModel.db.model('Category').updateOne(
+        { _id: setToDelete.subCategoryId },
+        { $pull: { sets: new Types.ObjectId(id) } }
+      ).exec();
+    }
+
+    console.log(`✅ Set ${id} deleted from category ${setToDelete.categoryId}${setToDelete.subCategoryId ? ` and subcategory ${setToDelete.subCategoryId}` : ''}`);
+  }
+
+  async duplicate(id: string): Promise<Set> {
+    // აიღე არსებული სეტი
+    const originalSet = await this.setModel.findById(id).exec();
+    if (!originalSet) {
+      throw new NotFoundException(`Set with ID "${id}" not found`);
+    }
+
+    // შექმენი დუპლიკატი - ვშლით MongoDB-ს სპეციფიურ ველებს
+    const originalData = originalSet.toObject();
+    
+    // ვქმნით ახალ ობიექტს MongoDB-ს ველების გარეშე
+    const cleanData = {
+      name: originalData.name,
+      description: originalData.description,
+      recommendations: originalData.recommendations,
+      additional: originalData.additional,
+      demoVideoUrl: originalData.demoVideoUrl,
+      duration: originalData.duration,
+      difficulty: originalData.difficulty,
+      equipment: originalData.equipment,
+      warnings: originalData.warnings,
+      thumbnailImage: originalData.thumbnailImage,
+      totalExercises: originalData.totalExercises,
+      totalDuration: originalData.totalDuration,
+      difficultyLevels: originalData.difficultyLevels,
+      levels: originalData.levels,
+      price: originalData.price,
+      priceEn: originalData.priceEn,
+      discountedPrice: originalData.discountedPrice,
+      discountedPriceEn: originalData.discountedPriceEn,
+      isActive: originalData.isActive,
+      sortOrder: originalData.sortOrder,
+      categoryId: originalData.categoryId,
+      subCategoryId: originalData.subCategoryId
+    };
+    
+    const duplicatedSetData = {
+      ...cleanData,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      name: {
+        ka: cleanData.name.ka + ' (დუპლიკატი)',
+        en: cleanData.name.en + ' (Copy)',
+        ru: cleanData.name.ru + ' (Копия)'
+      },
+      isPublished: false
+    };
+
+    const duplicatedSet = new this.setModel(duplicatedSetData);
+    return duplicatedSet.save();
   }
 } 

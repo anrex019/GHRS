@@ -9,6 +9,7 @@ import ReviewSlider from "../../components/ReviewSlider";
 import Professional from "../../components/Professional";
 import Blog from "@/app/components/Blog";
 import { useI18n } from "../../context/I18nContext";
+import SliderArrows from "../../components/SliderArrows";
 
 export default function SubcategoryPage({
   params,
@@ -134,15 +135,55 @@ export default function SubcategoryPage({
       />
       <div className="md:pt-[100px] pt-[400px]">
         {Array.isArray(formattedSets) && formattedSets.length > 0 && (
-          <div>
-            <WorksSlider
-              title={t("common.complexes")}
-              works={formattedSets}
-              linkType="complex"
-              fromMain={false}
-              seeAll={false}
-              scrollable={false}
-            />
+          <div className="px-10 py-[50px] rounded-[30px] bg-[#F9F7FE] md:mb-10 mx-6">
+            <div className="flex items-center justify-between mb-[20px]">
+              <div className="flex flex-col gap-5">
+                <h1 className="text-[#3D334A] text-[40px] leading-[120%] tracking-[-3%]">
+                  {t("common.complexes")}
+                </h1>
+                <span className="text-[#D4BAFC] text-[24px] leading-[90%] uppercase">
+                  {setsCount} {t("common.sets")}
+                </span>
+              </div>
+              <div>
+                <SliderArrows
+                  onScrollLeft={() => {
+                    const slider = document.getElementById('complexes-slider');
+                    if (slider) {
+                      slider.scrollBy({ left: -500, behavior: 'smooth' });
+                    }
+                  }}
+                  onScrollRight={() => {
+                    const slider = document.getElementById('complexes-slider');
+                    if (slider) {
+                      slider.scrollBy({ left: 500, behavior: 'smooth' });
+                    }
+                  }}
+                />
+              </div>
+            </div>
+
+            <div id="complexes-slider" className="flex flex-row items-center gap-[28px] overflow-x-auto">
+              {formattedSets.map((set) => (
+                <Link
+                  key={set.id}
+                  href={`/complex/${set.id}`}
+                  className="mt-[48px] min-w-[558px] bg-white p-2 rounded-[20px] cursor-pointer hover:shadow-lg transition-shadow"
+                >
+                  <div className="w-full h-[181px] bg-gray-200 rounded-[15px] mb-4 flex items-center justify-center">
+                    <span className="text-gray-500">Image Placeholder</span>
+                  </div>
+                  <div className="flex items-center justify-between mt-[22px]">
+                    <h1 className="text-[#3D334A] w-[342px] text-[28px] leading-[100%]">
+                      {set.title}
+                    </h1>
+                    <span className="text-[#D4BAFC] leading-[120%] font-medium">
+                      {set.exerciseCount} {t("common.exercises")}
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
         )}
 
@@ -157,14 +198,14 @@ export default function SubcategoryPage({
         )}
 
         <Subscribe />
-        <ReviewSlider />
+        <ReviewSlider title={""} />
         <Blog
           withBanner={false}
           withSlider={true}
           layoutType="default"
           title={t("common.grs_media")}
         />
-        <Professional />
+        <Professional withBanner={false} title={""} bgColor={"#F9F7FE"} withProfText={true} />
       </div>
     </div>
   );

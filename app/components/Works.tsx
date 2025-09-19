@@ -185,26 +185,9 @@ const Works: React.FC<WorksProps> = ({
       categoryId: set.categoryId || "",
     }));
   } else if (sets.length > 0) {
-    console.log('Processing sets in Works component:', sets);
-    works = sets.map((set) => {
-      console.log('Set category info:', {
-        setName: getLocalized(set.name),
-        categoryId: set.categoryId,
-        category: set.category,
-        categoryName: set.category ? getLocalized(set.category.name) : 'კატეგორია'
-      });
-      return {
-        id: set._id,
-        title: getLocalized(set.name),
-        description: getLocalized(set.description),
-        image: getValidThumbnailUrl(set.thumbnailImage),
-        exerciseCount: set.totalExercises,
-        categoryName: set.category ? getLocalized(set.category.name) : 'კატეგორია',
-        monthlyPrice: set.price.monthly,
-        categoryId: set.categoryId || "",
-        subcategoryId: set.subCategoryId,
-      };
-    });
+   
+    
+   
   } else {
     console.log("⚠️ No exercises, items, or sets to process!");
   }
