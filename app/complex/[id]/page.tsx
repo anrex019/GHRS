@@ -123,7 +123,7 @@ const Complex = ({ params }: ComplexPageProps) => {
       }
     : null;
 
-    console.log(setData?.duration, 'სეტის დატა');
+  console.log(setData?.duration, "სეტის დატა");
   const [popoverOpen, setPopoverOpen] = useState(false);
   const playBtnRef = useRef<HTMLButtonElement>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
@@ -188,11 +188,8 @@ const Complex = ({ params }: ComplexPageProps) => {
       .split(/\{new paragraph\s*\}/i)
       .map((p) => p.trim())
       .filter(Boolean);
-    return parts.map((part, index) => (
-      <p key={index}>{part}</p>
-    ));
+    return parts.map((part, index) => <p key={index}>{part}</p>);
   };
-
 
   // Loading state
   if (loading || exercisesLoading) {
@@ -287,18 +284,31 @@ const Complex = ({ params }: ComplexPageProps) => {
   ];
 
   const CustomBlock = (
-    <>
-      <div className="absolute hidden text-white text-sm bg-[#3D334A4D] p-4 rounded-2xl md:w-54 w-full right-8 top-1/2 z-10 md:flex items-center justify-center">
+    <div className="md:absolute bottom-0 right-0 gap-4 flex flex-col">
+      <div className="hidden mx-auto text-white text-sm bg-[#3D334A4D] p-4  rounded-2xl md:w-54 w-full z-10 md:flex">
         <p className="text-center">
           Внимание! На подписки сроком от 3-х месяцев действуют скидки
         </p>
       </div>
-      <div className="md:absolute flex bottom-0 right-0 md:bg-white rounded-tl-4xl p-8 justify-center mt-16">
-        <div className="text-white bg-amber-950 p-12 rounded-2xl h-54 md:w-54 w-full items-center justify-center transition-transform duration-300 hover:scale-105">
-          Optional
+      <div className="flex bottom-0 right-0 md:bg-white rounded-tl-4xl p-8 justify-center cursor-pointer">
+        <div className="flex flex-col text-white bg-gradient-to-br from-[#FFDAB9] via-[#F7A8C1] to-[#C4A6F1] p-4 rounded-2xl h-54 md:w-54 w-full justify-center transition-transform duration-300 hover:scale-105">
+          {/* Price */}
+          <p className="text-white font-bold text-4xl leading-[90%] uppercase">
+            500 ₽
+          </p>
+
+          {/* Duration */}
+          <p className="text-white font-normal text-lg leading-[90%] uppercase">
+            в месяц
+          </p>
+
+          {/* Button */}
+          <div className="text-white font-normal text-xl mx-auto leading-[90%] uppercase mt-auto">
+            Приобрести
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 
   return (
@@ -349,7 +359,9 @@ const Complex = ({ params }: ComplexPageProps) => {
                       {t("complex_recommendations")}
                     </h4>
                     <div className="text-[rgba(132,111,160,1)] md:text-[18px] tex-[14px] leading-[150%] font-pt space-y-4">
-                      {renderParagraphs(getLocalizedText(setData.recommendations, locale))}
+                      {renderParagraphs(
+                        getLocalizedText(setData.recommendations, locale)
+                      )}
                     </div>
                     <h4 className="mb-[10px] text-[rgba(61,51,74,1)] tracking-[-1%] leading-[100%] text-[18px] mt-10">
                       {t("complex_equipment")}
@@ -387,27 +399,33 @@ const Complex = ({ params }: ComplexPageProps) => {
                   </h1>
                   <div className="rounded-[15px] overflow-hidden shadow-lg">
                     <ReactPlayer
-                      src={
-                        (() => {
-                          let videoUrl: string | undefined;
-                          if (typeof setData.demoVideoUrl === 'object') {
-                            if (locale === 'en' && setData.demoVideoUrl.en) {
-                              videoUrl = setData.demoVideoUrl.en;
-                            } else if (locale === 'ru' && setData.demoVideoUrl.ru) {
-                              videoUrl = setData.demoVideoUrl.ru;
-                            } else if (locale === 'ka' && setData.demoVideoUrl.ru) {
-                              videoUrl = setData.demoVideoUrl.ru; // KA-სთვის იყენებთ RU-ს
-                            }
-                            if (!videoUrl) {
-                              videoUrl = setData.demoVideoUrl.en || setData.demoVideoUrl.ru;
-                            }
-                          } else {
-                            videoUrl = setData.demoVideoUrl as string;
+                      src={(() => {
+                        let videoUrl: string | undefined;
+                        if (typeof setData.demoVideoUrl === "object") {
+                          if (locale === "en" && setData.demoVideoUrl.en) {
+                            videoUrl = setData.demoVideoUrl.en;
+                          } else if (
+                            locale === "ru" &&
+                            setData.demoVideoUrl.ru
+                          ) {
+                            videoUrl = setData.demoVideoUrl.ru;
+                          } else if (
+                            locale === "ka" &&
+                            setData.demoVideoUrl.ru
+                          ) {
+                            videoUrl = setData.demoVideoUrl.ru; // KA-სთვის იყენებთ RU-ს
                           }
-                          // ვტოვებთ ზუსტად იმ URL-ს და ფორმატს, რაც მოდელშია მითითებული
-                          return videoUrl || "/videos/hero.mp4";
-                        })()
-                      }
+                          if (!videoUrl) {
+                            videoUrl =
+                              setData.demoVideoUrl.en ||
+                              setData.demoVideoUrl.ru;
+                          }
+                        } else {
+                          videoUrl = setData.demoVideoUrl as string;
+                        }
+                        // ვტოვებთ ზუსტად იმ URL-ს და ფორმატს, რაც მოდელშია მითითებული
+                        return videoUrl || "/videos/hero.mp4";
+                      })()}
                       controls
                       width="100%"
                       height="360px"
