@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React, { useState } from "react";
 import DesktopNavbar from "../Navbar/DesktopNavbar";
@@ -12,7 +12,7 @@ function MainHeader({
   showArrows = true,
 }) {
   const { t } = useI18n();
-  const [showContent, setShowContent] = useState(false); // control visibility
+  const [showContent, setShowContent] = useState(false);
 
   const localizedMenuItems = [
     { id: 1, name: t("navigation.all_complexes"), route: "allComplex" },
@@ -21,13 +21,11 @@ function MainHeader({
     { id: 4, name: t("navigation.contacts"), route: "contact" },
   ];
 
-  const handleNextClick = () => {
-    setShowContent(true);
-  };
+  const handleNextClick = () => setShowContent(true);
+  const handlePrevClick = () => setShowContent(false);
 
-  const handlePrevClick = () => {
-    setShowContent(false);
-  };
+  // determine visibility: always visible if arrows are not shown
+  const isVisible = !showArrows || showContent;
 
   return (
     <div className="relative rounded-[20px] h-[100vh] md:h-[80vh] md:m-6">
@@ -51,9 +49,9 @@ function MainHeader({
 
       {/* Arrow Navigation Buttons */}
       {showArrows && (
-        <div className="hidden absolute right-8 top-1/2 2xl:top-4/7 transform -translate-y-1/2 md:flex gap-3 z-10">
+        <div className="hidden absolute right-8 xl:top-4/7 top-1/2 transform -translate-y-1/2 md:flex gap-3 z-10">
           <button
-            onClick={handlePrevClick} // hide content
+            onClick={handlePrevClick}
             className="w-16 h-16 bg-black/30 backdrop-blur-sm rounded-2xl flex items-center justify-center transition-all duration-300 hover:bg-black/40 hover:scale-105"
           >
             <svg
@@ -75,7 +73,7 @@ function MainHeader({
           </button>
 
           <button
-            onClick={handleNextClick} // show content
+            onClick={handleNextClick}
             className="w-16 h-16 bg-black/30 backdrop-blur-sm rounded-2xl flex items-center justify-center transition-all duration-300 hover:bg-black/40 hover:scale-105"
           >
             <svg
@@ -106,9 +104,7 @@ function MainHeader({
         {/* Stats + Description Block with slide-in */}
         <div
           className={`md:absolute bottom-8 block transform transition-all duration-500 ${
-            showContent
-              ? "translate-y-0 opacity-100"
-              : "translate-y-10 opacity-0"
+            isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
           }`}
         >
           <div className="flex gap-4 flex-col md:flex-row mb-4 w-full justify-between">
