@@ -1,6 +1,6 @@
 'use client'
 
-import React from "react";
+import React, { useState } from "react";
 import DesktopNavbar from "../Navbar/DesktopNavbar";
 import { useI18n } from "../../context/I18nContext";
 import MobileNavbar from "../Navbar/MobileNavbar";
@@ -9,11 +9,10 @@ function MainHeader({
   ShowBlock = false,
   OptionalComponent = null,
   stats = [],
-  onPrevious = null,
-  onNext = null,
   showArrows = true,
 }) {
   const { t } = useI18n();
+  const [showContent, setShowContent] = useState(false); // control visibility
 
   const localizedMenuItems = [
     { id: 1, name: t("navigation.all_complexes"), route: "allComplex" },
@@ -22,6 +21,14 @@ function MainHeader({
     { id: 4, name: t("navigation.contacts"), route: "contact" },
   ];
 
+  const handleNextClick = () => {
+    setShowContent(true);
+  };
+
+  const handlePrevClick = () => {
+    setShowContent(false);
+  };
+
   return (
     <div className="relative rounded-[20px] h-[100vh] md:h-[80vh] md:m-6">
       <DesktopNavbar
@@ -29,9 +36,8 @@ function MainHeader({
         blogBg={false}
         allCourseBg={false}
       />
-      <div>
-        <MobileNavbar menuItems={localizedMenuItems} />
-      </div>
+      <MobileNavbar menuItems={localizedMenuItems} />
+
       <video
         autoPlay
         muted
@@ -45,47 +51,46 @@ function MainHeader({
 
       {/* Arrow Navigation Buttons */}
       {showArrows && (
-        <div className="hidden absolute right-8 top-4/7 transform -translate-y-1/2 md:flex gap-3 z-10">
+        <div className="hidden absolute right-8 top-1/2 2xl:top-4/7 transform -translate-y-1/2 md:flex gap-3 z-10">
           <button
-            onClick={onPrevious}
-            className="w-16 h-16 bg-black/30 backdrop-blur-sm rounded-2xl flex items-center justify-center transition-all duration-300 hover:bg-black/40 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={!onPrevious}
+            onClick={handlePrevClick} // hide content
+            className="w-16 h-16 bg-black/30 backdrop-blur-sm rounded-2xl flex items-center justify-center transition-all duration-300 hover:bg-black/40 hover:scale-105"
           >
-            <svg 
-              width="16" 
-              height="16" 
-              viewBox="0 0 24 24" 
-              fill="none" 
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
               xmlns="http://www.w3.org/2000/svg"
               className="text-white"
             >
-              <path 
-                d="M15 18L9 12L15 6" 
-                stroke="currentColor" 
-                strokeWidth="2" 
-                strokeLinecap="round" 
+              <path
+                d="M15 18L9 12L15 6"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
                 strokeLinejoin="round"
               />
             </svg>
           </button>
+
           <button
-            onClick={onNext}
-            className="w-16 h-16 bg-black/30 backdrop-blur-sm rounded-2xl flex items-center justify-center transition-all duration-300 hover:bg-black/40 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={!onNext}
+            onClick={handleNextClick} // show content
+            className="w-16 h-16 bg-black/30 backdrop-blur-sm rounded-2xl flex items-center justify-center transition-all duration-300 hover:bg-black/40 hover:scale-105"
           >
-            <svg 
-              width="16" 
-              height="16" 
-              viewBox="0 0 24 24" 
-              fill="none" 
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
               xmlns="http://www.w3.org/2000/svg"
               className="text-white"
             >
-              <path 
-                d="M9 18L15 12L9 6" 
-                stroke="currentColor" 
-                strokeWidth="2" 
-                strokeLinecap="round" 
+              <path
+                d="M9 18L15 12L9 6"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
                 strokeLinejoin="round"
               />
             </svg>
@@ -93,15 +98,19 @@ function MainHeader({
         </div>
       )}
 
-      <div className="md:w-212 m-8 content-between md:grid ">
+      <div className="md:w-212 m-8 content-between md:grid">
         <h1 className="text-2xl md:text-5xl font-bold text-white mb-6 hidden md:block">
-          {/* {title} */}
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Libero
-          facere quidem necessitatibus sint illo ea.
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit.
         </h1>
-        {/* Add stats container */}
 
-        <div className="block md:absolute bottom-8">
+        {/* Stats + Description Block with slide-in */}
+        <div
+          className={`md:absolute bottom-8 block transform transition-all duration-500 ${
+            showContent
+              ? "translate-y-0 opacity-100"
+              : "translate-y-10 opacity-0"
+          }`}
+        >
           <div className="flex gap-4 flex-col md:flex-row mb-4 w-full justify-between">
             {stats.map((stat, index) => (
               <div
@@ -127,11 +136,7 @@ function MainHeader({
           </div>
         </div>
 
-        {ShowBlock && OptionalComponent && (
-          <div>
-            {OptionalComponent}
-          </div>
-        )}
+        {ShowBlock && OptionalComponent && <div>{OptionalComponent}</div>}
       </div>
     </div>
   );

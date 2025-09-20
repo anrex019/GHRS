@@ -9,6 +9,9 @@ import Blog from "../components/Blog";
 import Section from "../components/Section";
 import { Footer } from "../components/Footer";
 import MainHeader from "../components/Header/MainHeader";
+import { useI18n } from "../context/I18nContext";
+
+
 export default function CategoriesPage() {
   const { categories, loading, error } = useCategories();
   const { t, locale } = useI18n();
