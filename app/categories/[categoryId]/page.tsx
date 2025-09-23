@@ -4,7 +4,7 @@ import { use } from "react";
 import { useCategoryComplete } from "../../hooks/useCategoryComplete";
 import Image from "next/image";
 import Link from "next/link";
-import Header from "../../components/Header/Header";
+// import Header from "../../components/Header/Header";
 import SliderArrows from "../../components/SliderArrows";
 import WorksSlider from "../../components/WorksSlider";
 import Subscribe from "../../components/Subscribe";
@@ -24,6 +24,8 @@ export default function CategoriesPage({
   const { categoryId } = use(params);
   const { categoryData, loading, error } = useCategoryComplete(categoryId);
   const { t } = useI18n();
+
+
 
   const selectedCategory = categoryData?.category;
 
@@ -98,13 +100,13 @@ export default function CategoriesPage({
   const allSets = [...directSets, ...subcategorySets];
 
   // ამოვიღოთ რაოდენობები
-  const setsCount = categoryData?.sets?.length || 0;
+  // const setsCount = categoryData?.sets?.length || 0;
   const subcategoriesCount = categoryData?.subcategories?.length || 0;
-  const exercisesCount =
-    categoryData?.sets?.reduce(
-      (total, set) => total + (set.exercises?.length || 0),
-      0
-    ) || 0;
+  // const exercisesCount =
+  //   categoryData?.sets?.reduce(
+  //     (total, set) => total + (set.exercises?.length || 0),
+  //     0
+  //   ) || 0;
 
   // გარდავქმნით ყველა სეტს WorksSlider-ის ფორმატში
   const formattedSets = allSets.map((set) => ({
@@ -132,13 +134,9 @@ export default function CategoriesPage({
           exercisesCount,
         }}
       /> */}
-      <MainHeader
-        ShowBlock={false}
-        OptionalComponent={null}
-        stats={[]}
-        showArrows={false}
-      />
+      <MainHeader ShowBlock={false} stats={[]} showArrows={false} complexData={categoryData?.category || null}/>
       <div className="md:pt-[100px] pt-[400px]">
+        {subcategoriesCount > 0 && (
         <div className="px-10 py-[50px] rounded-[30px] bg-[#F9F7FE] md:mb-10 mx-6">
           <div className="flex items-center justify-between mb-[20px]">
             <div className="flex flex-col gap-5">
@@ -215,6 +213,7 @@ export default function CategoriesPage({
             )) || []}
           </div>
         </div>
+        )}
 
         {Array.isArray(formattedSets) && formattedSets.length > 0 && (
           <div className="mt-10 mb-10">

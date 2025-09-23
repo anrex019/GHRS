@@ -2,7 +2,7 @@
 "use client";
 import React from "react";
 import { CiPlay1 } from "react-icons/ci";
-import Header from "../../components/Header/Header";
+// import Header from "../../components/Header/Header";
 import Subscribe from "../../components/Subscribe";
 import ReviewSlider from "../../components/ReviewSlider";
 import Tabs from "../../components/Tabs";
@@ -47,6 +47,9 @@ const Complex = ({ params }: ComplexPageProps) => {
     loading: categoryLoading,
     error: categoryError,
   } = useCategoryComplete(shouldUseCategoryComplete ? categoryIdFromUrl : "");
+
+
+  console.log(categoryData, "კატეგორიის დატა");
 
   // ალტერნატიული: პირდაპირ set-ის მოძიება
   const {
@@ -123,7 +126,7 @@ const Complex = ({ params }: ComplexPageProps) => {
       }
     : null;
 
-  console.log(setData?.duration, "სეტის დატა");
+  console.log(setData, "სეტის დატა");
   const [popoverOpen, setPopoverOpen] = useState(false);
   const playBtnRef = useRef<HTMLButtonElement>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
@@ -287,9 +290,7 @@ const Complex = ({ params }: ComplexPageProps) => {
   const CustomBlock = (
     <div className="md:absolute bottom-0 right-0 gap-4 flex flex-col">
       <div className="hidden mx-auto text-white text-sm bg-[#3D334A4D] p-4  rounded-2xl md:w-54 w-full z-10 md:flex">
-        <p className="text-center">
-          Внимание! На подписки сроком от 3-х месяцев действуют скидки
-        </p>
+        <p className="text-center">{t("header.subscription_period.twelve_months")}</p>
       </div>
       <div
         className="flex bottom-0 right-0 md:bg-white rounded-tl-4xl p-8 justify-center cursor-pointer"
@@ -298,17 +299,18 @@ const Complex = ({ params }: ComplexPageProps) => {
         <div className="flex flex-col text-white bg-gradient-to-br from-[#FFDAB9] via-[#C4A6F1] to-[#C4A6F1] p-4 rounded-2xl h-54 md:w-54 w-full justify-center transition-transform duration-300 hover:scale-105">
           {/* Price */}
           <p className="text-white font-bold text-4xl leading-[90%] uppercase">
-            500 ₽
+            {setData?.discountedPrice?.yearly || setData?.price?.yearly}
+            {t("header.currency")}
           </p>
 
           {/* Duration */}
           <p className="text-white font-normal text-lg leading-[90%] uppercase">
-            в месяц
+            {t("header.subscription_period.twelve_months")}
           </p>
 
           {/* Button */}
           <div className="text-white font-normal text-xl mx-auto leading-[90%] uppercase mt-auto">
-            Приобрести
+            {t("common.buy")}
           </div>
         </div>
       </div>
@@ -324,9 +326,10 @@ const Complex = ({ params }: ComplexPageProps) => {
       /> */}
       <MainHeader
         ShowBlock={true}
-        OptionalComponent={CustomBlock}
-        stats={statsData}
+        OptionalComponent={CustomBlock as any}
+        stats={statsData as any}
         showArrows={false}
+        complexData={setData as any}
       />
       <div className="">
         <section className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-20 md:mt-40 px-4">
@@ -488,130 +491,14 @@ const Complex = ({ params }: ComplexPageProps) => {
                 {popoverOpen && (
                   <div
                     ref={popoverRef}
-                    className="absolute right-0 -top-72 mt-2 bg-white shadow-lg rounded-2xl p-0 min-w-[320px] max-w-[90vw] border border-purple-200 z-20 flex flex-col items-stretch"
+                    className="absolute right-0 -top-48 mt-2 bg-white shadow-lg rounded-2xl p-0 min-w-[320px] max-w-[90vw] border border-purple-200 z-20 flex flex-col items-stretch"
                   >
-                    {/* 1 месяц */}
-                    <div className="flex justify-between items-center px-6 py-4 border-b border-[rgba(132,111,160,0.12)]">
-                      <span
-                        onClick={() =>
-                          handleSubscriptionSelect(
-                            "1 month",
-                            setData.discountedPrice?.monthly ||
-                              setData.price.monthly
-                          )
-                        }
-                        className="font-bold cursor-pointer text-[18px] leading-[120%] tracking-[-2%] text-[rgba(61,51,74,1)] uppercase"
-                      >
-                        {t("header.pricing.monthly")}
-                      </span>
-                      <div className="flex flex-col items-end">
-                        <span className="text-[20px] cursor-pointer font-bold text-[rgba(132,111,160,1)] leading-[120%]">
-                          {setData.discountedPrice?.monthly ? (
-                            <>
-                              {setData.discountedPrice.monthly}
-                              {t("header.currency")}/{t("header.per_month")}
-                              <span className="text-[14px] text-[rgba(132,111,160,0.5)] line-through block">
-                                {setData.price.monthly}
-                                {t("header.currency")}/{t("header.per_month")}
-                              </span>
-                            </>
-                          ) : (
-                            <>
-                              {setData.price.monthly}
-                              {t("header.currency")}/{t("header.per_month")}
-                              <span className="text-[14px] text-[rgba(132,111,160,0.5)] line-through block">
-                                {setData.price.monthly}
-                                {t("header.currency")}/{t("header.per_month")}
-                              </span>
-                            </>
-                          )}
-                        </span>
-                      </div>
-                    </div>
-                    {/* 3 месяца - highlight */}
-                    <div className="flex justify-between items-center px-6 py-4 border-b border-[rgba(132,111,160,0.12)] bg-[rgba(132,111,160,0.08)]">
-                      <span
-                        onClick={() =>
-                          handleSubscriptionSelect(
-                            "3 months",
-                            setData.discountedPrice?.threeMonths ||
-                              setData.price.threeMonths
-                          )
-                        }
-                        className="font-bold cursor-pointer text-[18px] leading-[120%] tracking-[-2%] text-[rgba(132,111,160,1)] uppercase"
-                      >
-                        {t("header.pricing.three_months")}
-                      </span>
-                      <div className="flex flex-col items-end">
-                        <span className="text-[20px] cursor-pointer font-bold text-[rgba(132,111,160,1)] leading-[120%]">
-                          {setData.discountedPrice?.threeMonths ? (
-                            <>
-                              {setData.discountedPrice.threeMonths}
-                              {t("header.currency")}/{t("header.per_month")}
-                              <span className="text-[14px] text-[rgba(132,111,160,0.5)] line-through block">
-                                {setData.price.threeMonths}
-                                {t("header.currency")}/{t("header.per_month")}
-                              </span>
-                            </>
-                          ) : (
-                            <>
-                              {setData.price.threeMonths}
-                              {t("header.currency")}/{t("header.per_month")}
-                              <span className="text-[14px] text-[rgba(132,111,160,0.5)] line-through block">
-                                {setData.price.monthly * 3}
-                                {t("header.currency")}/{t("header.per_month")}
-                              </span>
-                            </>
-                          )}
-                        </span>
-                      </div>
-                    </div>
-                    {/* 6 месяцев */}
-                    <div className="flex justify-between items-center px-6 py-4 border-b border-[rgba(132,111,160,0.12)]">
-                      <span
-                        onClick={() =>
-                          handleSubscriptionSelect(
-                            "6 months",
-                            setData.discountedPrice?.sixMonths ||
-                              setData.price.sixMonths
-                          )
-                        }
-                        className="font-bold text-[18px] cursor-pointer leading-[120%] tracking-[-2%] text-[rgba(61,51,74,1)] uppercase"
-                      >
-                        {t("header.subscription_period.six_months")}
-                      </span>
-                      <div className="flex flex-col items-end">
-                        <span className="text-[20px] cursor-pointer font-bold text-[rgba(132,111,160,1)] leading-[120%]">
-                          {setData.discountedPrice?.sixMonths ? (
-                            <>
-                              {setData.discountedPrice.sixMonths}
-                              {t("header.currency")}/{t("header.per_month")}
-                              <span className="text-[14px] text-[rgba(132,111,160,0.5)] line-through block">
-                                {setData.price.sixMonths}
-                                {t("header.currency")}/{t("header.per_month")}
-                              </span>
-                            </>
-                          ) : (
-                            <>
-                              {setData.price.sixMonths}
-                              {t("header.currency")}/{t("header.per_month")}
-                              <span className="text-[14px] text-[rgba(132,111,160,0.5)] line-through block">
-                                {setData.price.monthly * 6}
-                                {t("header.currency")}/{t("header.per_month")}
-                              </span>
-                            </>
-                          )}
-                        </span>
-                      </div>
-                    </div>
-                    {/* 12 месяцев */}
                     <div className="flex justify-between items-center px-6 py-4">
                       <span
                         onClick={() =>
                           handleSubscriptionSelect(
                             "12 months",
-                            setData.discountedPrice?.yearly ||
-                              setData.price.yearly
+                            setData.discountedPrice?.yearly || setData.price.yearly
                           )
                         }
                         className="font-bold text-[18px] cursor-pointer leading-[120%] tracking-[-2%] text-[rgba(61,51,74,1)] uppercase"
@@ -620,25 +507,8 @@ const Complex = ({ params }: ComplexPageProps) => {
                       </span>
                       <div className="flex flex-col items-end">
                         <span className="text-[20px] cursor-pointer font-bold text-[rgba(132,111,160,1)] leading-[120%]">
-                          {setData.discountedPrice?.yearly ? (
-                            <>
-                              {setData.discountedPrice.yearly}
-                              {t("header.currency")}/{t("header.per_month")}
-                              <span className="text-[14px] text-[rgba(132,111,160,0.5)] line-through block">
-                                {setData.price.yearly}
-                                {t("header.currency")}/{t("header.per_month")}
-                              </span>
-                            </>
-                          ) : (
-                            <>
-                              {setData.price.yearly}
-                              {t("header.currency")}/{t("header.per_month")}
-                              <span className="text-[14px] text-[rgba(132,111,160,0.5)] line-through block">
-                                {setData.price.monthly * 12}
-                                {t("header.currency")}/{t("header.per_month")}
-                              </span>
-                            </>
-                          )}
+                          {setData.discountedPrice?.yearly || setData.price.yearly}
+                          {t("header.currency")}
                         </span>
                       </div>
                     </div>

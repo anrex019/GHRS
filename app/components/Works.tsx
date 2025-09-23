@@ -151,7 +151,6 @@ const Works: React.FC<WorksProps> = ({
 
   let works: WorkItem[] = [];
 
-  // If exercises are provided, transform them for WorksSlider
   if (exercises.length > 0) {
     works = exercises.map((exercise) => {
       const result = {
@@ -185,9 +184,19 @@ const Works: React.FC<WorksProps> = ({
       categoryId: set.categoryId || "",
     }));
   } else if (sets.length > 0) {
-   
-    
-   
+    // Transform sets prop (when passed as `sets` instead of `items`)
+    works = sets.map((set) => ({
+      id: set._id,
+      title: getLocalized(set.name),
+      description: getLocalized(set.description),
+      image: set.thumbnailImage || "/assets/images/workMan.png",
+      exerciseCount: Array.isArray(set.exercises) ? set.exercises.length : set.totalExercises || 0,
+      categoryName:
+        (set.category && getLocalized(set.category.name)) || "ორთოპედია",
+      monthlyPrice: (set.price && set.price.monthly) || 920,
+      categoryId: set.categoryId || "",
+      subcategoryId: set.subCategoryId,
+    }));
   } else {
     console.log("⚠️ No exercises, items, or sets to process!");
   }
