@@ -6,20 +6,50 @@ import DesktopNavbar from "../components/Navbar/DesktopNavbar";
 import MobileNavbar from "../components/Navbar/MobileNavbar";
 import { Footer } from "../components/Footer";
 import SubHeader from "../components/Header/SubHeader";
+import { useBlogs, useFeaturedBlogs, usePopularBlogs } from "../hooks/useBlogs";
+import { useI18n } from "../context/I18nContext";
+import { Blog } from "../api/blogs";
 
-const BlogCard = () => {
+interface BlogCardProps {
+  blog?: Blog;
+}
+
+const BlogCard = ({ blog }: BlogCardProps) => {
+  const { t, locale } = useI18n();
+
+  if (!blog) {
+    return (
+      <div className="bg-white rounded-[20px] p-5 flex flex-col justify-between h-full shadow-sm animate-pulse">
+        <div className="flex flex-col gap-3">
+          <div className="h-6 bg-gray-200 rounded w-3/4"></div>
+          <div className="h-4 bg-gray-200 rounded w-full"></div>
+        </div>
+        <div className="flex justify-between mt-4">
+          <div className="h-8 bg-gray-200 rounded w-24"></div>
+        </div>
+      </div>
+    );
+  }
+
+  const getLocalizedText = (field: { en: string; ru: string; ka?: string }) => {
+    return field[locale as keyof typeof field] || field.ru || field.en || "";
+  };
+
   return (
     <div className="bg-white rounded-[20px] p-5 flex flex-col justify-between h-full shadow-sm">
       <div className="flex flex-col gap-3">
         <h3 className="text-[#1A1A1A] text-xl font-semibold leading-tight">
-          Как физиотерапия остеопороза снижает риск переломов
+          {getLocalizedText(blog.title)}
         </h3>
+        <p className="text-[#1A1A1A]/70 text-sm line-clamp-3">
+          {getLocalizedText(blog.excerpt)}
+        </p>
       </div>
 
       <div className="flex justify-between">
         <div className="items-center flex">
           <span className="bg-[#F1EBF9] text-[#6941C6] text-sm font-medium py-3 px-5 rounded-xl w-fit">
-            ОРТОПЕДИЯ
+            {blog.tags?.[0] || t("blog.category")}
           </span>
         </div>
         <div className="flex justify-end gap-4 mt-4">
@@ -63,14 +93,37 @@ const BlogCard = () => {
   );
 };
 
-const BigBlogCard = () => {
+interface BigBlogCardProps {
+  blog?: Blog;
+}
+
+const BigBlogCard = ({ blog }: BigBlogCardProps) => {
+  const { t, locale } = useI18n();
+
+  if (!blog) {
+    return (
+      <div className="rounded-[20px] h-full md:h-[500px] p-8 flex flex-col justify-between relative overflow-hidden bg-white shadow-sm animate-pulse">
+        <div className="absolute top-0 left-0 w-full h-[45%] overflow-hidden bg-gray-200"></div>
+        <div className="flex flex-col gap-4 mt-auto relative z-10">
+          <div className="h-6 bg-gray-200 rounded w-3/4"></div>
+          <div className="h-4 bg-gray-200 rounded w-full"></div>
+          <div className="h-8 bg-gray-200 rounded w-24"></div>
+        </div>
+      </div>
+    );
+  }
+
+  const getLocalizedText = (field: { en: string; ru: string; ka?: string }) => {
+    return field[locale as keyof typeof field] || field.ru || field.en || "";
+  };
+
   return (
     <div className="rounded-[20px] h-full md:h-[500px] p-8 flex flex-col justify-between relative overflow-hidden bg-white shadow-sm">
       {/* Add image div that takes up the top space */}
       <div className="absolute top-0 left-0 w-full h-[45%] overflow-hidden">
         <img
-          src="https://learntalk.org/photos/blog/header_photo/226/Learntalk_BlogPosts_02-19-2018_Some_Any.jpg"
-          alt=""
+          src={blog.imageUrl || "/assets/images/blogbg.jpg"}
+          alt={getLocalizedText(blog.title)}
           className="w-full h-full object-cover opacity-80"
         />
         {/* <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#6941C6]" /> */}
@@ -117,22 +170,26 @@ const BigBlogCard = () => {
       {/* Existing text content */}
       <div className="flex flex-col gap-4 mt-auto relative z-10">
         <h2 className="text-[#1A1A1A] text-lg md:text-xl font-semibold leading-tight">
-          Курсы и мастер-классы для опытных терапевтов. Практикум по лечению
-          ортопедических проблем
+          {getLocalizedText(blog.title)}
         </h2>
         <p className="text-[#1A1A1A]/80 text-sm">
-          С советами по безопасности, которым нужно следовать до и после
-          перелома Кристен Гасник
+          {getLocalizedText(blog.excerpt)}
         </p>
         <span className="bg-[#F1EBF9] text-[#6941C6] text-sm font-medium py-2 px-4 rounded-lg w-fit">
-          ОРТОПЕДИЯ
+          {blog.tags?.[0] || t("blog.category")}
         </span>
       </div>
     </div>
   );
 };
 
-const BlogHeader = ({ BlogCategory }) => {
+interface BlogHeaderProps {
+  BlogCategory: string;
+}
+
+const BlogHeader = ({ BlogCategory }: BlogHeaderProps) => {
+  const { t } = useI18n();
+
   return (
     <div className="bg-[#F9F7FE] md:mx-5 md:px-10 px-4 md:pb-10">
       <div className="flex items-center justify-between">
@@ -146,13 +203,18 @@ const BlogHeader = ({ BlogCategory }) => {
         href="/categories"
         className="text-[14px] md:text-[24px] uppercase text-[#D4BAFC] hover:text-[#734ea4] transition-colors duration-300"
       >
-        {"View all"}
+        {t("blog.view_all")}
       </Link>
     </div>
   );
 };
 
 const BlogRoute = () => {
+  const { t } = useI18n();
+  const { blogs: allBlogs, loading: loadingAll } = useBlogs({ isPublished: true, limit: 8 });
+  const { blogs: featuredBlogs, loading: loadingFeatured } = useFeaturedBlogs();
+  const { blogs: popularBlogs, loading: loadingPopular } = usePopularBlogs(6);
+
   return (
     <div className="bg-[#F9F7FE]">
       <DesktopNavbar
@@ -163,66 +225,67 @@ const BlogRoute = () => {
       <MobileNavbar />
       {/* <Header variant="blog" /> */}
       <SubHeader />
-      {/* First comp */}
-      <BlogHeader BlogCategory="" />
+
+      {/* Featured Blogs Section */}
+      <BlogHeader BlogCategory={t("blog.featured_articles")} />
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full mb-12 px-10">
         <div className="col-span-2">
-          <BigBlogCard />
+          <BigBlogCard blog={featuredBlogs[0]} />
         </div>
 
         <div className="col-span-2 gap-6 grid grid-cols-1 md:grid-cols-2 h-[500px]">
-          <BlogCard />
-          <BlogCard />
-          <BlogCard />
-          <BlogCard />
+          <BlogCard blog={allBlogs[0]} />
+          <BlogCard blog={allBlogs[1]} />
+          <BlogCard blog={allBlogs[2]} />
+          <BlogCard blog={allBlogs[3]} />
         </div>
       </div>
-      {/* Second comp */}
-      <BlogHeader BlogCategory="Популярные статьи" />
 
+      {/* Popular Articles Section */}
+      <BlogHeader BlogCategory={t("blog.popular_articles")} />
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full mb-12 px-10">
-        <BigBlogCard />
-        <BigBlogCard />
+        <BigBlogCard blog={popularBlogs[0]} />
+        <BigBlogCard blog={popularBlogs[1]} />
         <div className="col-span-2 gap-6 grid  grid-cols-1 md:grid-cols-2 h-[500px]">
           <div className="col-span-2">
-            <BlogCard />
+            <BlogCard blog={popularBlogs[2]} />
           </div>
-          <BlogCard />
-          <BlogCard />
+          <BlogCard blog={popularBlogs[3]} />
+          <BlogCard blog={popularBlogs[4]} />
         </div>
       </div>
-      {/* Third comp */}
-      <BlogHeader BlogCategory="Неврология" />
 
+      {/* Recent Articles Section */}
+      <BlogHeader BlogCategory={t("blog.recent_articles")} />
       <div className="grid grid-cols-2 md:grid-cols-4  gap-6 w-full mb-12 px-10">
         <div className="col-span-2">
-          <BigBlogCard />
+          <BigBlogCard blog={allBlogs[4]} />
         </div>
 
         <div className="col-span-2 gap-6 grid grid-cols-1 md:grid-cols-2 h-[500px]">
-          <BlogCard />
-          <BlogCard />
-          <BlogCard />
-          <BlogCard />
+          <BlogCard blog={allBlogs[5]} />
+          <BlogCard blog={allBlogs[6]} />
+          <BlogCard blog={allBlogs[7]} />
+          <BlogCard blog={featuredBlogs[1]} />
         </div>
       </div>
-      {/* Fourth comp */}
-      <BlogHeader BlogCategory="Ортопедия" />
 
+      {/* All Articles Section */}
+      <BlogHeader BlogCategory={t("blog.all_articles")} />
       <div className="grid grid-cols-2 md:grid-cols-4  gap-6 w-full mb-12 px-10">
         <div className="col-span-2 gap-6 grid  grid-cols-1 md:grid-cols-2 h-[500px]">
           <div className="col-span-2">
-            <BlogCard />
+            <BlogCard blog={featuredBlogs[2]} />
           </div>
-          <BlogCard />
-          <BlogCard />
+          <BlogCard blog={popularBlogs[5]} />
+          <BlogCard blog={allBlogs[0]} />
         </div>
         <div className="col-span-2 gap-6 grid grid-cols-1 md:grid-cols-2 h-[500px]">
-          <BlogCard />
+          <BlogCard blog={allBlogs[1]} />
           <div className="row-span-2">
-            <BigBlogCard />
+            <BigBlogCard blog={featuredBlogs[3]} />
           </div>
-          <BlogCard />
+          <BlogCard blog={allBlogs[2]} />
         </div>
       </div>
 

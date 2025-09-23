@@ -60,7 +60,13 @@
     "status": "В разработке"
   },
   "blog": {
-    "title": "Блог"
+    "title": "Блог",
+    "featured_articles": "Рекомендуемые статьи",
+    "popular_articles": "Популярные статьи",
+    "recent_articles": "Недавние статьи",
+    "all_articles": "Все статьи",
+    "view_all": "Посмотреть все",
+    "category": "Категория"
   },
   "download": {
     "title": "Возможность <br /> взаимодействия <br /> на разных платформах"

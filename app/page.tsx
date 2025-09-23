@@ -16,27 +16,29 @@ import { Footer } from "./components/Footer";
 import { useI18n } from "./context/I18nContext";
 import MainHeader from "./components/Header/MainHeader";
 import { FaBook, FaDumbbell, FaClock } from "react-icons/fa";
+import useStatistics from "./hooks/useStatistics";
 
 const Home = () => {
   const { sets } = useAllSets();
   const { t } = useI18n();
+  const { statistics } = useStatistics();
 
-  // Add stats data
+  // Add stats data using real API data
   const statsData = [
     {
       icon: <FaBook size={24} />,
-      value: "20 sets",
-      label: "Training sets",
+      value: statistics ? `${statistics.total.sets}` : "Loading...",
+      label: t("header.sets_count", { count: statistics?.total.sets || 0 }).replace(/\d+\s*/, ""),
     },
     {
       icon: <FaDumbbell size={24} />,
-      value: "181 exercises",
-      label: "Total exercises",
+      value: statistics ? `${statistics.total.exercises}` : "Loading...",
+      label: t("header.exercises_count", { count: statistics?.total.exercises || 0 }).replace(/\d+\s*/, ""),
     },
     {
       icon: <FaClock size={24} />,
-      value: "null hours",
-      label: "Duration",
+      value: statistics ? `${statistics.total.hours}` : "Loading...",
+      label: t("header.hours_count", { count: statistics?.total.hours || 0 }).replace(/\d+\s*/, ""),
     },
   ];
 

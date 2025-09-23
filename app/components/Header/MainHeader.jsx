@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import DesktopNavbar from "../Navbar/DesktopNavbar";
 import { useI18n } from "../../context/I18nContext";
 import MobileNavbar from "../Navbar/MobileNavbar";
+import useStatistics from "../../hooks/useStatistics";
 
 function MainHeader({
   ShowBlock = false,
@@ -12,6 +13,7 @@ function MainHeader({
   showArrows = true,
 }) {
   const { t } = useI18n();
+  const { statistics } = useStatistics();
   const [showContent, setShowContent] = useState(false);
 
   const localizedMenuItems = [
@@ -98,13 +100,13 @@ function MainHeader({
 
       <div className="md:w-212 m-8 content-between md:grid">
         <h1 className="text-2xl md:text-5xl font-bold text-white mb-6 hidden md:block">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+          {t("header.ecosystem_title")}
         </h1>
 
         {/* Stats + Description Block with slide-in */}
         <div
           className={`md:absolute bottom-8 block transform transition-all duration-500 ${
-            isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+            isVisible ? "translate-x-0 opacity-100" : "-translate-x-10 opacity-0"
           }`}
         >
           <div className="flex gap-4 flex-col md:flex-row mb-4 w-full justify-between">
@@ -125,10 +127,9 @@ function MainHeader({
           </div>
           <div className="bg-[#3d334a4d] rounded-3xl p-8 content-between grid max-w-212">
             <h1 className="text-xl md:text-2xl font-bold text-white mb-8">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt,
-              dignissimos.
+              {t("header.rehabilitation")}
             </h1>
-            <p className="text-sm md:text-lg text-white">Description</p>
+            <p className="text-sm md:text-lg text-white">{t("header.rehabilitation_description")}</p>
           </div>
         </div>
 

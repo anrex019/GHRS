@@ -60,7 +60,13 @@
     "status": "In development"
   },
   "blog": {
-    "title": "Blog"
+    "title": "Blog",
+    "featured_articles": "Featured Articles",
+    "popular_articles": "Popular Articles",
+    "recent_articles": "Recent Articles",
+    "all_articles": "All Articles",
+    "view_all": "View All",
+    "category": "Category"
   },
   "download": {
     "title": "Interaction <br /> possibility on <br /> different platforms"
