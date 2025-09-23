@@ -25,7 +25,6 @@ export default function CategoriesPage({
   const { categoryData, loading, error } = useCategoryComplete(categoryId);
   const { t } = useI18n();
 
-  console.log(categoryData, 'კატეგორიის დატა');
 
 
   const selectedCategory = categoryData?.category;
