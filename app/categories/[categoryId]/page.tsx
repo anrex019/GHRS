@@ -25,7 +25,6 @@ export default function CategoriesPage({
   const { categoryData, loading, error } = useCategoryComplete(categoryId);
   const { t } = useI18n();
 
-
   const selectedCategory = categoryData?.category;
 
   if (loading) {
@@ -133,7 +132,12 @@ export default function CategoriesPage({
           exercisesCount,
         }}
       /> */}
-      <MainHeader ShowBlock={false} OptionalComponent={null} stats={[]} showArrows={false}/>
+      <MainHeader
+        ShowBlock={false}
+        OptionalComponent={null}
+        stats={[]}
+        showArrows={false}
+      />
       <div className="md:pt-[100px] pt-[400px]">
         <div className="px-10 py-[50px] rounded-[30px] bg-[#F9F7FE] md:mb-10 mx-6">
           <div className="flex items-center justify-between mb-[20px]">
@@ -148,22 +152,29 @@ export default function CategoriesPage({
             <div>
               <SliderArrows
                 onScrollLeft={() => {
-                  const slider = document.getElementById('subcategories-slider');
+                  const slider = document.getElementById(
+                    "subcategories-slider"
+                  );
                   if (slider) {
-                    slider.scrollBy({ left: -500, behavior: 'smooth' });
+                    slider.scrollBy({ left: -500, behavior: "smooth" });
                   }
                 }}
                 onScrollRight={() => {
-                  const slider = document.getElementById('subcategories-slider');
+                  const slider = document.getElementById(
+                    "subcategories-slider"
+                  );
                   if (slider) {
-                    slider.scrollBy({ left: 500, behavior: 'smooth' });
+                    slider.scrollBy({ left: 500, behavior: "smooth" });
                   }
                 }}
               />
             </div>
           </div>
 
-          <div id="subcategories-slider" className="flex flex-row items-center gap-[28px] overflow-x-auto">
+          <div
+            id="subcategories-slider"
+            className="flex flex-row items-center gap-[28px] overflow-x-auto"
+          >
             {categoryData?.subcategories?.map((subcategory) => (
               <Link
                 key={subcategory._id}
