@@ -92,7 +92,7 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
                     }&subcategoryId=${work.subcategoryId || ""}`
                   : `/sets/${work.id}`
               }
-              className="bg-white  w-[400px] h-[493px] flex-shrink-0 rounded-[20px] hover:shadow-lg transition-shadow flex flex-col"
+              className="bg-white relative w-[400px] h-[493px] flex-shrink-0 rounded-[20px] hover:shadow-lg transition-shadow flex flex-col"
             >
               <div className="flex-grow">
                 <Image
@@ -103,18 +103,18 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
                   className="w-full h-[250px] object-cover rounded-2xl mb-6"
                 />
                 <div className="mb-2.5 mx-4">
-                  <span className="p-3 bg-[#E9DFF6] inline-block rounded-[6px] text-[#3D334A] text-[14px] font-bold leading-[90%] uppercase truncate max-w-[120px]">
+                  <span className="p-3 bg-[#E9DFF6] inline-block rounded-[6px] text-[#3D334A] text-[14px] font-bold leading-[90%] uppercase max-w-[120px]">
                     {work.categoryName}
                   </span>
                 </div>
-                <h3 className="line-clamp-2 text-[#3D334A] text-[18px] font-bold leading-[120%] uppercase mx-4 mb-2">
+                <h3 className="text-[#3D334A] text-[16px] leading-[120%] uppercase mx-4 ">
                   {work.title}
                 </h3>
                 {/* <p className="line-clamp-3 font-pt text-[#846FA0] leading-[120%] text-sm mx-4">
                   {work.description}
                 </p> */}
               </div>
-              <div className="flex items-center justify-end">
+              <div className="flex items-center justify-end absolute -bottom-2 right-0">
                 <span className="px-5 py-3 bg-[#D4BAFC] rounded-lg text-white text-[18px] leading-[100%] font-bold mb-8 mr-8 mt-6">
                   {work.monthlyPrice}$
                   {language === "ka" ? "₾" : language === "ru" ? "₽" : "$"}/

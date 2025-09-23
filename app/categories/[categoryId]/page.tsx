@@ -151,22 +151,29 @@ export default function CategoriesPage({
             <div>
               <SliderArrows
                 onScrollLeft={() => {
-                  const slider = document.getElementById('subcategories-slider');
+                  const slider = document.getElementById(
+                    "subcategories-slider"
+                  );
                   if (slider) {
-                    slider.scrollBy({ left: -500, behavior: 'smooth' });
+                    slider.scrollBy({ left: -500, behavior: "smooth" });
                   }
                 }}
                 onScrollRight={() => {
-                  const slider = document.getElementById('subcategories-slider');
+                  const slider = document.getElementById(
+                    "subcategories-slider"
+                  );
                   if (slider) {
-                    slider.scrollBy({ left: 500, behavior: 'smooth' });
+                    slider.scrollBy({ left: 500, behavior: "smooth" });
                   }
                 }}
               />
             </div>
           </div>
 
-          <div id="subcategories-slider" className="flex flex-row items-center gap-[28px] overflow-x-auto">
+          <div
+            id="subcategories-slider"
+            className="flex flex-row items-center gap-[28px] overflow-x-auto"
+          >
             {categoryData?.subcategories?.map((subcategory) => (
               <Link
                 key={subcategory._id}
