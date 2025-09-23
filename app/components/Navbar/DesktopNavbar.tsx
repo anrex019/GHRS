@@ -17,13 +17,15 @@ interface DesktopNavbarProps {
   data?: {
     featuredImages?: string[];
   };
-}
+  complexData?: any;
+} 
 
 const DesktopNavbar: React.FC<DesktopNavbarProps> = ({
   menuItems,
   blogBg,
   allCourseBg,
   data,
+  complexData,
 }) => {
   const [language, setLanguage] = useState("RU");
   const { isAuthenticated } = useAuth();

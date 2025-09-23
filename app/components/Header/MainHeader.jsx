@@ -11,8 +11,9 @@ function MainHeader({
   OptionalComponent = null,
   stats = [],
   showArrows = true,
+  complexData = null,
 }) {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const { statistics } = useStatistics();
   const [showContent, setShowContent] = useState(false);
 
@@ -35,6 +36,7 @@ function MainHeader({
         menuItems={localizedMenuItems}
         blogBg={false}
         allCourseBg={false}
+        complexData={complexData}
       />
       <MobileNavbar menuItems={localizedMenuItems} />
 
@@ -126,10 +128,21 @@ function MainHeader({
             ))}
           </div>
           <div className="bg-[#3d334a4d] rounded-3xl p-8 content-between grid max-w-212">
-            <h1 className="text-xl md:text-2xl font-bold text-white mb-8">
-              {t("header.rehabilitation")}
-            </h1>
-            <p className="text-sm md:text-lg text-white">{t("header.rehabilitation_description")}</p>
+            {complexData ? (
+              <>
+                <h1 className="text-xl md:text-2xl font-bold text-white mb-8">
+                  {complexData?.name?.[locale] || complexData?.name?.ru || complexData?.name?.en || complexData?.name?.ka}
+                </h1>
+                <p className="text-sm md:text-lg text-white">{complexData?.description?.[locale] || complexData?.description?.ru || complexData?.description?.en || complexData?.description?.ka}</p>
+              </>
+            ):(
+              <>
+                <h1 className="text-xl md:text-2xl font-bold text-white mb-8">
+                  {t("header.rehabilitation")}
+                </h1>
+                <p className="text-sm md:text-lg text-white">{t("header.rehabilitation_description")}</p>
+              </>
+            )}
           </div>
         </div>
 

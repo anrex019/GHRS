@@ -8,13 +8,13 @@ import React, {
 } from "react";
 import DesktopNavbar from "../components/Navbar/DesktopNavbar";
 import { defaultMenuItems } from "../components/Header/Header";
-import Image from "next/image";
+// import Image from "next/image";
 import MobileNavbar from "../components/Navbar/MobileNavbar";
 import { useSearchParams } from "next/navigation";
 import { useI18n } from "../context/I18nContext";
-import { useAuth } from "../context/AuthContext";
+// import { useAuth } from "../context/AuthContext";
 import { useUserAccess } from "../hooks/useUserAccess";
-import PurchasePrompt from "../components/PurchasePrompt";
+// import PurchasePrompt from "../components/PurchasePrompt";
 import { useExercisesBySet } from "../hooks/useExercises";
 import { useSet } from "../hooks/useSet";
 import { useActivityTracker } from "../hooks/useAchievements";
@@ -366,13 +366,8 @@ const VideoPlayer = ({
             onTimeUpdate={handleTimeUpdate}
             onEnded={handleEnded}
             onError={(e) => {
+              // const video = e.target as HTMLVideoElement;
               console.error("Video error:", e);
-              const video = e.target as HTMLVideoElement;
-              console.log("Video error details:", {
-                error: video.error,
-                networkState: video.networkState,
-                readyState: video.readyState,
-              });
             }}
             onLoadedData={() => {
               console.log("✅ Video loaded successfully");
@@ -403,7 +398,7 @@ const VideoPlayer = ({
 function PlayerContent() {
   const searchParams = useSearchParams();
   const { t } = useI18n();
-  const { isAuthenticated } = useAuth();
+  // const { isAuthenticated } = useAuth();
   const { recordActivity } = useActivityTracker();
   const [currentExercise, setCurrentExercise] =
     useState<BackendExercise | null>(null);
@@ -423,7 +418,7 @@ function PlayerContent() {
     useExercisesBySet(setId);
 
   // Access control
-  const { hasAccess, loading: accessLoading } = useUserAccess(setId);
+  const { loading: accessLoading } = useUserAccess(setId);
 
   // ვარჯიშების დასრულების სტატუსის ჩატვირთვა
   useEffect(() => {
@@ -603,33 +598,33 @@ function PlayerContent() {
   }
 
   // Access denied - show purchase prompt
-  if (!isAuthenticated || !hasAccess) {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="bg-white shadow-sm border-b">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center py-4">
-              <div className="flex items-center">
-                <Image
-                  src="/assets/images/logo.png"
-                  alt="Logo"
-                  width={120}
-                  height={40}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+  // if (!isAuthenticated || !hasAccess) {
+  //   return (
+  //     <div className="min-h-screen bg-gray-50">
+  //       <div className="bg-white shadow-sm border-b">
+  //         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  //           <div className="flex justify-between items-center py-4">
+  //             <div className="flex items-center">
+  //               <Image
+  //                 src="/assets/images/logo.png"
+  //                 alt="Logo"
+  //                 width={120}
+  //                 height={40}
+  //               />
+  //             </div>
+  //           </div>
+  //         </div>
+  //       </div>
 
-        <div className="max-w-4xl mx-auto py-12 px-4">
-          <PurchasePrompt
-            setId={setId}
-            setName={setData?.name ? getLocalizedText(setData.name) : undefined}
-          />
-        </div>
-      </div>
-    );
-  }
+  //       <div className="max-w-4xl mx-auto py-12 px-4">
+  //         <PurchasePrompt
+  //           setId={setId}
+  //           setName={setData?.name ? getLocalizedText(setData.name) : undefined}
+  //         />
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   if (loading) {
     return (
@@ -668,49 +663,21 @@ function PlayerContent() {
       <div className="flex flex-col items-center md:overflow-hidden">
         <div className="w-full h-[calc(100vh-200px)] rounded-[20px] md:rounded-[30px] overflow-hidden">
           {(() => {
-            console.log("🎯 currentExercise:", currentExercise);
+            
             if (!currentExercise) {
-              console.log("❌ No currentExercise");
               return (
                 <div className="w-full h-full flex items-center justify-center bg-gray-100 rounded-[20px] md:rounded-[30px]">
                   <p className="text-gray-500">{t("common.noVideo")}</p>
                 </div>
               );
             }
-            console.log(
-              "✅ currentExercise exists, proceeding with video selection"
-            );
+           
 
             // Get video URL based on language and availability
-            console.log("🚀 Starting video URL selection...");
             const locale = getLocale();
-            console.log("🌍 Current locale:", locale);
-            console.log("🎯 currentExercise._id:", currentExercise._id);
             let videoUrl: string | undefined;
 
             // პირველად ვცდილობთ შესაბამისი ენის ვიდეოს
-            console.log("🎬 Available video URLs:", {
-              videoUrl: currentExercise.videoUrl,
-              videoUrlEn: currentExercise.videoUrlEn,
-              locale: locale,
-              videoUrlType: typeof currentExercise.videoUrl,
-              videoUrlEnType: typeof currentExercise.videoUrlEn,
-            });
-            console.log("🔍 About to check video URL conditions...");
-
-            console.log("🔍 Checking conditions:");
-            console.log('  - locale === "en":', locale === "en");
-            console.log(
-              "  - currentExercise.videoUrlEn exists:",
-              !!currentExercise.videoUrlEn
-            );
-            console.log('  - locale === "ru":', locale === "ru");
-            console.log(
-              "  - currentExercise.videoUrl exists:",
-              !!currentExercise.videoUrl
-            );
-            console.log('  - locale === "ka":', locale === "ka");
-
             if (locale === "en" && currentExercise.videoUrlEn) {
               videoUrl = currentExercise.videoUrlEn;
               console.log("✅ Selected EN video:", videoUrl);
@@ -762,31 +729,11 @@ function PlayerContent() {
 
             // If language-specific URL is invalid, try fallback URLs
             if (videoType === "unknown") {
-              console.log("🔄 Trying fallback URLs...");
-              console.log("  - videoType is unknown, trying fallback");
-              console.log('  - locale === "en":', locale === "en");
-              console.log(
-                "  - currentExercise.videoUrl exists:",
-                !!currentExercise.videoUrl
-              );
-              console.log('  - locale !== "en":', locale !== "en");
-              console.log(
-                "  - currentExercise.videoUrlEn exists:",
-                !!currentExercise.videoUrlEn
-              );
-              console.log(
-                "  - currentExercise.videoUrl:",
-                currentExercise.videoUrl
-              );
-              console.log(
-                "  - currentExercise.videoUrlEn:",
-                currentExercise.videoUrlEn
-              );
+              
 
               // ვცდილობთ სხვა ენის ვიდეოს fallback-ად
               if (locale === "en" && currentExercise.videoUrl) {
                 videoUrl = currentExercise.videoUrl;
-                console.log("✅ Fallback to RU video:", videoUrl);
               } else if (locale !== "en" && currentExercise.videoUrlEn) {
                 videoUrl = currentExercise.videoUrlEn;
                 console.log("✅ Fallback to EN video:", videoUrl);
@@ -892,7 +839,41 @@ function PlayerContent() {
           </div>
         )}
 
-        {/* Exercise Details */}
+        {/* Exercise List Slider Controls + Items */}
+        <div className="w-full max-w-[1400px] px-4 mt-4 flex items-center justify-end gap-2">
+          <button
+            type="button"
+            onClick={() => {
+              if (!currentExercise || exercises.length === 0) return;
+              const idx = exercises.findIndex((ex) => ex._id === currentExercise._id);
+              if (idx > 0) {
+                handleExerciseChange(exercises[idx - 1], idx - 1);
+              }
+            }}
+            className="hidden md:flex w-10 h-10 items-center justify-center rounded-lg bg-[#E9DFF6] hover:bg-[#D4BAFC] transition"
+            aria-label="scroll-left"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#3D334A]">
+              <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              if (!currentExercise || exercises.length === 0) return;
+              const idx = exercises.findIndex((ex) => ex._id === currentExercise._id);
+              if (idx > -1 && idx < exercises.length - 1) {
+                handleExerciseChange(exercises[idx + 1], idx + 1);
+              }
+            }}
+            className="hidden md:flex w-10 h-10 items-center justify-center rounded-lg bg-[#E9DFF6] hover:bg-[#D4BAFC] transition"
+            aria-label="scroll-right"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#3D334A]">
+              <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+        </div>
 
         <div
           ref={scrollContainerRef}

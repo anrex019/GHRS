@@ -66,7 +66,6 @@ const Blog: React.FC<BlogProps> = ({
   const { t, locale } = useI18n();
   const { categories } = useCategories();
   const blogsPerPage = 4;
-  console.log(title)
 
   const { articles, loading: articlesLoading } = useArticles({
     isFeatured: true, 
@@ -183,15 +182,7 @@ const Blog: React.FC<BlogProps> = ({
             
             return category?.subcategories && Array.isArray(category.subcategories) && typeof article?.categoryId === 'string' && category.subcategories.includes(article.categoryId);
           }) || [];
-          
-          console.log(`Category: ${getLocalizedText(category?.name)} (${category?._id})`);
-          console.log(`Category subcategories:`, category?.subcategories);
-          console.log(`Articles found: ${categoryArticles.length}`);
           if (categoryArticles.length > 0) {
-            console.log('Category articles:', categoryArticles.map(a => ({
-              title: a?.title?.en,
-              categoryId: a?.categoryId
-            })));
           }
           
           // Only render if category has articles

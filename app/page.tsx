@@ -22,6 +22,7 @@ const Home = () => {
   const { sets } = useAllSets();
   const { t } = useI18n();
   const { statistics } = useStatistics();
+  console.log(sets, 'სეტები სეტები სეტები სეტები');
 
   // Add stats data using real API data
   const statsData = [

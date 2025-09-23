@@ -107,7 +107,6 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
         const newPage = Math.min(Math.max(0, currentPageFromScroll), totalPages - 1);
         if (newPage !== currentPage) {
           // აქ არ ვიძახებთ setCurrentPage-ს რადგან ეს prop არის
-          console.log('Current visible page:', newPage);
         }
       }
     };
@@ -118,7 +117,6 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
       return () => scrollContainer.removeEventListener('scroll', handleScroll);
     }
   }, [currentPage, totalPages]);
-  console.log(blogs);
 
   // Helper function to get article link
   const getArticleLink = (blog: Blog) => {
