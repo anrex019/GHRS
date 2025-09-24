@@ -654,6 +654,8 @@ function PlayerContent() {
 
   return (
     <div>
+
+      
       <DesktopNavbar
         menuItems={defaultMenuItems}
         blogBg={false}
