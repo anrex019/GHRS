@@ -48,7 +48,7 @@ const About = () => {
     institution: "", // ეს ველი არ არის instructor API-ში
     credentials:
       instructor.certificates
-        ?.map((cert: Certificate) => cert.name)
+        ?.map((cert: Certificate, index: number) => cert.name)
         .join(", ") || "",
     education: [], // ეს ველი არ არის instructor API-ში
     imageUrl: instructor.profileImage,
@@ -146,9 +146,9 @@ const About = () => {
                 </p>
               </div>
             ) : (
-              teacherData.map((teacher) => (
+              teacherData.map((teacher, index) => (
                 <div
-                  key={teacher.id}
+                  key={teacher.id || index}
                   className="bg-white rounded-[20px] shadow-md overflow-hidden"
                 >
                   <div className="flex flex-col md:flex-row gap-8 p-4">

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "../../context/AuthContext";
 
 import { SimpleLogo } from "../Logo";
@@ -30,6 +30,33 @@ const DesktopNavbar: React.FC<DesktopNavbarProps> = ({
   const [language, setLanguage] = useState("RU");
   const { isAuthenticated } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
+
+  const getBackgroundStyle = () => {
+    if (pathname.startsWith('/singleCourse/')) {
+      return "bg-[url('/assets/images/header44.png')] bg-cover bg-center h-[70px]";
+    }
+
+    if (pathname === '/shoppingcard' ||
+        pathname === '/contact' ||
+        pathname.startsWith('/player') ||
+        pathname === '/personalAccount' ||
+        pathname.startsWith('/personalAccount/')) {
+      return "bg-[url('/assets/images/header55.png')] bg-cover bg-center h-[70px]";
+    }
+
+    switch (pathname) {
+      case '/allCourse':
+        return "bg-[url('/assets/images/header44.png')] bg-cover bg-center h-[70px]";
+      case '/blog':
+        return "bg-[url('/assets/images/header22.png')] bg-cover bg-center h-[70px]";
+      case '/allComplex':
+        return "bg-[url('/assets/images/header33.png')] bg-cover bg-center h-[70px]";
+      default:
+        return "bg-gradient-to-br from-[rgba(94,43,143,0.4)] to-[rgba(61,51,74,0.3)] h-[70px]";
+    }
+  };
+
   console.log(data);
   const handleProtectedRouteClick = (e: React.MouseEvent, route: string) => {
     e.preventDefault();
@@ -45,13 +72,7 @@ const DesktopNavbar: React.FC<DesktopNavbarProps> = ({
       {/* Fixed Header */}
       <header className="fixed font-[Bowler] top-0 left-0 right-0 z-50 my-4 w-full md:flex hidden justify-between px-10 py-5">
         <div
-          className={`w-[780px] flex p-3.5 items-center rounded-[24px] ${
-            blogBg
-              ? "bg-[url('/assets/images/blogHeader.jpg')] bg-cover w-[780px] bg-no-repeat bg-fixed bg-center h-[70px]"
-              : allCourseBg
-              ? "bg-[url('/assets/images/header33.png')] bg-cover bg-center h-[70px] w-[780px]"
-              : "bg-[url('/assets/images/header33.png')] shadow-xl w-[780px]"
-          } border border-white/10 relative`}
+          className={`w-[780px] flex p-3.5 items-center rounded-[24px] ${getBackgroundStyle()} border border-white/10 relative`}
         >
           <BackgroundImage imageUrl={data?.featuredImages?.[0]} />
           <Link href={"/"} className="hover:brightness-0 duration-700">

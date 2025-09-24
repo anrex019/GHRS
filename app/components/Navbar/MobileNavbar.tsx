@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { usePathname } from "next/navigation";
 import { MobileLogo } from "../Logo";
 import NavbarIconButton from "./NavbarIconButton";
 import { defaultMenuItems } from "../Header/Header";
@@ -7,13 +8,39 @@ import Link from "next/link";
 
 const MobileNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  const getBackgroundStyle = () => {
+    if (pathname.startsWith('/singleCourse/')) {
+      return "bg-[url('/assets/images/header44.png')] bg-cover bg-center";
+    }
+
+    if (pathname === '/shoppingcard' ||
+        pathname === '/contact' ||
+        pathname.startsWith('/player') ||
+        pathname === '/personalAccount' ||
+        pathname.startsWith('/personalAccount/')) {
+      return "bg-[url('/assets/images/header55.png')] bg-cover bg-center";
+    }
+
+    switch (pathname) {
+      case '/allCourse':
+        return "bg-[url('/assets/images/header44.png')] bg-cover bg-center";
+      case '/blog':
+        return "bg-[url('/assets/images/header22.png')] bg-cover bg-center";
+      case '/allComplex':
+        return "bg-[url('/assets/images/header33.png')] bg-cover bg-center";
+      default:
+        return "bg-gradient-to-br from-[rgba(94,43,143,0.5)] to-[rgba(61,51,74,0.4)]";
+    }
+  };
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
   return (
     <header className="py-2 md:hidden z-[9999999999] max-w-[700px]">
       <div className=" top-0 left-0 right-0 z-[9999999999] px-6 py-6 md:hidden w-full mx-auto">
-        <div className="px-4 py-3  flex justify-between items-center rounded-2xl bg-gradient-to-br from-[rgba(94,43,143,0.5)] to-[rgba(61,51,74,0.4)] backdrop-blur-lg shadow-xl border border-white/10">
+        <div className={`px-4 py-3 flex justify-between items-center rounded-2xl ${getBackgroundStyle()} backdrop-blur-lg shadow-xl border border-white/10`}>
           <div onClick={toggleMenu}>
             <NavbarIconButton src={"/assets/images/burger.svg"} alt="Burger" />
           </div>
