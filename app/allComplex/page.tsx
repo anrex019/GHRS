@@ -247,9 +247,10 @@ const AllComplex = () => {
         customMargin={""}
         customBorderRadius={""}
         seeAll={false}
-        scrollable={false}
+        scrollable={true}
         border={1}
         borderColor="#D4BAFC"
+        sliderId="popular-complexes-slider"
       />
 
       {/* Dynamic Works components for each category */}
@@ -269,9 +270,10 @@ const AllComplex = () => {
             customMargin={""}
             customBorderRadius={""}
             seeAll={false}
-            scrollable={false}
+            scrollable={true}
             border={1}
             borderColor="#D4BAFC"
+            sliderId={`category-slider-${category._id}`}
           />
         );
       })}

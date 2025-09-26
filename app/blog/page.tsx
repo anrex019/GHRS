@@ -36,60 +36,62 @@ const BlogCard = ({ blog }: BlogCardProps) => {
   };
 
   return (
-    <div className="bg-white rounded-[20px] p-5 flex flex-col justify-between h-full shadow-sm">
-      <div className="flex flex-col gap-3">
-        <h3 className="text-[#1A1A1A] text-xl font-semibold leading-tight">
-          {getLocalizedText(blog.title)}
-        </h3>
-        <p className="text-[#1A1A1A]/70 text-sm line-clamp-3">
-          {getLocalizedText(blog.excerpt)}
-        </p>
-      </div>
+    <Link href={`/blog/${blog._id}`}>
+      <div className="bg-white rounded-[20px] p-5 flex flex-col justify-between h-full shadow-sm hover:shadow-lg transition-shadow duration-300 cursor-pointer">
+          <div className="flex flex-col gap-3">
+            <h3 className="text-[#1A1A1A] text-xl font-semibold leading-tight">
+              {getLocalizedText(blog.title)}
+            </h3>
+            <p className="text-[#1A1A1A]/70 text-sm line-clamp-3">
+              {getLocalizedText(blog.excerpt)}
+            </p>
+          </div>
 
-      <div className="flex justify-between">
-        <div className="items-center flex">
-          <span className="bg-[#F1EBF9] text-[#6941C6] text-sm font-medium py-3 px-5 rounded-xl w-fit">
-            {blog.tags?.[0] || t("blog.category")}
-          </span>
-        </div>
-        <div className="flex justify-end gap-4 mt-4">
-          <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M17.593 3.322C18.693 3.45 19.5 4.399 19.5 5.507V21L12 17.25L4.5 21V5.507C4.5 4.399 5.306 3.45 6.407 3.322C10.123 2.89 13.877 2.89 17.593 3.322Z"
-                stroke="#667085"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
-          <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z"
-                stroke="#667085"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
-        </div>
+          <div className="flex justify-between">
+            <div className="items-center flex">
+              <span className="bg-[#F1EBF9] text-[#6941C6] text-sm font-medium py-3 px-5 rounded-xl w-fit">
+                {blog.tags?.[0] || t("blog.category")}
+              </span>
+            </div>
+            <div className="flex justify-end gap-4 mt-4">
+              <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17.593 3.322C18.693 3.45 19.5 4.399 19.5 5.507V21L12 17.25L4.5 21V5.507C4.5 4.399 5.306 3.45 6.407 3.322C10.123 2.89 13.877 2.89 17.593 3.322Z"
+                    stroke="#667085"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+              <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z"
+                    stroke="#667085"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
@@ -118,7 +120,8 @@ const BigBlogCard = ({ blog }: BigBlogCardProps) => {
   };
 
   return (
-    <div className="rounded-[20px] h-full md:h-[500px] p-8 flex flex-col justify-between relative overflow-hidden bg-white shadow-sm">
+    <Link href={`/blog/${blog._id}`}>
+      <div className="rounded-[20px] h-full md:h-[500px] p-8 flex flex-col justify-between relative overflow-hidden bg-white shadow-sm hover:shadow-lg transition-shadow duration-300 cursor-pointer">
       {/* Add image div that takes up the top space */}
       <div className="absolute top-0 left-0 w-full h-[45%] overflow-hidden">
         <img
@@ -179,7 +182,8 @@ const BigBlogCard = ({ blog }: BigBlogCardProps) => {
           {blog.tags?.[0] || t("blog.category")}
         </span>
       </div>
-    </div>
+      </div>
+    </Link>
   );
 };
 

@@ -84,12 +84,7 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
         <div className="col-span-2 row-span-2">
           {/* 1 */}
           {orderedBlogs[0] && (
-            <Link
-              href={
-                orderedBlogs[0]?.articles?.length > 0
-                  ? `/article/${orderedBlogs[0].articles[0]._id}`
-                  : "#"
-              }
+            <Link href={`/blog/${orderedBlogs[0]._id}`}
             >
               <div className="h-[249px] flex flex-col justify-between bg-white rounded-[20px] p-2">
                 <p className="text-[#3D334A] font-pt tracking-[0%] mt-0 mb-1 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
@@ -110,12 +105,7 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
         <div className="row-span-2 col-start-1 row-start-3">
           {/* 2 */}
           {orderedBlogs[1] && (
-            <Link
-              href={
-                orderedBlogs[1]?.articles?.length > 0
-                  ? `/article/${orderedBlogs[1].articles[0]._id}`
-                  : "#"
-              }
+            <Link href={`/blog/${orderedBlogs[1]._id}`}
             >
               <div className="h-[249px] flex flex-col justify-between bg-white rounded-[20px] p-2">
                 <p className="text-[#3D334A] font-pt tracking-[0%] mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
@@ -133,12 +123,7 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
         <div className="row-span-2 col-start-2 row-start-3">
           {/* 3 */}
           {orderedBlogs[2] && (
-            <Link
-              href={
-                orderedBlogs[2]?.articles?.length > 0
-                  ? `/article/${orderedBlogs[2].articles[0]._id}`
-                  : "#"
-              }
+            <Link href={`/blog/${orderedBlogs[2]._id}`}
             >
               <div className="h-[249px] flex flex-col justify-between bg-white rounded-[20px] p-2">
                 <p className="text-[#3D334A] font-pt tracking-[0%] mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
@@ -156,12 +141,7 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
         <div className="row-span-2 col-start-3 row-start-1">
           {/* 4 */}
           {orderedBlogs[3] && (
-            <Link
-              href={
-                orderedBlogs[3]?.articles?.length > 0
-                  ? `/article/${orderedBlogs[3].articles[0]._id}`
-                  : "#"
-              }
+            <Link href={`/blog/${orderedBlogs[3]._id}`}
             >
               <div className="h-[249px] flex flex-col justify-between bg-white rounded-[20px] p-2">
                 <p className="text-[#3D334A] font-pt tracking-[0%] mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
@@ -179,12 +159,7 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
         <div className="row-span-4 col-start-4 row-start-1">
           {/* 5 */}
           {orderedBlogs[4] && (
-            <Link
-              href={
-                orderedBlogs[4]?.articles?.length > 0
-                  ? `/article/${orderedBlogs[4].articles[0]._id}`
-                  : "#"
-              }
+            <Link href={`/blog/${orderedBlogs[4]._id}`}
             >
               <div className="h-full flex flex-col justify-between bg-white rounded-[20px] p-2 min-h-[100%]">
                 <Image
@@ -212,12 +187,7 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
         <div className="row-span-2 row-start-3">
           {/* 6 */}
           {orderedBlogs[5] && (
-            <Link
-              href={
-                orderedBlogs[5]?.articles?.length > 0
-                  ? `/article/${orderedBlogs[5].articles[0]._id}`
-                  : "#"
-              }
+            <Link href={`/blog/${orderedBlogs[5]._id}`}
             >
               <div className="h-[249px] flex flex-col justify-between bg-white rounded-[20px] p-2">
                 <p className="text-[#3D334A] font-pt tracking-[0%] mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
@@ -236,32 +206,31 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
       {/* Mobile: horizontal scroll */}
       <div className="flex sm:hidden gap-4 overflow-x-auto p-2">
         {orderedBlogs.map((blog) => (
-          <div
-            className="min-w-[260px] max-w-[260px] flex-shrink-0 p-5 bg-white flex flex-col justify-between rounded-[20px]"
-            key={blog._id}
-          >
-            <Image
-              src={blog.imageUrl}
-              alt={blog.title[language]}
-              width={300}
-              height={160}
-              className="rounded-md object-cover w-full h-[120px] mb-3"
-            />
-            <p className="text-[#3D334A] text-[18px] leading-[120%] line-clamp-2 font-bold">
-              {blog.title[language]}
-            </p>
-            <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%] rounded-[6px] text-[14px] uppercase mt-2 inline-block">
-              {blog?.articles?.length} სტატია
-            </span>
-            <div className="flex items-center gap-1.5 mt-3">
-              <div className="w-10 h-10  rounded-[6px] flex justify-center items-center">
-                <CiBookmark className="w-[14.2px] h-[18.68px] text-black" />
+          <Link key={blog._id} href={`/blog/${blog._id}`}>
+            <div className="min-w-[260px] max-w-[260px] flex-shrink-0 p-5 bg-white flex flex-col justify-between rounded-[20px]">
+              <Image
+                src={blog.imageUrl}
+                alt={blog.title[language]}
+                width={300}
+                height={160}
+                className="rounded-md object-cover w-full h-[120px] mb-3"
+              />
+              <p className="text-[#3D334A] text-[18px] leading-[120%] line-clamp-2 font-bold">
+                {blog.title[language]}
+              </p>
+              <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%] rounded-[6px] text-[14px] uppercase mt-2 inline-block">
+                {blog?.articles?.length} სტატია
+              </span>
+              <div className="flex items-center gap-1.5 mt-3">
+                <div className="w-10 h-10  rounded-[6px] flex justify-center items-center">
+                  <CiBookmark className="w-[14.2px] h-[18.68px] text-black" />
+                </div>
+                <div className="w-10 h-10  rounded-[6px] flex justify-center items-center">
+                  <IoIosShareAlt className="w-[14.2px] h-[18.68px] text-black" />
+                </div>
               </div>
-              <div className="w-10 h-10  rounded-[6px] flex justify-center items-center">
-                <IoIosShareAlt className="w-[14.2px] h-[18.68px] text-black" />
               </div>
-            </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

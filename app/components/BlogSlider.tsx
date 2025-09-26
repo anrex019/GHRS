@@ -12,39 +12,32 @@ import { useRouter } from "next/navigation";
 interface Blog {
   _id: string;
   title: {
-    [key in "ka" | "en" | "ru"]: string;
+    en: string;
+    ru: string;
+    ka?: string;
   };
   description: {
-    [key in "ka" | "en" | "ru"]: string;
+    en: string;
+    ru: string;
+    ka?: string;
   };
   excerpt: {
-    [key in "ka" | "en" | "ru"]: string;
-  };
-  content: {
-    [key in "ka" | "en" | "ru"]: string;
+    en: string;
+    ru: string;
+    ka?: string;
   };
   imageUrl: string;
-  featuredImages: string[];
-  articles:
-    | Array<{
-        _id: string;
-        title: {
-          [key in "ka" | "en" | "ru"]: string;
-        };
-        excerpt: {
-          [key in "ka" | "en" | "ru"]: string;
-        };
-        author: {
-          name: string;
-          bio?: string;
-          avatar?: string;
-        };
-        readTime: string;
-        viewsCount: number;
-        likesCount: number;
-        createdAt: string;
-      }>
-    | string[]; // Can be either array of objects or array of strings
+  categoryId: string;
+  tags: string[];
+  isPublished: boolean;
+  isFeatured: boolean;
+  publishDate: Date;
+  viewsCount: number;
+  likesCount: number;
+  isActive: boolean;
+  sortOrder: number;
+  featuredImages?: string[];
+  articles?: any[]; // Keep this flexible for compatibility
 }
 
 interface BlogSliderProps {
@@ -85,6 +78,12 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
   const otherBlogs = blogs.slice(1);
   const { t } = useI18n();
 
+  // Helper function to get localized text with fallback
+  const getLocalizedText = (field: { en: string; ru: string; ka?: string } | undefined): string => {
+    if (!field) return "";
+    return field[language] || field.ru || field.en || "";
+  };
+
   const getCurrentBlogs = () => {
     const startIndex = currentPage * blogsPerPage;
     const endIndex = startIndex + blogsPerPage;
@@ -118,15 +117,14 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
     }
   }, [currentPage, totalPages]);
 
-  // Helper function to get article link
-  const getArticleLink = (blog: Blog) => {
+  // Helper function to get blog link
+  const getBlogLink = (blog: Blog) => {
     if (!blog || !blog._id) {
       return "#";
     }
 
-    // For now, link directly to the blog article itself
-    // Since the data structure shows this is actually an article, not a blog with multiple articles
-    return `/article/${blog._id}`;
+    // Link to the individual blog detail page
+    return `/blog/${blog._id}`;
   };
 
   // const getArticleCount = (count: number) => {
@@ -141,7 +139,7 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
       <div className="flex md:flex-row flex-col gap-2.5 mb-10 w-full px-0">
         {/* Featured Blog */}
         {featuredBlog && isDesktop && (
-          <Link href={getArticleLink(featuredBlog)}>
+          <Link href={getBlogLink(featuredBlog)}>
             <div className="bg-white md:p-2 md:pb-5 hover:shadow-lg duration-300 transition-shadow md:h-[518px] w-[280px] md:w-auto flex-shrink-0 rounded-[20px] flex-col justify-between snap-center">
               <div className="relative min-w-[300px] max-w-[690px] ">
                 <Image
@@ -152,20 +150,18 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
                   }
                   width={694}
                   height={232}
-                  alt={featuredBlog.title[language]}
+                  alt={getLocalizedText(featuredBlog.title)}
                   className="md:h-[232px] object-cover rounded-[20px]"
                 />
                 <div className="text-[#3D334A] tracking-[0%] md:mt-[10px] mt-0 md:mb-2 mb-2 text-[14px] md:text-[24px] leading-[120%] font-semibold px-3">
                   <div className="line-clamp-2">
-                    {featuredBlog.title[language]?.trim()}
+                    {getLocalizedText(featuredBlog.title)?.trim()}
                   </div>
                 </div>
                 <div className="mt-0 text-[#846FA0] font-medium leading-[120%] tracking-[0%] px-3">
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: featuredBlog?.content[language].slice(0, 90),
-                    }}
-                  />
+                  <div className="line-clamp-2">
+                    {getLocalizedText(featuredBlog.excerpt) || getLocalizedText(featuredBlog.description) || ""}
+                  </div>
                 </div>
                 <div className="flex items-center gap-1.5 flex-col absolute top-2 right-2">
                   <div className="w-8 h-8 md:w-10 md:h-10 bg-[#F9F7FE]/30 rounded-[6px] flex justify-center items-center">
@@ -190,10 +186,10 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
           <div className="relative">
             <div className="grid grid-cols-2 grid-rows-2 gap-5">
               {getCurrentBlogs().map((blog) => (
-                <Link key={blog._id} href={getArticleLink(blog)}>
+                <Link key={blog._id} href={getBlogLink(blog)}>
                   <div className="min-w-[200px] hover:shadow-lg duratio-300 transition-shadow max-w-full md:h-[249px] p-5 bg-white flex flex-col justify-between rounded-[20px]">
                     <p className="text-[#3D334A] text-[18px] leading-[120%] line-clamp-2 font-bold md:text-[24px]">
-                      {blog.title[language]}
+                      {getLocalizedText(blog.title)}
                     </p>
                     <div className="flex justify-between items-center mt-3">
                       {/* <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%] bg-[#E9DFF6] rounded-[6px] text-[14px] uppercase">
@@ -219,17 +215,17 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
             className="flex overflow-auto gap-5 flex-row overflow-x-auto scroll-smooth scrollbar-hide"
           >
             {getCurrentBlogs().map((blog) => (
-              <Link key={blog._id} href={getArticleLink(blog)}>
+              <Link key={blog._id} href={getBlogLink(blog)}>
                 <div className="w-[200px] flex-shrink-0 p-3 bg-white flex flex-col justify-between rounded-[10px]">
                   <Image
                     src={blog.featuredImages?.[0] || blog.imageUrl || ""}
                     width={189}
                     height={172}
-                    alt={blog.title[language]}
+                    alt={getLocalizedText(blog.title)}
                     className="flex"
                   />
                   <p className="text-[#3D334A] text-[14px] leading-[120%] mt-2 line-clamp-2">
-                    {blog.title[language]}
+                    {getLocalizedText(blog.title)}
                   </p>
                   <div className="flex justify-between items-center mt-2">
                     {/* <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%] bg-[#E9DFF6] rounded-[6px] text-[14px] uppercase">

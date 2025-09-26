@@ -6,6 +6,7 @@ import OtherGrid from "./OtherGrid";
 import ThirdGrid from "./ThirdGrid";
 import { useI18n } from "../context/I18nContext";
 import { Article } from "../api/articles";
+import { Blog as BlogType } from "../api/blogs";
 
 export type LayoutType = "default" | "other" | "thirdGrid";
 
@@ -50,7 +51,7 @@ interface GridLayoutsProps {
   scrollRef: React.RefObject<HTMLDivElement | null>;
   currentPage: number;
   blogsPerPage: number;
-  blogs: Article[];
+  blogs: BlogType[] | Article[];
   showHeader?: boolean;
 }
 

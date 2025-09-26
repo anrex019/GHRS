@@ -11,13 +11,11 @@ import { Footer } from "../components/Footer";
 import MainHeader from "../components/Header/MainHeader";
 import { useI18n } from "../context/I18nContext";
 
-
 export default function CategoriesPage() {
   const { categories, loading, error } = useCategories();
   const { t, locale } = useI18n();
 
-
-  console.log(categories, '123');
+  console.log(categories, "123");
 
   // Helper to get localized string
   const getLocalized = (value: any): string => {
@@ -113,7 +111,12 @@ export default function CategoriesPage() {
     <div className="">
       {/* Header Section */}
       {/* <Header variant="categories" /> */}
-      <MainHeader ShowBlock={false} OptionalComponent={null} stats={[]} showArrows={false}/>
+      <MainHeader
+        ShowBlock={false}
+        OptionalComponent={null}
+        stats={[]}
+        showArrows={false}
+      />
       <div className="md:pt-[100px] pt-[400px]">
         {/*  */}
         <Section border={0} borderColor="none" />

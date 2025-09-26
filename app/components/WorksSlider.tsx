@@ -27,6 +27,7 @@ interface WorksSliderProps {
   fromMain: boolean;
   seeAll: boolean;
   scrollable: boolean;
+  sliderId?: string; // Unique ID for the slider
 }
 
 const WorksSlider: React.FC<WorksSliderProps> = ({
@@ -36,11 +37,16 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
   fromMain,
   seeAll = true,
   scrollable = true,
+  sliderId,
 }) => {
   const { t } = useI18n();
   const { language } = useLanguage();
+
+  // Generate unique slider ID if not provided
+  const uniqueSliderId = sliderId || `works-slider-${Math.random().toString(36).substr(2, 9)}`;
+
   const scroll = (direction: "left" | "right") => {
-    const slider = document.getElementById("works-slider");
+    const slider = document.getElementById(uniqueSliderId);
     if (slider) {
       const scrollAmount = direction === "left" ? -500 : 500;
       slider.scrollBy({
@@ -48,7 +54,7 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
         behavior: "smooth",
       });
     } else {
-      console.error("❌ Slider element not found!");
+      console.error(`❌ Slider element not found with ID: ${uniqueSliderId}`);
     }
   };
 
@@ -74,7 +80,7 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
       </div>
 
       <div
-        id="works-slider"
+        id={uniqueSliderId}
         className="overflow-x-hidden overflow-y-hidden mb-10 py-4"
       >
         <div className="flex gap-4">

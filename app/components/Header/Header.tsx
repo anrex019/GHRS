@@ -42,9 +42,9 @@ interface HeaderProps {
 }
 
 export const defaultMenuItems: MenuItem[] = [
-  { id: 1, name: "Все комплексы", route: "allComplex" },
-  { id: 2, name: "О нас", route: "about" },
-  { id: 3, name: "Блог", route: "blog" },
+  { id: 1, name: "Все комплексы", route: "/allComplex" },
+  { id: 2, name: "О нас", route: "/about" },
+  { id: 3, name: "Блог", route: "/blog" },
   { id: 4, name: "Контакты", route: "/contact" },
 ];
 

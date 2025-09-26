@@ -5,7 +5,7 @@ import SliderArrows from "./SliderArrows";
 import GridLayouts, { LayoutType } from "./GridLayouts";
 import { useI18n } from "../context/I18nContext";
 
-import { useArticles } from "../hooks/useArticles";
+import { useBlogs } from "../hooks/useBlogs";
 import { useCategories } from "../hooks/useCategories";
 
 interface BlogProps {
@@ -67,8 +67,9 @@ const Blog: React.FC<BlogProps> = ({
   const { categories } = useCategories();
   const blogsPerPage = 4;
 
-  const { articles, loading: articlesLoading } = useArticles({
-    isFeatured: true, 
+  const { blogs, loading: blogsLoading } = useBlogs({
+    isFeatured: true,
+    isPublished: true
   });
 
 
@@ -93,11 +94,11 @@ const Blog: React.FC<BlogProps> = ({
 
 
   const totalPages = useMemo(() => {
-    if (!articles?.length) return 0;
-    // პირველი სტატია არის featured, დანარჩენი მიდის გრიდში
-    const otherArticles = articles.slice(1);
-    return Math.max(1, Math.ceil(otherArticles.length / blogsPerPage));
-  }, [articles, blogsPerPage]);
+    if (!blogs?.length) return 0;
+    // პირველი ბლოგი არის featured, დანარჩენი მიდის გრიდში
+    const otherBlogs = blogs.slice(1);
+    return Math.max(1, Math.ceil(otherBlogs.length / blogsPerPage));
+  }, [blogs, blogsPerPage]);
 
   const scrollLeft = (): void => {
     if (currentPage > 0) {
@@ -118,7 +119,7 @@ const Blog: React.FC<BlogProps> = ({
 
 
 
-  if (articlesLoading) {
+  if (blogsLoading) {
     return <div>{t("common.loading")}</div>;
   }
 
@@ -135,8 +136,8 @@ const Blog: React.FC<BlogProps> = ({
       )}
 
       <div className="py-5 md:px-6">
-        {/* Popular Articles - All articles */}
-        {withSlider && articles?.length > 0 && (
+        {/* Popular Blogs - All blogs */}
+        {withSlider && blogs?.length > 0 && (
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-[20px] leading-[120%] md:my-5 md:mx-3 text-[#3D334A] md:text-[40px] md:tracking-[-3%]">
               {title || t("navigation.blog")}
@@ -150,9 +151,9 @@ const Blog: React.FC<BlogProps> = ({
           </div>
         )}
 
-        {articles?.length > 0 && (
+        {blogs?.length > 0 && (
           <GridLayouts
-            blogs={articles}
+            blogs={blogs}
             layoutType={layoutType}
             scrollRef={scrollRef}
             currentPage={currentPage}
@@ -163,30 +164,30 @@ const Blog: React.FC<BlogProps> = ({
 
         {/* Dynamic Blog sections for each category */}
         {showCategories && categories?.length > 0 && categories.map((category) => {
-          const categoryArticles = articles?.filter(article => {
+          const categoryBlogs = blogs?.filter(blog => {
             // Handle both single categoryId and array of categoryIds
-            if (article?.categoryId && Array.isArray(article.categoryId)) {
-              // Check if any of the article's categoryIds match this category
+            if (blog?.categoryId && Array.isArray(blog.categoryId)) {
+              // Check if any of the blog's categoryIds match this category
               // or if any of them are subcategories of this category
-              return article.categoryId.some(catId => {
+              return blog.categoryId.some(catId => {
                 // Direct match with main category
                 if (catId === category?._id) return true;
-                
+
                 // Check if this catId is a subcategory of current category
                 return category?.subcategories && Array.isArray(category.subcategories) && category.subcategories.includes(catId);
               });
             }
-            
+
             // Single categoryId case
-            if (article?.categoryId === category?._id) return true;
-            
-            return category?.subcategories && Array.isArray(category.subcategories) && typeof article?.categoryId === 'string' && category.subcategories.includes(article.categoryId);
+            if (blog?.categoryId === category?._id) return true;
+
+            return category?.subcategories && Array.isArray(category.subcategories) && typeof blog?.categoryId === 'string' && category.subcategories.includes(blog.categoryId);
           }) || [];
-          if (categoryArticles.length > 0) {
+          if (categoryBlogs.length > 0) {
           }
-          
-          // Only render if category has articles
-          if (categoryArticles.length === 0) return null;
+
+          // Only render if category has blogs
+          if (categoryBlogs.length === 0) return null;
           
           return (
             <div key={category?._id} className="mt-10">
@@ -197,7 +198,7 @@ const Blog: React.FC<BlogProps> = ({
               </div>
               
               <GridLayouts
-                blogs={categoryArticles?.length ? categoryArticles : []}
+                blogs={categoryBlogs?.length ? categoryBlogs : []}
                 layoutType={layoutType}
                 scrollRef={scrollRef}
                 currentPage={0}

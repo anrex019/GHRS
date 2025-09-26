@@ -89,7 +89,7 @@ const OtherGrid: React.FC<OtherGridProps> = ({ blogs, language, showHeader = tru
         <div className="row-span-5">
           {/* ბლოგი 1 */}
           {orderedBlogs[0] && (
-            <Link href={`/article/${orderedBlogs[0]._id}`}>
+            <Link href={`/blog/${orderedBlogs[0]._id}`}>
               <div className="min-h-full h-full flex flex-col justify-between bg-white rounded-[20px] p-2">
                 <Image
                   src={orderedBlogs[0].imageUrl}
@@ -124,7 +124,7 @@ const OtherGrid: React.FC<OtherGridProps> = ({ blogs, language, showHeader = tru
         <div className="row-span-5">
           {/* ბლოგი 2 */}
           {orderedBlogs[1] && (
-            <Link href={`/article/${orderedBlogs[1]._id}`}>
+            <Link href={`/blog/${orderedBlogs[1]._id}`}>
               <div className="min-h-full h-full flex flex-col justify-between bg-white rounded-[20px] p-2">
                 <Image
                   src={orderedBlogs[1].imageUrl}
@@ -159,7 +159,7 @@ const OtherGrid: React.FC<OtherGridProps> = ({ blogs, language, showHeader = tru
         <div className="col-span-2 row-span-3">
           {/* ბლოგი 3 */}
           {orderedBlogs[2] && (
-            <Link href={`/article/${orderedBlogs[2]._id}`}>
+            <Link href={`/blog/${orderedBlogs[2]._id}`}>
               <div className="min-h-full relative h-full flex flex-col justify-between bg-white rounded-[20px] p-5">
                 <p className="text-[#3D334A] tracking-[0%] font-pt mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
                   {orderedBlogs[2].title[language]}
@@ -195,7 +195,7 @@ const OtherGrid: React.FC<OtherGridProps> = ({ blogs, language, showHeader = tru
         <div className="row-span-2 col-start-3 row-start-4">
           {/* ბლოგი 4 */}
           {orderedBlogs[3] && (
-            <Link href={`/article/${orderedBlogs[3]._id}`}>
+            <Link href={`/blog/${orderedBlogs[3]._id}`}>
               <div className="min-h-full relative h-full flex flex-col justify-between bg-white rounded-[20px] p-5">
                 <p className="text-[#3D334A] font-pt tracking-[0%] mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
                   {orderedBlogs[3].title[language]}
@@ -229,7 +229,7 @@ const OtherGrid: React.FC<OtherGridProps> = ({ blogs, language, showHeader = tru
         <div className="row-span-2 col-start-4 row-start-4">
           {/* ბლოგი 5 */}
           {orderedBlogs[4] && (
-            <Link href={`/article/${orderedBlogs[4]._id}`}>
+            <Link href={`/blog/${orderedBlogs[4]._id}`}>
               <div className="min-h-full relative h-full flex flex-col justify-between bg-white rounded-[20px] p-5">
                 <p className="text-[#3D334A] font-pt tracking-[0%] mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
                   {orderedBlogs[4].title[language]}
@@ -264,7 +264,7 @@ const OtherGrid: React.FC<OtherGridProps> = ({ blogs, language, showHeader = tru
       {/* Mobile: horizontal scroll */}
       <div className="flex sm:hidden gap-4 overflow-x-auto p-2">
         {orderedBlogs.map((blog, idx) => (
-          <Link key={blog._id} href={`/article/${blog._id}`}>
+          <Link key={blog._id} href={`/blog/${blog._id}`}>
             <div
               className={`min-w-[200px] max-w-full p-5 bg-white flex flex-col justify-between rounded-[20px] ${gridClasses[idx]}`}
             >

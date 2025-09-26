@@ -65,6 +65,7 @@ interface WorksProps {
   customBorderRadius: string;
   seeAll: boolean;
   scrollable: boolean;
+  sliderId?: string;
 }
 
 const Works: React.FC<WorksProps> = ({
@@ -81,6 +82,7 @@ const Works: React.FC<WorksProps> = ({
   customBorderRadius,
   seeAll = true,
   scrollable = true,
+  sliderId,
 }) => {
   const { t, locale } = useI18n();
 
@@ -209,7 +211,7 @@ const Works: React.FC<WorksProps> = ({
       className="bg-[#F9F7FE] mx-6 rounded-[30px] md:mt-0 md:pt-6 mt-10 md:mb-10 mb-0   rounded-b-[15px] md:pb-10 pb-0"
     >
       {/* Slider */}
-      <WorksSlider scrollable={scrollable} seeAll={seeAll} title={title} works={works} fromMain={fromMain} />
+      <WorksSlider scrollable={scrollable} seeAll={seeAll} title={title} works={works} fromMain={fromMain} sliderId={sliderId} />
       { seeAll && (
         <Link
         href={linkHref}
