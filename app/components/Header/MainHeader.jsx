@@ -18,10 +18,10 @@ function MainHeader({
   const [showContent, setShowContent] = useState(false);
 
   const localizedMenuItems = [
-    { id: 1, name: t("navigation.all_complexes"), route: "allComplex" },
-    { id: 2, name: t("navigation.about"), route: "about" },
-    { id: 3, name: t("navigation.blog"), route: "blog" },
-    { id: 4, name: t("navigation.contacts"), route: "contact" },
+    { id: 1, name: t("navigation.all_complexes"), route: "/allComplex" },
+    { id: 2, name: t("navigation.about"), route: "/about" },
+    { id: 3, name: t("navigation.blog"), route: "/blog" },
+    { id: 4, name: t("navigation.contacts"), route: "/contact" },
   ];
 
   const handleNextClick = () => setShowContent(true);
