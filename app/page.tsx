@@ -61,7 +61,7 @@ const Home = () => {
       <MainHeader
         ShowBlock={true}
         OptionalComponent={CustomBlock}
-        stats={statsData} // Add stats prop here
+        stats={statsData} 
       />
       {/*  */}
       <div>

@@ -1,23 +1,32 @@
 "use client";
 
-import Header, { defaultMenuItems } from "../components/Header/Header";
+import { defaultMenuItems } from "../components/Header/Header";
 import Link from "next/link";
+import Image from "next/image";
 import DesktopNavbar from "../components/Navbar/DesktopNavbar";
 import MobileNavbar from "../components/Navbar/MobileNavbar";
 import { Footer } from "../components/Footer";
 import SubHeader from "../components/Header/SubHeader";
-import { useBlogs, useFeaturedBlogs, usePopularBlogs } from "../hooks/useBlogs";
+// import { useBlogs, useFeaturedBlogs, usePopularBlogs } from "../hooks/useBlogs";
+import { useArticles } from "../hooks/useArticles";
 import { useI18n } from "../context/I18nContext";
-import { Blog } from "../api/blogs";
+import type { Article } from "../api/articles";
+
+// Limit long texts to a reasonable number of characters while keeping line-clamp for layout
+const clampText = (text: string, max: number): string => {
+  if (!text) return "";
+  const trimmed = text.trim();
+  return trimmed.length > max ? `${trimmed.slice(0, max).trimEnd()}…` : trimmed;
+};
 
 interface BlogCardProps {
-  blog?: Blog;
+  article?: Article;
 }
 
-const BlogCard = ({ blog }: BlogCardProps) => {
+const BlogCard = ({ article }: BlogCardProps) => {
   const { t, locale } = useI18n();
 
-  if (!blog) {
+  if (!article) {
     return (
       <div className="bg-white rounded-[20px] p-5 flex flex-col justify-between h-full shadow-sm animate-pulse">
         <div className="flex flex-col gap-3">
@@ -36,22 +45,20 @@ const BlogCard = ({ blog }: BlogCardProps) => {
   };
 
   return (
-    <Link href={`/blog/${blog._id}`}>
+    <Link href={`/article/${article._id}`}>
       <div className="bg-white rounded-[20px] p-5 flex flex-col justify-between h-full shadow-sm hover:shadow-lg transition-shadow duration-300 cursor-pointer">
         <div className="flex flex-col gap-3">
-          <h3 className="text-[#1A1A1A] text-xl font-semibold leading-tight">
-            {getLocalizedText(blog.title)}
+          <h3 className="text-[#1A1A1A] text-xl font-semibold leading-tight line-clamp-2">
+            {clampText(getLocalizedText(article.title), 90)}
           </h3>
           <p className="text-[#1A1A1A]/70 text-sm line-clamp-3">
-            {getLocalizedText(blog.excerpt)}
+            {clampText(getLocalizedText(article.excerpt), 180)}
           </p>
         </div>
 
         <div className="flex justify-between">
           <div className="items-center flex">
-            <span className="bg-[#F1EBF9] text-[#6941C6] text-sm font-medium py-3 px-5 rounded-xl w-fit">
-              {blog.tags?.[0] || t("blog.category")}
-            </span>
+            
           </div>
           <div className="flex justify-end gap-4 mt-4">
             <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
@@ -96,13 +103,13 @@ const BlogCard = ({ blog }: BlogCardProps) => {
 };
 
 interface BigBlogCardProps {
-  blog?: Blog;
+  article?: Article;
 }
 
-const BigBlogCard = ({ blog }: BigBlogCardProps) => {
+const BigBlogCard = ({ article }: BigBlogCardProps) => {
   const { t, locale } = useI18n();
 
-  if (!blog) {
+  if (!article) {
     return (
       <div className="rounded-[20px] h-full md:h-[500px] p-8 flex flex-col justify-between relative overflow-hidden bg-white shadow-sm animate-pulse">
         <div className="absolute top-0 left-0 w-full h-[45%] overflow-hidden bg-gray-200"></div>
@@ -125,10 +132,11 @@ const BigBlogCard = ({ blog }: BigBlogCardProps) => {
       <div className="rounded-[20px] h-full md:h-[500px] p-8 flex flex-col justify-between relative overflow-hidden bg-white shadow-sm hover:shadow-lg transition-shadow duration-300 cursor-pointer">
         {/* Add image div that takes up the top space */}
         <div className="absolute top-0 left-0 w-full h-[45%] overflow-hidden">
-          <img
-            src={blog.imageUrl || "/assets/images/blogbg.jpg"}
-            alt={getLocalizedText(blog.title)}
-            className="w-full h-full object-cover opacity-80"
+          <Image
+            src={article.featuredImages?.[0] || "/assets/images/blogbg.jpg"}
+            alt={getLocalizedText(article.title)}
+            fill
+            className="object-cover opacity-80"
           />
           {/* <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#6941C6]" /> */}
         </div>
@@ -173,15 +181,13 @@ const BigBlogCard = ({ blog }: BigBlogCardProps) => {
 
         {/* Existing text content */}
         <div className="flex flex-col gap-4 mt-auto relative z-10">
-          <h2 className="text-[#1A1A1A] text-lg md:text-xl font-semibold leading-tight">
-            {getLocalizedText(blog.title)}
+          <h2 className="text-[#1A1A1A] text-lg md:text-xl font-semibold leading-tight line-clamp-2">
+            {clampText(getLocalizedText(article.title), 110)}
           </h2>
-          <p className="text-[#1A1A1A]/80 text-sm">
-            {getLocalizedText(blog.excerpt)}
+          <p className="text-[#1A1A1A]/80 text-sm line-clamp-3">
+            {clampText(getLocalizedText(article.excerpt).slice(0, 100))}
           </p>
-          <span className="bg-[#F1EBF9] text-[#6941C6] text-sm font-medium py-2 px-4 rounded-lg w-fit">
-            {blog.tags?.[0] || t("blog.category")}
-          </span>
+          
         </div>
       </div>
     </div>
@@ -217,12 +223,9 @@ const BlogHeader = ({ BlogCategory }: BlogHeaderProps) => {
 
 const BlogRoute = () => {
   const { t } = useI18n();
-  const { blogs: allBlogs, loading: loadingAll } = useBlogs({
-    isPublished: true,
-    limit: 8,
-  });
-  const { blogs: featuredBlogs, loading: loadingFeatured } = useFeaturedBlogs();
-  const { blogs: popularBlogs, loading: loadingPopular } = usePopularBlogs(6);
+  const { articles: allArticles } = useArticles({ isPublished: true, limit: 8 });
+  const { articles: featuredArticles } = useArticles({ isFeatured: true, isPublished: true, limit: 4 });
+  const { articles: popularArticles } = useArticles({ isPublished: true, limit: 6 });
 
   return (
     <div className="bg-[#F9F7FE]">
@@ -239,28 +242,28 @@ const BlogRoute = () => {
       <BlogHeader BlogCategory={t("blog.featured_articles")} />
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full mb-12 px-10">
         <div className="col-span-2">
-          <BigBlogCard blog={featuredBlogs[0]} />
+          <BigBlogCard article={featuredArticles[0]} />
         </div>
 
         <div className="col-span-2 gap-6 grid grid-cols-1 md:grid-cols-2 h-[500px]">
-          <BlogCard blog={allBlogs[0]} />
-          <BlogCard blog={allBlogs[1]} />
-          <BlogCard blog={allBlogs[2]} />
-          <BlogCard blog={allBlogs[3]} />
+          <BlogCard article={allArticles[0]} />
+          <BlogCard article={allArticles[1]} />
+          <BlogCard article={allArticles[2]} />
+          <BlogCard article={allArticles[3]} />
         </div>
       </div>
 
       {/* Popular Articles Section */}
       <BlogHeader BlogCategory={t("blog.popular_articles")} />
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full mb-12 px-10">
-        <BigBlogCard blog={popularBlogs[0]} />
-        <BigBlogCard blog={popularBlogs[1]} />
+        <BigBlogCard article={popularArticles[0]} />
+        <BigBlogCard article={popularArticles[1]} />
         <div className="col-span-2 gap-6 grid  grid-cols-1 md:grid-cols-2 h-[500px]">
           <div className="col-span-2">
-            <BlogCard blog={popularBlogs[2]} />
+            <BlogCard article={popularArticles[2]} />
           </div>
-          <BlogCard blog={popularBlogs[3]} />
-          <BlogCard blog={popularBlogs[4]} />
+          <BlogCard article={popularArticles[3]} />
+          <BlogCard article={popularArticles[4]} />
         </div>
       </div>
 
@@ -268,14 +271,14 @@ const BlogRoute = () => {
       <BlogHeader BlogCategory={t("blog.recent_articles")} />
       <div className="grid grid-cols-2 md:grid-cols-4  gap-6 w-full mb-12 px-10">
         <div className="col-span-2">
-          <BigBlogCard blog={allBlogs[4]} />
+          <BigBlogCard article={allArticles[4]} />
         </div>
 
         <div className="col-span-2 gap-6 grid grid-cols-1 md:grid-cols-2 h-[500px]">
-          <BlogCard blog={allBlogs[5]} />
-          <BlogCard blog={allBlogs[6]} />
-          <BlogCard blog={allBlogs[7]} />
-          <BlogCard blog={featuredBlogs[1]} />
+          <BlogCard article={allArticles[5]} />
+          <BlogCard article={allArticles[6]} />
+          <BlogCard article={allArticles[7]} />
+          <BlogCard article={featuredArticles[1]} />
         </div>
       </div>
 
@@ -284,17 +287,17 @@ const BlogRoute = () => {
       <div className="grid grid-cols-2 md:grid-cols-4  gap-6 w-full mb-12 px-10">
         <div className="col-span-2 gap-6 grid  grid-cols-1 md:grid-cols-2 h-[500px]">
           <div className="col-span-2">
-            <BlogCard blog={featuredBlogs[2]} />
+            <BlogCard article={featuredArticles[2]} />
           </div>
-          <BlogCard blog={popularBlogs[5]} />
-          <BlogCard blog={allBlogs[0]} />
+          <BlogCard article={popularArticles[5]} />
+          <BlogCard article={allArticles[0]} />
         </div>
         <div className="col-span-2 gap-6 grid grid-cols-1 md:grid-cols-2 h-[500px]">
-          <BlogCard blog={allBlogs[1]} />
+          <BlogCard article={allArticles[1]} />
           <div className="row-span-2">
-            <BigBlogCard blog={featuredBlogs[3]} />
+            <BigBlogCard article={featuredArticles[3]} />
           </div>
-          <BlogCard blog={allBlogs[2]} />
+          <BlogCard article={allArticles[2]} />
         </div>
       </div>
 

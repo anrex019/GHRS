@@ -6,7 +6,7 @@ import { IoIosShareAlt } from "react-icons/io";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useI18n } from "../context/I18nContext";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 // import { useCategories } from "../hooks/useCategories";
 
 interface Blog {
@@ -37,7 +37,7 @@ interface Blog {
   isActive: boolean;
   sortOrder: number;
   featuredImages?: string[];
-  articles?: any[]; // Keep this flexible for compatibility
+  articles?: unknown[]; // Keep this flexible for compatibility
 }
 
 interface BlogSliderProps {
@@ -72,7 +72,7 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
   language,
   showHeader = true,
 }) => {
-  const router = useRouter();
+  // const router = useRouter();
   const isDesktop = useIsDesktop();
   const featuredBlog = blogs[0];
   const otherBlogs = blogs.slice(1);
@@ -105,7 +105,6 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
         // განვაახლოთ გვერდის ნომერი სქროლის პოზიციიდან
         const newPage = Math.min(Math.max(0, currentPageFromScroll), totalPages - 1);
         if (newPage !== currentPage) {
-          // აქ არ ვიძახებთ setCurrentPage-ს რადგან ეს prop არის
         }
       }
     };
@@ -115,16 +114,16 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
       scrollContainer.addEventListener('scroll', handleScroll);
       return () => scrollContainer.removeEventListener('scroll', handleScroll);
     }
-  }, [currentPage, totalPages]);
+  }, [currentPage, totalPages, scrollRef]);
 
-  // Helper function to get blog link
+  // Helper function to get article link
   const getBlogLink = (blog: Blog) => {
     if (!blog || !blog._id) {
       return "#";
     }
 
-    // Link to the individual blog detail page
-    return `/blog/${blog._id}`;
+    // Link to the individual article detail page
+    return `/article/${blog._id}`;
   };
 
   // const getArticleCount = (count: number) => {
@@ -135,7 +134,7 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
   // };
 
   return (
-    <div className="w-full font-pt">
+    <div className="w-full font-pt" data-show-header={String(showHeader)}>
       <div className="flex md:flex-row flex-col gap-2.5 mb-10 w-full px-0">
         {/* Featured Blog */}
         {featuredBlog && isDesktop && (
@@ -228,9 +227,7 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
                     {getLocalizedText(blog.title)}
                   </p>
                   <div className="flex justify-between items-center mt-2">
-                    {/* <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%] bg-[#E9DFF6] rounded-[6px] text-[14px] uppercase">
-                      {getArticleCount(blog.articles?.length || 0)}
-                    </span> */}
+                   
                     <div className="flex items-center gap-1.5">
                       <div className="w-8 h-8 bg-[#F9F7FE] rounded-[6px] flex justify-center items-center">
                         <CiBookmark className="text-black" />
