@@ -5,10 +5,11 @@ import { InstagramIcon } from "./socialIcons/InstagramIcon";
 import { YoutubeIcon } from "./socialIcons/YoutubeIcon";
 import { VkIcon } from "./socialIcons/VkIcon";
 import { FacebookIcon } from "./socialIcons/FacebookIcon";
+import { Xicon } from "./socialIcons/X";
 
 export const Footer: FC = () => {
   return (
-    <footer className="bg-[#F9F7FE] rounded-[20px]  px-8 pt-8 pb-4 text-[#3D334A]">
+    <footer className="bg-[#F9F7FE] rounded-[20px] px-8 pt-8 pb-4 text-[#3D334A]">
       {/* კონსულტაციის ფორმა */}
       <div className="mb-8 px-16">
         <h2 className="text-4xl font-bold text-[#3D334A] mb-8">
@@ -36,7 +37,10 @@ export const Footer: FC = () => {
           <button className="bg-[#B6A3D9] text-white px-10 py-3 rounded-lg font-bold flex items-center gap-2 hover:bg-[#846FA0] transition-all text-lg shadow-md w-full md:w-auto">
             ОТПРАВИТЬ ЗАЯВКУ <span className="text-2xl">→</span>
           </button>
-          <span className="text-xs text-[#8B7BAA] mt-2 md:mt-0">
+          <span
+            className="text-[#8B7BAA] mt-2 md:mt-0"
+            style={{ width: "450px" }}
+          >
             Нажимая на кнопку вы даете согласие на обработку персональных данных
           </span>
         </div>
@@ -53,7 +57,7 @@ export const Footer: FC = () => {
             height={40}
             className="mb-2"
           />
-          <div className="flex-col flex ml-6">
+          <div className="flex flex-col ml-6 gap-5">
             <span className="text-sm text-[#8B7BAA]">
               Работаем с 9:00 до 19:00 по МСК
             </span>
@@ -69,37 +73,43 @@ export const Footer: FC = () => {
           </div>
         </div>
 
-        {/* სოციალური ღილაკები */}
-        <div className="flex gap-3 items-center mt-4">
+        {/* სოციალური ღილაკები - გამოსწორებული */}
+        <div className="flex gap-3 items-center justify-center mt-4">
           <a
             href="#"
-            className="hover:bg-[#B6A3D9]/30 rounded-full p-1 transition"
+            className="hover:bg-[#B6A3D9]/30 rounded-full p-2 transition flex items-center justify-center"
           >
             <LinkedinIcon className="w-12 h-12" />
           </a>
           <a
             href="#"
-            className="hover:bg-[#B6A3D9]/30 rounded-full p-1 transition"
+            className="hover:bg-[#B6A3D9]/30 rounded-full p-2 transition flex items-center justify-center"
           >
             <InstagramIcon className="w-12 h-12" />
           </a>
           <a
             href="#"
-            className="hover:bg-[#B6A3D9]/30 rounded-full p-1 transition"
+            className="hover:bg-[#B6A3D9]/30 rounded-full p-2 transition flex items-center justify-center"
           >
             <YoutubeIcon className="w-12 h-12" />
           </a>
           <a
             href="#"
-            className="hover:bg-[#B6A3D9]/30 rounded-full p-1 transition"
+            className="hover:bg-[#B6A3D9]/30 rounded-full p-2 transition flex items-center justify-center"
           >
             <VkIcon className="w-12 h-12" />
           </a>
           <a
             href="#"
-            className="hover:bg-[#B6A3D9]/30 rounded-full p-1 transition"
+            className="hover:bg-[#B6A3D9]/30 rounded-full p-2 transition flex items-center justify-center"
           >
             <FacebookIcon className="w-12 h-12" />
+          </a>
+          <a
+            href="#"
+            className="hover:bg-[#B6A3D9]/30 rounded-full p-2 transition flex items-center justify-center"
+          >
+            <Xicon className="w-12 h-12" />
           </a>
         </div>
       </div>
@@ -107,22 +117,21 @@ export const Footer: FC = () => {
 
       {/* ლინკები */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-2 mb-8 px-16 text-[#846FA0]">
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-5">
           <a href="#">Главная</a>
           <a href="#">Реабилитация</a>
           <a href="#">Профразвитие</a>
           <a href="#">Блог</a>
         </div>
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-5">
           <a href="#">О нас</a>
           <a href="#">FAQ</a>
           <a href="#">Руководство пользователя</a>
         </div>
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-5">
           <a href="#">Все комплексы</a>
           <a href="#">Ортопедия</a>
           <ul className="pl-4">
-            {/*  */}
             <li>
               <a href="#">Шейный отдел позвоночника</a>
             </li>
@@ -143,7 +152,6 @@ export const Footer: FC = () => {
             </li>
           </ul>
           <a href="#">Неврология</a>
-          {/*  */}
           <ul className="pl-4">
             <li>
               <a href="#">Болезнь Паркинсона</a>
@@ -159,7 +167,7 @@ export const Footer: FC = () => {
             </li>
           </ul>
         </div>
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-5">
           <a href="#">Афазия и дизартрия</a>
           <a href="#">Ожирение</a>
           <a href="#">Посттравматическая реабилитация походки</a>
@@ -168,7 +176,7 @@ export const Footer: FC = () => {
         </div>
       </div>
       {/* ქვედა ლოგოები */}
-      <div className="flex flex-col md:flex-row justify-between items-center mb-4 px-16">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-4 px-16 gap-5">
         <Image
           src="/assets/images/services/asuta.png"
           alt="Assuta"

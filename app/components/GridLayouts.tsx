@@ -73,7 +73,7 @@ const GridLayouts: React.FC<GridLayoutsProps> = ({
           case "default":
                           return (
                 <BlogSlider
-                  blogs={blogs as unknown as Blog[]}
+                  blogs={blogs as any[]}
                   scrollRef={scrollRef}
                   currentPage={currentPage}
                   blogsPerPage={blogsPerPage}
@@ -84,7 +84,7 @@ const GridLayouts: React.FC<GridLayoutsProps> = ({
           case "other":
                           return (
                 <OtherGrid
-                  blogs={blogs as unknown as Blog[]}
+                  blogs={blogs as any[]}
                   scrollRef={scrollRef}
                   currentPage={currentPage}
                   blogsPerPage={blogsPerPage}
@@ -95,7 +95,7 @@ const GridLayouts: React.FC<GridLayoutsProps> = ({
           case "thirdGrid":
                           return (
                 <ThirdGrid
-                  blogs={blogs as unknown as Blog[]}
+                  blogs={blogs as any[]}
                   scrollRef={scrollRef}
                   currentPage={currentPage}
                   blogsPerPage={blogsPerPage}
