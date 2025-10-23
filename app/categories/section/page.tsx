@@ -179,8 +179,7 @@ function SectionContent() {
           <div className="mt-10">
             <Works
               exercises={popularExercises as any[]}
-              title={t("common.popular_exercises") || "პოპულარული ვარჯიშები"}
-            />
+              title={t("common.popular_exercises") || "პოპულარული ვარჯიშები"} customMargin={""} customBorderRadius={""} seeAll={false} scrollable={false}            />
           </div>
         )}
 

@@ -177,7 +177,7 @@ export const API_CONFIG = {
     "Content-Type": "application/json",
   },
 
-  TIMEOUT: 10000,
+  TIMEOUT: 30000, // Increased to 30 seconds
 };
 
 export async function apiRequest<T>(
@@ -257,7 +257,14 @@ export async function apiRequest<T>(
     return await response.json();
   } catch (error) {
     clearTimeout(timeoutId);
-    console.error('❌ API Error:', { url, error: error instanceof Error ? error.message : String(error) });
+    
+    // Handle AbortError specifically
+    if (error instanceof Error && error.name === 'AbortError') {
+      console.warn('⏰ API Request timeout:', url);
+      throw new Error(`Request timeout after ${API_CONFIG.TIMEOUT}ms`);
+    }
+    
+    console.error('❌ API Error:', url, error instanceof Error ? error.message : String(error));
     throw error;
   }
 }

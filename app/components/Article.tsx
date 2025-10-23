@@ -21,7 +21,7 @@ interface ArticleProps {
 
 const extractImageUrl = (input?: string): string | null => {
   if (!input) return null;
-  
+
   // If input is a simple URL, return it
   if (!input.includes('[') && !input.includes('"')) {
     return input;
@@ -53,23 +53,23 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
   // Calculate reading time based on content
   const calculateReadingTime = (content: string): number => {
     if (!content) return 1;
-    
+
     // Remove HTML tags and decode HTML entities
     const cleanText = content
       .replace(/<[^>]*>/g, '') // Remove HTML tags
       .replace(/&nbsp;/g, ' ') // Replace &nbsp; with space
       .replace(/&[a-zA-Z0-9#]+;/g, '') // Remove other HTML entities
       .trim();
-    
+
     // Count words (split by whitespace and filter empty strings)
     const words = cleanText.split(/\s+/).filter(word => word.length > 0);
     const wordCount = words.length;
-    
+
     // Average reading speed is 200-250 words per minute
     // We'll use 220 words per minute as average
     const wordsPerMinute = 220;
     const readingTimeMinutes = Math.ceil(wordCount / wordsPerMinute);
-    
+
     // Minimum reading time should be 1 minute
     return Math.max(1, readingTimeMinutes);
   };
@@ -79,7 +79,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
   // Extract headings from article content for automatic table of contents
   const extractHeadingsFromContent = (content: string) => {
     if (!content) return [];
-    
+
     // Find only h2 and h3 tags and extract their text content
     const headingRegex = /<h([23])[^>]*>(.*?)<\/h[23]>/gi;
     const headings = [];
@@ -88,7 +88,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
     let mainIndex = 1;
     let subIndex = 1;
     let currentMainHeading = null;
-    
+
     while ((match = headingRegex.exec(content)) !== null) {
       const level = parseInt(match[1]);
       const decodeHtmlEntities = (text: string) => {
@@ -102,8 +102,8 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
           '&amp;': '&',
           '&quot;': '"',
           '&nbsp;': ' '
-        };
-        return text.replace(/&[^;]+;/g, (entity) => entities[entity] || entity);
+        } as const;
+        return text.replace(/&[^;]+;/g, (entity) => entities[entity as keyof typeof entities] || entity);
       };
 
       const headingText = decodeHtmlEntities(
@@ -111,7 +111,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
           .replace(/<[^>]*>/g, '') // Remove any HTML tags inside heading
           .trim()
       );
-      
+
       if (headingText) {
         // Create anchor ID from text with unique index to avoid duplicates
         let anchor = headingText
@@ -120,14 +120,14 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
           .replace(/[^\w\s-]/g, "") // Remove special characters but keep Cyrillic
           .replace(/\s+/g, "-") // Replace spaces with hyphens
           .replace(/^-+|-+$/g, ""); // Remove leading/trailing hyphens
-        
+
         // Add index to make it unique
         anchor = `${anchor}-${index}`;
-        
+
         // Create numbered prefix based on heading level and content
         let prefix = '';
         const isNumberedHeading = /^\d+(\.\d+)*\.?\s+/.test(headingText);
-        
+
         if (isNumberedHeading) {
           // Use the existing number from the heading
           const match = headingText.match(/^\d+(\.\d+)*\.?\s+/);
@@ -153,7 +153,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
             subIndex++;
           }
         }
-        
+
         headings.push({
           anchor,
           title: {
@@ -169,7 +169,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
         index++;
       }
     }
-    
+
     return headings;
   };
 
@@ -178,7 +178,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
     if (article.tableOfContents && article.tableOfContents.length > 0) {
       return article.tableOfContents;
     }
-    
+
     // Generate from content if no predefined table of contents
     return extractHeadingsFromContent(article.content[language]);
   };
@@ -189,15 +189,15 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
     const fetchSimilarArticles = async () => {
       try {
         setIsLoading(true);
-        
+
         // Get all category IDs
         const categoryIds = Array.isArray(article.categoryId) ? article.categoryId : [article.categoryId];
         console.log("Category IDs:", categoryIds);
-        
+
         // Filter out empty IDs
         const validCategoryIds = categoryIds.filter(id => id && id.trim() !== '');
         console.log("Valid Category IDs:", validCategoryIds);
-        
+
         if (validCategoryIds.length === 0) {
           console.log("No valid category IDs found");
           setSimilarArticles([]);
@@ -209,12 +209,12 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
         const allArticlesPromises = validCategoryIds.map(id => getArticlesByCategory(id));
         const allArticlesArrays = await Promise.all(allArticlesPromises);
         console.log("Articles from all categories:", allArticlesArrays);
-        
+
         // Flatten and deduplicate articles
         const allArticles = Array.from(new Set(allArticlesArrays.flat()))
           .filter(a => a._id !== article._id) // Remove current article
           .slice(0, 3); // Limit to 3 articles
-        
+
         console.log("Final similar articles:", allArticles);
         setSimilarArticles(allArticles);
       } catch (error) {
@@ -241,7 +241,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
     if (article.category?.name) {
       return [article.category.name[language]];
     }
-    
+
     // If we have categoryId but no category name, try to find it in categories
     if (article.categoryId) {
       const categoryIds = Array.isArray(article.categoryId) ? article.categoryId : [article.categoryId];
@@ -250,7 +250,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
         return foundCategories.map(cat => cat.name[language]);
       }
     }
-    
+
     return ["Category"];
   };
 
@@ -284,21 +284,19 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
               {(tableOfContents || []).map((item) => (
                 <div
                   key={item.anchor}
-                  className={`group relative flex items-start cursor-pointer transition-all duration-200 ${
-                    item.level === 3 ? 'ml-8 pl-4 border-l-2 border-purple-100' : ''
-                  }`}
+                  className={`group relative flex items-start cursor-pointer transition-all duration-200 ${item.level === 3 ? 'ml-8 pl-4 border-l-2 border-purple-100' : ''
+                    }`}
                   onClick={() => handleScrollToSection(item.anchor)}
                 >
                   {/* Hover Effect Line */}
                   <div className="absolute left-0 top-0 h-full w-1 bg-purple-500 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-200 ease-in-out" />
-                  
+
                   {/* Content */}
                   <div className="flex-1">
-                    <span className={`block text-[#3D334A] tracking-[-0.5px] ${
-                      item.level === 3 
-                        ? 'text-sm font-medium hover:text-purple-600' 
-                        : 'text-base font-semibold hover:text-purple-700'
-                    }`}>
+                    <span className={`block text-[#3D334A] tracking-[-0.5px] ${item.level === 3
+                      ? 'text-sm font-medium hover:text-purple-600'
+                      : 'text-base font-semibold hover:text-purple-700'
+                      }`}>
                       {item.title[language]}
                     </span>
                   </div>
@@ -664,7 +662,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
                   console.error('Failed to parse image URL:', e);
                 }
               }
-              
+
               // Skip if image URL is not a valid string or contains array-like structure
               if (typeof imageUrl !== 'string' || imageUrl.includes('[')) {
                 return null;
@@ -780,24 +778,24 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
             )}
           </section>
           <div className="w-full pr-40 flex flex-col items-center mt-10 md:mb-20 gap-8">
-              <h1 className="text-[18px] leading-[100%] tracking-[-1%] text-[#3D334A]">поделиться в соцсетях</h1>
-              <div className="flex gap-10">
+            <h1 className="text-[18px] leading-[100%] tracking-[-1%] text-[#3D334A]">поделиться в соцсетях</h1>
+            <div className="flex gap-10">
               <div className="w-14 h-14 bg-white rounded-[5px] items-center justify-center flex cursor-pointer hover:scale-105 duration-300">
-              <FaFacebookF color="black" size={30} />
+                <FaFacebookF color="black" size={30} />
               </div>
               <div className="w-14 h-14 bg-white rounded-[5px] items-center justify-center flex cursor-pointer hover:scale-105 duration-300">
-              <RiTwitterXFill color="black" size={30} />
+                <RiTwitterXFill color="black" size={30} />
               </div>
               <div className="w-14 h-14 bg-white rounded-[5px] items-center justify-center flex cursor-pointer hover:scale-105 duration-300">
-              <BsInstagram color="black" size={30} />
+                <BsInstagram color="black" size={30} />
               </div>
               <div className="w-14 h-14 bg-white rounded-[5px] items-center justify-center flex cursor-pointer hover:scale-105 duration-300">
-              <BsYoutube color="black" size={30} />
+                <BsYoutube color="black" size={30} />
               </div>
               <div className="w-14 h-14 bg-white rounded-[5px] items-center justify-center flex cursor-pointer hover:scale-105 duration-300 ">
-              <FaLinkedin color="black" size={30} className="hover:text-white" />
+                <FaLinkedin color="black" size={30} className="hover:text-white" />
               </div>
-              </div>
+            </div>
           </div>
         </div>
 
@@ -869,7 +867,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
 // Helper function to add anchor IDs to content headers and process videos
 const addAnchorsToContent = (content: string): string => {
   let index = 1;
-  
+
   // First, process shortcodes
   const processedContent = content
     // Process [su_youtube] shortcodes
@@ -881,23 +879,23 @@ const addAnchorsToContent = (content: string): string => {
         const widthMatch = attributes.match(/width=["']?(\d+)["']?/);
         const heightMatch = attributes.match(/height=["']?(\d+)["']?/);
         const titleMatch = attributes.match(/title=["']([^"']*)["']/);
-        
+
         if (!urlMatch) return match; // Return original if no URL found
-        
+
         const url = urlMatch[1];
         const width = widthMatch ? widthMatch[1] : '560';
         const height = heightMatch ? heightMatch[1] : '315';
         const title = titleMatch ? titleMatch[1] : '';
-        
+
         // Extract video ID from various YouTube URL formats
         const youtubeRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
         const matchResult = url.match(youtubeRegex);
-        
+
         if (matchResult) {
           const videoId = matchResult[1];
           return `<div class="video-container"><iframe src="https://www.youtube.com/embed/${videoId}" width="${width}" height="${height}" title="${title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
         }
-        
+
         return match; // Return original if can't parse
       }
     )
@@ -911,7 +909,7 @@ const addAnchorsToContent = (content: string): string => {
       /<video([^>]*)>(.*?)<\/video>/g,
       '<div class="video-container"><video$1>$2</video></div>'
     );
-  
+
   // Add id attributes to h1-h6 tags that match the anchors
   return processedContent.replace(
     /<h([1-6])([^>]*)>(.*?)<\/h[1-6]>/g,

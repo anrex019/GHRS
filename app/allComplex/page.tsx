@@ -1,11 +1,11 @@
 "use client";
+
 import React, { useRef, useEffect, useState } from "react";
 import DesktopNavbar from "../components/Navbar/DesktopNavbar";
 import { defaultMenuItems } from "../components/Header/Header";
 import MobileNavbar from "../components/Navbar/MobileNavbar";
 import Category from "../components/Category";
 import { CiSearch } from "react-icons/ci";
-import Works from "../components/Works";
 import { useCategories } from "../hooks/useCategories";
 import { useAllSets } from "../hooks/useSets";
 import { useI18n } from "../context/I18nContext";
@@ -13,6 +13,7 @@ import Section from "../components/Section";
 import { IoIosArrowDown } from "react-icons/io";
 import { Footer } from "../components/Footer";
 import { API_CONFIG } from "../config/api";
+import Works from "../components/Works";
 
 interface Subcategory {
   _id: string;
