@@ -257,7 +257,7 @@ export async function apiRequest<T>(
     return await response.json();
   } catch (error) {
     clearTimeout(timeoutId);
-    console.error('❌ API Error:', { url, error });
+    console.error('❌ API Error:', { url, error: error instanceof Error ? error.message : String(error) });
     throw error;
   }
 }
