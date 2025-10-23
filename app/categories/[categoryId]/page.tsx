@@ -134,7 +134,7 @@ export default function CategoriesPage({
           exercisesCount,
         }}
       /> */}
-      <MainHeader ShowBlock={false} stats={[]} showArrows={false} complexData={categoryData?.category || null}/>
+      <MainHeader ShowBlock={false} stats={[]} showArrows={false} complexData={null}/>
       <div className="md:pt-[100px] pt-[400px]">
         {subcategoriesCount > 0 && (
         <div className="px-10 py-[50px] rounded-[30px] bg-[#F9F7FE] md:mb-10 mx-6">

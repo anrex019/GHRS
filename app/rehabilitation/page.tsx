@@ -43,8 +43,8 @@ const Rehabilitation = () => {
       {/* <Header variant="rehabilitation" /> */}
       <MainHeader
         ShowBlock={true}
-        stats={statsData}
-        OptionalComponent={CustomBlock}
+        stats={statsData as never[]}
+        OptionalComponent={null}
       />
       <VideoNotification variant="default" />
       <Advantages />

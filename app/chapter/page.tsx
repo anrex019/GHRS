@@ -17,6 +17,7 @@ export const chapterSliderInfo = [
     exerciseCount: 10,
     categoryName: "Ортопедия",
     monthlyPrice: 920,
+    categoryId: "orthopedics-1",
   },
   {
     id: "2",
@@ -27,6 +28,7 @@ export const chapterSliderInfo = [
     exerciseCount: 10,
     categoryName: "Ортопедия",
     monthlyPrice: 920,
+    categoryId: "orthopedics-2",
   },
   {
     id: "3",
@@ -37,6 +39,7 @@ export const chapterSliderInfo = [
     exerciseCount: 10,
     categoryName: "Ортопедия",
     monthlyPrice: 920,
+    categoryId: "orthopedics-3",
   },
   {
     id: "4",
@@ -47,6 +50,7 @@ export const chapterSliderInfo = [
     exerciseCount: 10,
     categoryName: "Ортопедия",
     monthlyPrice: 920,
+    categoryId: "orthopedics-4",
   },
 ];
 
@@ -55,16 +59,25 @@ const Chapter = () => {
     <div>
       <Header />
       <div className="mt-40 px-6">
-        <WorksSlider title="Популярные упражнения" works={chapterSliderInfo} />
+        <WorksSlider 
+          title="Популярные упражнения" 
+          works={chapterSliderInfo} 
+          fromMain={false} 
+          seeAll={false} 
+          scrollable={false} 
+        />
       </div>
       <div className="mt-10 px-6">
         <WorksSlider
           title="Шейный отдел позвоночника"
           works={chapterSliderInfo}
+          fromMain={false} 
+          seeAll={false} 
+          scrollable={false}
         />
       </div>
       <Subscribe />
-      <ReviewSlider />
+      <ReviewSlider title="" />
       <Blog
         withBanner={false}
         withSlider={true}

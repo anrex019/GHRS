@@ -91,10 +91,7 @@ const DesktopNavbar: React.FC<DesktopNavbarProps> = ({
 
         <div className="flex items-center gap-4 ml-4">
           <div className="hover:scale-105 duration-300">
-            <LanguageSelector
-              currentLanguage={language}
-              onSelectLanguage={setLanguage}
-            />
+            <LanguageSelector />
           </div>
           <div onClick={(e) => handleProtectedRouteClick(e, "/shoppingcard")}>
             <NavbarIconButton

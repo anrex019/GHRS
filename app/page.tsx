@@ -29,17 +29,17 @@ const Home = () => {
     {
       icon: <FaBook size={24} />,
       value: statistics ? `${statistics.total.sets}` : "Loading...",
-      label: t("header.sets_count", { count: statistics?.total.sets || 0 }).replace(/\d+\s*/, ""),
+      label: t("header.sets_count", { count: String(statistics?.total.sets || 0) }).replace(/\d+\s*/, ""),
     },
     {
       icon: <FaDumbbell size={24} />,
       value: statistics ? `${statistics.total.exercises}` : "Loading...",
-      label: t("header.exercises_count", { count: statistics?.total.exercises || 0 }).replace(/\d+\s*/, ""),
+      label: t("header.exercises_count", { count: String(statistics?.total.exercises || 0) }).replace(/\d+\s*/, ""),
     },
     {
       icon: <FaClock size={24} />,
       value: statistics ? `${statistics.total.hours}` : "Loading...",
-      label: t("header.hours_count", { count: statistics?.total.hours || 0 }).replace(/\d+\s*/, ""),
+      label: t("header.hours_count", { count: String(statistics?.total.hours || 0) }).replace(/\d+\s*/, ""),
     },
   ];
 
@@ -60,8 +60,8 @@ const Home = () => {
       {/* <Header variant="default" />   */}
       <MainHeader
         ShowBlock={true}
-        OptionalComponent={CustomBlock}
-        stats={statsData} 
+        OptionalComponent={null}
+        stats={statsData as never[]} 
       />
       {/*  */}
       <div>

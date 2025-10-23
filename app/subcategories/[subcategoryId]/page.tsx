@@ -1,6 +1,7 @@
 "use client";
 
 import { use } from "react";
+import Link from "next/link";
 import { useCategoryComplete } from "../../hooks/useCategoryComplete";
 import Header from "../../components/Header/Header";
 import WorksSlider from "../../components/WorksSlider";

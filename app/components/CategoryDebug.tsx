@@ -1,9 +1,9 @@
 "use client";
 
-import { useCategories } from "../context/CategoryContext";
+import { useCategory } from "../context/CategoryContext";
 
 export default function CategoryDebug() {
-  const { categories, loading, error, refetch } = useCategories();
+  const { categories, loading, error, refetch } = useCategory();
 
   // მხოლოდ development-ში ჩანდეს
   if (process.env.NODE_ENV !== "development") {

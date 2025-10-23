@@ -77,7 +77,7 @@ const PersonalAccountPage = () => {
 
   return (
     <div>
-      <DesktopNavbar menuItems={defaultMenuItems} blogBg={false} />
+      <DesktopNavbar menuItems={defaultMenuItems} blogBg={false} allCourseBg={false} />
       <MobileNavbar />
       <PersonInfo user={user} />
       <div className="md:p-10 p-5 bg-[#F9F7FE] m-10">

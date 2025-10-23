@@ -13,7 +13,7 @@ import ReviewSlider from "../../components/ReviewSlider";
 import Professional from "../../components/Professional";
 import Blog from "@/app/components/Blog";
 import { useI18n } from "../../context/I18nContext";
-import { BackendExercise } from "@/types/exercise";
+// import { BackendExercise } from "@/types/exercise";
 import { Footer } from "@/app/components/Footer";
 
 function SectionContent() {
@@ -142,7 +142,7 @@ function SectionContent() {
           exercisesCount,
         }}
       /> */}
-      <MainHeader ShowBlock={false} OptionalComponent={null} stats={[]} showArrows={false} complexData={categoryData?.category}/>
+      <MainHeader ShowBlock={false} OptionalComponent={null} stats={[]} showArrows={false} complexData={null}/>
       <div className="md:pt-[100px] pt-[400px]">
         {Array.isArray(formattedSets) && formattedSets.length > 0 && (
           <div className="md:mb-10">
@@ -178,7 +178,7 @@ function SectionContent() {
         {!popularLoading && popularExercises.length > 0 && (
           <div className="mt-10">
             <Works
-              exercises={popularExercises as unknown as BackendExercise[]}
+              exercises={popularExercises as any[]}
               title={t("common.popular_exercises") || "პოპულარული ვარჯიშები"}
             />
           </div>

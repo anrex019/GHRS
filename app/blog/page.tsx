@@ -185,7 +185,7 @@ const BigBlogCard = ({ article }: BigBlogCardProps) => {
             {clampText(getLocalizedText(article.title), 110)}
           </h2>
           <p className="text-[#1A1A1A]/80 text-sm line-clamp-3">
-            {clampText(getLocalizedText(article.excerpt).slice(0, 100))}
+            {clampText(getLocalizedText(article.excerpt).slice(0, 100), 100)}
           </p>
           
         </div>

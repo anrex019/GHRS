@@ -16,7 +16,6 @@ export default function TestPayment() {
         <PayPalButton
           amount={10}
           currency="RUB"
-          setId="test-set-id"
           onSuccess={(details) => {
             console.log('Payment completed:', details);
             setPaymentStatus(t('payment.success_message', { id: details.id }));

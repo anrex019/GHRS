@@ -19,6 +19,7 @@ const homePageWorks = [
     exerciseCount: 10,
     categoryName: "Ортопедия",
     monthlyPrice: 920,
+    categoryId: "orthopedics-1",
   },
   {
     id: "2",
@@ -29,6 +30,7 @@ const homePageWorks = [
     exerciseCount: 10,
     categoryName: "Ортопедия",
     monthlyPrice: 920,
+    categoryId: "orthopedics-2",
   },
   {
     id: "3",
@@ -39,6 +41,7 @@ const homePageWorks = [
     exerciseCount: 10,
     categoryName: "Ортопедия",
     monthlyPrice: 920,
+    categoryId: "orthopedics-3",
   },
   {
     id: "4",
@@ -49,6 +52,7 @@ const homePageWorks = [
     exerciseCount: 10,
     categoryName: "Ортопедия",
     monthlyPrice: 920,
+    categoryId: "orthopedics-4",
   },
 ];
 
@@ -64,12 +68,23 @@ const Section = () => {
           exercisesCount: 48,
         }}
       /> */}
-      <MainHeader ShowBlock={false} OptionalComponent={null} stats={[]} showArrows={false}/>
+      <MainHeader ShowBlock={false} OptionalComponent={null} stats={[]} showArrows={false} />
       <div className="md:my-4">
-        <WorksSlider works={homePageWorks} title="Subcategories" />
+        <WorksSlider 
+          works={homePageWorks} 
+          title="Subcategories" 
+          fromMain={false} 
+          seeAll={false} 
+          scrollable={false} 
+        />
       </div>
       <div className="md:mb-8">
-        <WorksSlider works={homePageWorks} />
+        <WorksSlider 
+          works={homePageWorks} 
+          fromMain={false} 
+          seeAll={false} 
+          scrollable={false} 
+        />
       </div>
       <Subscribe
         backgroundImage="/assets/images/categorySliderBgs/bg1.jpg"
@@ -93,7 +108,7 @@ const Section = () => {
           withBanner={false}
         />
       </div>
-      <Professional withBanner={false} title="" />
+      <Professional withBanner={false} title="" bgColor="" withProfText={false} />
       <Footer />
     </div>
   );
