@@ -11,20 +11,12 @@ export interface MultiLanguageField {
 }
 
 export interface Video {
-  _id: string;
-  videoId: string;
-  title: MultiLanguageField;
-  description: MultiLanguageField;
+  title: string;
+  description: string;
   urls: {
-    hd: string;
-    sd: string;
+    hd: string; // URL for the HD video
+    thumbnail: string; // URL for the video thumbnail
   };
-  isActive: boolean;
-  sortOrder: number;
-  viewCount: number;
-  isPublic: boolean;
-  createdAt: string;
-  updatedAt: string;
 }
 
 export interface SubscriptionPlan {
