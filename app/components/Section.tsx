@@ -82,7 +82,7 @@ const Section = ({
       {/* Slider container */}
       <div 
         ref={scrollRef}
-        className="flex flex-row items-center gap-[28px] overflow-x-auto scrollbar-hide mt-[48px] scroll-smooth"
+        className="flex flex-row items-center gap-7 overflow-x-auto scrollbar-hide mt-12 scroll-smooth"
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
@@ -91,7 +91,7 @@ const Section = ({
         {subcategories.map((subcat) => (
           <div
             key={subcat._id}
-            className="min-w-[558px] h-[283px] relative bg-white p-2 rounded-[20px] hover:shadow-md transition-shadow cursor-pointer my-2"
+            className="min-w-[558px] h-[283px] relative bg-white p-2 rounded-5 hover:shadow-md transition-shadow cursor-pointer my-2"
           >
             <div className="absolute top-1 z-10">
               <CustomBadge text={getLocalizedText(subcat.name)} margin="m-3" />
@@ -101,7 +101,7 @@ const Section = ({
               width={542}
               height={181}
               alt={`subcategory-${subcat._id}`}
-              className="w-full h-[181px] object-cover rounded-[16px]"
+              className="w-full h-[181px] object-cover rounded-4"
             />
             <div className="flex items-end justify-between mt-[22px] relative">
               <h1 className="text-[#3D334A] w-[342px] text-[22px] leading-[120%] font-semibold break-words truncate">

@@ -115,7 +115,7 @@ function MainHeader({
             {stats.map((stat, index) => (
               <div
                 key={index}
-                className="bg-[#3d334a4d] w-full backdrop-blur-sm rounded-2xl p-3 flex items-center justify-center md: gap-2 transition-transform duration-300 hover:scale-105"
+                className="bg-[#3d334a4d] w-full backdrop-blur-sm rounded-2xl p-3 flex items-center justify-center md:gap-2 transition-transform duration-300 hover:scale-105"
               >
                 <span className="text-white/80">{stat.icon}</span>
                 <div className="flex flex-col items-center justify-center">

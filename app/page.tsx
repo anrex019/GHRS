@@ -67,7 +67,7 @@ const Home = () => {
       <div>
         <Rehabilitation />
         <Category bgColor="#F9F7FE" customRounded={""} customMx={""} />
-        <hr className="text-[#D5D1DB] bg-[#D5D1DB] w-[95%] mx-auto" />
+        <hr className="border-[#D5D1DB] w-[95%] mx-auto my-8" />
         <Works
           title={t("navigation.sets")}
           sets={sets}

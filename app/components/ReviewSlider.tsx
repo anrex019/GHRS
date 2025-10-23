@@ -147,7 +147,7 @@ const ReviewSlider = ({title}: {title: string}) => {
   };
 
   return (
-    <div className="bg-[#F9F7FE] md:mx-5 md:rounded-[20px] pb-10">
+      <div className="bg-[#F9F7FE] md:mx-5 md:rounded-5 pb-10">
       <div className="flex items-center justify-between py-5 px-6 md:py-[50px] md:px-8">
         <h1 className="text-[20px] leading-[120%] text-[#3D334A] md:text-[40px] md:tracking-[-3%] font-bold">
           {title || "ОТЗЫВЫ О GRS"}
@@ -159,7 +159,7 @@ const ReviewSlider = ({title}: {title: string}) => {
           canScrollRight={canScrollRight}
         />
       </div>
-      <div className="px-4 md:px-5 rounded-[30px] w-full overflow-hidden">
+      <div className="px-4 md:px-5 rounded-8 w-full overflow-hidden">
         <div
           ref={scrollContainerRef}
           className="flex gap-5 overflow-x-auto scroll-smooth scrollbar-hide"

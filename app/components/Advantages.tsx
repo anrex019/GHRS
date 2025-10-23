@@ -11,7 +11,7 @@ const Advantages = () => {
       <div className="grid md:grid-cols-2 h-full grid-cols-1 md:gap-5 gap-4 w-full">
         <div className="flex flex-col gap-4 md:gap-5 w-full min-w-full">
           <div className="bg-[rgba(249,247,254,1)] md:rounded-[15px] rounded-3xl md:p-5 p-4 w-full">
-            <h3 className="text-2xl   md:tracking-[-1%] tracking-[-3%] leading-[100%] text-[rgba(61,51,74,1)]">
+            <h3 className="text-2xl md:tracking-[-1%] tracking-[-3%] leading-[100%] text-[rgba(61,51,74,1)]">
               {typeof t("advantages.personal_support.title") === "string"
                 ? t("advantages.personal_support.title")
                 : ""}
@@ -23,12 +23,12 @@ const Advantages = () => {
             </p>
           </div>
           <div className="bg-[rgba(249,247,254,1)] md:rounded-[15px] rounded-3xl md:p-5 p-4">
-            <h3 className="text-2xl  md:tracking-[-1%] tracking-[-3%] leading-[100%] text-[rgba(61,51,74,1)]">
+            <h3 className="text-2xl md:tracking-[-1%] tracking-[-3%] leading-[100%] text-[rgba(61,51,74,1)]">
               {typeof t("advantages.inspiration.title") === "string"
                 ? t("advantages.inspiration.title")
                 : ""}
             </h3>
-            <p className="md:text-[18px] font-pt text-[14px] text-[rgba(132,111,160,1)]  tracking-[0%] leading-[120%] font-medium md:mt-[75px] mt:[134px]">
+            <p className="md:text-[18px] font-pt text-[14px] text-[rgba(132,111,160,1)] tracking-[0%] leading-[120%] font-medium md:mt-[75px] mt-8">
               {typeof t("advantages.inspiration.description") === "string"
                 ? t("advantages.inspiration.description")
                 : ""}
@@ -36,7 +36,7 @@ const Advantages = () => {
           </div>
           <div className="flex flex-col  md:flex-row gap-4 md:gap-5 ">
             <div className="bg-[rgba(249,247,254,1)] w-full md:rounded-[15px] rounded-3xl md:p-5 p-4 ">
-              <h3 className="text-2xl  md:tracking-[-1%] tracking-[-3%] leading-[100%] text-[rgba(61,51,74,1)]">
+              <h3 className="text-2xl md:tracking-[-1%] tracking-[-3%] leading-[100%] text-[rgba(61,51,74,1)]">
                 {typeof t("advantages.exercise_count.title") === "string"
                   ? t("advantages.exercise_count.title")
                   : ""}
@@ -48,7 +48,7 @@ const Advantages = () => {
               </p>
             </div>
             <div className="bg-[rgba(249,247,254,1)] md:rounded-[15px] rounded-3xl md:p-5 p-4">
-              <h3 className="text-2xl  md:tracking-[-1%] tracking-[-3%] leading-[100%] text-[rgba(61,51,74,1)]">
+              <h3 className="text-2xl md:tracking-[-1%] tracking-[-3%] leading-[100%] text-[rgba(61,51,74,1)]">
                 {typeof t("advantages.accessibility.title") === "string"
                   ? t("advantages.accessibility.title")
                   : ""}
@@ -63,7 +63,7 @@ const Advantages = () => {
         </div>
         <div className="flex flex-col gap-4 md:gap-5 ">
           <div className="bg-[rgba(249,247,254,1)] md:rounded-[15px] rounded-3xl md:p-5 p-4">
-            <h3 className="text-2xl  md:tracking-[-1%] tracking-[-3%] leading-[100%] text-[rgba(61,51,74,1)]">
+            <h3 className="text-2xl md:tracking-[-1%] tracking-[-3%] leading-[100%] text-[rgba(61,51,74,1)]">
               {typeof t("advantages.informativeness.title") === "string"
                 ? t("advantages.informativeness.title")
                 : ""}
@@ -76,7 +76,7 @@ const Advantages = () => {
           </div>
           <div className="flex flex-col  md:flex-row gap-4 md:gap-5 ">
             <div className="bg-[rgba(249,247,254,1)] flex flex-col justify-between md:rounded-[15px] rounded-3xl md:p-5 p-4">
-              <h3 className="text-2xl  md:tracking-[-1%] tracking-[-3%] leading-[100%] text-[rgba(61,51,74,1)]">
+              <h3 className="text-2xl md:tracking-[-1%] tracking-[-3%] leading-[100%] text-[rgba(61,51,74,1)]">
                 {typeof t("advantages.train_anywhere.title") === "string"
                   ? t("advantages.train_anywhere.title")
                   : ""}
@@ -88,7 +88,7 @@ const Advantages = () => {
               </p>
             </div>
             <div className="bg-[rgba(249,247,254,1)] md:rounded-[15px] rounded-3xl md:p-5 p-4 ">
-              <h3 className="text-2xl  md:tracking-[-1%] tracking-[-3%] leading-[100%] text-[rgba(61,51,74,1)]">
+              <h3 className="text-2xl md:tracking-[-1%] tracking-[-3%] leading-[100%] text-[rgba(61,51,74,1)]">
                 {typeof t("advantages.video_count.title") === "string"
                   ? t("advantages.video_count.title")
                   : ""}

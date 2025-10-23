@@ -69,7 +69,7 @@ const Section = () => {
         }}
       /> */}
       <MainHeader ShowBlock={false} OptionalComponent={null} stats={[]} showArrows={false} />
-      <div className="md:my-4">
+      <div className="my-8">
         <WorksSlider 
           works={homePageWorks} 
           title="Subcategories" 
@@ -78,7 +78,7 @@ const Section = () => {
           scrollable={false} 
         />
       </div>
-      <div className="md:mb-8">
+      <div className="mb-8">
         <WorksSlider 
           works={homePageWorks} 
           fromMain={false} 
@@ -97,10 +97,10 @@ const Section = () => {
         titleStyles="text-white"
         buttonStyles="hover:opacity-80"
       />
-      <div className="md:mb-8">
+      <div className="mb-8">
         <ReviewSlider title={""} />
       </div>
-      <div className="md:my-8">
+      <div className="my-8">
         <Blog
           title="GRS МЕДИА"
           withSlider={true}

@@ -268,14 +268,14 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
           src={extractImageUrl(article.featuredImages?.[0]) || '/assets/images/default-article.jpg'}
           alt={article.title[language]}
           fill
-          className="object-cover rounded-[40px]"
+          className="object-cover rounded-10"
         />
       </div>
 
       <main className="flex justify-between gap-[30px] text-[#3D334A] mt-10">
         {/* Left Sidebar - Table of Contents */}
         {(tableOfContents || []).length > 0 && (
-          <div className="sticky top-24 p-6 bg-[rgba(255,255,255,1)] rounded-[20px] max-w-[335px] hidden md:block shadow-lg">
+          <div className="sticky top-24 p-6 bg-[rgba(255,255,255,1)] rounded-5 max-w-[335px] hidden md:block shadow-lg">
             <h2 className="text-xl font-bold mb-6 text-[#3D334A] border-b pb-4">
               {t("article.table_of_contents")}
             </h2>

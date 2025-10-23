@@ -37,10 +37,7 @@ export const Footer: FC = () => {
           <button className="bg-[#B6A3D9] text-white px-10 py-3 rounded-lg font-bold flex items-center gap-2 hover:bg-[#846FA0] transition-all text-lg shadow-md w-full md:w-auto">
             ОТПРАВИТЬ ЗАЯВКУ <span className="text-2xl">→</span>
           </button>
-          <span
-            className="text-[#8B7BAA] mt-2 md:mt-0"
-            style={{ width: "450px" }}
-          >
+          <span className="text-[#8B7BAA] mt-2 md:mt-0 max-w-[450px] text-sm">
             Нажимая на кнопку вы даете согласие на обработку персональных данных
           </span>
         </div>
