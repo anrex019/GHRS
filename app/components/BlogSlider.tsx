@@ -6,8 +6,6 @@ import { IoIosShareAlt } from "react-icons/io";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useI18n } from "../context/I18nContext";
-// import { useRouter } from "next/navigation";
-// import { useCategories } from "../hooks/useCategories";
 
 interface Blog {
   _id: string;
@@ -37,7 +35,7 @@ interface Blog {
   isActive: boolean;
   sortOrder: number;
   featuredImages?: string[];
-  articles?: unknown[]; // Keep this flexible for compatibility
+  articles?: unknown[];
 }
 
 interface BlogSliderProps {
@@ -72,13 +70,11 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
   language,
   showHeader = true,
 }) => {
-  // const router = useRouter();
   const isDesktop = useIsDesktop();
   const featuredBlog = blogs[0];
   const otherBlogs = blogs.slice(1);
   const { t } = useI18n();
 
-  // Helper function to get localized text with fallback
   const getLocalizedText = (field: { en: string; ru: string; ka?: string } | undefined): string => {
     if (!field) return "";
     return field[language] || field.ru || field.en || "";
@@ -90,19 +86,16 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
     return otherBlogs.slice(startIndex, endIndex);
   };
 
-  // მთლიანი გვერდების რაოდენობა
   const totalPages = Math.ceil(otherBlogs.length / blogsPerPage);
-  
-  // სქროლის შემდეგ გადავამოწმოთ თუ საჭიროა გვერდის განახლება
+
   useEffect(() => {
     const handleScroll = () => {
       if (!scrollRef?.current) return;
-      
+
       const { scrollLeft, clientWidth } = scrollRef.current;
       const currentPageFromScroll = Math.round(scrollLeft / clientWidth);
-      
+
       if (currentPageFromScroll !== currentPage) {
-        // განვაახლოთ გვერდის ნომერი სქროლის პოზიციიდან
         const newPage = Math.min(Math.max(0, currentPageFromScroll), totalPages - 1);
         if (newPage !== currentPage) {
         }
@@ -116,31 +109,21 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
     }
   }, [currentPage, totalPages, scrollRef]);
 
-  // Helper function to get article link
   const getBlogLink = (blog: Blog) => {
     if (!blog || !blog._id) {
       return "#";
     }
-
-    // Link to the individual article detail page
     return `/article/${blog._id}`;
   };
 
-  // const getArticleCount = (count: number) => {
-  //   if (count === 1) {
-  //     return t("blog.articles_count_one");
-  //   }
-  //   return t("blog.articles_count", { count: String(count) });
-  // };
-
   return (
     <div className="w-full font-pt" data-show-header={String(showHeader)}>
-      <div className="flex md:flex-row flex-col gap-2.5 mb-10 w-full px-0">
+      <div className="flex md:flex-row flex-col gap-5 mb-10 w-full px-0">
         {/* Featured Blog */}
         {featuredBlog && isDesktop && (
-          <Link href={getBlogLink(featuredBlog)}>
-            <div className="bg-white md:p-2 md:pb-5 hover:shadow-lg duration-300 transition-shadow md:h-[518px] w-[280px] md:w-auto flex-shrink-0 rounded-[20px] flex-col justify-between snap-center">
-              <div className="relative min-w-[300px] max-w-[690px] ">
+          <Link href={getBlogLink(featuredBlog)} className="flex-1">
+            <div className="bg-white p-5 hover:shadow-lg duration-300 transition-shadow h-[518px] rounded-[20px] flex flex-col justify-between">
+              <div className="relative w-full">
                 <Image
                   src={
                     featuredBlog.featuredImages?.[0] ||
@@ -150,31 +133,28 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
                   width={694}
                   height={232}
                   alt={getLocalizedText(featuredBlog.title)}
-                  className="md:h-[232px] object-cover rounded-[20px]"
+                  className="w-full h-[232px] object-cover rounded-[20px]"
                 />
-                <div className="text-[#3D334A] tracking-[0%] md:mt-[10px] mt-0 md:mb-2 mb-2 text-[14px] md:text-[24px] leading-[120%] font-semibold px-3">
-                  <div className="line-clamp-2">
-                    {getLocalizedText(featuredBlog.title)?.trim()}
+                <div className="absolute top-2 right-2 flex flex-col gap-1.5">
+                  <div className="w-10 h-10 bg-[#F9F7FE]/30 backdrop-blur-sm rounded-[6px] flex justify-center items-center hover:bg-[#F9F7FE]/50 transition-all">
+                    <CiBookmark className="w-[14.2px] h-[18.68px] text-white" />
                   </div>
-                </div>
-                <div className="mt-0 text-[#846FA0] font-medium leading-[120%] tracking-[0%] px-3">
-                  <div className="line-clamp-2">
-                    {getLocalizedText(featuredBlog.excerpt) || getLocalizedText(featuredBlog.description) || ""}
-                  </div>
-                </div>
-                <div className="flex items-center gap-1.5 flex-col absolute top-2 right-2">
-                  <div className="w-8 h-8 md:w-10 md:h-10 bg-[#F9F7FE]/30 rounded-[6px] flex justify-center items-center">
-                    <CiBookmark className="md:w-[14.2px] md:h-[18.68px] text-white" />
-                  </div>
-                  <div className="w-8 h-8 md:w-10 md:h-10 bg-[#F9F7FE]/30 rounded-[6px] flex justify-center items-center">
-                    <IoIosShareAlt className="md:w-[14.2px] md:h-[18.68px]" />
+                  <div className="w-10 h-10 bg-[#F9F7FE]/30 backdrop-blur-sm rounded-[6px] flex justify-center items-center hover:bg-[#F9F7FE]/50 transition-all">
+                    <IoIosShareAlt className="w-[14.2px] h-[18.68px] text-white" />
                   </div>
                 </div>
               </div>
-              <div className="px-3 pb-3 font-[Bowler] mt-4">
-                {/* <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%] bg-[#E9DFF6] rounded-[6px] text-[14px] uppercase">
-                  {getArticleCount(featuredBlog.articles?.length || 0)}
-                </span> */}
+              <div className="flex-1 flex flex-col justify-between mt-4">
+                <div>
+                  <h3 className="text-[#3D334A] text-[24px] leading-[120%] font-semibold mb-2">
+                    <div className="line-clamp-2">
+                      {getLocalizedText(featuredBlog.title)?.trim()}
+                    </div>
+                  </h3>
+                  <p className="text-[#846FA0] font-medium leading-[120%] line-clamp-2">
+                    {getLocalizedText(featuredBlog.excerpt) || getLocalizedText(featuredBlog.description) || ""}
+                  </p>
+                </div>
               </div>
             </div>
           </Link>
@@ -182,25 +162,20 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
 
         {/* Desktop Grid */}
         {isDesktop ? (
-          <div className="relative">
-            <div className="grid grid-cols-2 grid-rows-2 gap-5">
+          <div className="flex-1">
+            <div className="grid grid-cols-2 gap-5 h-full">
               {getCurrentBlogs().map((blog) => (
                 <Link key={blog._id} href={getBlogLink(blog)}>
-                  <div className="min-w-[200px] hover:shadow-lg duratio-300 transition-shadow max-w-full md:h-[249px] p-5 bg-white flex flex-col justify-between rounded-[20px]">
-                    <p className="text-[#3D334A] text-[18px] leading-[120%] line-clamp-2 font-bold md:text-[24px]">
+                  <div className="h-[249px] p-5 bg-white flex flex-col justify-between rounded-[20px] hover:shadow-lg duration-300 transition-shadow">
+                    <h3 className="text-[#3D334A] text-[24px] leading-[120%] line-clamp-3 font-bold">
                       {getLocalizedText(blog.title)}
-                    </p>
-                    <div className="flex justify-between items-center mt-3">
-                      {/* <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%] bg-[#E9DFF6] rounded-[6px] text-[14px] uppercase">
-                        {getArticleCount(blog.articles?.length || 0)}
-                      </span> */}
-                      <div className="flex items-center gap-1.5">
-                        <div className="w-10 h-10 bg-[#F9F7FE] rounded-[6px] flex justify-center items-center">
-                          <CiBookmark className="w-[14.2px] h-[18.68px] text-black" />
-                        </div>
-                        <div className="w-10 h-10 bg-[#F9F7FE] rounded-[6px] flex justify-center items-center">
-                          <IoIosShareAlt className="w-[14.2px] h-[18.68px] text-black" />
-                        </div>
+                    </h3>
+                    <div className="flex justify-end items-center gap-1.5">
+                      <div className="w-10 h-10 bg-[#F9F7FE] rounded-[6px] flex justify-center items-center hover:bg-[#E9DFF6] transition-all">
+                        <CiBookmark className="w-[14.2px] h-[18.68px] text-black" />
+                      </div>
+                      <div className="w-10 h-10 bg-[#F9F7FE] rounded-[6px] flex justify-center items-center hover:bg-[#E9DFF6] transition-all">
+                        <IoIosShareAlt className="w-[14.2px] h-[18.68px] text-black" />
                       </div>
                     </div>
                   </div>
@@ -221,20 +196,17 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
                     width={189}
                     height={172}
                     alt={getLocalizedText(blog.title)}
-                    className="flex"
+                    className="rounded-[10px]"
                   />
                   <p className="text-[#3D334A] text-[14px] leading-[120%] mt-2 line-clamp-2">
                     {getLocalizedText(blog.title)}
                   </p>
-                  <div className="flex justify-between items-center mt-2">
-                   
-                    <div className="flex items-center gap-1.5">
-                      <div className="w-8 h-8 bg-[#F9F7FE] rounded-[6px] flex justify-center items-center">
-                        <CiBookmark className="text-black" />
-                      </div>
-                      <div className="w-8 h-8 bg-[#F9F7FE] rounded-[6px] flex justify-center items-center">
-                        <IoIosShareAlt className="text-black" />
-                      </div>
+                  <div className="flex justify-end items-center gap-1.5 mt-2">
+                    <div className="w-8 h-8 bg-[#F9F7FE] rounded-[6px] flex justify-center items-center">
+                      <CiBookmark className="text-black" />
+                    </div>
+                    <div className="w-8 h-8 bg-[#F9F7FE] rounded-[6px] flex justify-center items-center">
+                      <IoIosShareAlt className="text-black" />
                     </div>
                   </div>
                 </div>
