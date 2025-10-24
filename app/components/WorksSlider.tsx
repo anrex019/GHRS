@@ -59,7 +59,7 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
   };
 
   return (
-    <div className="md:px-5 px-2 py-2 bg-[#F9F7FE] md:mx-5 md:rounded-[20px] ">
+    <div className="md:px-5 px-2 py-2 bg-[#F9F7FE] md:mx-5 md:rounded-[20px]">
       <div className="flex items-center justify-between">
         <div className="flex flex-col items-start">
           <h2 className="text-[20px] md:py-4 md:text-[40px] text-[#3D334A] mb-2.5 md:mb-5">
@@ -113,12 +113,26 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
                     {work.categoryName}
                   </span>
                 </div>
-                <h3 className="font-pt text-[#3D334A] font-[1000] text-[18px] leading-[120%] mx-4 ">
+                <h3
+                  className="font-pt text-[#3D334A] font-[1000] text-[18px] leading-[120%] mx-4 line-clamp-2 overflow-hidden"
+                  style={{
+                    display: "-webkit-box",
+                    WebkitBoxOrient: "vertical",
+                    WebkitLineClamp: 2,
+                  }}
+                >
                   {work.title}
                 </h3>
-                {/* <p className="line-clamp-3 font-pt text-[#846FA0] leading-[120%] text-sm mx-4">
+                <p
+                  className="line-clamp-3 font-pt text-[#846FA0] leading-[120%] text-sm mx-4 overflow-hidden"
+                  style={{
+                    display: "-webkit-box",
+                    WebkitBoxOrient: "vertical",
+                    WebkitLineClamp: 3,
+                  }}
+                >
                   {work.description}
-                </p> */}
+                </p>
               </div>
               <div className="flex items-center justify-end absolute -bottom-2 right-0">
                 <span className="px-5 py-3 bg-[#D4BAFC] rounded-lg text-white text-[18px] leading-[100%] font-bold mb-8 mr-8 mt-6">

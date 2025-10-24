@@ -11,6 +11,8 @@ export interface MultiLanguageField {
 }
 
 export interface Video {
+  _id: string | null | undefined;
+  duration: any;
   title: string;
   description: string;
   urls: {

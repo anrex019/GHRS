@@ -10,8 +10,8 @@ import { Footer } from "../components/Footer";
 const ClockIcon = () => (
   <svg
     className="w-7 h-7 md:w-9 md:h-9 text-[#3D334A]"
-    fill="none"
-    stroke="currentColor"
+    fill="black"
+    stroke="white"
     viewBox="0 0 24 24"
     aria-hidden="true"
   >

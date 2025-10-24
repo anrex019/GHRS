@@ -100,14 +100,15 @@ const CourseSlider: React.FC<CourseSliderProps> = ({
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
-  
+
   const fallbackCourses: Course[] = Array.from({ length: 10 }, (_, i) => ({
     id: `fallback-${i + 1}`,
-    title: "Ортопедия",
-    description:
-      "Курсы и мастер-классы для опытных терапевтов. Практикум по лечению ортопедических проблем",
-    price: "4023 $",
+    title: "Default Course",
+    description: "This is a fallback course description.",
+    price: "5000 ₾",
     image: "/assets/images/course.png",
+    
+    
   }));
 
   const [showAll, setShowAll] = useState(false);
@@ -127,20 +128,32 @@ const CourseSlider: React.FC<CourseSliderProps> = ({
     return "";
   };
 
+  const getValidImage = (imageUrl: string | undefined): string => {
+    if (!imageUrl) return "/assets/images/course.png"; // Default image
+    if (imageUrl.startsWith("http") || imageUrl.startsWith("/")) return imageUrl;
+    return "/assets/images/course.png"; // Fallback to default
+  };
+
   const transformedCourses: Course[] = courses.map((course) => ({
     id: course._id || course.id.toString(),
     title: getLocalizedContent(course.title),
     description: getLocalizedContent(course.description),
     shortDescription: getLocalizedContent(course.shortDescription),
-    price: `${course.price}${language === "ka" ? " ₾" : language === "ru" ? " ₽" : " $"}`,
-    image: course.thumbnail || "/assets/images/course.png",
-    category: course.category ? {
-      id: course.category.id.toString(),
-      name: getLocalizedContent(course.category.name)
-    } : undefined,
-    instructor: course.instructor?.name ? getLocalizedContent(course.instructor.name) : undefined,
+    price: course.price
+      ? `${course.price}${language === "ka" ? " ₾" : language === "ru" ? " ₽" : " $"}` // Format price
+      : "N/A",
+    image: getValidImage(course.thumbnail),
+    category: course.category
+      ? {
+          id: course.category.id.toString(),
+          name: getLocalizedContent(course.category.name),
+        }
+      : undefined,
+    instructor: course.instructor?.name
+      ? getLocalizedContent(course.instructor.name)
+      : undefined,
     duration: course.duration,
-    level: course.level
+    level: course.level,
   }));
 
   const allCourses = transformedCourses.length > 0 ? transformedCourses : fallbackCourses;
@@ -162,7 +175,7 @@ const CourseSlider: React.FC<CourseSliderProps> = ({
       const scrollAmount = cardWidth + gap;
       scrollRef.current.scrollBy({
         left: -scrollAmount,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
     }
   };
@@ -174,7 +187,7 @@ const CourseSlider: React.FC<CourseSliderProps> = ({
       const scrollAmount = cardWidth + gap;
       scrollRef.current.scrollBy({
         left: scrollAmount,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
     }
   };
@@ -193,19 +206,19 @@ const CourseSlider: React.FC<CourseSliderProps> = ({
     if (scrollElement) {
       // Initial check
       checkScrollPosition();
-      
+
       // Add scroll event listener
-      scrollElement.addEventListener('scroll', checkScrollPosition);
-      
+      scrollElement.addEventListener("scroll", checkScrollPosition);
+
       // Check on resize
       const handleResize = () => {
         setTimeout(checkScrollPosition, 100);
       };
-      window.addEventListener('resize', handleResize);
+      window.addEventListener("resize", handleResize);
 
       return () => {
-        scrollElement.removeEventListener('scroll', checkScrollPosition);
-        window.removeEventListener('resize', handleResize);
+        scrollElement.removeEventListener("scroll", checkScrollPosition);
+        window.removeEventListener("resize", handleResize);
       };
     }
   }, [allCourses.length]);
@@ -216,18 +229,16 @@ const CourseSlider: React.FC<CourseSliderProps> = ({
     <div className="w-full relative">
       {/* Header with arrows */}
       <div className="flex justify-between items-center mb-4 absolute -top-20 right-0">
-
         <SliderArrows
           onScrollLeft={scrollLeft}
           onScrollRight={scrollRight}
           canScrollLeft={canScrollLeft}
           canScrollRight={canScrollRight}
-          
         />
       </div>
 
       {/* Scrollable horizontal layout for all screen sizes */}
-      <div 
+      <div
         ref={scrollRef}
         className="flex gap-4 overflow-x-auto scrollbar-hide pb-2 scroll-smooth"
       >
@@ -248,7 +259,7 @@ const CourseSlider: React.FC<CourseSliderProps> = ({
             onClick={() => setShowAll((prev) => !prev)}
             className="bg-[#846FA0] text-white py-2 px-6 rounded-full text-sm hover:bg-[#6e5c8a] transition"
           >
-            {showAll ? "Скрыть" : "Показать ещё"}
+            {showAll ? "Hide" : "Show More"}
           </button>
         </div>
       )}
@@ -262,15 +273,15 @@ const CourseSlider: React.FC<CourseSliderProps> = ({
           display: none;
         }
       `}</style>
-    </div>  
+    </div>
   );
 };
 
 const CourseCard = ({ course }: { course: Course }) => {
   const truncateText = (text: string, maxLength: number = 100) => {
-    const cleanText = text.trim().replace(/\s+/g, ' ');
+    const cleanText = text.trim().replace(/\s+/g, " ");
     if (cleanText.length <= maxLength) return cleanText;
-    return cleanText.substring(0, maxLength) + '...';
+    return cleanText.substring(0, maxLength) + "...";
   };
 
   return (
@@ -279,7 +290,7 @@ const CourseCard = ({ course }: { course: Course }) => {
       className="block w-full transition-transform duration-300 hover:scale-[1.02]"
     >
       <div className="bg-white rounded-[20px] p-1.5 pb-4 w-full">
-        <div className="h-[418px]">     
+        <div className="h-[418px]">
           <Image
             src={course.image}
             width={674}

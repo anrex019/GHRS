@@ -176,7 +176,24 @@ const Professional = ({
             </div>
           ) : (
             <div className="flex gap-4 md:mb-8">
-              <CourseSlider courses={courses} />
+              <CourseSlider
+                courses={courses.map((course) => ({
+                  id: course._id,
+                  title: course.title.en,
+                  shortDescription: course.description.en,
+                  price: course.price,
+                  currency: "USD", // Replace with actual currency if available
+                  imageUrl: course.thumbnail,
+                  instructorName: course.instructor.name,
+                  description: course.description.en, // Assuming description is required
+                  categoryId: "default-category", // Replace with actual categoryId if available
+                  level: "beginner", // Replace with actual level if available
+                  isActive: true, // Assuming courses are active
+                  createdAt: new Date().toISOString(), // Replace with actual createdAt if available
+                  updatedAt: new Date().toISOString(), // Replace with actual updatedAt if available
+                  isFeatured: false, // Add default value for isFeatured
+                }))}
+              />
             </div>
           )}
 
