@@ -43,9 +43,8 @@ const Subscribe = ({
   return (
     <div className={`mb-6 md:mb-10 mt-10 md:mt-0 md:px-5 ${containerStyles}`}>
       <div
-        className={` w-[359px] md:w-full md:h-[424px] ${
-          bgCenter && "bg-center"
-        } rounded-[20px] md:px-5 mx-auto md:mx-0 p-4 gap-5`}
+        className={` w-[359px] md:w-full md:h-[424px] ${bgCenter && "bg-center"
+          } rounded-[20px] md:px-5 mx-auto md:mx-0 p-4 gap-5`}
         style={{
           backgroundImage: `url(${backgroundImage})`,
           backgroundColor: bgColor,
@@ -71,15 +70,17 @@ const Subscribe = ({
           }}
         >
           <button
-            className={`py-[13px] text-[18px] font-medium  ${buttonStyles}`}
-          >
-            {buttonTextKey ? t(buttonTextKey) : buttonText}
-          </button>
+  className={`w-full py-[13px] text-[32px] font-medium hover:opacity-80 ${buttonStyles}`}
+>
+  {buttonTextKey ? t(buttonTextKey) : buttonText}
+</button>
+
           <Image
             src="/assets/images/rightArrow.svg"
             alt="rightArrow"
-            width={13}
-            height={9.5}
+            width={42}
+            height={15}
+          
           />
         </div>
       </div>

@@ -211,6 +211,7 @@ function SectionContent() {
           containerStyles="custom-class"
           titleStyles="text-white"
           buttonStyles="hover:opacity-80"
+          
         />
         <div className="my-10">
           <ReviewSlider title={"ОТЗЫВЫ О НАС"} />
