@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcryptjs'; // ← შეცვლილია bcrypt → bcryptjs
 import { User, UserDocument, UserResponse } from '../schemas/user.schema';
+import { EmailService } from '../email/email.service';
 
 interface RegistrationDto {
   email: string;
@@ -20,6 +21,7 @@ interface VerificationData {
   email: string;
   code: string;
   expiresAt: Date;
+  verified?: boolean; // Add this flag to track verification status
 }
 
 @Injectable()
@@ -29,6 +31,7 @@ export class AuthService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private jwtService: JwtService,
+    private emailService: EmailService,
   ) {}
 
   private generateVerificationCode(): string {
@@ -80,7 +83,14 @@ export class AuthService {
       expiresAt,
     });
 
-    // აქ უნდა დაემატოს რეალური ელ-ფოსტის გაგზავნის ლოგიკა
+    // Send verification code via email
+    try {
+      await this.emailService.sendVerificationCode(email, code);
+    } catch (error) {
+      console.error('Failed to send verification email:', error);
+      // Still return success as the code is generated and stored
+      // The user can request a resend if needed
+    }
 
     return {
       success: true,
@@ -102,6 +112,13 @@ export class AuthService {
 
     if (!isValid) {
       throw new UnauthorizedException('Invalid or expired code');
+    }
+
+    // Mark the email as verified without consuming the code
+    const verificationData = this.verificationCodes.get(email);
+    if (verificationData) {
+      verificationData.verified = true;
+      this.verificationCodes.set(email, verificationData);
     }
 
     return {
@@ -154,15 +171,12 @@ export class AuthService {
       );
     }
 
-    if (
-      !registrationData.verificationCode ||
-      !(await this.verifyCode(
-        registrationData.email,
-        registrationData.verificationCode,
-        true, // აქ ვშლით კოდს წარმატებული რეგისტრაციისას
-      ))
-    ) {
-      throw new UnauthorizedException('Invalid verification code');
+    // Check if email is verified (either by code or by verification step)
+    const verificationData = this.verificationCodes.get(registrationData.email);
+    const isEmailVerified = verificationData?.verified === true;
+    
+    if (!isEmailVerified) {
+      throw new UnauthorizedException('Email not verified. Please complete email verification first.');
     }
 
     const hashedPassword = await bcrypt.hash(registrationData.password, 10);
@@ -180,6 +194,17 @@ export class AuthService {
     
     // ახალი მომხმარებლისთვის achievements-ების ინიციალიზაცია
     await this.initializeUserAchievements(savedUser);
+    
+    // Send welcome email
+    try {
+      await this.emailService.sendWelcomeEmail(savedUser.email, savedUser.name);
+    } catch (error) {
+      console.error('Failed to send welcome email:', error);
+      // Don't fail registration if welcome email fails
+    }
+    
+    // Clean up verification data after successful registration
+    this.verificationCodes.delete(registrationData.email);
     
     const { password, ...result } = savedUser.toObject();
 

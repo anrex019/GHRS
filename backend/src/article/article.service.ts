@@ -111,6 +111,7 @@ export class ArticleService {
         .find(filter)
         .populate('blogId', 'title description imageUrl')
         .populate('categoryId', 'name description image')
+        .select('-content') // Exclude full content for list view
         .sort({ publishDate: -1, createdAt: -1 })
         .exec();
 
@@ -266,6 +267,7 @@ export class ArticleService {
         })
         .populate('blogId', 'title description imageUrl')
         .populate('categoryId', 'name description image')
+        .select('-content') // Exclude full content for list view
         .sort({ publishDate: -1 })
         .limit(6)
         .exec();

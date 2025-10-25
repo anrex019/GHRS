@@ -7,7 +7,6 @@ import { UserModule } from './user/user.module';
 import { CategoryModule } from './category/category.module';
 import { SetModule } from './set/set.module';
 import { ExerciseModule } from './exercise/exercise.module';
-
 import { UploadModule } from './upload/upload.module';
 import { ArticleModule } from './article/article.module';
 import { BlogModule } from './blog/blog.module';
@@ -19,7 +18,7 @@ import { InstructorModule } from './instructor/instructor.module';
 import { CourseModuleModule } from './course-module/course-module.module';
 import { ReviewModule } from './review/review.module';
 import { StatisticsModule } from './statistics/statistics.module';
-
+import { EmailModule } from './email/email.module'; // ← დამატებული
 
 @Module({
   imports: [
@@ -29,7 +28,7 @@ import { StatisticsModule } from './statistics/statistics.module';
     MongooseModule.forRoot(
       'mongodb+srv://beruashvilig60:Berobero1234!@cluster0.dtwfws3.mongodb.net/grs-db',
     ),
-
+    EmailModule, // ← დამატებული
     AuthModule,
     UserModule,
     CategoryModule,

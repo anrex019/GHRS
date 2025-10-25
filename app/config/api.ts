@@ -177,7 +177,7 @@ export const API_CONFIG = {
     "Content-Type": "application/json",
   },
 
-  TIMEOUT: 30000, // Increased to 30 seconds
+  TIMEOUT: 15000, // 15 seconds - optimized for faster responses
 };
 
 export async function apiRequest<T>(

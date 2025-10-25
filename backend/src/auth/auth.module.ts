@@ -8,6 +8,7 @@ import { User, UserSchema } from '../schemas/user.schema';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { EmailModule } from '../email/email.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       inject: [ConfigService],
     }),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    EmailModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, LocalStrategy, JwtStrategy],
