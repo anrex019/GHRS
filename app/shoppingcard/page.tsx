@@ -79,7 +79,7 @@ const ShoppingCard = () => {
           subscription: parseInt(item.period || "1") || 1,
           totalExercises: item.totalExercises || 0,
           totalDuration: item.totalDuration || "0:00",
-          itemType: item.itemType || item.type || "set", // ✅ itemType-ის კოპირება
+          itemType: item.itemType || item.type || "set",
         }));
         setCart(transformedCart);
       }
@@ -115,7 +115,6 @@ const ShoppingCard = () => {
       t("payment.payment_success") || "Payment completed successfully!",
       t("payment.payment_completed") || "Payment Completed"
     );
-    // You could also redirect to a success page or show a success message
   };
 
   const handlePaymentError = (error: Error) => {
@@ -127,6 +126,9 @@ const ShoppingCard = () => {
     setCart([]);
     localStorage.removeItem("cart");
   };
+
+  // ✅ Calculate total amount
+  const totalAmount = cart.reduce((sum, i) => sum + i.price, 0);
 
   return (
     <>
@@ -151,102 +153,108 @@ const ShoppingCard = () => {
               </span>
             </div>
             <hr className="h-[2px] bg-[#F9F7FE] w-full" />
-            {cart.map((item) => (
-              <div
-                key={item.id}
-                className="flex items-start h-auto gap-4 p-3 rounded-[16px] w-full justify-between relative group hover:shadow-md transition"
-              >
-                <div className="w-[136px] h-[131px]">
-                  <Image
-                    src={item.img}
-                    width={136}
-                    height={131}
-                    alt="image"
-                    className="rounded-[12px] object-cover bg-center"
-                  />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-[#3D334A] font-pt font-bold text-[24px] leading-[100%] max-w-[353px] mb-2.5 line-clamp-2">
-                    {item.title}
-                  </h3>
-                  <p className="text-[#846FA0] font-bold leading-[100%] mb-[16px] line-clamp-2 max-w-[353px] font-pt">
-                    {item.desc}
-                  </p>
-                  {/* {item.totalExercises && <p className="text-[#846FA0] text-[14px] font-pt">Упражнений: {item.totalExercises}</p>}
-                {item.totalDuration && <p className="text-[#846FA0] text-[14px] font-pt">Длительность: {item.totalDuration}</p>} */}
-                  <div className="flex items-center gap-2 relative">
-                    <button
-                      className="text-[#846FA0] font-pt font-bold text-[14px] rounded-[8px] py-1 flex items-center gap-1 hover:bg-[#F3EDFF] transition"
-                      onClick={() =>
-                        setDropdownOpen(
-                          dropdownOpen === item.id ? null : item.id
-                        )
-                      }
-                    >
-                      Срок подписки:
-                      <span className="text-purple-400 ">
-                        {
-                          subscriptionOptions.find(
-                            (o) => o.value === item.subscription
-                          )?.label
+            {cart.length === 0 ? (
+              <div className="w-full text-center py-10">
+                <p className="text-[#846FA0] text-xl font-pt">
+                  Корзина пуста
+                </p>
+              </div>
+            ) : (
+              cart.map((item) => (
+                <div
+                  key={item.id}
+                  className="flex items-start h-auto gap-4 p-3 rounded-[16px] w-full justify-between relative group hover:shadow-md transition"
+                >
+                  <div className="w-[136px] h-[131px]">
+                    <Image
+                      src={item.img}
+                      width={136}
+                      height={131}
+                      alt="image"
+                      className="rounded-[12px] object-cover bg-center"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-[#3D334A] font-pt font-bold text-[24px] leading-[100%] max-w-[353px] mb-2.5 line-clamp-2">
+                      {item.title}
+                    </h3>
+                    <p className="text-[#846FA0] font-bold leading-[100%] mb-[16px] line-clamp-2 max-w-[353px] font-pt">
+                      {item.desc}
+                    </p>
+                    <div className="flex items-center gap-2 relative">
+                      <button
+                        className="text-[#846FA0] font-pt font-bold text-[14px] rounded-[8px] py-1 flex items-center gap-1 hover:bg-[#F3EDFF] transition"
+                        onClick={() =>
+                          setDropdownOpen(
+                            dropdownOpen === item.id ? null : item.id
+                          )
                         }
-                      </span>
-                      <svg
-                        className={`ml-1 w-4 h-4 transition-transform ${
-                          dropdownOpen === item.id && "rotate-180"
-                        }`}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M19 9l-7 7-7-7"
-                        />
-                      </svg>
+                        Срок подписки:
+                        <span className="text-purple-400 ">
+                          {
+                            subscriptionOptions.find(
+                              (o) => o.value === item.subscription
+                            )?.label
+                          }
+                        </span>
+                        <svg
+                          className={`ml-1 w-4 h-4 transition-transform ${
+                            dropdownOpen === item.id && "rotate-180"
+                          }`}
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M19 9l-7 7-7-7"
+                          />
+                        </svg>
+                      </button>
+                      {dropdownOpen === item.id && (
+                        <div className="absolute font-[Bowler] z-10 top-10 left-0 bg-white rounded-[16px] shadow-lg py-2 w-[180px] flex flex-col animate-fade-in border border-[#E2D6F9]">
+                          {subscriptionOptions.map((option) => (
+                            <button
+                              key={option.value}
+                              className={`text-left font-pt px-4 py-2 hover:bg-[#F3EDFF] transition text-[#3D334A] ${
+                                item.subscription === option.value
+                                  ? "font-bold"
+                                  : ""
+                              }`}
+                              onClick={() =>
+                                handleSelectSubscription(item.id, option.value)
+                              }
+                            >
+                              <span className="font-bold">{option.label}</span>
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex flex-col justify-between h-full items-end min-h-[100px]">
+                    <span className="text-[#3D334A] font-pt text-[24px] leading-[100%] font-bold">
+                      {item.price} ₽
+                    </span>
+                    <button
+                      className="text-[#846FA0] font-bold text-[16px] leading-[100% ] font-pt flex items-center gap-3 mt-2 hover:text-[#D7263D] transition"
+                      onClick={() => handleRemove(item.id)}
+                    >
+                      Удалить
+                      <Image
+                        src={"/assets/icons/trash.svg"}
+                        alt="trash"
+                        width={15}
+                        height={20}
+                      />
                     </button>
-                    {dropdownOpen === item.id && (
-                      <div className="absolute font-[Bowler] z-10 top-10 left-0 bg-white rounded-[16px] shadow-lg py-2 w-[180px] flex flex-col animate-fade-in border border-[#E2D6F9]">
-                        {subscriptionOptions.map((option) => (
-                          <button
-                            key={option.value}
-                            className={`text-left font-pt px-4 py-2 hover:bg-[#F3EDFF] transition text-[#3D334A] ${
-                              item.subscription === option.value
-                                ? "font-bold"
-                                : ""
-                            }`}
-                            onClick={() =>
-                              handleSelectSubscription(item.id, option.value)
-                            }
-                          >
-                            <span className="font-bold">{option.label}</span>
-                          </button>
-                        ))}
-                      </div>
-                    )}
                   </div>
                 </div>
-                <div className="flex flex-col justify-between h-full items-end min-h-[100px]">
-                  <span className="text-[#3D334A] font-pt text-[24px] leading-[100%] font-bold">
-                    {item.price} ₽
-                  </span>
-                  <button
-                    className="text-[#846FA0] font-bold text-[16px] leading-[100% ] font-pt flex items-center gap-3 mt-2 hover:text-[#D7263D] transition"
-                    onClick={() => handleRemove(item.id)}
-                  >
-                    Удалить
-                    <Image
-                      src={"/assets/icons/trash.svg"}
-                      alt="trash"
-                      width={15}
-                      height={20}
-                    />
-                  </button>
-                </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
 
           <div className="w-full md:w-[334px] bg-white p-4 rounded-[20px] space-y-5 h-fit">
@@ -259,7 +267,7 @@ const ShoppingCard = () => {
             <div className="flex items-center justify-between">
               <h5 className="text-[#846FA0] font-pt">Всего на сумму</h5>
               <span className="text-[#3D334A] text-[18px] font-bold font-pt">
-                {cart.reduce((sum, i) => sum + i.price, 0)} ₽
+                {totalAmount} ₽
               </span>
             </div>
             <div className="flex items-center justify-between">
@@ -271,7 +279,8 @@ const ShoppingCard = () => {
 
             <button
               onClick={() => setShowPayPal(true)}
-              className="group bg-[url('/assets/images/bluebg.jpg')] rounded-[10px] bg-cover bg-center py-[13px] w-full mt-4 cursor-pointer text-white text-[18px] font-semibold shadow-md hover:opacity-90 transition flex items-center justify-center gap-2"
+              disabled={cart.length === 0 || totalAmount === 0}
+              className="group bg-[url('/assets/images/bluebg.jpg')] rounded-[10px] bg-cover bg-center py-[13px] w-full mt-4 cursor-pointer text-white text-[18px] font-semibold shadow-md hover:opacity-90 transition flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <span className="">Оплатить</span>
               <svg
@@ -289,7 +298,7 @@ const ShoppingCard = () => {
               </svg>
             </button>
 
-            {showPayPal && (
+            {showPayPal && totalAmount > 0 && (
               <div className="mt-8">
                 {paymentError && (
                   <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
@@ -298,8 +307,8 @@ const ShoppingCard = () => {
                 )}
 
                 <PayPalButton
-                  amount={cart.reduce((sum, i) => sum + i.price, 0)}
-                  currency="RUB"
+                  amount={totalAmount}
+                  currency="USD"
                   itemId={cart.map((item) => item.id).join(",")}
                   itemType={
                     cart.length === 1 ? cart[0].itemType || "set" : "mixed"

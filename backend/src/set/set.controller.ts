@@ -17,7 +17,7 @@ import { CreateSetDto } from './dto/create-set.dto';
 import cloudinary from '../cloudinary.config';
 import * as streamifier from 'streamifier';
 
-@Controller('sets')
+@Controller('api/sets') // ✅ შეცვლილი: 'sets' → 'api/sets'
 export class SetController {
   constructor(private readonly setService: SetService) {}
 
@@ -203,4 +203,4 @@ export class SetController {
       throw new BadRequestException(error.message);
     }
   }
-} 
+}

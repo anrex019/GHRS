@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Set, LocalizedString } from "../types/category";
-import { apiRequest } from "../config/api";
 
 interface BackendSet {
   _id: string;
@@ -87,11 +86,31 @@ export function useAllSets(): UseSetsReturn {
     try {
       setLoading(true);
       setError(null);
-      const backendSets = await apiRequest<BackendSet[]>("/sets");
+      
+      console.log('🔵 Fetching sets from: http://localhost:4000/api/sets');
+      
+      // ✅ პირდაპირ fetch - bypass apiRequest cache
+      const response = await fetch('http://localhost:4000/api/sets', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        cache: 'no-store', // არ გამოიყენოს cache
+      });
+      
+      console.log('📡 Response status:', response.status);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
+      const backendSets = await response.json();
+      console.log('✅ Sets fetched:', backendSets.length);
+      
       if (!Array.isArray(backendSets)) {
         throw new Error("API response is not an array");
       }
-      // აღარ ვაფილტრავთ isPublished-ით, ყველა სეტს ვაჩვენებთ
+      
       const transformedSets = backendSets.map(transformSet);
       setSets(transformedSets);
     } catch (err) {
