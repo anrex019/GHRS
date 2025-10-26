@@ -237,15 +237,18 @@ const Complex = ({ params }: ComplexPageProps) => {
 
     const cartItem = {
       id: setId,
-      type: "set", // ✅ შევცვალე 'subscription'-დან 'set'-ზე
-      itemType: "set", // ✅ დავამატე itemType ველი
-      name: setData.name,
+      type: "set",
+      itemType: "set",
+      name: setData.name, // multilingual object {ru, en, ka}
+      title: setData.name?.ru || setData.name?.en || "", // fallback title
       price: price,
       period: period,
-      image: "/assets/images/course.png",
-      description: setData.description,
-      totalExercises: setData.totalExercises,
-      totalDuration: setData.totalDuration,
+      image: setData.thumbnailImage || "/assets/images/course.png",
+      img: setData.thumbnailImage || "/assets/images/course.png",
+      description: setData.description, // multilingual object
+      desc: setData.description?.ru || setData.description?.en || "",
+      totalExercises: setData.totalExercises || 0,
+      totalDuration: setData.totalDuration || "0:00",
     };
 
     // Get existing cart or initialize empty array

@@ -58,52 +58,84 @@ export class PurchaseService {
   async checkUserAccess(userId: string, setId: string): Promise<boolean> {
     console.log('🔍 checkUserAccess called with:', { userId, setId });
     
-    const purchase = await this.purchaseModel.findOne({
-      userId: new Types.ObjectId(userId),
-      setId: new Types.ObjectId(setId),
-      isActive: true,
-    });
-    
-    console.log('📦 Found purchase for access check:', purchase ? 'YES' : 'NO');
-    if (purchase) {
-      console.log('📋 Purchase details:', JSON.stringify(purchase, null, 2));
-    }
-    
-    if (!purchase) return false;
-
-    // თუ არის expiresAt და გასულია ვადა
-    if (purchase.expiresAt && purchase.expiresAt < new Date()) {
-      purchase.isActive = false;
-      await purchase.save();
+    // Validate ObjectIds
+    if (!Types.ObjectId.isValid(userId)) {
+      console.error('❌ Invalid userId:', userId);
       return false;
     }
+    
+    if (!Types.ObjectId.isValid(setId)) {
+      console.error('❌ Invalid setId:', setId);
+      return false;
+    }
+    
+    try {
+      const purchase = await this.purchaseModel.findOne({
+        userId: new Types.ObjectId(userId),
+        setId: new Types.ObjectId(setId),
+        isActive: true,
+      });
+      
+      console.log('📦 Found purchase for access check:', purchase ? 'YES' : 'NO');
+      if (purchase) {
+        console.log('📋 Purchase details:', JSON.stringify(purchase, null, 2));
+      }
+      
+      if (!purchase) return false;
 
-    return true;
+      // თუ არის expiresAt და გასულია ვადა
+      if (purchase.expiresAt && purchase.expiresAt < new Date()) {
+        purchase.isActive = false;
+        await purchase.save();
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      console.error('❌ Error in checkUserAccess:', error);
+      return false;
+    }
   }
 
   async checkUserCourseAccess(userId: string, courseId: string): Promise<boolean> {
     console.log('🔍 checkUserCourseAccess called with:', { userId, courseId });
     
-    const purchase = await this.purchaseModel.findOne({
-      userId: new Types.ObjectId(userId),
-      courseId: new Types.ObjectId(courseId),
-      isActive: true,
-    });
-    
-    console.log('📦 Found course purchase for access check:', purchase ? 'YES' : 'NO');
-    if (purchase) {
-      console.log('📋 Course purchase details:', JSON.stringify(purchase, null, 2));
-    }
-    
-    if (!purchase) return false;
-
-    // Check if expired
-    if (purchase.expiresAt && purchase.expiresAt < new Date()) {
-      purchase.isActive = false;
-      await purchase.save();
+    // Validate ObjectIds
+    if (!Types.ObjectId.isValid(userId)) {
+      console.error('❌ Invalid userId:', userId);
       return false;
     }
+    
+    if (!Types.ObjectId.isValid(courseId)) {
+      console.error('❌ Invalid courseId:', courseId);
+      return false;
+    }
+    
+    try {
+      const purchase = await this.purchaseModel.findOne({
+        userId: new Types.ObjectId(userId),
+        courseId: new Types.ObjectId(courseId),
+        isActive: true,
+      });
+      
+      console.log('📦 Found course purchase for access check:', purchase ? 'YES' : 'NO');
+      if (purchase) {
+        console.log('📋 Course purchase details:', JSON.stringify(purchase, null, 2));
+      }
+      
+      if (!purchase) return false;
 
-    return true;
+      // Check if expired
+      if (purchase.expiresAt && purchase.expiresAt < new Date()) {
+        purchase.isActive = false;
+        await purchase.save();
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      console.error('❌ Error in checkUserCourseAccess:', error);
+      return false;
+    }
   }
 } 
