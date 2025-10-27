@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { useI18n } from "../context/I18nContext";
 
@@ -40,6 +41,22 @@ const Subscribe = ({
   subTitle = "",
 }: SubscribeProps) => {
   const { t } = useI18n();
+  
+  // Determine navigation path based on button text
+  const getNavigationPath = () => {
+    const text = buttonTextKey ? t(buttonTextKey) : buttonText;
+    
+    if (text?.toLowerCase().includes('subscription') || text?.toLowerCase().includes('подписка')) {
+      return '/shoppingcard';
+    } else if (text?.toLowerCase().includes('test') || text?.toLowerCase().includes('тест')) {
+      return '/chapter';
+    } else if (text?.toLowerCase().includes('survey') || text?.toLowerCase().includes('опрос')) {
+      return '/contact';
+    }
+    return '#';
+  };
+  
+  const navigationPath = getNavigationPath();
   return (
     <div className={`mb-6 md:mb-10 mt-10 md:mt-0 md:px-5 ${containerStyles}`}>
       <div
@@ -62,7 +79,8 @@ const Subscribe = ({
               : subTitle}
           </p>
         </div>
-        <div
+        <Link
+          href={navigationPath}
           className={`flex items-center cursor-pointer md:mt-[70px] mt-10 rounded-[10px] gap-5 px-[15px] w-[327px] md:w-[562px]`}
           style={{
             backgroundColor: buttonBgColor,
@@ -70,19 +88,18 @@ const Subscribe = ({
           }}
         >
           <button
-  className={`w-full py-[13px] text-[32px] font-medium hover:opacity-80 ${buttonStyles}`}
->
-  {buttonTextKey ? t(buttonTextKey) : buttonText}
-</button>
+            className={`w-full py-[13px] text-[32px]  md:w-[562px] font-medium hover:opacity-80 ${buttonStyles}`}
+          >
+            {buttonTextKey ? t(buttonTextKey) : buttonText}
+          </button>
 
           <Image
             src="/assets/images/rightArrow.svg"
             alt="rightArrow"
             width={42}
             height={15}
-          
           />
-        </div>
+        </Link>
       </div>
     </div>
   );

@@ -49,8 +49,8 @@
     "exercises_title": "Exercises"
   },
   "buttons": {
-    "subscribe": "Purchase subscription →",
-    "take_test": "TAKE TEST →",
-    "take_survey": "take survey →"
+    "subscribe": "Purchase subscription",
+    "take_test": "TAKE TEST",
+    "take_survey": "take survey"
   }
 } 

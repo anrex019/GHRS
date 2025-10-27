@@ -16,15 +16,16 @@ export class CategoryService {
 
   async findAll(): Promise<Category[]> {
     return this.categoryModel.find()
-      .populate('subcategories')
-      .populate('sets')
+      .populate('subcategories', '_id name image description')
+      .populate('sets', '_id name thumbnailImage totalExercises totalDuration price')
+      .select('name description image subcategories sets isActive sortOrder isPublished parentId')
       .exec();
   }
 
   async findOne(id: string): Promise<Category> {
     const category = await this.categoryModel.findById(id)
-      .populate('subcategories')
-      .populate('sets')
+      .populate('subcategories', '_id name image description')
+      .populate('sets', '_id name thumbnailImage totalExercises totalDuration price')
       .exec();
     
     if (!category) {
