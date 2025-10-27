@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import "./globals.css";
 import { I18nProvider } from "./context/I18nContext";
@@ -14,25 +14,22 @@ const paypalOptions = {
   components: "buttons"
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <head>
-        <meta
-          httpEquiv="Permissions-Policy"
-          content="geolocation=(), camera=(), microphone=()"
-        />
-      </head>
       <body>
         <PayPalScriptProvider options={paypalOptions}>
           <I18nProvider>
             <AuthProvider>
               <ModalProvider>
-                <CategoryProvider value={{ categories: [], loading: false, error: null, refetch: async () => {} }}>
+                <CategoryProvider
+                  value={{
+                    categories: [],
+                    loading: false,
+                    error: null,
+                    refetch: async () => {},
+                  }}
+                >
                   {children}
                 </CategoryProvider>
               </ModalProvider>

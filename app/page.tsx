@@ -43,18 +43,6 @@ const Home = () => {
     },
   ];
 
-  // ✅ ახლა ლოკალიზებულია!
-  const CustomBlock = (
-    <div className="md:absolute flex bottom-0  right-0 md:bg-white rounded-tl-4xl p-8 justify-center mt-16">
-      <div className="text-white  bg-[#3D334A] p-6 rounded-2xl h-54 md:w-54 w-full items-center justify-center transition-transform duration-300 hover:scale-105">
-        {t("header.learn_more")}
-      </div>
-      <div className="text-white bg-gradient-to-tr from-[#FFDAB9] via-[#C4A6F1] to-[#C4A6F1] p-6 rounded-2xl h-54 md:w-54 w-full items-center justify-center transition-transform duration-300 hover:scale-105 ml-4">
-        {t("header.to_catalog")}
-      </div>
-    </div>
-  );
-
   return (
     <div className="w-full min-h-screen overflow-x-hidden">
       <MainHeader
@@ -72,7 +60,7 @@ const Home = () => {
           fromMain={true}
           customMargin="20px"
           customBorderRadius=""
-          seeAll={false}
+          seeAll={true}
           scrollable={true}
         />
         <Subscribe

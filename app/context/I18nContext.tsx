@@ -32,27 +32,19 @@ interface I18nProviderProps {
   children: React.ReactNode;
 }
 
-// Helper function to get nested values from object
+// Helper function for nested keys
 const getNestedValue = (obj: Record<string, unknown>, path: string): string => {
-  const value = path
-    .split(".")
-    .reduce(
-      (o: unknown, p: string) => {
-        return o && typeof o === "object" && p in o
-          ? (o as Record<string, unknown>)[p]
-          : undefined;
-      },
-      obj
-    );
-
-  if (value === undefined) {
-    return path;
-  }
-
-  return value as string;
+  const value = path.split(".").reduce(
+    (o: unknown, p: string) =>
+      o && typeof o === "object" && p in o
+        ? (o as Record<string, unknown>)[p]
+        : undefined,
+    obj
+  );
+  return value === undefined ? path : (value as string);
 };
 
-// Deep merge helper to preserve nested keys when combining translation files
+// Deep merge translations
 const deepMerge = (
   target: Record<string, unknown>,
   source: Record<string, unknown>
@@ -79,8 +71,7 @@ const deepMerge = (
 
 export const I18nProvider: React.FC<I18nProviderProps> = ({ children }) => {
   const [locale, setLocaleState] = useState<Locale>(() => {
-    // Try to get locale from localStorage first
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       const savedLocale = localStorage.getItem("locale") as Locale;
       if (savedLocale && ["ka", "ru", "en"].includes(savedLocale)) {
         return savedLocale;
@@ -88,42 +79,36 @@ export const I18nProvider: React.FC<I18nProviderProps> = ({ children }) => {
     }
     return "ka";
   });
+
   const [translationData, setTranslationData] = useState<Record<string, unknown>>({});
   const [isLoading, setIsLoading] = useState(true);
 
-  // Load translation files
   useEffect(() => {
     const loadTranslations = async () => {
       setIsLoading(true);
       try {
-        const [common, home, advantages, subscribe, sets, header, components, personalAccount, footer] =
-          await Promise.all([
-            fetch(`/locales/${locale}/common.json`).then((res) => res.json()),
-            fetch(`/locales/${locale}/home.json`).then((res) => res.json()),
-            fetch(`/locales/${locale}/advantages.json`).then((res) => res.json()),
-            fetch(`/locales/${locale}/subscribe.json`).then((res) => res.json()),
-            fetch(`/locales/${locale}/sets.json`).then((res) => res.json()),
-            fetch(`/locales/${locale}/header.json`).then((res) => res.json()),
-            fetch(`/locales/${locale}/components.json`).then((res) => res.json()),
-            fetch(`/locales/${locale}/personalAccount.json`).then((res) => res.json()),
-            fetch(`/locales/${locale}/footer.json`).then((res) => res.json()), // ← ახალი დამატება
-          ]);
-
-        const translationsArray = [
-          common,
-          home,
-          advantages,
-          subscribe,
-          sets,
-          header,
-          components,
-          personalAccount,
-          footer, // ← ახალი დამატება
+        const files = [
+          "common",
+          "home",
+          "advantages",
+          "subscribe",
+          "sets",
+          "header",
+          "components",
+          "personalAccount",
+          "footer",
+          "contact"
         ];
 
-        const mergedTranslations = translationsArray.reduce<Record<string, unknown>>(
+        const translations = await Promise.all(
+          files.map((file) =>
+            fetch(`/locales/${locale}/${file}.json`).then((res) => res.json())
+          )
+        );
+
+        const mergedTranslations = translations.reduce<Record<string, unknown>>(
           (acc, curr) => deepMerge(acc, curr as Record<string, unknown>),
-          {} as Record<string, unknown>
+          {}
         );
 
         setTranslationData(mergedTranslations);
@@ -141,31 +126,23 @@ export const I18nProvider: React.FC<I18nProviderProps> = ({ children }) => {
     if (newLocale !== locale) {
       setLocaleState(newLocale);
       localStorage.setItem("locale", newLocale);
-      window.location.reload(); // Force reload to ensure all components get new translations
     }
   };
 
   const t = (key: string, options?: Record<string, string>): string => {
     let translation = getNestedValue(translationData, key);
 
-    // If translation not found, return the key
-    if (translation === key) {
-      return key;
-    }
+    if (translation === key) return key;
 
-    // If translation is an object (e.g., {ka, ru, en, _id}), try to return the value for the current locale
     if (typeof translation === "object" && translation !== null) {
-      // Remove any non-locale keys (like _id)
       const localeValue = (translation as Record<string, string>)[locale];
       if (typeof localeValue === "string") {
         translation = localeValue;
       } else {
-        // fallback: return a warning string
-        return `[[Translation object for key: ${key}]]`;
+        return `[[Missing translation for ${key}]]`;
       }
     }
 
-    // Simple interpolation
     if (options && typeof translation === "string") {
       Object.keys(options).forEach((optionKey) => {
         translation = translation.replace(
@@ -175,12 +152,9 @@ export const I18nProvider: React.FC<I18nProviderProps> = ({ children }) => {
       });
     }
 
-    // Ensure we never return an object
-    if (typeof translation !== "string") {
-      return `[[Invalid translation for key: ${key}]]`;
-    }
-
-    return translation;
+    return typeof translation === "string"
+      ? translation
+      : `[[Invalid translation for ${key}]]`;
   };
 
   if (isLoading) {
@@ -188,7 +162,9 @@ export const I18nProvider: React.FC<I18nProviderProps> = ({ children }) => {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-4 border-purple-600 border-t-transparent mb-4 mx-auto"></div>
-          <h2 className="text-2xl font-semibold text-gray-700">Loading translations...</h2>
+          <h2 className="text-2xl font-semibold text-gray-700">
+            Loading translations...
+          </h2>
         </div>
       </div>
     );

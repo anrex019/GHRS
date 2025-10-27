@@ -46,7 +46,8 @@
     "status": "დამუშავების პროცესში"
   },
   "works": {
-    "exercises_title": "ვარჯიშები"
+    "exercises_title": "ვარჯიშები",
+    "all_sets": "ყველა {{count}} ვარჯიში →"
   },
   "buttons": {
     "subscribe": "გამოწერის შეძენა",

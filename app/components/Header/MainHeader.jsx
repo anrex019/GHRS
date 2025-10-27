@@ -5,6 +5,7 @@ import DesktopNavbar from "../Navbar/DesktopNavbar";
 import { useI18n } from "../../context/I18nContext";
 import MobileNavbar from "../Navbar/MobileNavbar";
 import useStatistics from "../../hooks/useStatistics";
+import Link from "next/link";
 
 function MainHeader({
   ShowBlock = false,
@@ -97,6 +98,24 @@ function MainHeader({
               />
             </svg>
           </button>
+        </div>
+      )}
+
+      {/* ✅ ორი ბათონი - მხოლოდ ეს დავამატე! */}
+      {ShowBlock && (
+        <div className="absolute bottom-0 right-0 hidden md:flex gap-4 bg-[#F9F7FE] rounded-tl-[60px] p-6 pb-8 z-10 items-end">
+          <Link 
+            href="/about"
+            className="text-white bg-[#3D334A] rounded-3xl w-[246px] h-[180px] flex items-start justify-start p-8 transition-transform duration-300 hover:scale-105 cursor-pointer font-bold uppercase text-lg shadow-2xl leading-tight"
+          >
+            {t("header.learn_more") || "Изучить подробнее"}
+          </Link>
+          <Link 
+            href="/allComplex"
+            className="text-white bg-gradient-to-br from-[#D4BAFC] via-[#C4A6F1] to-[#B794E8] rounded-3xl w-[246px] h-[180px] flex items-start justify-start p-8 transition-transform duration-300 hover:scale-105 cursor-pointer font-bold uppercase text-lg shadow-2xl leading-tight"
+          >
+            {t("header.to_catalog") || "В каталог"}
+          </Link>
         </div>
       )}
 

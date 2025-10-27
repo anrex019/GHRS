@@ -75,7 +75,7 @@ const Works: React.FC<WorksProps> = ({
   sets = [],
   linkHref = "/allComplex",
   linkText = "All exercises",
-  fromMain = false, // Default value დამატებული
+  fromMain = false,
   border,
   borderColor,
   customMargin,
@@ -85,7 +85,6 @@ const Works: React.FC<WorksProps> = ({
   sliderId,
 }) => {
   const { t, locale } = useI18n();
-
 
   // Helper to get localized string from object or string
   const getLocalized = (value: unknown): string => {
@@ -116,23 +115,18 @@ const Works: React.FC<WorksProps> = ({
 
   // Helper function to get valid thumbnail URL
   const getValidThumbnailUrl = (url: string | undefined): string => {
-
-    // თუ URL არ არის, ვიყენებთ default-ს
     if (!url) {
       return "/assets/images/workMan.png";
     }
 
-    // base64 images-ის support
     if (url.startsWith("data:image")) {
-      return url; // base64 image-ს ვიყენებთ
+      return url;
     }
 
-    // თუ ვალიდური URL-ია
     if (url.startsWith("http") || url.startsWith("/")) {
       return url;
     }
 
-    // სხვა შემთხვევაში default
     return "/assets/images/workMan.png";
   };
 
@@ -148,7 +142,7 @@ const Works: React.FC<WorksProps> = ({
     duration?: string;
     videoUrl?: string;
     categoryId: string;
-    subcategoryId?: string; // ქვე-კატეგორიის ID დამატებული
+    subcategoryId?: string;
   }
 
   let works: WorkItem[] = [];
@@ -160,11 +154,11 @@ const Works: React.FC<WorksProps> = ({
         title: getLocalizedFromExercise(exercise.name),
         description: getLocalizedFromExercise(exercise.description),
         image: getValidThumbnailUrl(exercise.thumbnailUrl),
-        exerciseCount: 1, // Single exercise
+        exerciseCount: 1,
         categoryName: exercise.category
           ? getLocalizedFromExercise(exercise.category.name)
           : "ორთოპედია",
-        monthlyPrice: 920, // Default price
+        monthlyPrice: 920,
         difficulty: exercise.difficulty,
         duration: exercise.duration,
         videoUrl: exercise.videoUrl,
@@ -174,19 +168,17 @@ const Works: React.FC<WorksProps> = ({
       return result;
     });
   } else if (items.length > 0) {
-    // Transform sets to work with existing WorksSlider component
     works = items.map((set) => ({
       id: set._id,
       title: getLocalized(set.name),
       description: getLocalized(set.description),
-      image: "/assets/images/workMan.png", // Default image
+      image: "/assets/images/workMan.png",
       exerciseCount: Array.isArray(set.exercises) ? set.exercises.length : 0,
-      categoryName: "ორთოპედია", // Default
-      monthlyPrice: set.price.monthly || 920, // Default price
+      categoryName: "ორთოპედია",
+      monthlyPrice: set.price.monthly || 920,
       categoryId: set.categoryId || "",
     }));
   } else if (sets.length > 0) {
-    // Transform sets prop (when passed as `sets` instead of `items`)
     works = sets.map((set) => ({
       id: set._id,
       title: getLocalized(set.name),
@@ -203,28 +195,26 @@ const Works: React.FC<WorksProps> = ({
     console.log("⚠️ No exercises, items, or sets to process!");
   }
 
-
   return (
     <div
-    
       style={{ border: `${border}px solid ${borderColor}`, marginInline: `${customMargin}`, borderRadius: `${customBorderRadius}` }}
-      className="bg-[#F9F7FE] mx-6 rounded-[30px] md:mt-0 md:pt-6 mt-10 md:mb-10 mb-0   rounded-b-[15px] md:pb-10 pb-0"
+      className="bg-[#F9F7FE] mx-6 rounded-[30px] md:mt-0 md:pt-6 mt-10 md:mb-10 mb-0 rounded-b-[15px] md:pb-10 pb-0"
     >
       {/* Slider */}
       <WorksSlider scrollable={scrollable} seeAll={seeAll} title={title} works={works} fromMain={fromMain} sliderId={sliderId} />
-      { seeAll && (
-        <Link
-        href={linkHref}
-        className="text-[14px] px-5 md:px-0 md:text-[24px] leading-[90%] uppercase text-[#D4BAFC]"
-      >
-        <span className="px-12">
-          {" "}
-          {typeof t("works.all_sets", { count: works.length.toString() }) ===
-          "string"
-            ? t("works.all_sets", { count: works.length.toString() })
-            : linkText}
-        </span>
-      </Link>
+      
+      {/* ✅ ქვედა ლინკი - გამოსწორებული */}
+      {seeAll && (
+        <div className="px-6 md:px-12 pb-8 md:pb-10">
+          <Link
+            href={linkHref}
+            className="text-[18px] md:text-[28px] font-normal leading-[110%] uppercase text-[#D4BAFC] hover:text-[#C4A6F1] transition-colors inline-block"
+          >
+            {typeof t("works.all_sets", { count: works.length.toString() }) === "string"
+              ? t("works.all_sets", { count: works.length.toString() })
+              : `${linkText} →`}
+          </Link>
+        </div>
       )}
     </div>
   );

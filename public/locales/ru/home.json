@@ -46,11 +46,12 @@
     "status": "В разработке"
   },
   "works": {
-    "exercises_title": "Упражнения"
+    "exercises_title": "Упражнения",
+    "all_sets": "ВСЕ {{count}} УПРАЖНЕНИЯ →"
   },
   "buttons": {
     "subscribe": "Приобрести подписку",
     "take_test": "ПРОЙТИ ТЕСТИРОВАНИЕ",
     "take_survey": "пройти опрос"
   }
-} 
+}

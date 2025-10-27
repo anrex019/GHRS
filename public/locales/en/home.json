@@ -46,7 +46,8 @@
     "status": "In development"
   },
   "works": {
-    "exercises_title": "Exercises"
+    "exercises_title": "Exercises",
+  "all_sets": "ALL {{count}} EXERCISES →"
   },
   "buttons": {
     "subscribe": "Purchase subscription",

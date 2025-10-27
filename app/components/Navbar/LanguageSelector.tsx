@@ -7,9 +7,7 @@ const LanguageSelector: React.FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { locale, setLocale } = useI18n();
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen((prev) => !prev);
-  };
+  const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
 
   const languages = [
     { code: "ka", label: "KA" },
@@ -19,12 +17,9 @@ const LanguageSelector: React.FC = () => {
 
   const handleLanguageChange = (langCode: "ka" | "ru" | "en") => {
     setLocale(langCode);
-    localStorage.setItem("locale", langCode);
     setIsDropdownOpen(false);
-    window.location.reload(); // Force reload to ensure all components get new translations
   };
 
-  // Load saved language on mount
   useEffect(() => {
     const savedLocale = localStorage.getItem("locale") as "ka" | "ru" | "en";
     if (savedLocale && savedLocale !== locale) {
