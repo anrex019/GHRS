@@ -142,5 +142,18 @@
       "waiting": "In Progress",
       "locked": "Complete Previous Exercise First"
     }
+  },
+  "contact": {
+    "working_hours": "09:00 - 19:00 MSK",
+    "working_mode": "Working Hours",
+    "hotline": "Hotline Number",
+    "email_info": "If you have any questions, please write here",
+    "form_title": "CONTACT FORM",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "email": "Email Address",
+    "subject": "Subject",
+    "message": "Your Message",
+    "send": "SEND"
   }
 } 

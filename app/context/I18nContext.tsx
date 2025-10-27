@@ -96,20 +96,17 @@ export const I18nProvider: React.FC<I18nProviderProps> = ({ children }) => {
     const loadTranslations = async () => {
       setIsLoading(true);
       try {
-        const [common, home, advantages, subscribe, sets, header, components, personalAccount] =
+        const [common, home, advantages, subscribe, sets, header, components, personalAccount, footer] =
           await Promise.all([
             fetch(`/locales/${locale}/common.json`).then((res) => res.json()),
             fetch(`/locales/${locale}/home.json`).then((res) => res.json()),
-            fetch(`/locales/${locale}/advantages.json`).then((res) =>
-              res.json()
-            ),
-            fetch(`/locales/${locale}/subscribe.json`).then((res) =>
-              res.json()
-            ),
+            fetch(`/locales/${locale}/advantages.json`).then((res) => res.json()),
+            fetch(`/locales/${locale}/subscribe.json`).then((res) => res.json()),
             fetch(`/locales/${locale}/sets.json`).then((res) => res.json()),
             fetch(`/locales/${locale}/header.json`).then((res) => res.json()),
             fetch(`/locales/${locale}/components.json`).then((res) => res.json()),
             fetch(`/locales/${locale}/personalAccount.json`).then((res) => res.json()),
+            fetch(`/locales/${locale}/footer.json`).then((res) => res.json()), // ← ახალი დამატება
           ]);
 
         const translationsArray = [
@@ -121,6 +118,7 @@ export const I18nProvider: React.FC<I18nProviderProps> = ({ children }) => {
           header,
           components,
           personalAccount,
+          footer, // ← ახალი დამატება
         ];
 
         const mergedTranslations = translationsArray.reduce<Record<string, unknown>>(

@@ -1,0 +1,45 @@
+{
+    "consultation": {
+      "title": "LEAVE A REQUEST FOR",
+      "titleHighlight": "CONSULTATION:",
+      "button": "SUBMIT REQUEST",
+      "consent": "By clicking the button you agree to the processing of personal data"
+    },
+    "form": {
+      "name": "Name",
+      "phone": "Phone",
+      "email": "Email"
+    },
+    "workHours": "Working hours: 9:00 AM - 7:00 PM MSK",
+    "links": {
+      "home": "Home",
+      "rehabilitation": "Rehabilitation",
+      "development": "Professional Development",
+      "blog": "Blog",
+      "about": "About Us",
+      "faq": "FAQ",
+      "userGuide": "User Guide",
+      "allSets": "All Sets",
+      "orthopedics": "Orthopedics",
+      "cervical": "Cervical Spine",
+      "thoracic": "Thoracic Spine",
+      "lumbar": "Lumbar Spine",
+      "upperLimbs": "Upper Limbs Issues",
+      "lowerLimbs": "Lower Limbs Issues",
+      "posture": "Posture Issues",
+      "neurology": "Neurology",
+      "parkinsons": "Parkinson's Disease",
+      "stroke": "Stroke",
+      "facialNerve": "Facial Nerve Paralysis",
+      "multipleSclerosis": "Multiple Sclerosis",
+      "aphasia": "Aphasia and Dysarthria",
+      "obesity": "Obesity",
+      "gaitRehab": "Post-traumatic Gait Rehabilitation",
+      "elderlyRehab": "Rehabilitation for the Elderly",
+      "covidRehab": "Post-COVID-19 Rehabilitation"
+    },
+    "copyright": "Copyright © 2023 GHRS LLC",
+    "userAgreement": "User Agreement",
+    "privacyPolicy": "Privacy Policy",
+    "dataProcessing": "Personal Data Processing"
+  }
