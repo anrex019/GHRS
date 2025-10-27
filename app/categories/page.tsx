@@ -134,6 +134,7 @@ export default function CategoriesPage() {
             buttonTextKey="buttons.subscribe"
             buttonTextColor="#3D334A"
             buttonBgColor="#FFFFFF"
+            href="/shoppingcard"
             containerStyles="custom-class"
             titleStyles="text-white"
             buttonStyles="hover:opacity-80"

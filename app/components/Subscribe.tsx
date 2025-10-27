@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
+import { useRouter } from "next/navigation";
 import { useI18n } from "../context/I18nContext";
 
 interface SubscribeProps {
@@ -16,6 +16,7 @@ interface SubscribeProps {
   buttonStyles?: string;
   subTitleKey?: string;
   bgColor?: string;
+  href?: string;
   // Fallback props for backward compatibility
   title?: string;
   buttonText?: string;
@@ -35,28 +36,14 @@ const Subscribe = ({
   subTitleKey,
   bgColor = "",
   bgCenter = false,
+  href,
   // Fallback props
   title = "Приобретите подписку для получения доступа к контенту платформы",
   buttonText = "Приобрести подписку",
   subTitle = "",
 }: SubscribeProps) => {
   const { t } = useI18n();
-  
-  // Determine navigation path based on button text
-  const getNavigationPath = () => {
-    const text = buttonTextKey ? t(buttonTextKey) : buttonText;
-    
-    if (text?.toLowerCase().includes('subscription') || text?.toLowerCase().includes('подписка')) {
-      return '/shoppingcard';
-    } else if (text?.toLowerCase().includes('test') || text?.toLowerCase().includes('тест')) {
-      return '/chapter';
-    } else if (text?.toLowerCase().includes('survey') || text?.toLowerCase().includes('опрос')) {
-      return '/contact';
-    }
-    return '#';
-  };
-  
-  const navigationPath = getNavigationPath();
+  const router = useRouter();
   return (
     <div className={`mb-6 md:mb-10 mt-10 md:mt-0 md:px-5 ${containerStyles}`}>
       <div
@@ -79,12 +66,14 @@ const Subscribe = ({
               : subTitle}
           </p>
         </div>
-        <Link
-          href={navigationPath}
+        <div
           className={`flex items-center cursor-pointer md:mt-[70px] mt-10 rounded-[10px] gap-5 px-[15px] w-[327px] md:w-[562px]`}
           style={{
             backgroundColor: buttonBgColor,
             color: buttonTextColor,
+          }}
+          onClick={() => {
+            if (href) router.push(href);
           }}
         >
           <button
@@ -98,8 +87,9 @@ const Subscribe = ({
             alt="rightArrow"
             width={42}
             height={15}
+
           />
-        </Link>
+        </div>
       </div>
     </div>
   );

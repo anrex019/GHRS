@@ -83,6 +83,7 @@ const Home = () => {
           buttonTextKey="buttons.subscribe"
           buttonTextColor="#3D334A"
           buttonBgColor="#FFFFFF"
+          href="/shoppingcard"
           bgCenter={true}
           containerStyles="custom-class"
           titleStyles="text-white"
@@ -124,6 +125,7 @@ const Home = () => {
           buttonTextKey="buttons.take_survey"
           buttonTextColor="#3D334A"
           buttonBgColor="#FFFFFF"
+          href="/shoppingcard"
           containerStyles="custom-class"
           titleStyles="text-[#3D334A]"
           buttonStyles="hover:opacity-80"

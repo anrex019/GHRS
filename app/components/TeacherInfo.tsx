@@ -344,6 +344,7 @@ const TeacherInfo = ({ instructorId }: TeacherInfoProps) => {
           buttonTextKey="buttons.subscribe"
           buttonTextColor="#3D334A"
           buttonBgColor="#FFFFFF"
+          href="/shoppingcard"
           bgCenter={true}
           containerStyles="custom-class"
           titleStyles="text-white"
