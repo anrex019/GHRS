@@ -43,8 +43,15 @@ const Login = () => {
         formData.email,
         formData.password
       )) as LoginResponse;
+      
+      // 🔍 DEBUG
+      console.log('🔐 Backend Response:', response);
+      console.log('🔐 Token:', response.token);
+      console.log('🔐 User:', response.user);
+      
       authLogin(response.token, response.user);
     } catch (err: unknown) {
+      console.error('❌ Login Error:', err);
       if (err instanceof Error) {
         setError(err.message);
       } else {

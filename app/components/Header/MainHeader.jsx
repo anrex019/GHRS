@@ -32,7 +32,7 @@ function MainHeader({
   const isVisible = !showArrows || showContent;
 
   return (
-    <div className="relative rounded-[20px] h-[100vh] md:h-[80vh] md:m-6">
+    <div className="relative rounded-[20px] h-[100vh] md:h-[85vh] md:m-6 overflow-hidden">
       <DesktopNavbar
         menuItems={localizedMenuItems}
         blogBg={false}

@@ -24,6 +24,7 @@ export function useUserAccess(setId?: string, courseId?: string): UseUserAccessR
       return;
     }
 
+
     try {
       setLoading(true);
       setError(null);
