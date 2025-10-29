@@ -17,7 +17,7 @@ import { CreateSetDto } from './dto/create-set.dto';
 import cloudinary from '../cloudinary.config';
 import * as streamifier from 'streamifier';
 
-@Controller('api/sets') // ✅ შეცვლილი: 'sets' → 'api/sets'
+@Controller('sets')
 export class SetController {
   constructor(private readonly setService: SetService) {}
 

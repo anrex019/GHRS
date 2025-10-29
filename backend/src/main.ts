@@ -34,6 +34,9 @@ async function bootstrap() {
     }),
   );
 
+  // გლობალური API პრეფიქსი
+  app.setGlobalPrefix('api');
+
   const port = process.env.PORT || 4000;
   await app.listen(port);
 }
