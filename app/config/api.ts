@@ -71,24 +71,6 @@ interface CourseData {
   endDate?: string;
 }
 
-// JWT authorization მოშორებულია - ყველა endpoint public-ია
-// const PUBLIC_ENDPOINTS = [
-//   '/categories',
-//   '/sets',
-//   '/exercises',
-//   '/articles',
-//   '/blogs',
-//   '/instructors',
-//   '/test',
-//   '/users-count'
-// ];
-
-// function isPublicEndpoint(endpoint: string): boolean {
-//   return PUBLIC_ENDPOINTS.some(publicEndpoint => 
-//     endpoint.startsWith(publicEndpoint)
-//   );
-// }
-
 // Protected endpoints that require JWT token
 const PROTECTED_ENDPOINTS = [
   '/users/me',
@@ -106,10 +88,11 @@ function requiresAuth(endpoint: string): boolean {
 
 // API Configuration
 export const API_CONFIG = {
-  // URL კონფიგურაცია გარემოს მიხედვით
-  BASE_URL: process.env.NODE_ENV === 'development'
+  // ✅ გასწორებული URL კონფიგურაცია
+  BASE_URL: typeof window !== 'undefined' && window.location.hostname === 'localhost'
     ? 'http://localhost:4000'
     : 'https://ghrs-backend.onrender.com',
+  
   ENDPOINTS: {
     UPLOAD: {
       IMAGE: "/upload/image"
@@ -177,7 +160,7 @@ export const API_CONFIG = {
     "Content-Type": "application/json",
   },
 
-  TIMEOUT: 15000, // 15 seconds - optimized for faster responses
+  TIMEOUT: 15000, // 15 seconds
 };
 
 export async function apiRequest<T>(
@@ -316,7 +299,8 @@ export async function resendVerificationCode(email: string) {
   });
 }
 
-const API_URL = process.env.NODE_ENV === 'development'
+// ✅ გასწორებული axios instance
+const API_URL = typeof window !== 'undefined' && window.location.hostname === 'localhost'
   ? 'http://localhost:4000'
   : 'https://ghrs-backend.onrender.com';
 

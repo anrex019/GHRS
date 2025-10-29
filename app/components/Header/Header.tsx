@@ -424,7 +424,7 @@ const Header: React.FC<HeaderProps> = ({
 
             {variant == "rehabilitation" && (
               <div className="flex flex-col gap-0 px-5">
-                <h2 className="mx-5  hidden md:flex text-[64px] md:mt-[40px] leading-[100%] tracking-[-3%] max-w-[994px]">
+                <h2 className="mx-5 text-[#3D334A]   hidden md:flex text-[64px] md:mt-[40px] leading-[100%] tracking-[-3%] max-w-[994px]">
                   {t("header.rehabilitation_title")}
                 </h2>
                 {currentSlide === 1 && (
