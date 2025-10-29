@@ -159,7 +159,7 @@ function MainHeader({
                 <h1 className="text-xl md:text-2xl font-bold text-[#3D334A] mb-8">
                   {t("header.rehabilitation")}
                 </h1>
-                <p className="text-[18px] font-pt font-medium md:max-w-[1320px] md:text-[24px] leading-[120%] md:leading-[120%] mb-5 text-white">{t("header.rehabilitation_description")}</p>
+                <p className="text-[18px] font-medium md:max-w-[1320px] md:text-[24px] leading-[120%] md:leading-[120%] mb-5 text-white">{t("header.rehabilitation_description")}</p>
               </>
             )}
           </div>

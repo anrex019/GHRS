@@ -142,5 +142,14 @@
       "waiting": "In Progress",
       "locked": "Complete Previous Exercise First"
     }
+  },
+  "sort": {
+    "popularity": "By Popularity",
+    "newest": "By Newest",
+    "priceAsc": "By Price (Low to High)",
+    "priceDesc": "By Price (High to Low)"
+  },
+  "reviews": {
+    "title": "REVIEWS ABOUT GRS"
   }
 } 

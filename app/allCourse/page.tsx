@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { Footer } from "../components/Footer";
 import CustomBadge from "../components/CustomBadge";
 import { API_CONFIG } from "../config/api";
+import { useI18n } from "../context/I18nContext";
 
 interface Course {
   _id: string;
@@ -43,7 +44,8 @@ const AllCourse = () => {
   const [selectedSubcategoryId, setSelectedSubcategoryId] = useState<
     string | null
   >(null);
-  const [sortBy, setSortBy] = useState<string>("По популярности");
+  const { t } = useI18n();
+  const [sortBy, setSortBy] = useState<string>(t("sort.popularity"));
 
   const ITEMS_PER_PAGE = 9;
 
@@ -111,16 +113,17 @@ const AllCourse = () => {
     }
 
     // სორტირება
-    if (sortBy === "По популярности") {
+    if (sortBy === t("sort.popularity")) {
       // შეგვიძლია დავამატოთ popularityScore თუ არსებობს, ან დავტოვოთ ისე როგორც არის
       filtered.sort((a, b) => b.price - a.price); // მაგალითად ფასის მიხედვით
-    } else if (sortBy === "По новизне") {
+    } else if (sortBy === t("sort.newest")) {
       // თუ createdAt ველი გვაქვს
       filtered.sort(
         (a, b) => new Date(b._id).getTime() - new Date(a._id).getTime()
       );
-    } else if (sortBy === "По цене (возрастание)") {
+    } else if (sortBy === t("sort.price.ascending")) {
       filtered.sort((a, b) => a.price - b.price);
+    } else if (sortBy === t("sort.price.descending")) {
     } else if (sortBy === "По цене (убывание)") {
       filtered.sort((a, b) => b.price - a.price);
     }
@@ -218,7 +221,7 @@ const AllCourse = () => {
             value={searchTerm}
             onChange={handleSearch}
             placeholder="Введите название курса или имя инструктора"
-            className="w-full bg-white border focus:outline-purple-[#D4BAFC] font-pt border-[#D4BAFC] rounded-[54px] px-[50px] py-[15px] mb-2 text-[#846FA0] text-[19px] font-medium"
+            className="w-full bg-white border focus:outline-purple-[#D4BAFC] border-[#D4BAFC] rounded-[54px] px-[50px] py-[15px] mb-2 text-[#846FA0] text-[19px] font-medium"
           />
           <CiSearch
             color="black"
@@ -255,7 +258,7 @@ const AllCourse = () => {
                   </p>
                   <div className="flex justify-end">
                     <div className="bg-[#D4BAFC] py-[10px] px-10 rounded-[6px] inline-block">
-                      <span className="text-2xl font-bold text-white leading-[100%] font-pt">
+                      <span className="text-2xl font-bold text-white leading-[100%]">
                         ${course.price}
                       </span>
                     </div>

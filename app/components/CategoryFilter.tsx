@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { API_CONFIG } from "../config/api";
+import { useI18n } from "../context/I18nContext";
 
 interface Category {
   _id: string;
@@ -29,10 +30,11 @@ interface CategoryFilterProps {
 
 export default function CategoryFilter({ onCategoryChange, onSubcategoryChange, onSortChange }: CategoryFilterProps) {
   const [allCategories, setAllCategories] = useState<Category[]>([]);
+  const { t } = useI18n();
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState<Category | null>(null);
-  const [sort, setSort] = useState("По популярности");
+  const [sort, setSort] = useState(t("sort.popularity"));
 
   // მთავარი კატეგორიები (parentId არ აქვთ)
   const mainCategories = allCategories.filter(cat => !cat.parentId);
@@ -150,10 +152,10 @@ export default function CategoryFilter({ onCategoryChange, onSubcategoryChange, 
           }}
           className="bg-[#f7f4ff] border-none text-[19px] outline-none text-[#1e1b29] cursor-pointer px-3 py-1 rounded-md"
         >
-          <option>По популярности</option>
-          <option>По новизне</option>
-          <option>По цене (возрастание)</option>
-          <option>По цене (убывание)</option>
+          <option>{t("sort.popularity")}</option>
+          <option>{t("sort.newest")}</option>
+          <option>{t("sort.priceAsc")}</option>
+          <option>{t("sort.priceDesc")}</option>
         </select>
       </div>
     </div>

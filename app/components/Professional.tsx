@@ -143,7 +143,7 @@ const Professional = ({
                 ? t("professional.title")
                 : "Professional Development"}
             </h1>
-            <p className="text-[#3D334A] text-[18px] font-pt font-medium md:max-w-[1320px] md:text-[24px] leading-[120%] md:leading-[120%] mb-5">
+            <p className="text-[#3D334A] text-[18px] font-medium md:max-w-[1320px] md:text-[24px] leading-[120%] md:leading-[120%] mb-5">
               {typeof t("professional.description") === "string"
                 ? t("professional.description")
                 : ""}

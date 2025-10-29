@@ -1,5 +1,6 @@
 "use client";
 import React, { useRef, useState, useEffect } from "react";
+import { useI18n } from "../context/I18nContext";
 
 // SliderArrows component with working functionality
 type SliderArrowsProps = {
@@ -69,38 +70,53 @@ const SliderArrows: React.FC<SliderArrowsProps> = ({
   );
 };
 
+// TODO: Replace these placeholder paths with your actual video URLs
+// Videos can be hosted on:
+// - Cloudinary: https://res.cloudinary.com/your-cloud/video/upload/...
+// - AWS S3: https://your-bucket.s3.amazonaws.com/...
+// - YouTube: Use YouTube video IDs (requires component modification)
+// - Local: /assets/videos/reviews/review1.mp4 (after uploading to public folder)
+
 const reviewSliderItems = [
   {
     id: 1,
     image: "/assets/images/reviewSliderImages/image2.png",
+    video: "", // Add your video URL here
     name: "Алексей",
   },
   {
     id: 2,
     image: "/assets/images/reviewSliderImages/image3.png",
+    video: "", // Add your video URL here
     name: "Владислава",
   },
   {
     id: 3,
     image: "/assets/images/reviewSliderImages/image4.png",
+    video: "", // Add your video URL here
     name: "Александра",
   },
   {
     id: 4,
     image: "/assets/images/reviewSliderImages/image5.png",
+    video: "", // Add your video URL here
     name: "Владислава",
   },
   {
     id: 5,
     image: "/assets/images/reviewSliderImages/image6.png",
+    video: "", // Add your video URL here
     name: "Елена",
   },
 ];
 
 const ReviewSlider = ({title}: {title: string}) => {
+  const { t } = useI18n();
   const scrollContainerRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [playingVideo, setPlayingVideo] = useState<number | null>(null);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
   const checkScrollButtons = () => {
     if (scrollContainerRef.current) {
@@ -150,7 +166,7 @@ const ReviewSlider = ({title}: {title: string}) => {
       <div className="bg-[#F9F7FE] md:mx-5 md:rounded-5 pb-10">
       <div className="flex items-center justify-between py-5 px-6 md:py-[50px] md:px-8">
         <h1 className="text-[20px] leading-[120%] text-[#3D334A] md:text-[40px] md:tracking-[-3%] font-bold">
-          {title || "ОТЗЫВЫ О GRS"}
+          {title || t("reviews.title")}
         </h1>
         <SliderArrows
           onScrollLeft={handleScrollLeft}
@@ -173,28 +189,71 @@ const ReviewSlider = ({title}: {title: string}) => {
               key={index}
               className="relative flex items-center flex-col min-w-[220px] md:min-w-[300px] flex-shrink-0"
             >
-              <img
-                src={item.image}
-                alt={item.name}
-                className="rounded-[15px] object-cover w-[220px] h-[320px] md:w-[300px] md:h-[420px] lg:w-[349px] lg:h-[496px]"
-              />
-              <h4 className="absolute bottom-[20px] text-center backdrop-blur-[16px] bg-black/20 text-white py-2 px-3 w-[180px] md:w-[240px] lg:w-[289px] rounded-[10px] font-medium text-[16px] md:text-[20px] lg:text-[24px] leading-[120%]">
+              {/* Thumbnail image - hidden when video is playing */}
+              {playingVideo !== index && (
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="rounded-[15px] object-cover w-[220px] h-[320px] md:w-[300px] md:h-[420px] lg:w-[349px] lg:h-[496px]"
+                />
+              )}
+              
+              {/* Video element - shown when playing (only if video URL exists) */}
+              {item.video && (
+                <video
+                  ref={(el) => { videoRefs.current[index] = el; }}
+                  src={item.video}
+                  className={`rounded-[15px] object-cover w-[220px] h-[320px] md:w-[300px] md:h-[420px] lg:w-[349px] lg:h-[496px] ${
+                    playingVideo === index ? 'block' : 'hidden'
+                  }`}
+                  controls
+                  playsInline
+                  onEnded={() => setPlayingVideo(null)}
+                  onPause={() => {
+                    if (videoRefs.current[index]?.currentTime === videoRefs.current[index]?.duration) {
+                      setPlayingVideo(null);
+                    }
+                  }}
+                  onError={(e) => {
+                    console.error('Video failed to load:', item.video);
+                    setPlayingVideo(null);
+                  }}
+                />
+              )}
+              
+              <h4 className="absolute bottom-[20px] text-center backdrop-blur-[16px] bg-black/20 text-white py-2 px-3 w-[180px] md:w-[240px] lg:w-[289px] rounded-[10px] font-medium text-[16px] md:text-[20px] lg:text-[24px] leading-[120%] z-10">
                 {item.name}
               </h4>
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hover:scale-105 duration-300 cursor-pointer w-[50px] h-[50px] md:w-[70px] md:h-[70px] lg:w-[100px] lg:h-[100px] bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                <svg 
-                  width="24" 
-                  height="28" 
-                  viewBox="0 0 24 28" 
-                  fill="none" 
-                  className="ml-1"
+              
+              {/* Play button - only show when video is not playing AND video URL exists */}
+              {playingVideo !== index && item.video && (
+                <div 
+                  onClick={() => {
+                    if (!item.video) {
+                      alert('Video not available yet. Please add video URL in ReviewSlider.tsx');
+                      return;
+                    }
+                    setPlayingVideo(index);
+                    setTimeout(() => {
+                      videoRefs.current[index]?.play();
+                    }, 100);
+                  }}
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hover:scale-110 duration-300 cursor-pointer w-[50px] h-[50px] md:w-[70px] md:h-[70px] lg:w-[100px] lg:h-[100px] bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center z-10"
                 >
-                  <path 
-                    d="M22 12.268c1.333.77 1.333 2.694 0 3.464L4 25.856c-1.333.77-3-.192-3-1.732V3.876c0-1.54 1.667-2.502 3-1.732L22 12.268z" 
-                    fill="white"
-                  />
-                </svg>
-              </div>
+                  <svg 
+                    width="24" 
+                    height="28" 
+                    viewBox="0 0 24 28" 
+                    fill="none" 
+                    className="ml-1"
+                  >
+                    <path 
+                      d="M22 12.268c1.333.77 1.333 2.694 0 3.464L4 25.856c-1.333.77-3-.192-3-1.732V3.876c0-1.54 1.667-2.502 3-1.732L22 12.268z" 
+                      fill="white"
+                    />
+                  </svg>
+                </div>
+              )}
             </div>
           ))}
         </div>

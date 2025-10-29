@@ -56,18 +56,12 @@ const Header: React.FC<HeaderProps> = ({
   description,
   setData,
 }) => {
-  const getLocale = () => {
-    if (typeof window !== "undefined") {
-      const storedLocale = localStorage.getItem("locale");
-      return storedLocale && ["ka", "ru", "en"].includes(storedLocale)
-        ? storedLocale
-        : "ru";
-    }
-    return "ru";
-  };
-
   console.log(description, 'მიღებული დატა');
   console.log('🎯 Header info data:', info);
+
+  // Use locale from i18n context instead of reading from localStorage
+  const { t, locale } = useI18n();
+  const [currentSlide, setCurrentSlide] = useState<0 | 1>(0);
 
   interface PriceObject {
     monthly: number;
@@ -82,16 +76,16 @@ const Header: React.FC<HeaderProps> = ({
     priceKa?: PriceObject | null,
     discountedEn?: PriceObject | null,
     discountedKa?: PriceObject | null,
-    locale: string = "ru"
+    currentLocale: string = "ru"
   ): number => {
-    if (locale === "en") {
+    if (currentLocale === "en") {
       if (discountedEn && typeof discountedEn.monthly === "number")
         return discountedEn.monthly;
       if (priceEn && typeof priceEn.monthly === "number")
         return priceEn.monthly;
       return fallbackMonthly;
     }
-    if (locale === "ka") {
+    if (currentLocale === "ka") {
       if (discountedKa && typeof discountedKa.monthly === "number")
         return discountedKa.monthly;
       if (priceKa && typeof priceKa.monthly === "number")
@@ -103,21 +97,17 @@ const Header: React.FC<HeaderProps> = ({
 
   const getLocalizedText = (
     field: { ka: string; en: string; ru: string } | undefined,
-    locale: string = "ru"
+    currentLocale: string = "ru"
   ): string => {
     if (!field) return "";
     return (
-      field[locale as keyof typeof field] ||
+      field[currentLocale as keyof typeof field] ||
       field.ru ||
       field.en ||
       field.ka ||
       ""
     );
   };
-
-  const locale = getLocale();
-  const [currentSlide, setCurrentSlide] = useState<0 | 1>(0);
-  const { t } = useI18n();
   const { statistics } = useStatistics();
 
   const categoryDetailItems = [
@@ -435,7 +425,7 @@ const Header: React.FC<HeaderProps> = ({
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.6, ease: "easeOut" }}
                       exit={{ opacity: 0, x: -100 }}
-                      className="leading-[120%] hidden md:flex md:px-5 text-[32px] font-medium  md:mt-[92px] font-pt md:max-w-[592px] "
+                      className="leading-[120%] hidden md:flex md:px-5 text-[32px] font-medium  md:mt-[92px] md:max-w-[592px] "
                     >
                       {t("header.rehabilitation_subtitle")}
                     </motion.p>
@@ -443,7 +433,7 @@ const Header: React.FC<HeaderProps> = ({
                       <p className="text-[32px] leading-[100%] tracking-[-3%] text-white font-medium">
                         {t("header.rehabilitation_title")}
                       </p>
-                      <span className="font-pt font-medium leading-[100%]">
+                      <span className="font-medium leading-[100%]">
                         {t("header.rehabilitation_subtitle")}
                       </span>
                     </div>
@@ -485,14 +475,14 @@ const Header: React.FC<HeaderProps> = ({
                                 />
                               </div>
 
-                              <h3 className="text-white text-sm font-medium font-pt">
+                              <h3 className="text-white text-sm font-medium">
                                 {homePageHeaderItems[0].text}
                               </h3>
                             </motion.div>
                           </Link>
 
                           {/* მეორე და მესამე ბარათები */}
-                          <div className="flex flex-row gap-2 mt-2 md:mt-0 w-full font-pt">
+                          <div className="flex flex-row gap-2 mt-2 md:mt-0 w-full">
                             {homePageHeaderItems.slice(1).map((item) => (
                               <Link
                                 key={item.id}
@@ -530,7 +520,7 @@ const Header: React.FC<HeaderProps> = ({
                             <h2 className="text-[20px] md:text-[40px] leading-[120%] tracking-[-3%]">
                               {t("header.rehabilitation")}
                             </h2>
-                            <p className="leading-[120%] font-pt   font-medium md:max-w-[719px] text-[24px] ">
+                            <p className="leading-[120%] font-medium md:max-w-[719px] text-[24px] ">
                               {t("header.rehabilitation_description")}
                             </p>
                           </div>

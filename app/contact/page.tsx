@@ -7,6 +7,7 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { CiMail } from "react-icons/ci";
 import Image from "next/image";
 import { Footer } from "../components/Footer";
+import { useI18n } from "../context/I18nContext";
 
 type Locale = "ka" | "ru" | "en";
 
@@ -39,17 +40,14 @@ const ClockIcon = () => (
 );
 
 const Contact = () => {
-  const [locale, setLocale] = useState<Locale>("ka");
+  const { locale } = useI18n();
   const [text, setText] = useState<ContactText | null>(null);
 
   useEffect(() => {
-    // გამოიღეთ locale localStorage-დან თუ არსებობს
-    const savedLocale = (localStorage.getItem("locale") as Locale) || "ka";
-    setLocale(savedLocale);
 
     const fetchText = async () => {
       try {
-        const res = await fetch(`/locales/${savedLocale}/contact.json`);
+        const res = await fetch(`/locales/${locale}/contact.json`);
         const data: ContactText = await res.json();
         setText(data);
       } catch (err) {
@@ -58,7 +56,7 @@ const Contact = () => {
     };
 
     fetchText();
-  }, []);
+  }, [locale]);
 
   if (!text) {
     return <div>Loading...</div>;

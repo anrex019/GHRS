@@ -143,5 +143,14 @@
     "access_granted": "✓ თქვენ გაქვთ წვდომა",
     "purchase_course": "კურსის შეძენა",
     "login_to_purchase": "შესვლა შეძენისთვის"
+  },
+  "sort": {
+    "popularity": "პოპულარობით",
+    "newest": "სიახლით",
+    "priceAsc": "ფასით (ზრდადობით)",
+    "priceDesc": "ფასით (კლებადობით)"
+  },
+  "reviews": {
+    "title": "მიმოხილვები GRS-ის შესახებ"
   }
 }

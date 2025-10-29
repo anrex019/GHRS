@@ -118,7 +118,7 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
                   </span>
                 </div>
                 <h3
-                  className="font-pt text-[#3D334A] font-[1000] text-[18px] leading-[120%] mx-4 line-clamp-2 overflow-hidden"
+                  className="text-[#3D334A] font-[1000] text-[18px] leading-[120%] mx-4 line-clamp-2 overflow-hidden"
                   style={{
                     display: "-webkit-box",
                     WebkitBoxOrient: "vertical",
@@ -128,7 +128,7 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
                   {work.title}
                 </h3>
                 <p
-                  className="line-clamp-3 font-pt text-[#846FA0] leading-[120%] text-sm mx-4 overflow-hidden"
+                  className="line-clamp-3 text-[#846FA0] leading-[120%] text-sm mx-4 overflow-hidden"
                   style={{
                     display: "-webkit-box",
                     WebkitBoxOrient: "vertical",

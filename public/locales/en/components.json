@@ -66,7 +66,13 @@
     "recent_articles": "Recent Articles",
     "all_articles": "All Articles",
     "view_all": "View All",
-    "category": "Category"
+    "category": "Category",
+    "banner": {
+      "title": "Courses and masterclasses for experienced therapists. Workshop on treating orthopedic problems",
+      "mobile_title": "BACK AND NECK PAIN: HOW TO IMPROVE POSTURE NATURALLY.",
+      "description": "With safety tips to follow before and after a fracture by Kristen Gasnik",
+      "category": "Orthopedics"
+    }
   },
   "download": {
     "title": "Interaction <br /> possibility on <br /> different platforms"

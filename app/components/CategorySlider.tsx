@@ -9,6 +9,7 @@ import React, {
 } from "react";
 import { useCategories } from "../hooks/useCategories";
 import SubcategoryDropdown from "./SubcategoryDropdown";
+import { useI18n } from "../context/I18nContext";
 
 const backgrounds = [
   "/assets/images/categorySliderBgs/bg1.jpg",
@@ -62,16 +63,8 @@ const CategorySlider = forwardRef<HTMLDivElement, CategorySliderProps>(
     const { categories, loading, error } = useCategories();
     const [clickedCategory, setClickedCategory] = useState<string | null>(null);
 
-    // Get current locale
-    const [locale, setLocale] = useState("ru");
-    useEffect(() => {
-      if (typeof window !== "undefined") {
-        const storedLocale = localStorage.getItem("locale");
-        if (storedLocale && ["ka", "ru", "en"].includes(storedLocale)) {
-          setLocale(storedLocale);
-        }
-      }
-    }, []);
+    // Get current locale from i18n context
+    const { locale } = useI18n();
 
 
 
