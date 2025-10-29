@@ -41,7 +41,7 @@ export function useCategoryComplete(categoryId: string): UseCategoryCompleteRetu
 
       console.log("🔗 Fetching complete category data for ID:", categoryId);
       
-      const endpoint = `/categories/${categoryId}/complete`;
+      const endpoint = `/api/categories/${categoryId}/complete`;
       console.log("🔗 API endpoint:", endpoint);
 
       const response = await apiRequest<CategoryCompleteData>(endpoint);

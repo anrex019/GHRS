@@ -74,7 +74,7 @@ const AllComplex = () => {
     const fetchSubcategories = async () => {
       try {
         const response = await fetch(
-          `${API_CONFIG.BASE_URL}/categories/subcategories/all`
+          `${API_CONFIG.BASE_URL}/api/categories/subcategories/all`
         );
         const data = await response.json();
         setSubcategories(data);

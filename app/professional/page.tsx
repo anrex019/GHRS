@@ -114,7 +114,7 @@ const Professional = () => {
   const fetchCourses = async () => {
     try {
       setLoading(true);
-      const url = `${API_CONFIG.BASE_URL}/courses?isPublished=true&limit=10`;
+      const url = `${API_CONFIG.BASE_URL}/api/courses?isPublished=true&limit=10`;
       const response = await fetch(url);
 
       if (!response.ok) {
@@ -134,7 +134,7 @@ const Professional = () => {
   const fetchInstructors = async () => {
     try {
       setInstructorsLoading(true);
-      const url = `${API_CONFIG.BASE_URL}/instructors`;
+      const url = `${API_CONFIG.BASE_URL}/api/instructors`;
       const response = await fetch(url);
 
       if (!response.ok) {

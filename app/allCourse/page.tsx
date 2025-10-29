@@ -52,7 +52,7 @@ const AllCourse = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `${API_CONFIG.BASE_URL}/courses?limit=1000&isPublished=true`
+        `${API_CONFIG.BASE_URL}/api/courses?limit=1000&isPublished=true`
       );
 
       if (!response.ok) {

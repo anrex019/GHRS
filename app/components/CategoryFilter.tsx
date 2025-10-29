@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { API_CONFIG } from "../config/api";
 
 interface Category {
   _id: string;
@@ -45,7 +46,7 @@ export default function CategoryFilter({ onCategoryChange, onSubcategoryChange, 
     const fetchCategories = async () => {
       try {
         setLoading(true);
-        const response = await fetch('http://localhost:4000/categories');
+        const response = await fetch(`${API_CONFIG.BASE_URL}/api/categories`);
         
         if (!response.ok) {
           throw new Error('Failed to fetch categories');

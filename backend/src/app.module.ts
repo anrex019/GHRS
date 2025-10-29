@@ -26,7 +26,7 @@ import { EmailModule } from './email/email.module'; // ← დამატებ
       isGlobal: true,
     }),
     MongooseModule.forRoot(
-      'mongodb+srv://beruashvilig60:Berobero1234!@cluster0.dtwfws3.mongodb.net/grs-db',
+      process.env.MONGODB_URI || 'mongodb+srv://beruashvilig60:Berobero1234!@cluster0.dtwfws3.mongodb.net/grs-db',
     ),
     EmailModule, // ← დამატებული
     AuthModule,

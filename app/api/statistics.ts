@@ -7,7 +7,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const response = await fetch(`${API_CONFIG.BASE_URL}/statistics/global`);
+    const response = await fetch(`${API_CONFIG.BASE_URL}/api/statistics/global`);
     
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

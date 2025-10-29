@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Set, LocalizedString } from "../types/category";
+import { API_CONFIG } from "../config/api";
 
 interface BackendSet {
   _id: string;
@@ -83,14 +84,18 @@ export function useAllSets(): UseSetsReturn {
   const [error, setError] = useState<string | null>(null);
 
   const fetchSets = async () => {
+    const isDev = process.env.NODE_ENV === 'development';
+    
     try {
       setLoading(true);
       setError(null);
       
-      console.log('🔵 Fetching sets from: http://localhost:4000/api/sets');
+      if (isDev) {
+        console.log('🔵 Fetching sets from:', `${API_CONFIG.BASE_URL}/api/sets`);
+      }
       
       // ✅ პირდაპირ fetch - bypass apiRequest cache
-      const response = await fetch('http://localhost:4000/api/sets', {
+      const response = await fetch(`${API_CONFIG.BASE_URL}/api/sets`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -98,14 +103,19 @@ export function useAllSets(): UseSetsReturn {
         cache: 'no-store', // არ გამოიყენოს cache
       });
       
-      console.log('📡 Response status:', response.status);
+      if (isDev) {
+        console.log('📡 Response status:', response.status);
+      }
       
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
       
       const backendSets = await response.json();
-      console.log('✅ Sets fetched:', backendSets.length);
+      
+      if (isDev) {
+        console.log('✅ Sets fetched:', backendSets.length);
+      }
       
       if (!Array.isArray(backendSets)) {
         throw new Error("API response is not an array");

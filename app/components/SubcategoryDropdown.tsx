@@ -37,7 +37,7 @@ const SubcategoryDropdown = ({
   useEffect(() => {
     const fetchSubcategories = async () => {
       try {
-        const response = await fetch(`${API_CONFIG.BASE_URL}/categories/${categoryId}/subcategories`);
+        const response = await fetch(`${API_CONFIG.BASE_URL}/api/categories/${categoryId}/subcategories`);
         const data = await response.json();
         setSubcategories(data);
       } catch (error) {

@@ -166,7 +166,24 @@ export async function apiRequest<T>(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<T> {
-  const url = `${API_CONFIG.BASE_URL}${endpoint}`;
+  // TEMPORARY FIX: Remove /api prefix for production Render backend until it's redeployed
+  // TODO: Remove this after backend is redeployed with global /api prefix
+  const isProduction = typeof window !== 'undefined' && 
+    window.location.hostname !== 'localhost' &&
+    API_CONFIG.BASE_URL.includes('render.com');
+  
+  let finalEndpoint = endpoint;
+  if (isProduction && endpoint.startsWith('/api/')) {
+    finalEndpoint = endpoint.replace('/api/', '/');
+    console.warn('⚠️ TEMP FIX: Removed /api prefix for Render backend compatibility');
+  }
+  
+  // Validate endpoint starts with /api (skip for temp production fix)
+  if (!isProduction && !endpoint.startsWith('/api/')) {
+    console.warn(`⚠️ Warning: Endpoint missing /api prefix: ${endpoint}`);
+  }
+  
+  const url = `${API_CONFIG.BASE_URL}${finalEndpoint}`;
 
   // ვიწყებთ base headers-ით
   const headers: Record<string, string> = {
@@ -174,37 +191,36 @@ export async function apiRequest<T>(
   };
 
   // Add JWT token only for protected endpoints
+  const isDev = process.env.NODE_ENV === 'development';
+  
   if (typeof window !== "undefined" && requiresAuth(endpoint)) {
     const token = localStorage.getItem("token");
-    console.log('🔐 localStorage token check:', {
-      endpoint,
-      requiresAuth: true,
-      windowUndefined: typeof window === "undefined",
-      tokenExists: !!token,
-      tokenLength: token?.length,
-      tokenStart: token?.substring(0, 50)
-    });
+    
+    if (isDev) {
+      console.log('🔐 localStorage token check:', {
+        endpoint,
+        requiresAuth: true,
+        tokenExists: !!token,
+        tokenLength: token?.length
+      });
+    }
     
     if (token) {
       headers.Authorization = `Bearer ${token}`;
-      console.log('🔐 Authorization header set:', headers.Authorization.substring(0, 50) + '...');
-    } else {
+      if (isDev) console.log('🔐 Authorization header set');
+    } else if (isDev) {
       console.log('🔐 No token found in localStorage');
     }
-  } else if (typeof window !== "undefined") {
-    console.log('🔐 Public endpoint - no auth required:', endpoint);
-  } else {
-    console.log('🔐 Window is undefined - SSR mode');
   }
 
-  // Debug logs
-  console.log('🌐 API Request:', {
-    url,
-    method: options.method || 'GET',
-    hasToken: !!headers.Authorization,
-    tokenPreview: headers.Authorization ? headers.Authorization.substring(0, 30) + '...' : 'No token',
-    headers
-  });
+  // Debug logs (only in development)
+  if (isDev) {
+    console.log('🌐 API Request:', {
+      url,
+      method: options.method || 'GET',
+      hasToken: !!headers.Authorization
+    });
+  }
 
   const config: RequestInit = {
     ...options,
@@ -225,12 +241,13 @@ export async function apiRequest<T>(
 
     clearTimeout(timeoutId);
 
-    console.log('📡 API Response:', {
-      url,
-      status: response.status,
-      statusText: response.statusText,
-      ok: response.ok
-    });
+    if (isDev) {
+      console.log('📡 API Response:', {
+        url,
+        status: response.status,
+        ok: response.ok
+      });
+    }
 
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -299,13 +316,8 @@ export async function resendVerificationCode(email: string) {
 }
 
 // ✅ გამოსწორებული axios instance
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 
-  (typeof window !== 'undefined' && window.location.hostname === 'localhost'
-    ? 'http://localhost:4000'
-    : 'https://ghrs-backend.onrender.com');
-
 export const api = axios.create({
-  baseURL: API_URL,
+  baseURL: API_CONFIG.BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -334,7 +346,7 @@ export const fetchCourses = async (params?: {
 // Single Course
 export const fetchCourse = async (id: string) => {
   try {
-    console.log('Fetching course from API:', `${API_URL}/api/courses/${id}`);
+    console.log('Fetching course from API:', `${API_CONFIG.BASE_URL}/api/courses/${id}`);
     const response = await api.get(`/api/courses/${id}`);
     return response.data;
   } catch (error) {

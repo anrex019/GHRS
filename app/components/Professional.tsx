@@ -60,7 +60,7 @@ const Professional = ({
       try {
         setLoading(true);
         const response = await fetch(
-          `${API_CONFIG.BASE_URL}/courses?isPublished=true`
+          `${API_CONFIG.BASE_URL}/api/courses?isPublished=true`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch courses");
