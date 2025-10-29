@@ -7,15 +7,26 @@ Your **production backend on Render** is returning 404 errors because it doesn't
 **Errors seen:**
 - `ghrs-backend.onrender.com/api/articles` → 404
 - `ghrs-backend.onrender.com/api/categories` → 404
+- `ghrs-backend.onrender.com/api/sets` → 404 (causing sets not to display)
 
 ## ✅ Temporary Fix Applied
 
 I've added a **temporary compatibility layer** in the frontend that:
 - Removes `/api` prefix when calling Render backend
 - Keeps `/api` prefix for localhost development
+- Applied to ALL direct fetch calls (sets, categories, statistics, etc.)
 - Will be automatically removed once backend is redeployed
 
 **This allows your production site to work RIGHT NOW** while you redeploy the backend.
+
+### Files with Temporary Fixes:
+- ✅ `app/config/api.ts` - Main apiRequest function
+- ✅ `app/hooks/useSets.ts` - Sets fetching
+- ✅ `app/hooks/useStatistics.ts` - Statistics
+- ✅ `app/components/CategoryFilter.tsx` - Categories
+- ✅ `app/components/SubcategoryDropdown.tsx` - Subcategories
+- ✅ `app/allComplex/page.tsx` - Subcategories list
+- ✅ `app/api/statistics.ts` - Statistics API
 
 ---
 

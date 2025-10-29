@@ -37,7 +37,16 @@ const SubcategoryDropdown = ({
   useEffect(() => {
     const fetchSubcategories = async () => {
       try {
-        const response = await fetch(`${API_CONFIG.BASE_URL}/api/categories/${categoryId}/subcategories`);
+        // TEMPORARY FIX: Remove /api prefix for production Render backend
+        const isProduction = typeof window !== 'undefined' && 
+          window.location.hostname !== 'localhost' &&
+          API_CONFIG.BASE_URL.includes('render.com');
+        
+        const endpoint = isProduction 
+          ? `/categories/${categoryId}/subcategories`
+          : `/api/categories/${categoryId}/subcategories`;
+        
+        const response = await fetch(`${API_CONFIG.BASE_URL}${endpoint}`);
         const data = await response.json();
         setSubcategories(data);
       } catch (error) {

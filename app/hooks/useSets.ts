@@ -90,12 +90,20 @@ export function useAllSets(): UseSetsReturn {
       setLoading(true);
       setError(null);
       
+      // TEMPORARY FIX: Remove /api prefix for production Render backend
+      const isProduction = typeof window !== 'undefined' && 
+        window.location.hostname !== 'localhost' &&
+        API_CONFIG.BASE_URL.includes('render.com');
+      
+      const endpoint = isProduction ? '/sets' : '/api/sets';
+      const url = `${API_CONFIG.BASE_URL}${endpoint}`;
+      
       if (isDev) {
-        console.log('🔵 Fetching sets from:', `${API_CONFIG.BASE_URL}/api/sets`);
+        console.log('🔵 Fetching sets from:', url);
       }
       
       // ✅ პირდაპირ fetch - bypass apiRequest cache
-      const response = await fetch(`${API_CONFIG.BASE_URL}/api/sets`, {
+      const response = await fetch(url, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

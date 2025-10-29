@@ -7,7 +7,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const response = await fetch(`${API_CONFIG.BASE_URL}/api/statistics/global`);
+    // TEMPORARY FIX: Remove /api prefix for production Render backend
+    const isProduction = typeof window !== 'undefined' && 
+      window.location.hostname !== 'localhost' &&
+      API_CONFIG.BASE_URL.includes('render.com');
+    
+    const endpoint = isProduction ? '/statistics/global' : '/api/statistics/global';
+    const response = await fetch(`${API_CONFIG.BASE_URL}${endpoint}`);
     
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
