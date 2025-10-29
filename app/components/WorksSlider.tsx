@@ -22,27 +22,28 @@ interface WorkItem {
 interface WorksSliderProps {
   title?: string;
   works: WorkItem[];
-  linkType?: "sets" | "complex" | "section"; // დინამიური ლინკის ტიპი
+  linkType?: "sets" | "complex" | "section";
   categoryData?: any;
   fromMain: boolean;
   seeAll: boolean;
   scrollable: boolean;
-  sliderId?: string; // Unique ID for the slider
+  sliderId?: string;
+  seeAllHref?: string; // ✅ ახალი prop
 }
 
 const WorksSlider: React.FC<WorksSliderProps> = ({
   title,
   works,
-  linkType = "sets", // default არის sets
+  linkType = "sets",
   fromMain,
   seeAll = true,
   scrollable = true,
   sliderId,
+  seeAllHref = "/allComplex", // ✅ default value
 }) => {
   const { t } = useI18n();
   const { language } = useLanguage();
 
-  // Generate unique slider ID if not provided
   const uniqueSliderId = sliderId || `works-slider-${Math.random().toString(36).substr(2, 9)}`;
 
   const scroll = (direction: "left" | "right") => {
@@ -66,9 +67,12 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
             {title}
           </h2>
           {seeAll && (
-            <span className="text-[#D4BAFC] text-[24px] md:mb-10 leading-[90%] uppercase cursor-pointer hover:text-[#B69EE8] transition-colors">
+            <Link
+              href={seeAllHref}
+              className="text-[#D4BAFC] text-[24px] md:mb-10 leading-[90%] uppercase cursor-pointer hover:text-[#B69EE8] transition-colors"
+            >
               {t("common.see_all")} →
-            </span>
+            </Link>
           )}
         </div>
         {scrollable && (
@@ -136,7 +140,7 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
               </div>
               <div className="flex items-center justify-end absolute -bottom-2 right-0">
                 <span className="px-5 py-3 bg-[#D4BAFC] rounded-lg text-white text-[18px] leading-[100%] font-bold mb-8 mr-8 mt-6">
-                  {work.monthlyPrice}$
+                  {work.monthlyPrice}
                   {language === "ka" ? "₾" : language === "ru" ? "₽" : "$"}/
                   {t("common.month")}
                 </span>
