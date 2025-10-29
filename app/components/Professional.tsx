@@ -59,8 +59,18 @@ const Professional = ({
     const fetchCourses = async (): Promise<void> => {
       try {
         setLoading(true);
+        
+        // TEMPORARY FIX: Remove /api prefix for production Render backend
+        const isProduction = typeof window !== 'undefined' && 
+          window.location.hostname !== 'localhost' &&
+          API_CONFIG.BASE_URL.includes('render.com');
+        
+        const endpoint = isProduction 
+          ? '/courses?isPublished=true'
+          : '/api/courses?isPublished=true';
+        
         const response = await fetch(
-          `${API_CONFIG.BASE_URL}/api/courses?isPublished=true`
+          `${API_CONFIG.BASE_URL}${endpoint}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch courses");

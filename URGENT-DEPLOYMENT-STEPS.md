@@ -27,6 +27,9 @@ I've added a **temporary compatibility layer** in the frontend that:
 - ✅ `app/components/SubcategoryDropdown.tsx` - Subcategories
 - ✅ `app/allComplex/page.tsx` - Subcategories list
 - ✅ `app/api/statistics.ts` - Statistics API
+- ✅ `app/components/Professional.tsx` - Courses (homepage)
+- ✅ `app/allCourse/page.tsx` - All courses page
+- ✅ `app/professional/page.tsx` - Professional page courses
 
 ---
 
