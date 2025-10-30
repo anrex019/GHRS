@@ -919,6 +919,18 @@ const Header: React.FC<HeaderProps> = ({
                           <div className={`cutout-container `}>
                             {/* <div className="purp1">purpple1</div> */}
                             <div className={`white-cutout `}>
+                              {variant === "professional" && (
+                                <Link href={"/professional"}>
+                                  <div
+                                    className={`bg-[#3D334A] p-5 -mt-8 hover:scale-105 duration-700`}
+                                  >
+                                    <h3 className="text-[24px] ">
+                                      {t("header.learn_more")}
+                                    </h3>
+                                  </div>
+                                </Link>
+                              )}
+
                               {variant !== "complex" &&
                                 variant !== "professional" && (
                                   <Link href={"/rehabilitation"}>

@@ -20,10 +20,11 @@ export function useUserAccess(setId?: string, courseId?: string): UseUserAccessR
 
   const checkAccess = async (targetSetId: string) => {
     if (!isAuthenticated || !user) {
+      console.log('👤 User not authenticated, skipping access check');
       setHasAccess(false);
+      setLoading(false);
       return;
     }
-
 
     try {
       setLoading(true);
@@ -34,9 +35,13 @@ export function useUserAccess(setId?: string, courseId?: string): UseUserAccessR
       );
       
       setHasAccess(response);
+      console.log('✅ Access check result:', response);
     } catch (err) {
-      console.error('Error checking user access:', err);
-      setError('შეცდომა access-ის შემოწმებისას');
+      // Only log error if user is authenticated (unexpected error)
+      if (isAuthenticated) {
+        console.error('❌ Error checking user access:', err);
+        setError('შეცდომა access-ის შემოწმებისას');
+      }
       setHasAccess(false);
     } finally {
       setLoading(false);
@@ -45,7 +50,9 @@ export function useUserAccess(setId?: string, courseId?: string): UseUserAccessR
 
   const checkCourseAccess = async (targetCourseId: string) => {
     if (!isAuthenticated || !user) {
+      console.log('👤 User not authenticated, skipping course access check');
       setHasAccess(false);
+      setLoading(false);
       return;
     }
 
@@ -58,9 +65,13 @@ export function useUserAccess(setId?: string, courseId?: string): UseUserAccessR
       );
       
       setHasAccess(response);
+      console.log('✅ Course access check result:', response);
     } catch (err) {
-      console.error('Error checking course access:', err);
-      setError('შეცდომა course access-ის შემოწმებისას');
+      // Only log error if user is authenticated (unexpected error)
+      if (isAuthenticated) {
+        console.error('❌ Error checking course access:', err);
+        setError('შეცდომა course access-ის შემოწმებისას');
+      }
       setHasAccess(false);
     } finally {
       setLoading(false);

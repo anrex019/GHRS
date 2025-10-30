@@ -250,7 +250,23 @@ export async function apiRequest<T>(
     }
 
     if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      // Try to get error details from response body
+      let errorDetails = '';
+      try {
+        const errorBody = await response.json();
+        errorDetails = errorBody.message || errorBody.error || JSON.stringify(errorBody);
+        console.error('❌ API Error Response Body:', errorBody);
+      } catch (e) {
+        // Response body is not JSON
+        try {
+          errorDetails = await response.text();
+          console.error('❌ API Error Response Text:', errorDetails);
+        } catch (textError) {
+          errorDetails = response.statusText;
+        }
+      }
+      
+      throw new Error(`HTTP ${response.status}: ${errorDetails || response.statusText}`);
     }
 
     return await response.json();

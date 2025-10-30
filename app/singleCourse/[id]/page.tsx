@@ -135,10 +135,13 @@ export default function SingleCourse() {
 
   // კურსის ყიდვის ფუნქცია
   const handlePurchaseCourse = () => {
-    if (!course) return;
+    if (!course) {
+      console.error("❌ No course data available");
+      return;
+    }
 
-    // Check if user already has access
-    if (hasAccess) {
+    // Check if user already has access (only if authenticated)
+    if (isAuthenticated && hasAccess) {
       showError(
         t("course.already_purchased") ||
           "You already have access to this course!",
@@ -147,58 +150,67 @@ export default function SingleCourse() {
       return;
     }
 
-    // Check if user is authenticated
-    if (!isAuthenticated) {
-      router.push("/auth/login");
-      return;
-    }
+    console.log("🛒 Adding course to cart", { courseId, course, isAuthenticated });
 
-    // კურსის მონაცემები shopping cart-ისთვის
-    const courseItem = {
-      id: course._id,
-      title: course.title.ru || course.title.en, // ✅ title ველი
-      desc:
-        course.shortDescription?.ru ||
-        course.description?.ru ||
-        "No description", // ✅ desc ველი
-      img: course.thumbnail, // ✅ img ველი
-      price: course.price,
-      subscription: 1, // ✅ default subscription
-      totalExercises: course.syllabus?.length || 0,
-      totalDuration: course.duration ? `${course.duration} წუთი` : "0:00",
-      itemType: "course", // ✅ itemType ველი
-      type: "course", // ✅ backward compatibility
-    };
+    try {
+      // კურსის მონაცემები shopping cart-ისთვის
+      const courseItem = {
+        id: course._id,
+        title: course.title.ru || course.title.en, // ✅ title ველი
+        desc:
+          course.shortDescription?.ru ||
+          course.description?.ru ||
+          "No description", // ✅ desc ველი
+        img: course.thumbnail, // ✅ img ველი
+        price: course.price,
+        subscription: 1, // ✅ default subscription
+        totalExercises: course.syllabus?.length || 0,
+        totalDuration: course.duration ? `${course.duration} წუთი` : "0:00",
+        itemType: "course", // ✅ itemType ველი
+        type: "course", // ✅ backward compatibility
+      };
 
-    // არსებული cart-ის მოძებნა ან ცარიელი array-ის შექმნა
-    const existingCart = localStorage.getItem("cart");
-    const cart = existingCart ? JSON.parse(existingCart) : [];
+      console.log("📦 Course item created:", courseItem);
 
-    // Check if item already exists in cart
-    const existingItemIndex = cart.findIndex(
-      (item: any) => item.id === courseId
-    );
-    if (existingItemIndex !== -1) {
-      // Update existing item with new data
-      cart[existingItemIndex] = courseItem;
-      showSuccess(
-        t("course.updated_in_cart") || "Course updated in cart!",
-        t("course.success_title") || "Success"
+      // არსებული cart-ის მოძებნა ან ცარიელი array-ის შექმნა
+      const existingCart = localStorage.getItem("cart");
+      const cart = existingCart ? JSON.parse(existingCart) : [];
+
+      console.log("🛍️ Existing cart:", cart);
+
+      // Check if item already exists in cart
+      const existingItemIndex = cart.findIndex(
+        (item: any) => item.id === courseId
       );
-    } else {
-      // Add new item
-      cart.push(courseItem);
-      showSuccess(
-        t("course.added_to_cart") || "Course added to cart!",
-        t("course.success_title") || "Success"
-      );
+      if (existingItemIndex !== -1) {
+        // Update existing item with new data
+        cart[existingItemIndex] = courseItem;
+        console.log("✏️ Updated existing course in cart");
+        showSuccess(
+          t("course.updated_in_cart") || "Course updated in cart!",
+          t("course.success_title") || "Success"
+        );
+      } else {
+        // Add new item
+        cart.push(courseItem);
+        console.log("➕ Added new course to cart");
+        showSuccess(
+          t("course.added_to_cart") || "Course added to cart!",
+          t("course.success_title") || "Success"
+        );
+      }
+
+      // localStorage-ში შენახვა
+      localStorage.setItem("cart", JSON.stringify(cart));
+      console.log("💾 Cart saved to localStorage:", cart);
+
+      // shopping cart გვერდზე გადასვლა
+      console.log("🔄 Redirecting to shopping cart...");
+      router.push("/shoppingcard");
+    } catch (error) {
+      console.error("❌ Error adding course to cart:", error);
+      alert("Failed to add course to cart. Please try again.");
     }
-
-    // localStorage-ში შენახვა
-    localStorage.setItem("cart", JSON.stringify(cart));
-
-    // shopping cart გვერდზე გადასვლა
-    router.push("/shoppingcard");
   };
 
   useEffect(() => {

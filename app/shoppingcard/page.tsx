@@ -11,6 +11,7 @@ import { Footer } from "../components/Footer";
 import { useAllSets } from "../hooks/useSets";
 import { useModal } from "../context/ModalContext";
 import { useI18n } from "../context/I18nContext";
+import { convertRUBtoUSD, formatPriceWithConversion } from "../utils/currency";
 
 const subscriptionOptions = [
   { label: "1 МЕСЯЦ", value: 1 },
@@ -127,8 +128,11 @@ const ShoppingCard = () => {
     localStorage.removeItem("cart");
   };
 
-  // ✅ Calculate total amount
-  const totalAmount = cart.reduce((sum, i) => sum + i.price, 0);
+  // ✅ Calculate total amount in RUB
+  const totalAmountRUB = cart.reduce((sum, i) => sum + i.price, 0);
+  
+  // ✅ Convert to USD for PayPal
+  const totalAmountUSD = convertRUBtoUSD(totalAmountRUB);
 
   return (
     <>
@@ -267,7 +271,7 @@ const ShoppingCard = () => {
             <div className="flex items-center justify-between">
               <h5 className="text-[#846FA0] font-pt">Всего на сумму</h5>
               <span className="text-[#3D334A] text-[18px] font-bold font-pt">
-                {totalAmount} ₽
+                {formatPriceWithConversion(totalAmountRUB, 'USD')}
               </span>
             </div>
             <div className="flex items-center justify-between">
@@ -279,7 +283,7 @@ const ShoppingCard = () => {
 
             <button
               onClick={() => setShowPayPal(true)}
-              disabled={cart.length === 0 || totalAmount === 0}
+              disabled={cart.length === 0 || totalAmountRUB === 0}
               className="group bg-[url('/assets/images/bluebg.jpg')] rounded-[10px] bg-cover bg-center py-[13px] w-full mt-4 cursor-pointer text-white text-[18px] font-semibold shadow-md hover:opacity-90 transition flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <span className="">Оплатить</span>
@@ -298,7 +302,7 @@ const ShoppingCard = () => {
               </svg>
             </button>
 
-            {showPayPal && totalAmount > 0 && (
+            {showPayPal && totalAmountUSD > 0 && (
               <div className="mt-8">
                 {paymentError && (
                   <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
@@ -307,7 +311,7 @@ const ShoppingCard = () => {
                 )}
 
                 <PayPalButton
-                  amount={totalAmount}
+                  amount={totalAmountUSD}
                   currency="USD"
                   itemId={cart.map((item) => item.id).join(",")}
                   itemType={

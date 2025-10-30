@@ -9,7 +9,7 @@ import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 const paypalOptions = {
   clientId: "AQtqwl189MSBEbnUWNGIfPsAl3ynUUUKr506gJa5SDXhnXzje33FVtEJaTjcqRXE9FCnUPWu3kaVlfEO",
-  currency: "RUB",
+  currency: "USD",
   intent: "capture",
   components: "buttons"
 };

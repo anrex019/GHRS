@@ -233,43 +233,66 @@ const Complex = ({ params }: ComplexPageProps) => {
   }
 
   const handleSubscriptionSelect = (period: string, price: number) => {
-    if (!setData) return;
-
-    const cartItem = {
-      id: setId,
-      type: "set",
-      itemType: "set",
-      name: setData.name, // multilingual object {ru, en, ka}
-      title: setData.name?.ru || setData.name?.en || "", // fallback title
-      price: price,
-      period: period,
-      image: setData.thumbnailImage || "/assets/images/course.png",
-      img: setData.thumbnailImage || "/assets/images/course.png",
-      description: setData.description, // multilingual object
-      desc: setData.description?.ru || setData.description?.en || "",
-      totalExercises: setData.totalExercises || 0,
-      totalDuration: setData.totalDuration || "0:00",
-    };
-
-    // Get existing cart or initialize empty array
-    const existingCart = localStorage.getItem("cart");
-    const cart = existingCart ? JSON.parse(existingCart) : [];
-
-    // Check if item already exists in cart
-    const existingItemIndex = cart.findIndex((item: any) => item.id === setId);
-    if (existingItemIndex !== -1) {
-      // Update existing item
-      cart[existingItemIndex] = cartItem;
-    } else {
-      // Add new item
-      cart.push(cartItem);
+    console.log("🛒 handleSubscriptionSelect called", { period, price, setId, setData });
+    
+    if (!setData) {
+      console.error("❌ No setData available");
+      return;
     }
 
-    // Save back to localStorage
-    localStorage.setItem("cart", JSON.stringify(cart));
+    if (!setId) {
+      console.error("❌ No setId available");
+      return;
+    }
 
-    // Redirect to shopping cart
-    window.location.href = "/shoppingcard";
+    try {
+      const cartItem = {
+        id: setId,
+        type: "set",
+        itemType: "set",
+        name: setData.name, // multilingual object {ru, en, ka}
+        title: setData.name?.ru || setData.name?.en || "", // fallback title
+        price: price,
+        period: period,
+        image: setData.thumbnailImage || "/assets/images/course.png",
+        img: setData.thumbnailImage || "/assets/images/course.png",
+        description: setData.description, // multilingual object
+        desc: setData.description?.ru || setData.description?.en || "",
+        totalExercises: setData.totalExercises || 0,
+        totalDuration: setData.totalDuration || "0:00",
+      };
+
+      console.log("📦 Cart item created:", cartItem);
+
+      // Get existing cart or initialize empty array
+      const existingCart = localStorage.getItem("cart");
+      const cart = existingCart ? JSON.parse(existingCart) : [];
+
+      console.log("🛍️ Existing cart:", cart);
+
+      // Check if item already exists in cart
+      const existingItemIndex = cart.findIndex((item: any) => item.id === setId);
+      if (existingItemIndex !== -1) {
+        // Update existing item
+        cart[existingItemIndex] = cartItem;
+        console.log("✏️ Updated existing item in cart");
+      } else {
+        // Add new item
+        cart.push(cartItem);
+        console.log("➕ Added new item to cart");
+      }
+
+      // Save back to localStorage
+      localStorage.setItem("cart", JSON.stringify(cart));
+      console.log("💾 Cart saved to localStorage:", cart);
+
+      // Redirect to shopping cart
+      console.log("🔄 Redirecting to shopping cart...");
+      window.location.href = "/shoppingcard";
+    } catch (error) {
+      console.error("❌ Error adding to cart:", error);
+      alert("Failed to add item to cart. Please try again.");
+    }
   };
 
   const statsData = [

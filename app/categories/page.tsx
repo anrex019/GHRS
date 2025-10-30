@@ -1,5 +1,6 @@
 "use client";
 import { useCategories } from "../hooks/useCategories";
+import { useAllSets } from "../hooks/useSets";
 import Header from "../components/Header/Header";
 import WorksSlider from "../components/WorksSlider";
 import Subscribe from "../components/Subscribe";
@@ -12,10 +13,15 @@ import MainHeader from "../components/Header/MainHeader";
 import { useI18n } from "../context/I18nContext";
 
 export default function CategoriesPage() {
-  const { categories, loading, error } = useCategories();
+  const { categories, loading: categoriesLoading, error: categoriesError } = useCategories();
+  const { sets, loading: setsLoading, error: setsError } = useAllSets();
   const { t, locale } = useI18n();
 
-  console.log(categories, "123");
+  console.log("📊 Categories Page Data:");
+  console.log("  Total categories:", categories.length);
+  console.log("  Categories:", categories);
+  console.log("  Total sets:", sets.length);
+  console.log("  Sets:", sets);
 
   // Helper to get localized string
   const getLocalized = (value: any): string => {
@@ -25,54 +31,40 @@ export default function CategoriesPage() {
     }
     return "";
   };
-  const homePageWorks = [
-    {
-      id: "1",
-      title: "Ортопедия",
-      description: "Улучшение динамики и подвижности грудного отдела",
-      price: "920 ₽/мес",
-      image: "/assets/images/workMan.png",
-      exerciseCount: 10,
-      categoryName: "Ортопедия",
-      monthlyPrice: 920,
-      categoryId: "1",
-    },
-    {
-      id: "2",
-      title: "Ортопедия",
-      description: "Улучшение динамики и подвижности грудного отдела",
-      price: "920 ₽/мес",
-      image: "/assets/images/workMan.png",
-      exerciseCount: 10,
-      categoryName: "Ортопедия",
-      monthlyPrice: 920,
-      categoryId: "1",
-    },
-    {
-      id: "3",
-      title: "Ортопедия",
-      description: "Улучшение динамики и подвижности грудного отдела",
-      price: "920 ₽/мес",
-      image: "/assets/images/workMan.png",
-      exerciseCount: 10,
-      categoryName: "Ортопедия",
-      monthlyPrice: 920,
-      categoryId: "1",
-    },
-    {
-      id: "4",
-      title: "Ортопедия",
-      description: "Улучшение динамики и подвижности грудного отдела",
-      price: "920 ₽/мес",
-      image: "/assets/images/workMan.png",
-      exerciseCount: 10,
-      categoryName: "Ортопедия",
-      monthlyPrice: 920,
-      categoryId: "1",
-    },
-  ];
+
+  // Get all subcategories (categories with parentId) and transform them
+  const allSubcategories = categories
+    .filter((cat: any) => cat.parentId)
+    .map((cat: any) => ({
+      _id: cat._id,
+      name: cat.name,
+      description: cat.description,
+      image: cat.image || undefined, // Convert null to undefined
+      sets: cat.sets || [],
+    }));
+
+  console.log("🔍 Subcategories Analysis:");
+  console.log("  Categories with parentId:", categories.filter((cat: any) => cat.parentId).length);
+  console.log("  Transformed subcategories:", allSubcategories.length);
+  console.log("  Subcategories data:", allSubcategories);
+
+  // Transform sets data for WorksSlider
+  const transformedSets = sets.map((set: any) => ({
+    id: set._id,
+    title: getLocalized(set.name),
+    description: getLocalized(set.description),
+    price: `${set.price?.monthly || 0} ₽/мес`,
+    image: set.thumbnailImage || "/assets/images/workMan.png",
+    exerciseCount: set.totalExercises || 0,
+    categoryName: getLocalized(set.category?.name),
+    monthlyPrice: set.price?.monthly || 0,
+    categoryId: set.categoryId || set._id,
+  }));
 
   // Loading state
+  const loading = categoriesLoading || setsLoading;
+  const error = categoriesError || setsError;
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
@@ -118,11 +110,17 @@ export default function CategoriesPage() {
         showArrows={false}
       />
       <div className="md:pt-[100px] pt-[400px]">
-        {/*  */}
-        <Section border={0} borderColor="none" />
+        {/* Разделы (Subcategories) */}
+        <Section 
+          border={0} 
+          borderColor="none" 
+          subcategories={allSubcategories}
+        />
+        
+        {/* Комплексы (Sets) */}
         <WorksSlider
           title="Комплексы"
-          works={homePageWorks}
+          works={transformedSets}
           fromMain={false}
           seeAll={true}
           scrollable={true}
