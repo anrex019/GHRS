@@ -11,18 +11,18 @@ const VideoNotification = ({ variant }: VideoNotificationProps) => {
 
   return (
     <section
-      className={`flex flex-col md:mx-10 md:mb-20 mt-56 mb-10 md:justify-between ${
+      className={`flex flex-col md:mx-10 md:mb-8 mt-8 mb-6 md:justify-between ${
         variant == "rehabilitation" ? "" : "mt-[500px] "
       }`}
     >
-      <h2 className="md:text-[64px] px-2 md:px-0 items-start text-start flex justify-start w-full text-2xl text-[rgba(61,51,74,1)] md:pb-10 pb-6">
+      <h2 className="md:text-[64px] px-2 md:px-0 items-start text-start flex justify-start w-full text-2xl text-[rgba(61,51,74,1)] md:pb-6 pb-4">
         {typeof t("video_notification.title") === "string"
           ? t("video_notification.title")
           : "Video Exercises"}
       </h2>
-      <div className="flex flex-col md:flex-row gap-4 w-full items-center md:justify-between mx-auto px-20">
+      <div className="flex flex-col md:flex-row md:gap-5 gap-4 w-full items-stretch justify-start md:px-0 px-2">
         <div
-          className="md:p-[30px] p-4 md:w-[456px] md:h-[505px] md:rounded-[40px] w-[359px] h-[397px] rounded-3xl"
+          className="md:p-[30px] p-4 md:flex-1 md:h-[505px] md:rounded-[40px] md:w-auto w-[359px] h-[397px] rounded-3xl"
           style={{
             backgroundImage: "url('/assets/images/background-reh.png')",
           }}
@@ -41,7 +41,7 @@ const VideoNotification = ({ variant }: VideoNotificationProps) => {
           </p>
         </div>
         <div
-          className="relative md:p-[30px] p-4 md:w-[456px] md:h-[505px] md:rounded-[40px] w-[359px] h-[397px] rounded-3xl"
+          className="relative md:p-[30px] p-4 md:flex-1 md:h-[505px] md:rounded-[40px] md:w-auto w-[359px] h-[397px] rounded-3xl"
           style={{
             backgroundImage: "url('/assets/images/background-reh.png')",
           }}
@@ -74,7 +74,7 @@ const VideoNotification = ({ variant }: VideoNotificationProps) => {
         </div>
 
         <div
-          className=" relative md:p-[30px] p-4 md:w-[456px] md:h-[505px] md:rounded-[40px] w-[359px] h-[397px] rounded-3xl"
+          className="relative md:p-[30px] p-4 md:flex-1 md:h-[505px] md:rounded-[40px] md:w-auto w-[359px] h-[397px] rounded-3xl"
           style={{
             backgroundImage: "url('/assets/images/background-reh.png')",
           }}

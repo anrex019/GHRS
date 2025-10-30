@@ -4,8 +4,8 @@ import { useI18n } from "../context/I18nContext";
 const Advantages = () => {
   const { t } = useI18n();
   return (
-    <section className="md:max-w-full max-w-[359px] px-2 md:px-8 md:mb-20 mb-10">
-      <h2 className="md:text-[64px] text-2xl text-[rgba(61,51,74,1)] md:pb-10 pb-6">
+    <section className="md:max-w-full max-w-[359px] px-2 md:px-8 md:mb-8 mb-6">
+      <h2 className="md:text-[64px] text-2xl text-[rgba(61,51,74,1)] md:pb-6 pb-4">
         {typeof t("advantages.title") === "string" ? t("advantages.title") : ""}
       </h2>
       <div className="grid md:grid-cols-2 h-full grid-cols-1 md:gap-5 gap-4 w-full">

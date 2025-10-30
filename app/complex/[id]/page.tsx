@@ -315,18 +315,18 @@ const Complex = ({ params }: ComplexPageProps) => {
   const statsData = [
     {
       icon: <FaBook size={24} />,
-      value: "20 sets",
-      label: "Training sets",
+      value: setData?.totalExercises || exercises?.length || 0,
+      label: t("complex_exercises") || "Exercises",
     },
     {
       icon: <FaDumbbell size={24} />,
-      value: "181 exercises",
-      label: "Total exercises",
+      value: exercises?.length || setData?.totalExercises || 0,
+      label: t("complex_total_exercises") || "Total exercises",
     },
     {
       icon: <FaClock size={24} />,
-      value: "null hours",
-      label: "Duration",
+      value: formattedTotalDuration || setData?.totalDuration || "0:00",
+      label: t("complex_duration") || "Duration",
     },
   ];
 
