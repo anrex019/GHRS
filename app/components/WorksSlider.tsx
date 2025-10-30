@@ -63,13 +63,13 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
     <div className="md:px-5 px-2 py-2 bg-[#F9F7FE] md:mx-5 md:rounded-[20px]">
       <div className="flex items-center justify-between">
         <div className="flex flex-col items-start">
-          <h2 className="text-[20px] md:py-4 md:text-[40px] text-[#3D334A] mb-2.5 md:mb-5">
+          <h2 className="text-[20px] md:py-4 md:text-[40px] text-[#3D334A] mb-2.5 md:mb-5 font-[Bowler]">
             {title}
           </h2>
           {seeAll && (
             <Link
               href={seeAllHref}
-              className="text-[#D4BAFC] text-[24px] md:mb-10 leading-[90%] uppercase cursor-pointer hover:text-[#B69EE8] transition-colors"
+              className="text-[#D4BAFC] text-[24px] md:mb-10 leading-[90%] uppercase cursor-pointer hover:text-[#B69EE8] transition-colors font-[Bowler]"
             >
               {t("common.see_all")} →
             </Link>
@@ -113,12 +113,12 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
                   className="w-full h-[250px] object-cover rounded-2xl mb-6"
                 />
                 <div className="mb-2.5 mx-4">
-                  <span className="p-3 bg-[#E9DFF6] inline-block rounded-[6px] text-[#3D334A] text-[14px] font-bold leading-[90%] uppercase max-w-[120px]">
+                  <span className="p-3 bg-[#E9DFF6] inline-block rounded-[6px] text-[#3D334A] text-[14px] font-bold leading-[90%] uppercase max-w-[120px] font-[Bowler]">
                     {work.categoryName}
                   </span>
                 </div>
                 <h3
-                  className="text-[#3D334A] font-[1000] text-[18px] leading-[120%] mx-4 line-clamp-2 overflow-hidden"
+                  className="text-[#3D334A] font-[1000] text-[18px] leading-[120%] mx-4 line-clamp-2 overflow-hidden font-[Bowler]"
                   style={{
                     display: "-webkit-box",
                     WebkitBoxOrient: "vertical",
@@ -128,7 +128,7 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
                   {work.title}
                 </h3>
                 <p
-                  className="line-clamp-3 text-[#846FA0] leading-[120%] text-sm mx-4 overflow-hidden"
+                  className="line-clamp-3 text-[#846FA0] leading-[120%] text-sm mx-4 overflow-hidden font-[Bowler]"
                   style={{
                     display: "-webkit-box",
                     WebkitBoxOrient: "vertical",
@@ -139,7 +139,7 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
                 </p>
               </div>
               <div className="flex items-center justify-end absolute -bottom-2 right-0">
-                <span className="px-5 py-3 bg-[#D4BAFC] rounded-lg text-white text-[18px] leading-[100%] font-bold mb-8 mr-8 mt-6">
+                <span className="px-5 py-3 bg-[#D4BAFC] rounded-lg text-white text-[18px] leading-[100%] font-bold mb-8 mr-8 mt-6 font-[Bowler]">
                   {work.monthlyPrice}
                   {language === "ka" ? "₾" : language === "ru" ? "₽" : "$"}/
                   {t("common.month")}

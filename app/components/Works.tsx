@@ -216,7 +216,7 @@ const Works: React.FC<WorksProps> = ({
         <div className="px-6 md:px-12 pb-8 md:pb-10">
           <Link
             href={linkHref}
-            className="text-[18px] md:text-[28px] font-normal leading-[110%] uppercase text-[#D4BAFC] hover:text-[#C4A6F1] transition-colors inline-block"
+            className="text-[18px] md:text-[28px] font-normal leading-[110%] uppercase text-[#D4BAFC] hover:text-[#C4A6F1] transition-colors inline-block font-[Bowler]"
           >
             {typeof t("works.all_sets", { count: works.length.toString() }) === "string"
               ? t("works.all_sets", { count: works.length.toString() })

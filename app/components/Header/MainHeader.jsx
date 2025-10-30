@@ -103,16 +103,16 @@ function MainHeader({
 
       {/* ✅ Cards Container - Top-Right Position */}
       {ShowBlock && (
-        <div className="absolute bottom-0 right-0 hidden md:flex gap-4 bg-[#F9F7FE] rounded-tl-[60px] p-6 pb-8 z-10 items-end">
+        <div className="absolute bottom-0 right-0 hidden md:flex gap-4 bg-[#F9F7FE] rounded-tl-[80px] p-6 pb-8 z-10 items-end">
           <Link 
-            href="/about"
-            className="text-white bg-[#3D334A] rounded-[32px] w-[246px] h-[222px] flex items-start justify-start p-8 transition-transform duration-300 hover:scale-105 cursor-pointer font-bold uppercase text-lg shadow-2xl leading-tight"
+            href="/rehabilitation"
+            className="text-white bg-[#3D334A] rounded-[40px] w-[246px] h-[222px] flex items-start justify-start p-8 transition-transform duration-300 hover:scale-105 cursor-pointer font-bold uppercase text-lg shadow-2xl leading-tight"
           >
             {t("header.learn_more") || "Изучить подробнее"}
           </Link>
           <Link 
             href="/allComplex"
-            className="text-white bg-gradient-to-br from-[#D4BAFC] via-[#C4A6F1] to-[#B794E8] rounded-[32px] w-[246px] h-[222px] flex items-start justify-start p-8 transition-transform duration-300 hover:scale-105 cursor-pointer font-bold uppercase text-lg shadow-2xl leading-tight"
+            className="text-white bg-gradient-to-br from-[#D4BAFC] via-[#C4A6F1] to-[#B794E8] rounded-[40px] w-[246px] h-[222px] flex items-start justify-start p-8 transition-transform duration-300 hover:scale-105 cursor-pointer font-bold uppercase text-lg shadow-2xl leading-tight"
           >
             {t("header.to_catalog") || "В каталог"}
           </Link>
@@ -165,7 +165,7 @@ function MainHeader({
           </div>
         </div>
 
-        {ShowBlock && OptionalComponent && <div>{OptionalComponent}</div>}
+        {OptionalComponent && <div>{OptionalComponent}</div>}
       </div>
     </div>
   );

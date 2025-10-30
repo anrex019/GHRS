@@ -48,6 +48,51 @@ export default function CategoriesPage() {
   console.log("  Transformed subcategories:", allSubcategories.length);
   console.log("  Subcategories data:", allSubcategories);
 
+  // TEMPORARY: Mock subcategories for testing (remove when backend has real data)
+  const mockSubcategories = allSubcategories.length === 0 ? [
+    {
+      _id: "mock-sub-1",
+      name: { ru: "Шейный отдел позвоночника", en: "Cervical Spine", ka: "ყელის მალა" },
+      description: { ru: "Упражнения для улучшения подвижности и укрепления шейного отдела позвоночника", en: "Exercises to improve mobility and strengthen the cervical spine", ka: "ვარჯიშები ყელის მალის მობილურობის გასაუმჯობესებლად" },
+      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=542&h=181&fit=crop",
+      sets: ["1", "2", "3"]
+    },
+    {
+      _id: "mock-sub-2",
+      name: { ru: "Грудной отдел позвоночника", en: "Thoracic Spine", ka: "გულმკერდის მალა" },
+      description: { ru: "Комплекс упражнений для грудного отдела позвоночника и улучшения осанки", en: "Exercise complex for thoracic spine and posture improvement", ka: "ვარჯიშები გულმკერდის მალისთვის" },
+      image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=542&h=181&fit=crop",
+      sets: ["4", "5"]
+    },
+    {
+      _id: "mock-sub-3",
+      name: { ru: "Поясничный отдел позвоночника", en: "Lumbar Spine", ka: "წელის მალა" },
+      description: { ru: "Упражнения для укрепления поясничного отдела и профилактики болей в спине", en: "Exercises to strengthen lumbar spine and prevent back pain", ka: "ვარჯიშები წელის მალის გასაძლიერებლად" },
+      image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=542&h=181&fit=crop",
+      sets: ["6", "7", "8"]
+    },
+    {
+      _id: "mock-sub-4",
+      name: { ru: "Плечевой сустав", en: "Shoulder Joint", ka: "მხრის სახსარი" },
+      description: { ru: "Упражнения для восстановления и укрепления плечевого сустава", en: "Exercises for shoulder joint recovery and strengthening", ka: "ვარჯიშები მხრის სახსრის აღდგენისთვის" },
+      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=542&h=181&fit=crop",
+      sets: ["9", "10"]
+    },
+    {
+      _id: "mock-sub-5",
+      name: { ru: "Коленный сустав", en: "Knee Joint", ka: "მუხლის სახსარი" },
+      description: { ru: "Реабилитация и профилактика травм коленного сустава", en: "Knee joint rehabilitation and injury prevention", ka: "მუხლის სახსრის რეაბილიტაცია" },
+      image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=542&h=181&fit=crop",
+      sets: ["11", "12", "13"]
+    }
+  ] : [];
+
+  // Use real subcategories if they exist, otherwise use mock data
+  const displaySubcategories = allSubcategories.length > 0 ? allSubcategories : mockSubcategories;
+  
+  console.log("📌 Displaying subcategories:", displaySubcategories.length, "items");
+  console.log("📌 Using:", allSubcategories.length > 0 ? "REAL backend data" : "MOCK data (backend has no subcategories)");
+
   // Transform sets data for WorksSlider
   const transformedSets = sets.map((set: any) => ({
     id: set._id,
@@ -114,7 +159,7 @@ export default function CategoriesPage() {
         <Section 
           border={0} 
           borderColor="none" 
-          subcategories={allSubcategories}
+          subcategories={displaySubcategories}
         />
         
         {/* Комплексы (Sets) */}

@@ -131,6 +131,10 @@ const Complex = ({ params }: ComplexPageProps) => {
   const playBtnRef = useRef<HTMLButtonElement>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
   const [activeTabIndex, setActiveTabIndex] = useState(0);
+  
+  // State for selected subscription
+  const [selectedPeriod, setSelectedPeriod] = useState("12 months");
+  const [selectedPrice, setSelectedPrice] = useState(setData?.discountedPrice?.yearly || setData?.price?.yearly || 500);
 
   // Close popover when clicking outside
   useEffect(() => {
@@ -232,8 +236,21 @@ const Complex = ({ params }: ComplexPageProps) => {
     );
   }
 
+  // Just update the selection, don't add to cart yet
   const handleSubscriptionSelect = (period: string, price: number) => {
-    console.log("🛒 handleSubscriptionSelect called", { period, price, setId, setData });
+    console.log("✅ Selection updated", { period, price });
+    
+    // Update selected period and price
+    setSelectedPeriod(period);
+    setSelectedPrice(price);
+    
+    // Close popover
+    setPopoverOpen(false);
+  };
+
+  // Add to cart when user clicks the buy button
+  const handleAddToCart = () => {
+    console.log("🛒 Adding to cart", { selectedPeriod, selectedPrice, setId, setData });
     
     if (!setData) {
       console.error("❌ No setData available");
@@ -252,8 +269,8 @@ const Complex = ({ params }: ComplexPageProps) => {
         itemType: "set",
         name: setData.name, // multilingual object {ru, en, ka}
         title: setData.name?.ru || setData.name?.en || "", // fallback title
-        price: price,
-        period: period,
+        price: selectedPrice,
+        period: selectedPeriod,
         image: setData.thumbnailImage || "/assets/images/course.png",
         img: setData.thumbnailImage || "/assets/images/course.png",
         description: setData.description, // multilingual object
@@ -313,30 +330,51 @@ const Complex = ({ params }: ComplexPageProps) => {
     },
   ];
 
+  // Helper function to get period display text
+  const getPeriodDisplayText = (period: string) => {
+    switch(period) {
+      case "1 month":
+        return "1 МЕСЯЦ";
+      case "3 months":
+        return "3 МЕСЯЦА";
+      case "6 months":
+        return "6 МЕСЯЦЕВ";
+      case "12 months":
+        return "12 МЕСЯЦЕВ";
+      default:
+        return period.toUpperCase();
+    }
+  };
+
   const CustomBlock = (
     <div className="md:absolute bottom-0 right-0 gap-4 flex flex-col">
       <div className="hidden mx-auto text-white text-sm bg-[#3D334A4D] p-4  rounded-2xl md:w-54 w-full z-10 md:flex">
-        <p className="text-center">{t("header.subscription_period.twelve_months")}</p>
+        <p className="text-center font-bold uppercase">{getPeriodDisplayText(selectedPeriod)}</p>
       </div>
-      <div
-        className="flex bottom-0 right-0 md:bg-white rounded-tl-4xl p-8 justify-center cursor-pointer"
-        onClick={() => setPopoverOpen(true)}
-      >
-        <div className="flex flex-col text-white bg-gradient-to-br from-[#FFDAB9] via-[#C4A6F1] to-[#C4A6F1] p-4 rounded-2xl h-54 md:w-54 w-full justify-center transition-transform duration-300 hover:scale-105">
+      <div className="flex bottom-0 right-0 md:bg-white rounded-tl-4xl p-8 justify-center">
+        <div 
+          className="flex flex-col text-white bg-gradient-to-br from-[#FFDAB9] via-[#C4A6F1] to-[#C4A6F1] p-4 rounded-2xl h-54 md:w-54 w-full justify-center transition-transform duration-300 hover:scale-105 cursor-pointer"
+          onClick={() => setPopoverOpen(true)}
+        >
           {/* Price */}
           <p className="text-white font-bold text-4xl leading-[90%] uppercase">
-            {setData?.discountedPrice?.yearly || setData?.price?.yearly}
-            {t("header.currency")}
+            {selectedPrice} ₽
           </p>
 
           {/* Duration */}
           <p className="text-white font-normal text-lg leading-[90%] uppercase">
-            {t("header.subscription_period.twelve_months")}
+            {getPeriodDisplayText(selectedPeriod)}
           </p>
 
           {/* Button */}
-          <div className="text-white font-normal text-xl mx-auto leading-[90%] uppercase mt-auto">
-            {t("common.buy")}
+          <div 
+            className="text-white font-normal text-xl mx-auto leading-[90%] uppercase mt-auto bg-white/20 px-6 py-2 rounded-lg hover:bg-white/30 transition-colors"
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent opening popover
+              handleAddToCart();
+            }}
+          >
+            {t("common.buy") || "ПРИОБРЕСТИ"}
           </div>
         </div>
       </div>
@@ -351,7 +389,7 @@ const Complex = ({ params }: ComplexPageProps) => {
         setData={setData}
       /> */}
       <MainHeader
-        ShowBlock={true}
+        ShowBlock={false}
         OptionalComponent={CustomBlock as any}
         stats={statsData as any}
         showArrows={false}
@@ -517,26 +555,85 @@ const Complex = ({ params }: ComplexPageProps) => {
                 {popoverOpen && (
                   <div
                     ref={popoverRef}
-                    className="absolute right-0 -top-48 mt-2 bg-white shadow-lg rounded-2xl p-0 min-w-[320px] max-w-[90vw] border border-purple-200 z-20 flex flex-col items-stretch"
+                    className="absolute right-0 -top-96 mt-2 bg-white shadow-lg rounded-2xl p-0 min-w-[320px] max-w-[90vw] border border-purple-200 z-20 flex flex-col items-stretch"
                   >
-                    <div className="flex justify-between items-center px-6 py-4">
-                      <span
-                        onClick={() =>
-                          handleSubscriptionSelect(
-                            "12 months",
-                            setData.discountedPrice?.yearly || setData.price.yearly
-                          )
-                        }
-                        className="font-bold text-[18px] cursor-pointer leading-[120%] tracking-[-2%] text-[rgba(61,51,74,1)] uppercase"
-                      >
-                        {t("header.subscription_period.twelve_months")}
+                    {/* 1 Month */}
+                    <div 
+                      className="flex justify-between items-center px-6 py-4 hover:bg-purple-50 transition-colors cursor-pointer border-b border-gray-100"
+                      onClick={() =>
+                        handleSubscriptionSelect(
+                          "1 month",
+                          setData.price?.monthly || 100
+                        )
+                      }
+                    >
+                      <span className="font-bold text-[18px] leading-[120%] tracking-[-2%] text-[rgba(61,51,74,1)] uppercase">
+                        1 МЕСЯЦ
+                      </span>
+                      <span className="text-[20px] font-bold text-[rgba(132,111,160,1)] leading-[120%]">
+                        {setData.price?.monthly || 100} ₽/мес
+                      </span>
+                    </div>
+
+                    {/* 3 Months */}
+                    <div 
+                      className="flex justify-between items-center px-6 py-4 hover:bg-purple-50 transition-colors cursor-pointer border-b border-gray-100"
+                      onClick={() =>
+                        handleSubscriptionSelect(
+                          "3 months",
+                          setData.price?.quarterly || setData.discountedPrice?.quarterly || 350
+                        )
+                      }
+                    >
+                      <span className="font-bold text-[18px] leading-[120%] tracking-[-2%] text-[rgba(61,51,74,1)] uppercase">
+                        3 МЕСЯЦА
                       </span>
                       <div className="flex flex-col items-end">
-                        <span className="text-[20px] cursor-pointer font-bold text-[rgba(132,111,160,1)] leading-[120%]">
-                          {setData.discountedPrice?.yearly || setData.price.yearly}
-                          {t("header.currency")}
+                        {setData.discountedPrice?.quarterly && (
+                          <span className="text-[14px] text-gray-400 line-through">
+                            {setData.price?.quarterly} ₽/мес
+                          </span>
+                        )}
+                        <span className="text-[20px] font-bold text-[rgba(132,111,160,1)] leading-[120%]">
+                          {setData.discountedPrice?.quarterly || setData.price?.quarterly || 350} ₽/мес
                         </span>
                       </div>
+                    </div>
+
+                    {/* 6 Months */}
+                    <div 
+                      className="flex justify-between items-center px-6 py-4 hover:bg-purple-50 transition-colors cursor-pointer border-b border-gray-100"
+                      onClick={() =>
+                        handleSubscriptionSelect(
+                          "6 months",
+                          setData.price?.halfYearly || setData.discountedPrice?.halfYearly || 500
+                        )
+                      }
+                    >
+                      <span className="font-bold text-[18px] leading-[120%] tracking-[-2%] text-[rgba(61,51,74,1)] uppercase">
+                        6 МЕСЯЦЕВ
+                      </span>
+                      <span className="text-[20px] font-bold text-[rgba(132,111,160,1)] leading-[120%]">
+                        {setData.discountedPrice?.halfYearly || setData.price?.halfYearly || 500} ₽/мес
+                      </span>
+                    </div>
+
+                    {/* 12 Months */}
+                    <div 
+                      className="flex justify-between items-center px-6 py-4 hover:bg-purple-50 transition-colors cursor-pointer rounded-b-2xl"
+                      onClick={() =>
+                        handleSubscriptionSelect(
+                          "12 months",
+                          setData.discountedPrice?.yearly || setData.price?.yearly || 500
+                        )
+                      }
+                    >
+                      <span className="font-bold text-[18px] leading-[120%] tracking-[-2%] text-[rgba(61,51,74,1)] uppercase">
+                        12 МЕСЯЦЕВ
+                      </span>
+                      <span className="text-[20px] font-bold text-[rgba(132,111,160,1)] leading-[120%]">
+                        {setData.discountedPrice?.yearly || setData.price?.yearly || 500} ₽/мес
+                      </span>
                     </div>
                   </div>
                 )}

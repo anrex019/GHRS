@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import Link from "next/link";
 import SliderArrows from "./SliderArrows";
 import { FaArrowRightLong } from "react-icons/fa6";
 import CustomBadge from "./CustomBadge";
@@ -64,12 +65,12 @@ const Section = ({
           <h1 className="text-[#3D334A] text-[40px] leading-[120%] tracking-[-3%] font-bold">
             Разделы
           </h1>
-          <div className="flex items-center gap-2">
+          <Link href="/subcategories" className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer">
             <span className="text-[#D4BAFC] text-[24px] leading-[90%] uppercase mr-2">
               Смотреть все
             </span>
             <FaArrowRightLong color="#D4BAFC"/>
-          </div>
+          </Link>
         </div>
         <div>
           <SliderArrows
@@ -89,9 +90,10 @@ const Section = ({
         }}
       >
         {subcategories.map((subcat) => (
-          <div
+          <Link
             key={subcat._id}
-            className="min-w-[558px] h-[283px] relative bg-white p-2 rounded-5 hover:shadow-md transition-shadow cursor-pointer my-2"
+            href={`/subcategories/${subcat._id}`}
+            className="min-w-[558px] h-[283px] relative bg-white p-2 rounded-5 hover:shadow-lg transition-all cursor-pointer my-2 block"
           >
             <div className="absolute top-1 z-10">
               <CustomBadge text={getLocalizedText(subcat.name)} margin="m-3" />
@@ -111,7 +113,7 @@ const Section = ({
                 {subcat.sets?.length || 0} комплексов
               </span>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
 
