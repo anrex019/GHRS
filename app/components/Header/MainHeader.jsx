@@ -105,7 +105,7 @@ function MainHeader({
       {ShowBlock && (
         <div className="absolute bottom-0 right-0 hidden md:flex gap-4 bg-[#F9F7FE] rounded-tl-[80px] p-6 pb-8 z-10 items-end">
           <Link 
-            href="/rehabilitation"
+            href="/about"
             className="text-white bg-[#3D334A] rounded-[40px] w-[246px] h-[222px] flex items-start justify-start p-8 transition-transform duration-300 hover:scale-105 cursor-pointer font-bold uppercase text-lg shadow-2xl leading-tight"
           >
             {t("header.learn_more") || "Изучить подробнее"}

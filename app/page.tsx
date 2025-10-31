@@ -22,7 +22,8 @@ const Home = () => {
   const { sets } = useAllSets();
   const { t } = useI18n();
   const { statistics } = useStatistics();
-  console.log(sets, 'სეტები სეტები სეტები სეტები');
+  console.log('📊 Total sets fetched:', sets?.length);
+  console.log('📦 Sets data:', sets);
 
   // Add stats data using real API data
   const statsData = [
@@ -62,6 +63,7 @@ const Home = () => {
           customBorderRadius=""
           seeAll={true}
           scrollable={true}
+          totalCount={sets?.length || 0}
         />
         <Subscribe
           backgroundImage="/assets/images/categorySliderBgs/bg1.jpg"

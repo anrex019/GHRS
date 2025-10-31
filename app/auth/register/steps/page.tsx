@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { register } from "../../../config/api";
+import { useI18n } from "../../../context/I18nContext";
 
 interface RegistrationData {
   email: string;
@@ -56,6 +57,7 @@ const Step2 = ({
   onBack: () => void;
   onDataUpdate: (data: { firstName: string; lastName: string }) => void;
 }) => {
+  const { t } = useI18n();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const allFilled = firstName.trim().length > 0 && lastName.trim().length > 0;
@@ -71,10 +73,10 @@ const Step2 = ({
   return (
     <div className="flex flex-col items-center justify-center max-w-[600px] mx-auto">
       <h2 className="text-[32px] leading-[100%] tracking-[-3%] font-bold mb-2 text-start w-full pl-10 text-[#3D334A] ">
-        Как вас зовут?
+        {t("register.step2.title") || "Как вас зовут?"}
       </h2>
       <p className="mb-10 mt-2 text-[#846FA0] text-start pl- text-[18px] font-medium leading-[100%] font-pt">
-        Имя и фамилия будут отображаться в вашем личном кабинете
+        {t("register.step2.description") || "Имя и фамилия будут отображаться в вашем личном кабинете"}
       </p>
       <form
         onSubmit={handleNext}
@@ -83,14 +85,14 @@ const Step2 = ({
         <div className="flex flex-row font-pt gap-6 items-center justify-center mb-2 w-full">
           <input
             type="text"
-            placeholder="Имя"
+            placeholder={t("register.step2.firstName") || "Имя"}
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             className="w-[276px] h-[60px] border border-[#E9DFF6] rounded-lg px-4 text-xl focus:outline-none focus:border-[#846FA0] bg-white text-[#3D334A]"
           />
           <input
             type="text"
-            placeholder="Фамилия"
+            placeholder={t("register.step2.lastName") || "Фамилия"}
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             className="w-[276px] h-[60px] border border-[#E9DFF6] rounded-lg px-4 text-xl focus:outline-none focus:border-[#846FA0] bg-white text-[#3D334A]"
@@ -102,14 +104,14 @@ const Step2 = ({
             onClick={onBack}
             className="bg-[#E9DFF6] text-[#3D334A] py-2 px-8 rounded-lg font-medium text-[18px] w-full"
           >
-            Назад
+            {t("register.back") || "Назад"}
           </button>
           <button
             type="submit"
             className="bg-[#D4BAFC] text-white py-2 px-8 rounded-lg font-medium text-[18px] disabled:opacity-50 w-full"
             disabled={!allFilled}
           >
-            Далее
+            {t("register.next") || "Далее"}
           </button>
         </div>
       </form>
@@ -126,6 +128,7 @@ const Step3 = ({
   onBack: () => void;
   onDataUpdate: (data: { country: string; city: string }) => void;
 }) => {
+  const { t } = useI18n();
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
   const allFilled = country.trim().length > 0 && city.trim().length > 0;
@@ -196,6 +199,7 @@ const Step4 = ({
   onBack: () => void;
   onDataUpdate: (data: { phone: string; otherContact: string }) => void;
 }) => {
+  const { t } = useI18n();
   const [selectedCountry, setSelectedCountry] = useState(countryOptions[0]);
   const [phone, setPhone] = useState("");
   const [other, setOther] = useState("");
@@ -250,7 +254,7 @@ const Step4 = ({
             ))}
           </select>
           <div className="relative w-full">
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xl text-[#3D334A] select-none">
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xl text-[#3D334A] select-none pointer-events-none">
               {selectedCountry.code}
             </span>
             <input
@@ -258,7 +262,7 @@ const Step4 = ({
               value={phone}
               onChange={handlePhoneChange}
               className="w-full h-[60px] border border-[#E9DFF6] rounded-lg pl-16 pr-4 text-xl focus:outline-none focus:border-[#846FA0] bg-white text-[#3D334A] mb-2"
-              placeholder={selectedCountry.code + " ..."}
+              placeholder="555 123 456"
               maxLength={15}
             />
           </div>
@@ -300,6 +304,7 @@ const Step5 = ({
   onBack: () => void;
   onDataUpdate: (data: { selectedDiseases: string[] }) => void;
 }) => {
+  const { t } = useI18n();
   const [selectedDisease, setSelectedDisease] = useState("");
   const [other, setOther] = useState("");
   const allFilled =
@@ -382,6 +387,7 @@ const Step6 = ({
   onBack: () => void;
   onDataUpdate: (data: { additionalInfo: string }) => void;
 }) => {
+  const { t } = useI18n();
   const [additionalInfo, setAdditionalInfo] = useState("");
   const allFilled = additionalInfo.trim().length > 0;
 

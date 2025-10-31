@@ -50,7 +50,60 @@ export function useAchievements() {
       setError(null);
     } catch (err) {
       console.error('Error fetching achievements:', err);
-      setError(err instanceof Error ? err.message : 'Failed to load achievements');
+      
+      // If endpoint doesn't exist (404), use mock data
+      if (err instanceof Error && err.message.includes('404')) {
+        console.warn('⚠️ Achievements endpoint not implemented yet, using mock data');
+        
+        // Mock achievements data matching the Figma design
+        const mockAchievements: Achievement[] = [
+          {
+            id: 'strike-wave',
+            title: { en: 'Strike Wave', ru: 'Ударная волна', ka: 'დარტყმის ტალღა' },
+            description: { en: 'Exercise for 15 days in a row', ru: 'Занимайтесь 15 дней подряд', ka: 'ივარჯიშეთ 15 დღე ზედიზედ' },
+            image: '/assets/images/achievements/rocket.png',
+            imageBg: '/assets/images/achievements/bg1.jpg',
+            current: 12,
+            total: 15,
+            isCompleted: false,
+          },
+          {
+            id: 'hard-for-me',
+            title: { en: 'Too Hard For Me', ru: 'Сложности мне по плечу', ka: 'ძალიან რთულია ჩემთვის' },
+            description: { en: 'Complete an advanced level in any set', ru: 'Завершите продвинутый уровень в любом комплексе', ka: 'დაასრულეთ მოწინავე დონე ნებისმიერ კომპლექსში' },
+            image: '/assets/images/achievements/trophy.png',
+            imageBg: '/assets/images/achievements/bg2.jpg',
+            current: 0,
+            total: 1,
+            isCompleted: false,
+          },
+          {
+            id: 'reader',
+            title: { en: 'Reader', ru: 'Читатель', ka: 'მკითხველი' },
+            description: { en: 'Read 15 articles', ru: 'Прочтите 15 статей', ka: 'წაიკითხეთ 15 სტატია' },
+            image: '/assets/images/achievements/book.png',
+            imageBg: '/assets/images/achievements/bg3.jpg',
+            current: 12,
+            total: 15,
+            isCompleted: false,
+          },
+          {
+            id: 'commentator',
+            title: { en: 'I am a Commentator', ru: 'Я - комментатор', ka: 'მე ვარ კომენტატორი' },
+            description: { en: 'Comment on articles 5 times', ru: 'Прокомментируйте статью 5 раз', ka: 'გააკეთეთ კომენტარი სტატიაზე 5-ჯერ' },
+            image: '/assets/images/achievements/comment.png',
+            imageBg: '/assets/images/achievements/bg4.jpg',
+            current: 0,
+            total: 1,
+            isCompleted: false,
+          },
+        ];
+        
+        setAchievements(mockAchievements);
+        setError(null);
+      } else {
+        setError(err instanceof Error ? err.message : 'Failed to load achievements');
+      }
     } finally {
       setLoading(false);
     }
@@ -81,7 +134,15 @@ export function useStatistics() {
       setError(null);
     } catch (err) {
       console.error('Error fetching statistics:', err);
-      setError(err instanceof Error ? err.message : 'Failed to load statistics');
+      
+      // If endpoint doesn't exist (404), return null instead of error
+      if (err instanceof Error && err.message.includes('404')) {
+        console.warn('⚠️ Statistics endpoint not implemented yet, using null state');
+        setStatistics(null);
+        setError(null);
+      } else {
+        setError(err instanceof Error ? err.message : 'Failed to load statistics');
+      }
     } finally {
       setLoading(false);
     }

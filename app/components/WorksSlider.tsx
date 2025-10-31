@@ -66,14 +66,6 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
           <h2 className="text-[20px] md:py-4 md:text-[40px] text-[#3D334A] mb-2.5 md:mb-5 font-[Bowler]">
             {title}
           </h2>
-          {seeAll && (
-            <Link
-              href={seeAllHref}
-              className="text-[#D4BAFC] text-[24px] md:mb-10 leading-[90%] uppercase cursor-pointer hover:text-[#B69EE8] transition-colors font-[Bowler]"
-            >
-              {t("common.see_all")} →
-            </Link>
-          )}
         </div>
         {scrollable && (
           <SliderArrows

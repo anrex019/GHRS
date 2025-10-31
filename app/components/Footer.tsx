@@ -1,7 +1,7 @@
 "use client";
 import { FC } from "react";
 import Image from "next/image";
-  import { useI18n } from "../context/I18nContext"; // თქვენი i18n context-ის path
+import { useI18n } from "../context/I18nContext";
 import { LinkedinIcon } from "./socialIcons/LinkedinIcon";
 import { InstagramIcon } from "./socialIcons/InstagramIcon";
 import { YoutubeIcon } from "./socialIcons/YoutubeIcon";
@@ -10,44 +10,45 @@ import { FacebookIcon } from "./socialIcons/FacebookIcon";
 import { Xicon } from "./socialIcons/X";
 
 export const Footer: FC = () => {
-  const { t } = useI18n(); // თარგმანების hook
+  const { t } = useI18n();
 
   return (
-    <footer className="bg-[#F9F7FE] rounded-[20px] px-8 pt-8 pb-4 text-[#3D334A]">
+    <div className="bg-[#F9F7FE] rounded-[20px] px-8 pt-8 pb-4 text-[#3D334A]">
       {/* კონსულტაციის ფორმა */}
       <div className="mb-8 px-16">
         <h2 className="text-4xl font-bold text-[#3D334A] mb-8">
-          {t("footer.consultation.title")}{" "}
-          <span className="text-[#B6A3D9]">{t("footer.consultation.titleHighlight")}</span>
+          {t("consultation.title")}{" "}
+          <span className="text-[#B6A3D9]">{t("consultation.titleHighlight")}</span>
         </h2>
         <form className="flex flex-col md:flex-row gap-4 mb-8">
           <input
             type="text"
-            placeholder={t("footer.form.name")}
+            placeholder={t("form.name")}
             className="flex-1 rounded-lg px-4 py-3 bg-white/80 outline-none focus:ring-2 focus:ring-[#B6A3D9] transition"
           />
           <input
             type="text"
-            placeholder={t("footer.form.phone")}
+            placeholder={t("form.phone")}
             className="flex-1 rounded-lg px-4 py-3 bg-white/80 outline-none focus:ring-2 focus:ring-[#B6A3D9] transition"
           />
           <input
             type="email"
-            placeholder={t("footer.form.email")}
+            placeholder={t("form.email")}
             className="flex-1 rounded-lg px-4 py-3 bg-white/80 outline-none focus:ring-2 focus:ring-[#B6A3D9] transition"
           />
         </form>
         <div className="flex flex-col md:flex-row items-center gap-4">
           <button className="bg-[#B6A3D9] text-white px-10 py-3 rounded-lg font-bold flex items-center gap-2 hover:bg-[#846FA0] transition-all text-lg shadow-md w-full md:w-auto">
-            {t("footer.consultation.button")} <span className="text-2xl">→</span>
+            {t("consultation.button")} <span className="text-2xl">→</span>
           </button>
           <span className="text-[#8B7BAA] mt-2 md:mt-0 max-w-[450px] text-sm">
-            {t("footer.consultation.consent")}
+            {t("consultation.consent")}
           </span>
         </div>
       </div>
+
       <hr className="my-6 border-[#E0D6F9]" />
-      
+
       {/* მთავარი ბლოკი */}
       <div className="flex flex-col md:flex-row md:justify-between gap-8 mb-8 items-center md:items-start px-16">
         {/* მარცხენა */}
@@ -60,9 +61,7 @@ export const Footer: FC = () => {
             className="mb-2"
           />
           <div className="flex flex-col ml-6 gap-5">
-            <span className="text-sm text-[#8B7BAA]">
-              {t("footer.workHours")}
-            </span>
+            <span className="text-sm text-[#8B7BAA]">{t("workHours")}</span>
             <span className="text-2xl font-bold text-[#3D334A]">
               +7 (916) 856—11—45
             </span>
@@ -115,69 +114,50 @@ export const Footer: FC = () => {
           </a>
         </div>
       </div>
+
       <hr className="my-6 border-[#E0D6F9]" />
 
-      {/* ლინკები */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-2 mb-8 px-16 text-[#846FA0]">
-        <div className="flex flex-col gap-5">
-          <a href="#">{t("footer.links.home")}</a>
-          <a href="#">{t("footer.links.rehabilitation")}</a>
-          <a href="#">{t("footer.links.development")}</a>
-          <a href="#">{t("footer.links.blog")}</a>
-        </div>
-        <div className="flex flex-col gap-5">
-          <a href="#">{t("footer.links.about")}</a>
-          <a href="#">{t("footer.links.faq")}</a>
-          <a href="#">{t("footer.links.userGuide")}</a>
-        </div>
-        <div className="flex flex-col gap-5">
-          <a href="#">{t("footer.links.allSets")}</a>
-          <a href="#">{t("footer.links.orthopedics")}</a>
-          <ul className="pl-4">
-            <li>
-              <a href="#">{t("footer.links.cervical")}</a>
-            </li>
-            <li>
-              <a href="#">{t("footer.links.thoracic")}</a>
-            </li>
-            <li>
-              <a href="#">{t("footer.links.lumbar")}</a>
-            </li>
-            <li>
-              <a href="#">{t("footer.links.upperLimbs")}</a>
-            </li>
-            <li>
-              <a href="#">{t("footer.links.lowerLimbs")}</a>
-            </li>
-            <li>
-              <a href="#">{t("footer.links.posture")}</a>
-            </li>
-          </ul>
-          <a href="#">{t("footer.links.neurology")}</a>
-          <ul className="pl-4">
-            <li>
-              <a href="#">{t("footer.links.parkinsons")}</a>
-            </li>
-            <li>
-              <a href="#">{t("footer.links.stroke")}</a>
-            </li>
-            <li>
-              <a href="#">{t("footer.links.facialNerve")}</a>
-            </li>
-            <li>
-              <a href="#">{t("footer.links.multipleSclerosis")}</a>
-            </li>
-          </ul>
-        </div>
-        <div className="flex flex-col gap-5">
-          <a href="#">{t("footer.links.aphasia")}</a>
-          <a href="#">{t("footer.links.obesity")}</a>
-          <a href="#">{t("footer.links.gaitRehab")}</a>
-          <a href="#">{t("footer.links.elderlyRehab")}</a>
-          <a href="#">{t("footer.links.covidRehab")}</a>
-        </div>
-      </div>
-      
+{/* ლინკები */}
+<div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8 px-16 text-[#846FA0]">
+  <div className="flex flex-col gap-3">
+    <a href="#">{t("links.home")}</a>
+    <a href="#">{t("links.rehabilitation")}</a>
+    <a href="#">{t("links.development")}</a>
+    <a href="#">{t("links.blog")}</a>
+  </div>
+  <div className="flex flex-col gap-3">
+    <a href="#">{t("links.about")}</a>
+    <a href="#">{t("links.faq")}</a>
+    <a href="#">{t("links.userGuide")}</a>
+  </div>
+  <div className="flex flex-col gap-3">
+    <a href="#">{t("links.allSets")}</a>
+    <a href="#">{t("links.orthopedics")}</a>
+    <ul className="flex flex-col gap-2 pl-4">
+      <li><a href="#">{t("links.cervical")}</a></li>
+      <li><a href="#">{t("links.thoracic")}</a></li>
+      <li><a href="#">{t("links.lumbar")}</a></li>
+      <li><a href="#">{t("links.upperLimbs")}</a></li>
+      <li><a href="#">{t("links.lowerLimbs")}</a></li>
+      <li><a href="#">{t("links.posture")}</a></li>
+    </ul>
+    <a href="#">{t("links.neurology")}</a>
+    <ul className="flex flex-col gap-2 pl-4">
+      <li><a href="#">{t("links.parkinsons")}</a></li>
+      <li><a href="#">{t("links.stroke")}</a></li>
+      <li><a href="#">{t("links.facialNerve")}</a></li>
+      <li><a href="#">{t("links.multipleSclerosis")}</a></li>
+    </ul>
+  </div>
+  <div className="flex flex-col gap-3">
+    <a href="#">{t("links.aphasia")}</a>
+    <a href="#">{t("links.obesity")}</a>
+    <a href="#">{t("links.gaitRehab")}</a>
+    <a href="#">{t("links.elderlyRehab")}</a>
+    <a href="#">{t("links.covidRehab")}</a>
+  </div>
+</div>
+
       {/* ქვედა ლოგოები */}
       <div className="flex flex-col md:flex-row justify-between items-center mb-4 px-16 gap-5">
         <Image
@@ -199,20 +179,20 @@ export const Footer: FC = () => {
           height={48}
         />
       </div>
-      
+
       {/* ქვედა ტექსტი */}
       <div className="flex flex-col md:flex-row justify-between items-center text-sm text-[#8B7BAA] border-t border-[#E0D6F9] pt-2 text-center md:text-left px-16">
-        <span>{t("footer.copyright")}</span>
+        <span>{t("copyright")}</span>
         <a href="#" className="hover:underline">
-          {t("footer.userAgreement")}
+          {t("userAgreement")}
         </a>
         <a href="#" className="hover:underline">
-          {t("footer.privacyPolicy")}
+          {t("privacyPolicy")}
         </a>
         <a href="#" className="hover:underline">
-          {t("footer.dataProcessing")}
+          {t("dataProcessing")}
         </a>
       </div>
-    </footer>
+    </div>
   );
 };

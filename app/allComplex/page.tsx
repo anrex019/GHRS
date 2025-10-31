@@ -34,6 +34,23 @@ const AllComplex = () => {
   const { categories } = useCategories();
   const { sets } = useAllSets();
 
+  // Count sets per category
+  const setsPerCategory = categories.map((category) => {
+    const categorySets = sets.filter((set) => set.categoryId === category._id);
+    return {
+      category: getLocalizedText(category.name),
+      count: categorySets.length
+    };
+  });
+
+  const totalSetsInCategories = setsPerCategory.reduce((sum, cat) => sum + cat.count, 0);
+
+  console.log('📊 AllComplex Page - Total sets from API:', sets.length);
+  console.log('📦 AllComplex Page - Categories:', categories.length);
+  console.log('📋 Sets per category:', setsPerCategory);
+  console.log('🔢 Total sets displayed in categories:', totalSetsInCategories);
+  console.log('⚠️ Sets not in any category:', sets.length - totalSetsInCategories);
+
   // Helper to get localized text
   const getLocalizedText = (
     field: { ka: string; en: string; ru: string } | undefined
@@ -256,11 +273,13 @@ const AllComplex = () => {
         fromMain={true}
         customMargin={""}
         customBorderRadius={""}
-        seeAll={false}
+        seeAll={true}
         scrollable={true}
         border={1}
         borderColor="#D4BAFC"
         sliderId="popular-complexes-slider"
+        totalCount={sets.length}
+        linkHref="/allComplex"
       />
 
       {/* Dynamic Works components for each category */}

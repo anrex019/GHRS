@@ -66,6 +66,7 @@ interface WorksProps {
   seeAll: boolean;
   scrollable: boolean;
   sliderId?: string;
+  totalCount?: number; // Total count for dynamic display
 }
 
 const Works: React.FC<WorksProps> = ({
@@ -83,6 +84,7 @@ const Works: React.FC<WorksProps> = ({
   seeAll = true,
   scrollable = true,
   sliderId,
+  totalCount,
 }) => {
   const { t, locale } = useI18n();
 
@@ -218,8 +220,8 @@ const Works: React.FC<WorksProps> = ({
             href={linkHref}
             className="text-[18px] md:text-[28px] font-normal leading-[110%] uppercase text-[#D4BAFC] hover:text-[#C4A6F1] transition-colors inline-block font-[Bowler]"
           >
-            {typeof t("works.all_sets", { count: works.length.toString() }) === "string"
-              ? t("works.all_sets", { count: works.length.toString() })
+            {typeof t("works.all_sets", { count: (totalCount || works.length).toString() }) === "string"
+              ? t("works.all_sets", { count: (totalCount || works.length).toString() })
               : `${linkText} →`}
           </Link>
         </div>

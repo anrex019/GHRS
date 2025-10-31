@@ -138,18 +138,18 @@ const Professional = ({
       <div className="md:p-10 px-5">
         {withProfText && (
           <div className="">
-            <h1 className="text-[20px] md:mt-10 md:text-[40px] md:tracking-[-3%] text-[#3D334A] leading-[120%] mb-2.5 md:mb-5">
+            <h1 className="text-[20px] md:mt-10 md:text-[40px] md:tracking-[-3%] text-[#3D334A] leading-[120%] mb-2.5 md:mb-5 font-[Bowler]">
               {typeof t("professional.title") === "string"
                 ? t("professional.title")
                 : "Professional Development"}
             </h1>
-            <p className="text-[#3D334A] text-[18px] font-medium md:max-w-[1320px] md:text-[24px] leading-[120%] md:leading-[120%] mb-5">
+            <p className="text-[#3D334A] text-[18px] md:max-w-[1320px] md:text-[24px] leading-[120%] mb-5 font-pt">
               {typeof t("professional.description") === "string"
                 ? t("professional.description")
                 : ""}
             </p>
             <Link
-              className="text-[14px] md:text-[24px] leading-[90%] uppercase text-[#D4BAFC]"
+              className="text-[14px] md:text-[24px] leading-[90%] uppercase text-[#D4BAFC] font-[Bowler]"
               href="/professional"
             >
               {typeof t("professional.learn_more") === "string"
@@ -164,7 +164,7 @@ const Professional = ({
           className="bg-red-500 w-full mt-4 md:mt-[50px] md:mb-[45px] rounded-2xl"
         >
           <div className="flex items-center justify-between md:mb-[10px] ">
-            <h1 className="text-[20px] md:text-[40px] md:tracking-[-3%] text-[#3D334A] leading-[120%] mb-2.5 md:mb-5">
+            <h1 className="text-[20px] md:text-[40px] md:tracking-[-3%] text-[#3D334A] leading-[120%] mb-2.5 md:mb-5 font-[Bowler]">
               {typeof t("professional.courses.title") === "string"
                 ? t("professional.courses.title")
                 : "Courses"}
@@ -177,12 +177,12 @@ const Professional = ({
             </div>
           ) : error ? (
             <div className="text-center py-10">
-              <p className="text-red-500 mb-2">
+              <p className="text-red-500 mb-2 font-pt text-[18px] leading-[120%]">
                 {typeof t("professional.courses.error") === "string"
                   ? t("professional.courses.error")
                   : "Error loading courses"}
               </p>
-              <p className="text-gray-500 text-sm">{error}</p>
+              <p className="text-gray-500 text-[16px] leading-[120%] font-pt">{error}</p>
             </div>
           ) : (
             <div className="flex gap-4 md:mb-8">
@@ -209,7 +209,7 @@ const Professional = ({
 
           <Link
             href={"/allCourse"}
-            className="md:text-[24px] md:mx-6 leading-[90%] uppercase text-[#D4BAFC]"
+            className="md:text-[24px] md:mx-6 leading-[90%] uppercase text-[#D4BAFC] font-[Bowler]"
           >
             {typeof t("professional.courses.all_courses", {
               count: courses.length.toString(),

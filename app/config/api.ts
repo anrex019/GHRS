@@ -252,6 +252,13 @@ export async function apiRequest<T>(
     if (!response.ok) {
       // Try to get error details from response body
       let errorDetails = '';
+      console.error('❌ API Error:', {
+        status: response.status,
+        statusText: response.statusText,
+        url: url,
+        headers: Object.fromEntries(response.headers.entries())
+      });
+      
       try {
         const errorBody = await response.json();
         errorDetails = errorBody.message || errorBody.error || JSON.stringify(errorBody);
@@ -263,6 +270,7 @@ export async function apiRequest<T>(
           console.error('❌ API Error Response Text:', errorDetails);
         } catch (textError) {
           errorDetails = response.statusText;
+          console.error('❌ Could not parse error response');
         }
       }
       

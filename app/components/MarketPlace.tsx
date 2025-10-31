@@ -14,12 +14,12 @@ const MarketPlace = () => {
         icon="/assets/images/marketplacetxt.png"
       />
       <div className="flex flex-col items-start md:items-baseline gap-10 px-4 pb-4 ">
-        <p className="text-[#3D334A] md:text-[24px] md:px-5 md:pt-10 md:max-w-[838px] font-bold leading-[120%] font-pt">
+        <p className="text-[#3D334A] text-[18px] md:text-[24px] md:px-5 md:pt-10 md:max-w-[838px] leading-[120%] font-pt">
           {typeof t("marketplace.description") === "string"
             ? t("marketplace.description")
             : ""}
         </p>
-        <span className="text-[#846FA0] md:items-end w-full  items-end flex md:justify-end md:pr-10 md:pb-10 md:text-[32px] md:leading-[90%]">
+        <span className="text-[#846FA0] md:items-end w-full  items-end flex md:justify-end md:pr-10 md:pb-10 md:text-[32px] md:leading-[90%] font-[Bowler]">
           {typeof t("marketplace.status") === "string"
             ? t("marketplace.status")
             : ""}

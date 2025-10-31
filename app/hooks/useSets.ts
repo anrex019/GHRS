@@ -95,11 +95,15 @@ export function useAllSets(): UseSetsReturn {
         window.location.hostname !== 'localhost' &&
         API_CONFIG.BASE_URL.includes('render.com');
       
-      const endpoint = isProduction ? '/sets' : '/api/sets';
+      // Fetch ALL sets including inactive/unpublished for accurate count
+      // Add limit=1000 to ensure we get all sets (backend might have default limit)
+      const endpoint = isProduction 
+        ? '/sets?includeAll=true&limit=1000' 
+        : '/api/sets?includeAll=true&limit=1000';
       const url = `${API_CONFIG.BASE_URL}${endpoint}`;
       
       if (isDev) {
-        console.log('🔵 Fetching sets from:', url);
+        console.log('🔵 Fetching ALL sets from:', url);
       }
       
       // ✅ პირდაპირ fetch - bypass apiRequest cache
@@ -131,6 +135,12 @@ export function useAllSets(): UseSetsReturn {
       
       const transformedSets = backendSets.map(transformSet);
       setSets(transformedSets);
+      
+      if (isDev) {
+        console.log('✅ Total sets loaded:', transformedSets.length);
+        console.log('📊 Active sets:', transformedSets.filter(s => s.isActive).length);
+        console.log('📊 Published sets:', transformedSets.filter(s => s.isPublished).length);
+      }
     } catch (err) {
       console.error("❌ Error fetching sets:", err);
       setError(err instanceof Error ? err.message : "API Error");
