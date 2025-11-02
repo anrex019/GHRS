@@ -144,16 +144,106 @@ export default function CategoriesPage() {
     );
   }
 
+  // Calculate statistics
+  const subcategoriesCount = displaySubcategories.length;
+  const setsCount = sets.length;
+  const exercisesCount = sets.reduce((total: number, set: any) => total + (set.totalExercises || 0), 0);
+  
+  // Get the main category name (for now, we'll use a general title, but this can be dynamic per category)
+  const mainCategory = categories.find((cat: any) => !cat.parentId);
+  const categoryTitle = mainCategory ? getLocalized(mainCategory.name) : (t("common.categories") || "Категории");
+
   return (
     <div className="">
-      {/* Header Section */}
-      {/* <Header variant="categories" /> */}
-      <MainHeader
-        ShowBlock={false}
-        OptionalComponent={null}
-        stats={[]}
-        showArrows={false}
-      />
+      {/* Header Section with dynamic statistics */}
+      <div className="relative rounded-[20px] h-[100vh] md:h-[85vh] md:m-6 overflow-hidden">
+        {/* Video background */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="video-bg absolute h-full w-full object-cover z-[-1] md:rounded-[20px]"
+        >
+          <source src="/videos/hero.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+
+        {/* Statistics overlay */}
+        <div className="absolute bottom-16 left-16 z-10 max-w-[90%]">
+          {/* Stats badges */}
+          <div className="flex flex-wrap gap-3 mb-4">
+            {/* Sections badge with glassmorphism */}
+            <div className="relative w-[247px] h-[64px]">
+              {/* Glass background */}
+              <div className="absolute inset-0 bg-[#3D334A]/30 backdrop-blur-[20px] rounded-[15px]"></div>
+              {/* Content */}
+              <div className="relative w-full h-full px-5 py-2.5 flex items-center gap-2">
+                <div className="w-[46px] h-[44px] bg-[#3D334A]/30 backdrop-blur-[20px] rounded-[10px] flex items-center justify-center">
+                  <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 2H15V8H21V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V4C3 3.46957 3.21071 2.96086 3.58579 2.58579C3.96086 2.21071 4.46957 2 5 2H9Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <span className="font-['PT_Root_UI'] text-white text-base font-medium">
+                  {subcategoriesCount} {t("common.sections") || "разделов"}
+                </span>
+              </div>
+            </div>
+
+            {/* Complexes badge with glassmorphism */}
+            <div className="relative w-[247px] h-[64px]">
+              {/* Glass background */}
+              <div className="absolute inset-0 bg-[#3D334A]/30 backdrop-blur-[20px] rounded-[15px]"></div>
+              {/* Content */}
+              <div className="relative w-full h-full px-5 py-2.5 flex items-center gap-2">
+                <div className="w-[46px] h-[44px] bg-[#3D334A]/30 backdrop-blur-[20px] rounded-[10px] flex items-center justify-center">
+                  <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M2 17L12 22L22 17" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M2 12L12 17L22 12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <span className="font-['PT_Root_UI'] text-white text-base font-medium">
+                  {setsCount} {t("common.complexes") || "комплексов"}
+                </span>
+              </div>
+            </div>
+
+            {/* Exercises badge with glassmorphism */}
+            <div className="relative w-[247px] h-[64px]">
+              {/* Glass background */}
+              <div className="absolute inset-0 bg-[#3D334A]/30 backdrop-blur-[20px] rounded-[15px]"></div>
+              {/* Content */}
+              <div className="relative w-full h-full px-5 py-2.5 flex items-center gap-2">
+                <div className="w-[46px] h-[44px] bg-[#3D334A]/30 backdrop-blur-[20px] rounded-[10px] flex items-center justify-center">
+                  <img 
+                    src="/assets/images/Video.png" 
+                    alt="video icon" 
+                    width={30} 
+                    height={30}
+                    className="w-[30px] h-[30px]"
+                  />
+                </div>
+                <span className="font-['PT_Root_UI'] text-white text-base font-medium">
+                  {exercisesCount} {t("common.exercises") || "упражнений"}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Category title with glassmorphism */}
+          <div className="relative w-[779px] h-[158px]">
+            {/* Glass background */}
+            <div className="absolute inset-0 bg-[#3D334A]/30 backdrop-blur-[20px] rounded-[20px]"></div>
+            {/* Content */}
+            <div className="relative w-full h-full px-6 py-3 flex items-center">
+              <h1 className="font-[Bowler] text-white text-3xl md:text-4xl uppercase tracking-wide">
+                {categoryTitle}
+              </h1>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="md:pt-[100px] pt-[400px]">
         {/* Разделы (Subcategories) */}
         <Section 
@@ -164,7 +254,7 @@ export default function CategoriesPage() {
         
         {/* Комплексы (Sets) */}
         <WorksSlider
-          title="Комплексы"
+          title={t("common.complexes") || "Комплексы"}
           works={transformedSets}
           fromMain={false}
           seeAll={true}
@@ -186,7 +276,7 @@ export default function CategoriesPage() {
         </div>
         <div className="md:mb-10">
           {" "}
-          <ReviewSlider title="ОТЗЫВЫ О НАС" />
+          <ReviewSlider title={t("common.reviews_title") || "ОТЗЫВЫ О НАС"} />
         </div>
         <div
           className="md:mb-10
@@ -197,11 +287,11 @@ export default function CategoriesPage() {
             withBanner={false}
             withSlider={true}
             layoutType="default"
-            title={"GRS МЕДИА"}
+            title={t("common.grs_media") || "GRS МЕДИА"}
           />
         </div>
         <Professional
-          title={"GRS Профразвитие"}
+          title={t("common.grs_professional") || "GRS Профразвитие"}
           bgColor={"#F9F7FE"}
           withProfText={true}
           withBanner={false}

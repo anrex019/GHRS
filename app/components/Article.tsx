@@ -799,12 +799,10 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
           </div>
         </div>
 
-
-
         {/* Right Sidebar */}
         <div className="p-5 bg-[rgba(255,255,255,1)] min-h-[700px] h-[700px] rounded-[20px] max-w-[335px] hidden md:block">
           <h2 className="text-lg font-semibold mb-4 text-[rgba(61,51,74,1)]">
-            {t("article.similar_articles")}
+            {t("common.similar_articles")}
           </h2>
           <div className="space-y-4">
             {isLoading ? (
@@ -854,7 +852,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
               ))
             ) : (
               <p className="text-center text-[rgba(132,111,160,1)]">
-                {t("article.no_similar_articles")}
+                {t("common.no_similar_articles")}
               </p>
             )}
           </div>

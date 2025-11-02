@@ -115,12 +115,15 @@ export function useCategories(): UseCategoriesReturn {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  console.log("🎯 useCategories HOOK INITIALIZED");
+
   const fetchCategories = async () => {
     try {
       setLoading(true);
       setError(null);
 
       console.log("🚀 Starting fetchCategories...");
+      console.log("🔍 Window location:", typeof window !== 'undefined' ? window.location.href : 'SSR');
 
       const { apiRequest, API_CONFIG } = await import("../config/api");
       const endpoint = API_CONFIG.ENDPOINTS.CATEGORIES;
@@ -140,7 +143,8 @@ export function useCategories(): UseCategoriesReturn {
         type: typeof backendCategories,
         isArray: Array.isArray(backendCategories),
         length: backendCategories?.length,
-        firstItem: backendCategories?.[0]
+        firstItem: backendCategories?.[0],
+        allCategoryIds: backendCategories?.map(c => c._id)
       });
 
       if (!Array.isArray(backendCategories)) {

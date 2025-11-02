@@ -49,7 +49,9 @@ const Home = () => {
       <MainHeader
         ShowBlock={true}
         OptionalComponent={null}
-        stats={statsData as never[]} 
+        stats={statsData as never[]}
+        useVideo={false}
+        backgroundImage="/assets/images/main-header-bg.jpg"
       />
       <div>
         <Rehabilitation />

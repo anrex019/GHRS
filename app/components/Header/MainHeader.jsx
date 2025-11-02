@@ -132,12 +132,12 @@ function MainHeader({
       <div className="md:w-212 m-8 content-between md:grid">
         {/* თუ customTitle არის, მაშინ გამოაჩენე ის, თუარადა - ჩვეულებრივი */}
         {customTitle ? (
-          <div className="mb-6">
+          <div className="mb-6 md:max-w-[888px]">
             <h1 className="text-2xl md:text-5xl font-bold text-white font-[Bowler] uppercase md:leading-[100%] leading-[120%] md:tracking-[-1%] tracking-[-3%]">
               {customTitle}
             </h1>
             {customSubtitle && (
-              <p className="text-base md:text-2xl text-white font-['PT_Root_UI'] font-medium mt-4 md:leading-[120%] leading-[120%]">
+              <p className="text-base md:text-2xl text-white font-[Bowler] font-medium mt-4 md:leading-[120%] leading-[120%]">
                 {customSubtitle}
               </p>
             )}

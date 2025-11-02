@@ -43,6 +43,7 @@ export function useCategoryComplete(categoryId: string): UseCategoryCompleteRetu
       
       const endpoint = `/api/categories/${categoryId}/complete`;
       console.log("🔗 API endpoint:", endpoint);
+      console.log("🔗 Full URL will be:", `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'}${endpoint}`);
 
       const response = await apiRequest<CategoryCompleteData>(endpoint);
       
@@ -50,6 +51,9 @@ export function useCategoryComplete(categoryId: string): UseCategoryCompleteRetu
       setCategoryData(response);
     } catch (err) {
       console.error("❌ Error fetching category complete data:", err);
+      console.error("❌ Error type:", err instanceof Error ? 'Error object' : typeof err);
+      console.error("❌ Error message:", err instanceof Error ? err.message : String(err));
+      console.error("❌ Category ID that failed:", categoryId);
       setError(err instanceof Error ? err.message : 'Unknown error occurred');
     } finally {
       setLoading(false);

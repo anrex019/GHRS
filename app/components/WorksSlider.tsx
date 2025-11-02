@@ -6,6 +6,7 @@ import React from "react";
 import SliderArrows from "./SliderArrows";
 import Link from "next/link";
 import { useI18n, useLanguage } from "../context/I18nContext";
+import { FaArrowRightLong } from "react-icons/fa6";
 
 interface WorkItem {
   id: string;
@@ -60,12 +61,20 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
   };
 
   return (
-    <div className="md:px-5 px-2 py-2 bg-[#F9F7FE] md:mx-5 md:rounded-[20px]">
+    <div className="px-10 py-[50px] rounded-[30px] bg-[#F9F7FE] mx-6 md:mb-10">
       <div className="flex items-center justify-between">
-        <div className="flex flex-col items-start">
-          <h2 className="text-[20px] md:py-4 md:text-[40px] text-[#3D334A] mb-2.5 md:mb-5 font-[Bowler]">
+        <div className="flex flex-col gap-5">
+          <h2 className="text-[40px] text-[#3D334A] leading-[120%] tracking-[-3%] font-[Bowler]">
             {title}
           </h2>
+          {seeAll && (
+            <Link href={seeAllHref} className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer">
+              <span className="font-['PT_Root_UI'] text-[#D4BAFC] text-[24px] leading-[90%] uppercase mr-2">
+                {t("buttons.show_all") || "Смотреть все"}
+              </span>
+              <FaArrowRightLong color="#D4BAFC"/>
+            </Link>
+          )}
         </div>
         {scrollable && (
           <SliderArrows
@@ -77,7 +86,11 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
 
       <div
         id={uniqueSliderId}
-        className="overflow-x-hidden overflow-y-hidden mb-10 py-4"
+        className="flex flex-row items-center gap-7 overflow-x-auto scrollbar-hide mt-12 scroll-smooth"
+        style={{
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+        }}
       >
         <div className="flex gap-4">
           {works.map((work) => (
@@ -141,6 +154,16 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
           ))}
         </div>
       </div>
+
+      <style jsx>{`
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
     </div>
   );
 };

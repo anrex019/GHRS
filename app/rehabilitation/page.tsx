@@ -77,8 +77,8 @@ const Rehabilitation = () => {
               <Image
                 src="/assets/images/wallet.png"
                 alt="wallet"
-                width={23}
-                height={21}
+                width={54}
+                height={54}
               />
             </div>
             <p className="text-[rgba(255,255,255,1)] font-[Bowler] text-[14px] md:text-[18px] tracking-[0%] leading-[120%] font-medium md:max-w-[413px] w-full md:mt-5 mt-[60px]">
@@ -106,8 +106,8 @@ const Rehabilitation = () => {
                   <Image
                     src="/assets/images/Pin.png"
                     alt="pin"
-                    width={39}
-                    height={39}
+                    width={54}
+                    height={54}
                   />
                 </div>
                 <p className="text-white font-[Bowler] text-[14px] md:text-[18px] tracking-[0%] leading-[120%] font-medium md:max-w-[413px] w-full mt-[60px] md:mt-5">
@@ -132,8 +132,8 @@ const Rehabilitation = () => {
                   <Image
                     src="/assets/images/Key.png"
                     alt="key"
-                    width={45}
-                    height={25}
+                    width={54}
+                    height={54}
                   />
                 </div>
                 <p className="text-white font-[Bowler] text-[14px] md:text-[18px] tracking-[0%] leading-[120%] font-medium md:max-w-[413px] w-full mt-[60px] md:mt-5">
@@ -162,8 +162,8 @@ const Rehabilitation = () => {
                   <Image
                     src="/assets/images/Alarm.png"
                     alt="alarm"
-                    width={41}
-                    height={41}
+                    width={54}
+                    height={54}
                   />
                 </div>
                 <p className="text-white font-[Bowler] text-[14px] md:text-[18px] tracking-[0%] leading-[120%] font-medium md:max-w-[413px] w-full mt-[60px] md:mt-5">
@@ -188,12 +188,21 @@ const Rehabilitation = () => {
                       ? t("rehabilitation.page.subscription.cancellation.title")
                       : "Cancel Subscription"}
                   </h3>
-                  <Image
-                    src="/assets/images/Cross.png"
-                    alt="cross"
-                    width={54}
-                    height={54}
-                  />
+                  <svg
+                    width="54"
+                    height="54"
+                    viewBox="0 0 54 54"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M13.5 13.5L40.5 40.5M40.5 13.5L13.5 40.5"
+                      stroke="white"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
                 </div>
                 <p className="text-white font-[Bowler] text-[14px] md:text-[18px] tracking-[0%] leading-[120%] font-medium md:max-w-[413px] w-full mt-[60px] md:mt-5">
                   {typeof t(
@@ -216,7 +225,7 @@ const Rehabilitation = () => {
               ? t("rehabilitation.page.subscription.discount.title")
               : ""}
           </h3>
-          <div className="md:max-w-[862px] md:ml-4 cursor-pointer max-w-[327px] md:p-5 p-[10px] rounded-[10px] bg-[rgba(255,255,255,1)] flex items-center gap-5 absolute bottom-4 left-4">
+          <button className="md:max-w-[862px] md:ml-4 cursor-pointer max-w-[327px] md:p-5 p-[10px] rounded-[10px] bg-[rgba(255,255,255,1)] flex items-center gap-5 absolute bottom-4 left-4 hover:bg-[rgba(245,243,250,1)] transition-colors duration-300">
             <span className="md:text-[32px] text-[rgba(61,51,74,1)] font-[Bowler]">
               {typeof t("rehabilitation.page.subscription.discount.button") ===
               "string"
@@ -229,7 +238,7 @@ const Rehabilitation = () => {
               width={41}
               height={41}
             />
-          </div>
+          </button>
         </div>
       </section>
 
@@ -250,7 +259,7 @@ const Rehabilitation = () => {
                 : ""}
             </p>
           </div>
-          <div className="md:max-w-[562px] max-w-[327px] md:p-5 p-[10px] rounded-[10px] bg-[rgba(255,255,255,1)] flex items-center gap-5">
+          <button className="md:max-w-[562px] max-w-[327px] md:p-5 p-[10px] rounded-[10px] bg-[rgba(255,255,255,1)] flex items-center gap-5 cursor-pointer hover:bg-[rgba(245,243,250,1)] transition-colors duration-300">
             <span className="md:text-[32px] text-[rgba(61,51,74,1)] font-[Bowler]">
               {typeof t("rehabilitation.page.no_plan.button") === "string"
                 ? t("rehabilitation.page.no_plan.button")
@@ -263,7 +272,7 @@ const Rehabilitation = () => {
               width={26}
               height={19}
             />
-          </div>
+          </button>
         </div>
         <div className="absolute bottom-0 md:right-[64px] right-0 pb-0">
           <Image

@@ -252,12 +252,11 @@ export async function apiRequest<T>(
     if (!response.ok) {
       // Try to get error details from response body
       let errorDetails = '';
-      console.error('❌ API Error:', {
-        status: response.status,
-        statusText: response.statusText,
-        url: url,
-        headers: Object.fromEntries(response.headers.entries())
-      });
+      console.error('❌ API Error:');
+      console.error('  Status:', response.status);
+      console.error('  Status Text:', response.statusText);
+      console.error('  URL:', url);
+      console.error('  Headers:', Object.fromEntries(response.headers.entries()));
       
       try {
         const errorBody = await response.json();

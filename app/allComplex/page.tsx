@@ -26,13 +26,27 @@ interface Subcategory {
 
 const AllComplex = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const { locale } = useI18n();
+  const { locale, t } = useI18n();
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
   // const [visibleWorksCount, setVisibleWorksCount] = useState(1); // რამდენი Works გამოჩნდეს
 
   const { categories } = useCategories();
   const { sets } = useAllSets();
+
+  // Helper to get localized text - MOVED BEFORE USAGE
+  const getLocalizedText = (
+    field: { ka: string; en: string; ru: string } | undefined
+  ): string => {
+    if (!field) return "";
+    return (
+      field[locale as keyof typeof field] ||
+      field.ru ||
+      field.en ||
+      field.ka ||
+      ""
+    );
+  };
 
   // Count sets per category
   const setsPerCategory = categories.map((category) => {
@@ -50,27 +64,6 @@ const AllComplex = () => {
   console.log('📋 Sets per category:', setsPerCategory);
   console.log('🔢 Total sets displayed in categories:', totalSetsInCategories);
   console.log('⚠️ Sets not in any category:', sets.length - totalSetsInCategories);
-
-  // Helper to get localized text
-  const getLocalizedText = (
-    field: { ka: string; en: string; ru: string } | undefined
-  ): string => {
-    if (!field) return "";
-    return (
-      field[locale as keyof typeof field] ||
-      field.ru ||
-      field.en ||
-      field.ka ||
-      ""
-    );
-    // return (
-    //   field[locale as keyof typeof field] ||
-    //   field.ru ||
-    //   field.en ||
-    //   field.ka ||
-    //   ""
-    // );
-  };
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -168,7 +161,7 @@ const AllComplex = () => {
       />
       <MobileNavbar />
 
-      <h1 className="md:text-[64px] md:px-10 px-5 leading-[100%] tracking-[-3%] text-[#3D334A]">
+      <h1 className="font-[Bowler] text-[32px] md:text-[64px] md:px-10 px-5 pt-8 md:pt-10 leading-[120%] tracking-[-3%] text-[#3D334A]">
         {pageTexts.title[locale as keyof typeof pageTexts.title] ||
           pageTexts.title.ru}
       </h1>
@@ -184,14 +177,14 @@ const AllComplex = () => {
           <CiSearch color="black" size={25} />
           <input
             type="text"
-            placeholder="Введите название упражнения"
-            className="w-full font-pt bg-white text-[#846FA0]  md:text-[19px] font-medium ml-2 md:ml-4"
+            placeholder={pageTexts.searchPlaceholder[locale as keyof typeof pageTexts.searchPlaceholder] || pageTexts.searchPlaceholder.ru}
+            className="w-full font-['PT_Root_UI'] bg-white text-[#846FA0] text-[16px] md:text-[19px] font-medium ml-2 md:ml-4 outline-none"
           />
         </div>
 
         <div
           ref={dropdownRef}
-          className="w-full px-10 min-h-[64px] bg-white rounded-[40px] mb-6 p-4 flex flex-wrap gap-2 md:gap-3 items-center"
+          className="w-full px-4 md:px-10 min-h-[64px] bg-[#F9F7FE] rounded-[20px] mb-6 p-4 flex flex-wrap gap-2 md:gap-3 items-center"
         >
           {categories.map((cat, idx) => {
             const isDropdown = !!cat.subcategories;
@@ -199,10 +192,10 @@ const AllComplex = () => {
             return (
               <div key={cat._id} className="relative">
                 <button
-                  className={`text-[#3D334A] text-[13px] md:text-lg tracking-wide font-medium rounded-[8px] px-3 md:px-4 py-3 h-[33px] transition-colors whitespace-nowrap flex items-center gap-1
-                  ${idx === 0 ? "bg-[#E9DDFB] font-bold" : "bg-[#F9F7FE]"}
-                  
-                  ${isOpen ? "ring-2 ring-[#D4BAFC] bg-[#F3D57F]" : ""}
+                  className={`font-['PT_Root_UI'] text-[#3D334A] text-[14px] md:text-[18px] tracking-wide font-medium rounded-[12px] px-4 md:px-5 py-2 md:py-3 min-h-[40px] transition-colors whitespace-nowrap flex items-center gap-2
+                  ${idx === 0 ? "bg-[#E9DDFB]" : "bg-white"}
+                  hover:bg-[#E9DDFB]
+                  ${isOpen ? "ring-2 ring-[#D4BAFC] bg-[#E9DDFB]" : ""}
                 `}
                   onClick={() => {
                     if (isDropdown) {
@@ -238,7 +231,7 @@ const AllComplex = () => {
                         return (
                           <div
                             key={i}
-                            className="px-4 py-2 hover:bg-[#F3D57F] cursor-pointer text-[#3D334A] text-[13px]"
+                            className="font-['PT_Root_UI'] px-4 py-3 hover:bg-[#E9DDFB] cursor-pointer text-[#3D334A] text-[14px] md:text-[16px] transition-colors"
                           >
                             {subcategoryName}
                           </div>

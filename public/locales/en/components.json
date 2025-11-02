@@ -3,6 +3,11 @@
     "title": "Rehabilitation",
     "description": "Modern Israeli rehabilitation methods for restoring and maintaining mobility and work capacity",
     "learn_more": "Learn more →",
+    "all_exercises": "All Exercises",
+    "header": {
+      "title": "MODERN ISRAELI REHABILITATION METHODS",
+      "subtitle": "For restoring and maintaining mobility and work capacity"
+    },
     "page": {
       "subscription": {
         "title": "Subscription",

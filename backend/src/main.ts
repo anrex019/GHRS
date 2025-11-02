@@ -43,7 +43,29 @@ async function bootstrap() {
   // გლობალური API პრეფიქსი
   app.setGlobalPrefix('api');
 
+  // Root endpoint for API info (before global prefix)
+  const expressApp = app.getHttpAdapter().getInstance();
+  expressApp.get('/', (req, res) => {
+    res.json({
+      message: 'GRS Backend API',
+      version: '1.0.0',
+      status: 'running',
+      documentation: '/api/test',
+      endpoints: {
+        test: '/api/test',
+        categories: '/api/categories',
+        courses: '/api/courses',
+        exercises: '/api/exercises',
+        sets: '/api/sets',
+        articles: '/api/articles',
+        users: '/api/users',
+      }
+    });
+  });
+
   const port = process.env.PORT || 4000;
   await app.listen(port);
+  console.log(`🚀 Backend server running on http://localhost:${port}`);
+  console.log(`📚 API documentation: http://localhost:${port}/api/test`);
 }
 bootstrap();

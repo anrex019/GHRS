@@ -22,18 +22,18 @@ const VideoNotification = ({ variant }: VideoNotificationProps) => {
       </h2>
       <div className="flex flex-col md:flex-row md:gap-5 gap-4 w-full items-stretch justify-start md:px-0 px-2">
         <div
-          className="md:p-[30px] p-4 md:flex-1 md:h-[505px] md:rounded-[40px] md:w-auto w-[359px] h-[397px] rounded-3xl"
+          className="md:p-[30px] p-4 md:flex-1 md:h-[505px] md:rounded-[40px] w-full h-[397px] rounded-3xl"
           style={{
             backgroundImage: "url('/assets/images/background-reh.png')",
           }}
         >
-          <h3 className="md:pb-[34px] pb-8 md:text-[40px] text-4xl text-[rgba(255,255,255,1)] tracking-[-3%] leading-[120%]">
+          <h3 className="font-[Bowler] md:pb-[34px] pb-8 md:text-[40px] text-4xl text-[rgba(255,255,255,1)] tracking-[-3%] leading-[120%]">
             {typeof t("video_notification.exercise_complexes.title") ===
             "string"
               ? t("video_notification.exercise_complexes.title")
               : "Exercise Complexes"}
           </h3>
-          <p className=" md:text-[18px] font-pt font-medium text-[14px] text-[rgba(255,255,255,1)] tracking-[-3%]  leading-[120%]">
+          <p className="font-['PT_Root_UI'] md:text-[18px] font-medium text-[14px] text-[rgba(255,255,255,1)] tracking-[-3%]  leading-[120%]">
             {typeof t("video_notification.exercise_complexes.description") ===
             "string"
               ? t("video_notification.exercise_complexes.description")
@@ -41,17 +41,17 @@ const VideoNotification = ({ variant }: VideoNotificationProps) => {
           </p>
         </div>
         <div
-          className="relative md:p-[30px] p-4 md:flex-1 md:h-[505px] md:rounded-[40px] md:w-auto w-[359px] h-[397px] rounded-3xl"
+          className="relative md:p-[30px] p-4 md:flex-1 md:h-[505px] md:rounded-[40px] w-full h-[397px] rounded-3xl"
           style={{
             backgroundImage: "url('/assets/images/background-reh.png')",
           }}
         >
-          <h3 className="md:pb-[34px] pb-8 md:text-[40px] text-4xl text-[rgba(255,255,255,1)] tracking-[-3%] leading-[120%]">
+          <h3 className="font-[Bowler] md:pb-[34px] pb-8 md:text-[40px] text-4xl text-[rgba(255,255,255,1)] tracking-[-3%] leading-[120%]">
             {typeof t("video_notification.for_children.title") === "string"
               ? t("video_notification.for_children.title")
               : "For Children"}
           </h3>
-          <p className="md:text-[18px] font-pt font-medium text-[14px] text-[rgba(255,255,255,1)] tracking-[-3%] leading-[120%]">
+          <p className="font-['PT_Root_UI'] md:text-[18px] font-medium text-[14px] text-[rgba(255,255,255,1)] tracking-[-3%] leading-[120%]">
             {typeof t("video_notification.for_children.description") ===
             "string"
               ? t("video_notification.for_children.description")
@@ -74,17 +74,17 @@ const VideoNotification = ({ variant }: VideoNotificationProps) => {
         </div>
 
         <div
-          className="relative md:p-[30px] p-4 md:flex-1 md:h-[505px] md:rounded-[40px] md:w-auto w-[359px] h-[397px] rounded-3xl"
+          className="relative md:p-[30px] p-4 md:flex-1 md:h-[505px] md:rounded-[40px] w-full h-[397px] rounded-3xl"
           style={{
             backgroundImage: "url('/assets/images/background-reh.png')",
           }}
         >
-          <h3 className=" md:pb-[34px] pb-8 md:text-[40px] text-4xl text-[rgba(255,255,255,1)] tracking-[-3%] leading-[120%]">
+          <h3 className="font-[Bowler] md:pb-[34px] pb-8 md:text-[40px] text-4xl text-[rgba(255,255,255,1)] tracking-[-3%] leading-[120%]">
             {typeof t("video_notification.articles.title") === "string"
               ? t("video_notification.articles.title")
               : "Articles"}
           </h3>
-          <p className=" md:text-[18px] font-pt font-medium text-[14px] text-[rgba(255,255,255,1)] tracking-[-3%]  leading-[120%]">
+          <p className="font-['PT_Root_UI'] md:text-[18px] font-medium text-[14px] text-[rgba(255,255,255,1)] tracking-[-3%]  leading-[120%]">
             {typeof t("video_notification.articles.description") === "string"
               ? t("video_notification.articles.description")
               : ""}

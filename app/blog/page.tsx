@@ -48,10 +48,10 @@ const BlogCard = ({ article }: BlogCardProps) => {
     <Link href={`/article/${article._id}`}>
       <div className="bg-white rounded-[20px] p-5 flex flex-col justify-between h-full shadow-sm hover:shadow-lg transition-shadow duration-300 cursor-pointer">
         <div className="flex flex-col gap-3">
-          <h3 className="text-[#1A1A1A] text-xl font-semibold leading-tight line-clamp-2">
+          <h3 className="font-[Bowler] text-[#1A1A1A] text-xl font-semibold leading-tight line-clamp-2">
             {clampText(getLocalizedText(article.title), 90)}
           </h3>
-          <p className="text-[#1A1A1A]/70 text-sm line-clamp-3">
+          <p className="font-['PT_Root_UI'] text-[#1A1A1A]/70 text-sm line-clamp-3">
             {clampText(getLocalizedText(article.excerpt), 180)}
           </p>
         </div>
@@ -127,8 +127,7 @@ const BigBlogCard = ({ article }: BigBlogCardProps) => {
   };
 
   return (
-    // <Link href={`/blog/${blog._id}`}>
-    <div>
+    <Link href={`/article/${article._id}`}>
       <div className="rounded-[20px] h-full md:h-[500px] p-8 flex flex-col justify-between relative overflow-hidden bg-white shadow-sm hover:shadow-lg transition-shadow duration-300 cursor-pointer">
         {/* Add image div that takes up the top space */}
         <div className="absolute top-0 left-0 w-full h-[45%] overflow-hidden">
@@ -181,17 +180,16 @@ const BigBlogCard = ({ article }: BigBlogCardProps) => {
 
         {/* Existing text content */}
         <div className="flex flex-col gap-4 mt-auto relative z-10">
-          <h2 className="text-[#1A1A1A] text-lg md:text-xl font-semibold leading-tight line-clamp-2">
+          <h2 className="font-[Bowler] text-[#1A1A1A] text-lg md:text-xl font-semibold leading-tight line-clamp-2">
             {clampText(getLocalizedText(article.title), 110)}
           </h2>
-          <p className="text-[#1A1A1A]/80 text-sm line-clamp-3">
+          <p className="font-['PT_Root_UI'] text-[#1A1A1A]/80 text-sm line-clamp-3">
             {clampText(getLocalizedText(article.excerpt).slice(0, 100), 100)}
           </p>
           
         </div>
       </div>
-    </div>
-    // </Link>
+    </Link>
   );
 };
 
@@ -205,7 +203,7 @@ const BlogHeader = ({ BlogCategory }: BlogHeaderProps) => {
   return (
     <div className="bg-[#F9F7FE] md:mx-5 md:px-10 px-4 md:pb-10">
       <div className="flex items-center justify-between">
-        <h1 className="text-[20px] mt-5 md:text-[40px] pt-10 text-[#3D334A] md:mb-5">
+        <h1 className="font-[Bowler] text-[20px] mt-5 md:text-[40px] pt-10 text-[#3D334A] md:mb-5 leading-[120%] tracking-[-3%]">
           {BlogCategory}
         </h1>
         <div className="md:mt-16"></div>
@@ -213,7 +211,7 @@ const BlogHeader = ({ BlogCategory }: BlogHeaderProps) => {
 
       <Link
         href="/categories"
-        className="text-[14px] md:text-[24px] uppercase text-[#D4BAFC] hover:text-[#734ea4] transition-colors duration-300"
+        className="font-['PT_Root_UI'] text-[14px] md:text-[24px] uppercase text-[#D4BAFC] hover:text-[#734ea4] transition-colors duration-300"
       >
         {t("blog.view_all")}
       </Link>
