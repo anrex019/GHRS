@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useRef, useState, useEffect } from "react";
-import Header from "../components/Header/Header";
+import MainHeader from "../components/Header/MainHeader";
 import Image from "next/image";
 import CategorySlider from "../components/CategorySlider";
 import SliderArrows from "../components/SliderArrows";
@@ -14,6 +14,7 @@ import { useI18n } from "../context/I18nContext";
 import { Footer } from "../components/Footer";
 import Category from "../components/Category";
 import { API_CONFIG } from "../config/api";
+import { FaBook, FaDumbbell, FaClock } from "react-icons/fa";
 
 interface Course {
   _id: string;
@@ -111,11 +112,28 @@ const Professional = () => {
   const [instructorsLoading, setInstructorsLoading] = useState(true);
   const [instructorsError, setInstructorsError] = useState<string | null>(null);
 
+  const statsData = [
+    {
+      icon: <FaBook size={24} />,
+      value: "50+",
+      label: "Courses",
+    },
+    {
+      icon: <FaDumbbell size={24} />,
+      value: "20+",
+      label: "Instructors",
+    },
+    {
+      icon: <FaClock size={24} />,
+      value: "1000+",
+      label: "Students",
+    },
+  ];
+
   const fetchCourses = async () => {
     try {
       setLoading(true);
       
-      // TEMPORARY FIX: Remove /api prefix for production Render backend
       const isProduction = typeof window !== 'undefined' && 
         window.location.hostname !== 'localhost' &&
         API_CONFIG.BASE_URL.includes('render.com');
@@ -156,9 +174,6 @@ const Professional = () => {
         ? responseData
         : responseData.instructors || [];
 
-      console.log("Instructors data:", data);
-
-      // Transform data to match our interface
       const transformedInstructors: Instructor[] = data
         .filter((instructor) => instructor.isActive)
         .map((instructor) => ({
@@ -186,8 +201,6 @@ const Professional = () => {
             ka: instructor.htmlContent?.ka,
           },
         }));
-
-      console.log("Transformed instructors:", transformedInstructors);
 
       setInstructors(transformedInstructors);
       setInstructorsError(null);
@@ -220,10 +233,17 @@ const Professional = () => {
 
   return (
     <div>
-      <Header variant="professional" />
-      <div className="mt-52 md:mt-40 md:px-5">
-        <div className="flex flex-col md:flex-row justify-center gap-5 md:gap-0 md:justify-between">
-          <div className="md:w-[500px] w-[359px] relative bg-[url('/assets/images/bluebg.jpg')] bg-cover h-[288px] rounded-[20px]">
+      <MainHeader
+        ShowBlock={true}
+        stats={statsData as never[]}
+        OptionalComponent={null}
+        useVideo={false}
+        backgroundImage="/assets/images/bluebg.jpg"
+      />
+      
+      <div className="mt-10 md:px-5">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-5 md:gap-5 md:justify-between px-4 md:px-0">
+          <div className="md:w-[500px] w-full max-w-[359px] relative bg-[url('/assets/images/bluebg.jpg')] bg-cover h-[288px] rounded-[20px]">
             <Image
               src={"/assets/images/medal.png"}
               width={202}
@@ -232,14 +252,14 @@ const Professional = () => {
               className="absolute right-[15px] top-[15px]"
             />
             <div className="absolute bottom-5 left-5">
-              <h2 className="text-[40px] tracking-[1px]">&gt;20</h2>
-              <p className="text-[20px] font-medium">
+              <h2 className="text-[40px] tracking-[1px] text-white">&gt;20</h2>
+              <p className="text-[20px] font-medium text-white">
                 квалифицированных преподавателей
               </p>
             </div>
           </div>
 
-          <div className="md:w-[453px] w-[359px] relative bg-[url('/assets/images/bluebg.jpg')] bg-cover h-[288px] rounded-[20px]">
+          <div className="md:w-[453px] w-full max-w-[359px] relative bg-[url('/assets/images/bluebg.jpg')] bg-cover h-[288px] rounded-[20px]">
             <Image
               src={"/assets/images/book.png"}
               width={202}
@@ -248,11 +268,12 @@ const Professional = () => {
               className="absolute right-[15px] top-[15px]"
             />
             <div className="absolute bottom-5 left-5">
-              <h2 className="text-[40px] tracking-[1px]">50+</h2>
-              <p className="text-[20px] font-medium">эксклюзивных курсов</p>
+              <h2 className="text-[40px] tracking-[1px] text-white">50+</h2>
+              <p className="text-[20px] font-medium text-white">эксклюзивных курсов</p>
             </div>
           </div>
-          <div className="md:w-[453px] w-[359px] relative bg-[url('/assets/images/bluebg.jpg')] bg-cover h-[288px] rounded-[20px]">
+          
+          <div className="md:w-[453px] w-full max-w-[359px] relative bg-[url('/assets/images/bluebg.jpg')] bg-cover h-[288px] rounded-[20px]">
             <Image
               src={"/assets/images/laptop.png"}
               width={202}
@@ -261,8 +282,8 @@ const Professional = () => {
               className="absolute right-[15px] top-[15px]"
             />
             <div className="absolute bottom-5 left-5">
-              <h2 className="text-[40px] tracking-[1px]">&gt;20</h2>
-              <p className="text-[20px] font-medium">
+              <h2 className="text-[40px] tracking-[1px] text-white">&gt;20</h2>
+              <p className="text-[20px] font-medium text-white">
                 студентов, проходят обучения сейчас
               </p>
             </div>
@@ -270,7 +291,7 @@ const Professional = () => {
         </div>
       </div>
 
-      <div className=" mt-10">
+      <div className="mt-10">
         <Category bgColor={""} customRounded={"30px"} customMx={""} />
         <div className="bg-[#F9F7FE] mt-4 md:mt-[50px] md:mx-5 md:mb-[45px] rounded-[30px]">
           <div className="p-5">
@@ -345,7 +366,7 @@ const Professional = () => {
         buttonTextKey="buttons.take_test"
         buttonTextColor="#3D334A"
         buttonBgColor="#FFFFFF"
-    href="/shoppingcard"
+        href="/shoppingcard"
         bgCenter={true}
         containerStyles="custom-class"
         titleStyles="text-white"

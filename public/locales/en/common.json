@@ -6,7 +6,7 @@
     "home": "Home",
     "about": "About Us",
     "rehabilitation": "Rehabilitation",
-    "professional": "Professional Development", 
+    "professional": "Professional Development",
     "blog": "Blog",
     "categories": "Categories",
     "contact": "Contact",
@@ -35,7 +35,7 @@
     "price_per_month": "₾/month",
     "videos": "videos",
     "exercises": "exercises",
-    "courses": "courses", 
+    "courses": "courses",
     "minutes": "minutes",
     "hours": "hours",
     "loading": "Loading...",
@@ -151,5 +151,12 @@
   },
   "reviews": {
     "title": "REVIEWS ABOUT GRS"
+  },
+  "rehabilitation": {
+    "all_exercises": "All Exercises",
+    "header": {
+      "title": "MODERN ISRAELI REHABILITATION METHODS",
+      "subtitle": "For restoring and maintaining mobility and work capacity"
+    }
   }
-} 
+}

@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import Header from "../components/Header/Header";
 import VideoNotification from "../components/VideoNotification";
 import Advantages from "../components/Advantages";
 import Image from "next/image";
@@ -8,9 +7,17 @@ import Category from "../components/Category";
 import { Footer } from "../components/Footer";
 import { useI18n } from "../context/I18nContext";
 import MainHeader from "../components/Header/MainHeader";
-import { FaBook, FaDumbbell, FaClock } from "react-icons/fa"; // Add this import
+import { FaBook, FaDumbbell, FaClock } from "react-icons/fa";
 
 const Rehabilitation = () => {
+  const { t, locale } = useI18n();
+   console.log('=== REHABILITATION DEBUG ===');
+  console.log('Current locale:', locale);
+  console.log('Title translation:', t("rehabilitation.header.title"));
+  console.log('Subtitle translation:', t("rehabilitation.header.subtitle"));
+  console.log('All exercises:', t("rehabilitation.all_exercises"));
+  console.log('============================');
+  
   const statsData = [
     {
       icon: <FaBook size={24} />,
@@ -28,26 +35,27 @@ const Rehabilitation = () => {
       label: "Duration",
     },
   ];
-  const { t } = useI18n();
-
-  const CustomBlock = (
-    <div className="md:absolute bottom-0 right-0 gap-4 flex flex-col">
-      <a 
-        href="/allComplex"
-        className="text-white bg-[#3D334A] rounded-[40px] w-[246px] h-[222px] flex items-start justify-start p-8 transition-transform duration-300 hover:scale-105 cursor-pointer font-bold uppercase text-lg shadow-2xl leading-tight"
-      >
-        {t("rehabilitation.all_exercises") || "все Упражнения"}
-      </a>
-    </div>
-  );
 
   return (
     <div className="">
-      {/* <Header variant="rehabilitation" /> */}
       <MainHeader
-        ShowBlock={true}
+        ShowBlock={false}
         stats={statsData as never[]}
-        OptionalComponent={null}
+        // Add custom title and subtitle for rehabilitation page
+        customTitle={t("rehabilitation.header.title")}
+        customSubtitle={t("rehabilitation.header.subtitle")}
+        OptionalComponent={
+          <div className="absolute bottom-0 right-0 hidden md:flex gap-4 bg-[#F9F7FE] rounded-tl-[60px] p-6 pb-8 z-10 items-end">
+            <a 
+              href="/allComplex"
+              className="text-white bg-[#3D334A] rounded-[20px] w-[246px] h-[222px] flex items-start justify-start p-8 transition-transform duration-300 hover:scale-105 cursor-pointer font-bold uppercase text-lg shadow-2xl leading-tight"
+            >
+              {t("rehabilitation.all_exercises") || "все Упражнения"}
+            </a>
+          </div>
+        }
+        useVideo={false}
+        backgroundImage="/assets/images/continueWatchingBanner.jpg"
       />
       <VideoNotification variant="rehabilitation" />
       <Advantages />

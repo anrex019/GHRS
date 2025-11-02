@@ -13,6 +13,10 @@ function MainHeader({
   stats = [],
   showArrows = true,
   complexData = null,
+  useVideo = true,
+  backgroundImage = "/assets/images/continueWatchingBanner.jpg",
+  customTitle = null, // ახალი პროპი - რეაბილიტაციის სათაურისთვის
+  customSubtitle = null, // ახალი პროპი - რეაბილიტაციის ქვესათაურისთვის
 }) {
   const { t, locale } = useI18n();
   const { statistics } = useStatistics();
@@ -28,7 +32,6 @@ function MainHeader({
   const handleNextClick = () => setShowContent(true);
   const handlePrevClick = () => setShowContent(false);
 
-  // determine visibility: always visible if arrows are not shown
   const isVisible = !showArrows || showContent;
 
   return (
@@ -41,16 +44,24 @@ function MainHeader({
       />
       <MobileNavbar menuItems={localizedMenuItems} />
 
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="video-bg absolute h-full object-cover z-[-1] md:rounded-[20px]"
-      >
-        <source src="/videos/hero.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+      {/* ვიდეო ან სურათი */}
+      {useVideo ? (
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="video-bg absolute h-full w-full object-cover z-[-1] md:rounded-[20px]"
+        >
+          <source src="/videos/hero.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      ) : (
+        <div 
+          className="absolute inset-0 w-full h-full bg-cover bg-center z-[-1] md:rounded-[20px]"
+          style={{ backgroundImage: `url(${backgroundImage})` }}
+        />
+      )}
 
       {/* Arrow Navigation Buttons */}
       {showArrows && (
@@ -101,7 +112,6 @@ function MainHeader({
         </div>
       )}
 
-      {/* ✅ Cards Container - Top-Right Position */}
       {ShowBlock && (
         <div className="absolute bottom-0 right-0 hidden md:flex gap-4 bg-[#F9F7FE] rounded-tl-[80px] p-6 pb-8 z-10 items-end">
           <Link 
@@ -120,11 +130,24 @@ function MainHeader({
       )}
 
       <div className="md:w-212 m-8 content-between md:grid">
-        <h1 className="text-2xl md:text-5xl font-bold text-white mb-6 hidden md:block">
-          {t("header.ecosystem_title")}
-        </h1>
+        {/* თუ customTitle არის, მაშინ გამოაჩენე ის, თუარადა - ჩვეულებრივი */}
+        {customTitle ? (
+          <div className="mb-6">
+            <h1 className="text-2xl md:text-5xl font-bold text-white font-[Bowler] uppercase md:leading-[100%] leading-[120%] md:tracking-[-1%] tracking-[-3%]">
+              {customTitle}
+            </h1>
+            {customSubtitle && (
+              <p className="text-base md:text-2xl text-white font-['PT_Root_UI'] font-medium mt-4 md:leading-[120%] leading-[120%]">
+                {customSubtitle}
+              </p>
+            )}
+          </div>
+        ) : (
+          <h1 className="text-2xl md:text-5xl font-bold text-white mb-6 hidden md:block">
+            {t("header.ecosystem_title")}
+          </h1>
+        )}
 
-        {/* Stats + Description Block with slide-in */}
         <div
           className={`md:absolute bottom-8 block transform transition-all duration-500 ${
             isVisible ? "translate-x-0 opacity-100" : "-translate-x-10 opacity-0"
