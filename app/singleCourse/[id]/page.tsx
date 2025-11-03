@@ -14,6 +14,7 @@ import { useUserAccess } from "../../hooks/useUserAccess";
 import { useAuth } from "../../context/AuthContext";
 import { useModal } from "../../context/ModalContext";
 import { useI18n } from "../../context/I18nContext";
+import { sanitizeHtml } from "../../utils/sanitize";
 
 interface Course {
   _id: string;
@@ -330,10 +331,10 @@ export default function SingleCourse() {
               </span>
               <div className="flex flex-col">
                 <span className="font-semibold text-[18px] text-[rgba(132,111,160,1)]">
-                  {course.duration ? `${course.duration} минут` : "Не указано"}
+                  {course.duration ? t("course.duration_minutes", { duration: course.duration.toString() }) : t("course.not_specified")}
                 </span>
                 <span className="text-sm text-[#A9A6B4]">
-                  Продолжительность
+                  {t("course.duration")}
                 </span>
               </div>
             </div>
@@ -498,7 +499,7 @@ export default function SingleCourse() {
                         <div
                           className="text-[#8D7EF3]"
                           dangerouslySetInnerHTML={{
-                            __html: course.shortDescription.ru,
+                            __html: sanitizeHtml(course.shortDescription.ru),
                           }}
                         />
                       </div>
@@ -508,7 +509,7 @@ export default function SingleCourse() {
                     <div
                       className="text-[#A9A6B4]"
                       dangerouslySetInnerHTML={{
-                        __html: course.description.ru,
+                        __html: sanitizeHtml(course.description.ru),
                       }}
                     />
 
@@ -521,7 +522,7 @@ export default function SingleCourse() {
                         <div
                           className="text-[#8B7355]"
                           dangerouslySetInnerHTML={{
-                            __html: course.prerequisites.ru,
+                            __html: sanitizeHtml(course.prerequisites.ru),
                           }}
                         />
                       </div>
@@ -538,7 +539,7 @@ export default function SingleCourse() {
                             {course.learningOutcomes.map((outcome, index) => (
                               <li
                                 key={index}
-                                dangerouslySetInnerHTML={{ __html: outcome.ru }}
+                                dangerouslySetInnerHTML={{ __html: sanitizeHtml(outcome.ru) }}
                               />
                             ))}
                           </ul>
@@ -589,7 +590,7 @@ export default function SingleCourse() {
                     <div className="mt-8">
                       <div className="flex items-center justify-between md:mb-[10px]">
                         <h2 className="text-2xl font-bold text-[#302A3A] mb-6">
-                          Похожие курсы
+                          {t("course.related_courses")}
                         </h2>
                         <SliderArrows
                           onScrollLeft={scrollLeft}
@@ -634,13 +635,13 @@ export default function SingleCourse() {
                           )}
                         </div>
                         <div
-                          dangerouslySetInnerHTML={{ __html: item.title.ru }}
+                          dangerouslySetInnerHTML={{ __html: sanitizeHtml(item.title.ru) }}
                         />
                         {item.description && (
                           <div
                             className="font-normal mt-2 text-[#A9A6B4]"
                             dangerouslySetInnerHTML={{
-                              __html: item.description.ru,
+                              __html: sanitizeHtml(item.description.ru),
                             }}
                           />
                         )}
@@ -651,18 +652,19 @@ export default function SingleCourse() {
                     <div className="bg-[#F1EEFF] rounded-2xl px-6 py-4 mt-4">
                       <div className="flex items-center justify-between">
                         <span className="font-bold text-[#8D7EF3]">
-                          Общая продолжительность:
+                          {t("course.total_duration")}:
                         </span>
                         <span className="text-[#8D7EF3] font-semibold">
-                          {course.syllabus.reduce(
-                            (total, item) => total + (item.duration || 0),
-                            0
-                          )}{" "}
-                          минут
+                          {t("course.duration_minutes", { 
+                            duration: course.syllabus.reduce(
+                              (total, item) => total + (item.duration || 0),
+                              0
+                            ).toString()
+                          })}
                         </span>
                       </div>
                       <div className="text-[#A9A6B4] text-sm mt-1">
-                        {course.syllabus.length} уроков
+                        {course.syllabus.length} {t("common.lessons", { count: course.syllabus.length.toString() })}
                       </div>
                     </div>
                   </div>
@@ -672,7 +674,7 @@ export default function SingleCourse() {
                     <div className="mt-8">
                       <div className="flex items-center justify-between md:mb-[10px]">
                         <h2 className="text-2xl font-bold text-[#302A3A] mb-6">
-                          Похожие курсы
+                          {t("course.related_courses")}
                         </h2>
                         <SliderArrows
                           onScrollLeft={scrollLeft}
@@ -711,12 +713,12 @@ export default function SingleCourse() {
                           <h3
                             className="font-bold mb-2"
                             dangerouslySetInnerHTML={{
-                              __html: announcement.title.ru,
+                              __html: sanitizeHtml(announcement.title.ru),
                             }}
                           />
                           <div
                             dangerouslySetInnerHTML={{
-                              __html: announcement.content.ru,
+                              __html: sanitizeHtml(announcement.content.ru),
                             }}
                           />
                         </div>
@@ -728,7 +730,7 @@ export default function SingleCourse() {
                     <div className="mt-8">
                       <div className="flex items-center justify-between md:mb-[10px]">
                         <h2 className="text-2xl font-bold text-[#302A3A] mb-6">
-                          Похожие курсы
+                          {t("course.related_courses")}
                         </h2>
                         <SliderArrows
                           onScrollLeft={scrollLeft}
@@ -768,7 +770,7 @@ export default function SingleCourse() {
                     <div className="mt-8">
                       <div className="flex items-center justify-between md:mb-[10px]">
                         <h2 className="text-2xl font-bold text-[#302A3A] mb-6">
-                          Похожие курсы
+                          {t("course.related_courses")}
                         </h2>
                         <SliderArrows
                           onScrollLeft={scrollLeft}

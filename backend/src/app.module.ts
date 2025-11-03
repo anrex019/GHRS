@@ -25,9 +25,7 @@ import { EmailModule } from './email/email.module'; // ← დამატებ
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    MongooseModule.forRoot(
-      process.env.MONGODB_URI || 'mongodb+srv://beruashvilig60:Berobero1234!@cluster0.dtwfws3.mongodb.net/grs-db',
-    ),
+    MongooseModule.forRoot(process.env.MONGODB_URI),
     EmailModule, // ← დამატებული
     AuthModule,
     UserModule,

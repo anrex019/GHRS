@@ -94,6 +94,14 @@
     "similar_articles": "Похожие статьи",
     "no_similar_articles": "Похожих статей не найдено"
   },
+  "course": {
+    "duration": "Продолжительность",
+    "duration_minutes": "{{duration}} минут",
+    "not_specified": "Не указано",
+    "enter_comment": "Введите ваш комментарий",
+    "total_duration": "Общая продолжительность",
+    "related_courses": "Похожие курсы"
+  },
   "complex_description": "Описание",
   "complex_additional": "Дополнительно",
   "complex_demo_video": "Демо-видео",

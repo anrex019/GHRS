@@ -94,6 +94,14 @@
     "similar_articles": "მსგავსი სტატიები",
     "no_similar_articles": "მსგავსი სტატიები არ მოიძებნა"
   },
+  "course": {
+    "duration": "ხანგრძლივობა",
+    "duration_minutes": "{{duration}} წუთი",
+    "not_specified": "არ არის მითითებული",
+    "enter_comment": "შეიყვანეთ თქვენი კომენტარი",
+    "total_duration": "სრული ხანგრძლივობა",
+    "related_courses": "მსგავსი კურსები"
+  },
   "complex_description": "აღწერა",
   "complex_additional": "დამატებითი",
   "complex_demo_video": "დემო-ვიდეო",

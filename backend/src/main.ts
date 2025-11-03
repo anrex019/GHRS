@@ -23,7 +23,32 @@ async function bootstrap() {
 
   // უსაფრთხოების ჰედერები
   app.use((req, res, next) => {
+    // Prevent clickjacking
+    res.header('X-Frame-Options', 'DENY');
+    
+    // Prevent MIME type sniffing
+    res.header('X-Content-Type-Options', 'nosniff');
+    
+    // Enable XSS protection
+    res.header('X-XSS-Protection', '1; mode=block');
+    
+    // Restrict permissions
     res.header('Permissions-Policy', 'geolocation=(), camera=(), microphone=()');
+    
+    // Content Security Policy
+    res.header('Content-Security-Policy', 
+      "default-src 'self'; " +
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.paypal.com https://www.paypalobjects.com; " +
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+      "font-src 'self' https://fonts.gstatic.com; " +
+      "img-src 'self' data: https: blob:; " +
+      "connect-src 'self' https://api-m.sandbox.paypal.com https://api.paypal.com; " +
+      "frame-src 'self' https://www.paypal.com;"
+    );
+    
+    // Referrer Policy
+    res.header('Referrer-Policy', 'strict-origin-when-cross-origin');
+    
     next();
   });
 

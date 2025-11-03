@@ -8,6 +8,14 @@
       "additional": "Additional",
       "demo_video": "Demo Video"
     },
+    "stats": {
+      "total_time": "Total Time",
+      "exercises": "Exercises",
+      "exercises_label": "exercises",
+      "average_time": "Average Time",
+      "current_streak": "Current Streak",
+      "days": "days"
+    },
     "recommendations": "Recommended",
     "continue_watching": {
       "title": "You haven't finished watching the video exercise. Would you like to continue?",

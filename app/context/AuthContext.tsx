@@ -26,11 +26,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const userData = localStorage.getItem('user');
         
         if (token && userData) {
-          setIsAuthenticated(true);
-          setUser(JSON.parse(userData));
+          // Validate token format (basic JWT structure check)
+          const tokenParts = token.split('.');
+          if (tokenParts.length !== 3) {
+            console.warn('Invalid token format');
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            return;
+          }
+          
+          // Parse and validate user data
+          try {
+            const parsedUser = JSON.parse(userData);
+            if (!parsedUser || typeof parsedUser !== 'object') {
+              throw new Error('Invalid user data');
+            }
+            setIsAuthenticated(true);
+            setUser(parsedUser);
+          } catch (parseError) {
+            console.error('Error parsing user data:', parseError);
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+          }
         }
       } catch (error) {
         console.error('Error initializing auth:', error);
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
       } finally {
         setIsLoading(false);
       }

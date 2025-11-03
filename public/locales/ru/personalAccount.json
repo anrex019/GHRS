@@ -8,6 +8,14 @@
       "additional": "Дополнительно",
       "demo_video": "Демо-видео"
     },
+    "stats": {
+      "total_time": "Общее время",
+      "exercises": "Упражнения",
+      "exercises_label": "упражнений",
+      "average_time": "Среднее время",
+      "current_streak": "Текущая серия",
+      "days": "дней"
+    },
     "recommendations": "Рекомендуем",
     "continue_watching": {
       "title": "Вы не завершили просмотр видеоупражнения. Продолжить?",

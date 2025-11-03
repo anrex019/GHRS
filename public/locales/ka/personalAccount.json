@@ -8,6 +8,14 @@
       "additional": "დამატებითი",
       "demo_video": "დემო ვიდეო"
     },
+    "stats": {
+      "total_time": "სრული დრო",
+      "exercises": "ვარჯიშები",
+      "exercises_label": "ვარჯიში",
+      "average_time": "საშუალო დრო",
+      "current_streak": "მიმდინარე სერია",
+      "days": "დღე"
+    },
     "recommendations": "რეკომენდებული",
     "continue_watching": {
       "title": "თქვენ არ დაგისრულებიათ ვიდეო ვარჯიშის ყურება. გსურთ გაგრძელება?",

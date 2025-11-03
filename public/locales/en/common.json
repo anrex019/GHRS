@@ -38,6 +38,7 @@
     "courses": "courses",
     "minutes": "minutes",
     "hours": "hours",
+    "lessons": "lessons",
     "loading": "Loading...",
     "error": "Error",
     "subscription_plans": "Subscription plans",
@@ -84,7 +85,8 @@
     "all_articles": "All Articles",
     "read_more": "Read More",
     "share": "Share",
-    "bookmark": "Bookmark"
+    "bookmark": "Bookmark",
+    "share_social": "Share on social media"
   },
   "days": {
     "monday": "Mon",

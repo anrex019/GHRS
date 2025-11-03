@@ -20,42 +20,9 @@ import SubscriptionHistory from "../components/SubscriptionHistory";
 import { useAllSets } from "../hooks/useSets";
 import { useCategories } from "../hooks/useCategories";
 import { useActivityTracker } from "../hooks/useAchievements";
+import { useUserStatistics, formatTimeSpent, calculateAverageTime } from "../hooks/useUserStatistics";
 
-const dummyData = {
-  goals: {
-    currentStreak: 5,
-    recordStreak: 10,
-    calendarIntegration: "google",
-  },
-  statistics: [
-    { label: "Общее время", text: "24:00:00", icon: FaRegCheckCircle },
-    { label: "Упражнения", text: "150 упражнений", icon: FaStar },
-    { label: "Среднее время", text: "00:45:00", icon: FaRegCheckCircle },
-  ],
-  achievements: [
-    {
-      id: "first-exercise",
-      title: "Первое упражнение",
-      description: "Успешно завершили первое упражнение",
-      current: 1,
-      total: 1,
-    },
-    {
-      id: "five-day-streak",
-      title: "5 дней подряд",
-      description: "Тренировались 5 дней подряд",
-      current: 5,
-      total: 5,
-    },
-    {
-      id: "professional",
-      title: "Профессионал",
-      description: "Завершили 50 упражнений",
-      current: 25,
-      total: 50,
-    },
-  ],
-};
+// Removed dummy data - now using real user statistics
 
 const PersonalAccountContent: React.FC = () => {
   const { isAuthenticated, user, isLoading } = useAuth();
@@ -64,6 +31,7 @@ const PersonalAccountContent: React.FC = () => {
   const { sets } = useAllSets();
   const { categories } = useCategories();
   const { recordActivity } = useActivityTracker();
+  const { statistics: userStats, loading: statsLoading } = useUserStatistics();
 
   const tabItems = [
     { label: t("personal_account.tabs.description"), href: "#description" },
@@ -81,6 +49,31 @@ const PersonalAccountContent: React.FC = () => {
   }, [isLoading, isAuthenticated, router]);
 
   // Test functions for achievements
+  // Generate real statistics from user data
+  const statisticsData = React.useMemo(() => {
+    if (!userStats) return [];
+    
+    const activeDays = userStats.activityDates?.length || 0;
+    
+    return [
+      { 
+        label: t("personal_account.stats.total_time") || "Общее время", 
+        text: formatTimeSpent(userStats.totalTimeSpent || 0),
+        icon: FaRegCheckCircle 
+      },
+      { 
+        label: t("personal_account.stats.exercises") || "Упражнения", 
+        text: `${userStats.totalExercisesCompleted || 0} ${t("personal_account.stats.exercises_label") || "упражнений"}`,
+        icon: FaStar 
+      },
+      { 
+        label: t("personal_account.stats.average_time") || "Среднее время", 
+        text: calculateAverageTime(userStats.totalTimeSpent || 0, activeDays),
+        icon: FaRegCheckCircle 
+      },
+    ];
+  }, [userStats, t]);
+
   const testExerciseCompletion = async () => {
     try {
       await recordActivity("exercise", "test-exercise-1", 5);
@@ -164,16 +157,23 @@ const PersonalAccountContent: React.FC = () => {
       <MobileNavbar />
       <ContinueWatchingBanner />
       <div className="mx-2 md:mx-10 md:mt-10 mt-0  flex flex-col gap-3 md:flex-row-reverse">
-        <PersonGoals goals={dummyData.goals} />
-        <DaysInRow
-          currentStreak={dummyData.goals.currentStreak}
-          recordStreak={dummyData.goals.recordStreak}
-          multiplier={2}
-          timer="18:45:24"
+        <PersonInfo user={user || users[0]} />
+        <PersonGoals
+          goals={{
+            currentStreak: userStats?.currentStreak || 0,
+            recordStreak: userStats?.recordStreak || 0,
+            calendarIntegration: "google"
+          }}
         />
+        {statsLoading ? (
+          <div className="bg-[#F9F7FE] p-10 rounded-[20px] mt-5 flex items-center justify-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-4 border-purple-600 border-t-transparent"></div>
+          </div>
+        ) : (
+          <Statistics statistics={statisticsData} />
+        )}
       </div>
       <div className="md:mt-10 mb-[100px]">
-        <PersonInfo user={user} />
         {/* Tabs with click handler */}
         <div className="cursor-pointer px-10 bg-[#E9DFF6] mx-10 rounded-[20px]">
           <div

@@ -38,6 +38,7 @@
     "courses": "курсы",
     "minutes": "минут",
     "hours": "часов",
+    "lessons": "уроков",
     "loading": "Загрузка...",
     "error": "Ошибка",
     "subscription_plans": "Планы подписки",
@@ -84,7 +85,8 @@
     "all_articles": "Все статьи",
     "read_more": "Подробнее",
     "share": "Поделиться",
-    "bookmark": "Сохранить"
+    "bookmark": "Сохранить",
+    "share_social": "Поделиться в соцсетях"
   },
   "days": {
     "monday": "Пн",

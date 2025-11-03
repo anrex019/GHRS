@@ -1,7 +1,14 @@
 import mongoose from 'mongoose';
 import { config } from 'dotenv';
 
-const MONGODB_URI = 'mongodb+srv://beruashvilig60:Berobero1234!@cluster0.dtwfws3.mongodb.net/grs-db';
+config();
+
+const MONGODB_URI = process.env.MONGODB_URI;
+
+if (!MONGODB_URI) {
+  console.error('❌ MONGODB_URI is not set in environment variables');
+  process.exit(1);
+}
 
 
 // Article schema

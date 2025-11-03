@@ -3,6 +3,7 @@ import React from "react";
 import Image from "next/image";
 import DesktopNavbar from "@/app/components/Navbar/DesktopNavbar";
 import { defaultMenuItems } from "@/app/components/Header/Header";
+import { useI18n } from "@/app/context/I18nContext";
 
 const staticCourse = {
   title: "Ортопедия",
@@ -48,6 +49,7 @@ const sidebarBanners = [
 
 const SingleCourse = () => {
   const course = staticCourse;
+  const { t } = useI18n();
 
   return (
     <>
@@ -211,7 +213,7 @@ const SingleCourse = () => {
               <form className="max-w-[650px] mx-auto relative mb-6">
                 <input
                   type="text"
-                  placeholder="Введите ваш комментарий"
+                  placeholder={t("course.enter_comment")}
                   className="w-full p-4 text-lg font-medium border-2 rounded-lg outline-none border-[rgba(249,247,254,1)] transition-colors bg-transparent leading-none tracking-normal placeholder:text-[rgba(226,204,255,1)]"
                 />
                 <button

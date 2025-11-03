@@ -94,6 +94,14 @@
     "similar_articles": "Similar articles",
     "no_similar_articles": "No similar articles found"
   },
+  "course": {
+    "duration": "Duration",
+    "duration_minutes": "{{duration}} minutes",
+    "not_specified": "Not specified",
+    "enter_comment": "Enter your comment",
+    "total_duration": "Total duration",
+    "related_courses": "Related courses"
+  },
   "complex_description": "Description",
   "complex_additional": "Additional",
   "complex_demo_video": "Demo Video",
