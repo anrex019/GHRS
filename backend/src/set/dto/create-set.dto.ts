@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsBoolean, ValidateNested, IsOptional, IsMongoId } from 'class-validator';
+import { IsString, IsNumber, IsBoolean, ValidateNested, IsOptional, IsMongoId, IsArray } from 'class-validator';
 import { Type } from 'class-transformer';
 
 class LocalizedStringDto {
@@ -7,6 +7,10 @@ class LocalizedStringDto {
 
   @IsString()
   ru: string;
+
+  @IsOptional()
+  @IsString()
+  ge?: string; // დავამატოთ ქართული
 }
 
 class LevelDto {
@@ -54,9 +58,10 @@ export class CreateSetDto {
   @Type(() => LocalizedStringDto)
   description: LocalizedStringDto;
 
+  @IsOptional()
   @ValidateNested()
   @Type(() => LocalizedStringDto)
-  recommendations: LocalizedStringDto;
+  recommendations?: LocalizedStringDto;
 
   @IsOptional()
   @ValidateNested()
@@ -142,4 +147,9 @@ export class CreateSetDto {
   @IsOptional()
   @IsMongoId()
   subCategoryId?: string;
-} 
+
+  @IsOptional()
+  @IsArray()
+  @IsMongoId({ each: true })
+  exercises?: string[]; // დავამატოთ exercises array
+}

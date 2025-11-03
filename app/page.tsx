@@ -50,7 +50,7 @@ const Home = () => {
         ShowBlock={true}
         OptionalComponent={null}
         stats={statsData as never[]}
-        useVideo={false}
+        useVideo={true}
         backgroundImage="/assets/images/main-header-bg.jpg"
       />
       <div>
