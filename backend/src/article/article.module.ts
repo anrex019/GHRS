@@ -5,12 +5,14 @@ import { memoryStorage } from 'multer';
 import { ArticleController } from './article.controller';
 import { ArticleService } from './article.service';
 import { Article, ArticleSchema } from '../schemas/article.schema';
+import { Comment, CommentSchema } from '../schemas/comment.schema';
 import { Blog, BlogSchema } from '../schemas/blog.schema';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: Article.name, schema: ArticleSchema },
+      { name: Comment.name, schema: CommentSchema },
       { name: Blog.name, schema: BlogSchema },
     ]),
     MulterModule.register({

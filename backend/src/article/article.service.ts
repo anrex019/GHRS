@@ -1,7 +1,8 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Article, ArticleDocument } from '../schemas/article.schema';
+import { Comment, CommentDocument } from '../schemas/comment.schema';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { Blog, BlogDocument } from '../schemas/blog.schema';
 
@@ -9,6 +10,7 @@ import { Blog, BlogDocument } from '../schemas/blog.schema';
 export class ArticleService {
   constructor(
     @InjectModel(Article.name) private articleModel: Model<ArticleDocument>,
+    @InjectModel(Comment.name) private commentModel: Model<CommentDocument>,
     @InjectModel('Blog') private blogModel: Model<BlogDocument>,
   ) {}
 
@@ -423,6 +425,117 @@ export class ArticleService {
     } catch (error) {
       console.error('❌ Error fetching articles by blog:', error);
       throw new BadRequestException('Failed to fetch articles by blog');
+    }
+  }
+
+  // Comment methods
+  async getComments(articleId: string): Promise<Comment[]> {
+    try {
+      if (!Types.ObjectId.isValid(articleId)) {
+        throw new BadRequestException('Invalid article ID');
+      }
+
+      const comments = await this.commentModel
+        .find({ 
+          articleId: new Types.ObjectId(articleId),
+          isActive: true 
+        })
+        .sort({ createdAt: -1 })
+        .exec();
+
+      return comments;
+    } catch (error) {
+      console.error('❌ Error fetching comments:', error);
+      throw new BadRequestException('Failed to fetch comments');
+    }
+  }
+
+  async createComment(
+    articleId: string,
+    content: string,
+    userId: string,
+    userName: string,
+    userAvatar?: string,
+  ): Promise<Comment> {
+    try {
+      if (!Types.ObjectId.isValid(articleId)) {
+        throw new BadRequestException('Invalid article ID');
+      }
+
+      // Create comment
+      const comment = await this.commentModel.create({
+        articleId: new Types.ObjectId(articleId),
+        userId: new Types.ObjectId(userId),
+        userName,
+        userAvatar,
+        content,
+        likes: 0,
+      });
+
+      // Update article's comment count
+      await this.articleModel.findByIdAndUpdate(
+        articleId,
+        { $inc: { commentsCount: 1 } }
+      );
+
+      return comment;
+    } catch (error) {
+      console.error('❌ Error creating comment:', error);
+      throw new BadRequestException('Failed to create comment');
+    }
+  }
+
+  async deleteComment(commentId: string, userId: string): Promise<void> {
+    try {
+      if (!Types.ObjectId.isValid(commentId)) {
+        throw new BadRequestException('Invalid comment ID');
+      }
+
+      const comment = await this.commentModel.findById(commentId);
+      
+      if (!comment) {
+        throw new NotFoundException('Comment not found');
+      }
+
+      // Check if user owns the comment
+      if (comment.userId.toString() !== userId) {
+        throw new UnauthorizedException('You can only delete your own comments');
+      }
+
+      // Soft delete
+      await this.commentModel.findByIdAndUpdate(commentId, { isActive: false });
+
+      // Update article's comment count
+      await this.articleModel.findByIdAndUpdate(
+        comment.articleId,
+        { $inc: { commentsCount: -1 } }
+      );
+    } catch (error) {
+      console.error('❌ Error deleting comment:', error);
+      throw error;
+    }
+  }
+
+  async likeComment(commentId: string): Promise<Comment> {
+    try {
+      if (!Types.ObjectId.isValid(commentId)) {
+        throw new BadRequestException('Invalid comment ID');
+      }
+
+      const comment = await this.commentModel.findByIdAndUpdate(
+        commentId,
+        { $inc: { likes: 1 } },
+        { new: true }
+      );
+
+      if (!comment) {
+        throw new NotFoundException('Comment not found');
+      }
+
+      return comment;
+    } catch (error) {
+      console.error('❌ Error liking comment:', error);
+      throw new BadRequestException('Failed to like comment');
     }
   }
 } 

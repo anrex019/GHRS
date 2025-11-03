@@ -9,11 +9,15 @@ import {
   Query,
   UseInterceptors,
   UploadedFiles,
-  BadRequestException 
+  BadRequestException,
+  UseGuards,
+  Request 
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { ArticleService } from './article.service';
 import { CreateArticleDto } from './dto/create-article.dto';
+import { CreateCommentDto } from './dto/create-comment.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import cloudinary from '../cloudinary.config';
 import * as streamifier from 'streamifier';
 
@@ -222,5 +226,38 @@ export class ArticleController {
   @Post(':id/like')
   async incrementLikes(@Param('id') id: string) {
     return this.articleService.incrementLikes(id);
+  }
+
+  // Comment endpoints
+  @Get(':id/comments')
+  async getComments(@Param('id') articleId: string) {
+    return this.articleService.getComments(articleId);
+  }
+
+  @Post(':id/comments')
+  @UseGuards(JwtAuthGuard)
+  async createComment(
+    @Param('id') articleId: string,
+    @Body() createCommentDto: CreateCommentDto,
+    @Request() req,
+  ) {
+    return this.articleService.createComment(
+      articleId,
+      createCommentDto.content,
+      req.user.id,
+      req.user.name,
+      req.user.avatar,
+    );
+  }
+
+  @Delete('comments/:commentId')
+  @UseGuards(JwtAuthGuard)
+  async deleteComment(@Param('commentId') commentId: string, @Request() req) {
+    return this.articleService.deleteComment(commentId, req.user.id);
+  }
+
+  @Post('comments/:commentId/like')
+  async likeComment(@Param('commentId') commentId: string) {
+    return this.articleService.likeComment(commentId);
   }
 } 

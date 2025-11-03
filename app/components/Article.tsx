@@ -10,6 +10,7 @@ import { FaUserCircle } from "react-icons/fa";
 import Link from "next/link";
 import { useLanguage, useI18n } from "../context/I18nContext";
 import { useCategories } from "../hooks/useCategories";
+import { useComments } from "../hooks/useComments";
 import { RiTwitterXFill } from "react-icons/ri";
 import { FaLinkedin } from "react-icons/fa6";
 import { BsYoutube } from "react-icons/bs";
@@ -46,9 +47,11 @@ const extractImageUrl = (input?: string): string | null => {
 const Article: React.FC<ArticleProps> = ({ article }) => {
   const [similarArticles, setSimilarArticles] = useState<ArticleType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [commentText, setCommentText] = useState("");
   const { language } = useLanguage();
   const { t } = useI18n();
   const { categories } = useCategories();
+  const { comments, isLoading: commentsLoading, addComment, toggleLike } = useComments(article._id);
 
   // Calculate reading time based on content
   const calculateReadingTime = (content: string): number => {
@@ -716,15 +719,23 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
             <h2 className="md:text-2xl text-[18px] text-[rgba(61,51,74,1)] leading-[100%] tracking-[-1%] md:mb-[40px] mb-5">
               {t("article.comments")}
             </h2>
-            <form className="max-w-[650px] mx-auto relative">
+            <form className="max-w-[650px] mx-auto relative" onSubmit={async (e) => {
+              e.preventDefault();
+              if (!commentText.trim()) return;
+              const success = await addComment(commentText);
+              if (success) setCommentText("");
+            }}>
               <input
                 type="text"
+                value={commentText}
+                onChange={(e) => setCommentText(e.target.value)}
                 placeholder={t("article.write_comment")}
                 className="w-full p-4 text-lg font-medium border-2 rounded-lg outline-none border-[rgba(249,247,254,1)] transition-colors bg-transparent leading-none tracking-normal placeholder:text-[rgba(226,204,255,1)]"
               />
               <button
                 type="submit"
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-purple-400 hover:text-purple-600 transition-colors"
+                disabled={!commentText.trim()}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-purple-400 hover:text-purple-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <svg
                   width="24"
@@ -745,37 +756,54 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
             </form>
             <hr className="h-[2px] w-full bg-[rgba(249,247,254,1)] mt-[40px] border-none md:mb-5 mb-0" />
             <div className="flex flex-col gap-5">
-              {article.comments && article.comments.length > 0
-                ? article.comments.map((comment, index) => (
+              {commentsLoading ? (
+                <div className="flex justify-center py-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[rgba(132,111,160,1)]"></div>
+                </div>
+              ) : comments.length > 0 ? (
+                comments.map((comment) => (
                   <div
-                    key={index}
+                    key={comment._id}
                     className="flex gap-5 items-start max-w-[650px] bg-[rgba(249,247,254,1)] rounded-[20px] p-4"
                   >
                     <div className="w-[50px] h-[50px] rounded-[10px] bg-gray-300 flex-shrink-0 overflow-hidden flex items-center justify-center">
-                      <FaUserCircle className="text-gray-400 w-full h-full object-cover" />
+                      {comment.userAvatar ? (
+                        <Image src={comment.userAvatar} alt={comment.userName} width={50} height={50} className="object-cover" />
+                      ) : (
+                        <FaUserCircle className="text-gray-400 w-full h-full object-cover" />
+                      )}
                     </div>
                     <div className="flex-1">
                       <div className="mb-3">
-                        <h3 className="text-[rgba(61,51,74,1)] text-sm md:[18px]">
-                          {comment.author}
+                        <h3 className="text-[rgba(61,51,74,1)] text-sm md:text-[18px] font-medium">
+                          {comment.userName}
                         </h3>
                         <p className="text-gray-500 text-xs">
-                          {comment.date}
+                          {new Date(comment.createdAt).toLocaleDateString(language, { 
+                            year: 'numeric', 
+                            month: 'long', 
+                            day: 'numeric' 
+                          })}
                         </p>
                       </div>
                       <p className="md:text-[18px] text-[16px] text-[rgba(132,111,160,1)] md:leading-[140%] leading-[160%] tracking-[-1%]">
                         {comment.content}
                       </p>
+                      <button 
+                        onClick={() => toggleLike(comment._id)}
+                        className="mt-3 text-sm text-[rgba(132,111,160,1)] hover:text-[rgba(212,186,252,1)] transition-colors flex items-center gap-1"
+                      >
+                        ❤️ {comment.likes}
+                      </button>
                     </div>
                   </div>
                 ))
-                : null}
+              ) : (
+                <p className="text-center text-[rgba(132,111,160,1)] py-8">
+                  {t("article.no_comments")}
+                </p>
+              )}
             </div>
-            {article.comments && article.comments.length > 0 && (
-              <button className="block m-auto py-[17.5px] w-[319px] mt-[40px] max-w-[343px] md:w-[343px] bg-[rgba(212,186,252,1)] rounded-[10px] items-center text-lg text-[rgba(255,255,255,1)] md:leading-[100%] leading-[160%] tracking-[0%]">
-                {t("article.show_more_comments")}
-              </button>
-            )}
           </section>
           <div className="w-full pr-40 flex flex-col items-center mt-10 md:mb-20 gap-8">
             <h1 className="text-[18px] leading-[100%] tracking-[-1%] text-[#3D334A]">поделиться в соцсетях</h1>
