@@ -15,7 +15,6 @@ import { useAuth } from "../context/AuthContext";
 import { useI18n } from "../context/I18nContext";
 import { FaRegCheckCircle, FaStar } from "react-icons/fa";
 import WorksSlider from "../components/WorksSlider";
-import { users } from "../data/dummyUsers";
 import SubscriptionHistory from "../components/SubscriptionHistory";
 import { useAllSets } from "../hooks/useSets";
 import { useCategories } from "../hooks/useCategories";
@@ -156,23 +155,45 @@ const PersonalAccountContent: React.FC = () => {
       />
       <MobileNavbar />
       <ContinueWatchingBanner />
-      <div className="mx-2 md:mx-10 md:mt-10 mt-0  flex flex-col gap-3 md:flex-row-reverse">
-        <PersonInfo user={user || users[0]} />
-        <PersonGoals
-          goals={{
-            currentStreak: userStats?.currentStreak || 0,
-            recordStreak: userStats?.recordStreak || 0,
-            calendarIntegration: "google"
-          }}
-        />
-        {statsLoading ? (
-          <div className="bg-[#F9F7FE] p-10 rounded-[20px] mt-5 flex items-center justify-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-4 border-purple-600 border-t-transparent"></div>
-          </div>
-        ) : (
-          <Statistics statistics={statisticsData} />
-        )}
+      
+      {/* Goals and Days in Row Section */}
+      <div className="mx-2 md:mx-10 md:mt-10 mt-5 flex flex-col gap-3 md:flex-row md:gap-6">
+        <div className="flex-1">
+          <PersonGoals
+            goals={{
+              currentStreak: userStats?.currentStreak || 0,
+              recordStreak: userStats?.recordStreak || 0,
+              calendarIntegration: "google"
+            }}
+          />
+        </div>
+        <div className="flex-1">
+          <DaysInRow
+            currentStreak={userStats?.currentStreak || 0}
+            recordStreak={userStats?.recordStreak || 0}
+            multiplier={2}
+            timer="18:45:24"
+          />
+        </div>
       </div>
+
+      {/* Person Info Section */}
+      {user && (
+        <div className="md:mt-10 mt-5">
+          <PersonInfo user={user} />
+        </div>
+      )}
+
+      {/* Statistics Section */}
+      {statsLoading ? (
+        <div className="bg-[#F9F7FE] p-10 mx-10 rounded-[20px] mt-5 flex items-center justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-4 border-purple-600 border-t-transparent"></div>
+        </div>
+      ) : (
+        <div className="mt-5">
+          <Statistics statistics={statisticsData} />
+        </div>
+      )}
       <div className="md:mt-10 mb-[100px]">
         {/* Tabs with click handler */}
         <div className="cursor-pointer px-10 bg-[#E9DFF6] mx-10 rounded-[20px]">
@@ -292,7 +313,7 @@ const PersonalAccountContent: React.FC = () => {
               seeAll={false}
               scrollable={true}
             />
-            <Statistics statistics={users[0].statistics} />
+            <Statistics statistics={statisticsData} />
             <Achievements />
           </>
         )}

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Article from "../../components/Article";
 import DesktopNavbar from "../../components/Navbar/DesktopNavbar";
-import { defaultMenuItems } from "@/app/components/Header/Header";
+import { getDefaultMenuItems } from "@/app/components/Header/Header";
 import MobileNavbar from "../../components/Navbar/MobileNavbar";
 import { getArticleById } from "../../api/articles";
 import type { Article as ArticleType } from "../../api/articles";
@@ -12,10 +12,11 @@ import { useI18n } from "../../context/I18nContext";
 
 export default function ArticlePage() {
   const params = useParams();
-  const { locale } = useI18n();
+  const { locale, t } = useI18n();
   const [article, setArticle] = useState<ArticleType | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const menuItems = getDefaultMenuItems(t);
 
   useEffect(() => {
     const fetchArticle = async () => {
@@ -66,7 +67,7 @@ export default function ArticlePage() {
   return (
     <div className="bg-[#F9F7FE] py-1">
       <DesktopNavbar
-        menuItems={defaultMenuItems}
+        menuItems={menuItems}
         blogBg={true}
         allCourseBg={false}
         data={article}

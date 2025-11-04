@@ -52,45 +52,12 @@ interface UseCoursesReturn {
   refetch: () => Promise<void>;
 }
 
+// NOTE: This function returns empty array as fallback
+// The component using this hook should handle empty state
+// or use Sets from useAllSets() hook instead
 function getFallbackCourses(): Course[] {
-  return [
-    {
-      id: 1,
-      title: "Ортопедия",
-      description: "Улучшение динамики и подвижности грудного отдела",
-      price: "920 ₽/მთვე",
-      image: "/assets/images/workMan.png",
-      duration: "12 საათი",
-      level: "beginner",
-    },
-    {
-      id: 2,
-      title: "Неврология",
-      description: "Восстановление нервной системы и координации движений",
-      price: "1200 ₽/მთვე",
-      image: "/assets/images/workMan.png",
-      duration: "16 საათი",
-      level: "intermediate",
-    },
-    {
-      id: 3,
-      title: "Кардиология",
-      description: "Укрепление сердечно-сосудистой системы",
-      price: "850 ₽/მთვე",
-      image: "/assets/images/workMan.png",
-      duration: "8 საათი",
-      level: "advanced",
-    },
-    {
-      id: 4,
-      title: "Реабилитация",
-      description: "Комплексная программа восстановления",
-      price: "1500 ₽/მთვე",
-      image: "/assets/images/workMan.png",
-      duration: "20 საათი",
-      level: "intermediate",
-    },
-  ];
+  console.warn('⚠️ Courses API failed, returning empty array. Consider using Sets instead.');
+  return [];
 }
 
 export function useCourses(categoryId?: number): UseCoursesReturn {

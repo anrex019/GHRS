@@ -176,7 +176,8 @@ const Works: React.FC<WorksProps> = ({
       description: getLocalized(set.description),
       image: "/assets/images/workMan.png",
       exerciseCount: Array.isArray(set.exercises) ? set.exercises.length : 0,
-      categoryName: "ორთოპედია",
+      categoryName:
+        (set.category && getLocalized(set.category.name)) || "ორთოპედია",
       monthlyPrice: set.price.monthly || 920,
       categoryId: set.categoryId || "",
     }));

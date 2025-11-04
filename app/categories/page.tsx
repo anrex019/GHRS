@@ -184,7 +184,7 @@ export default function CategoriesPage() {
                     <path d="M9 2H15V8H21V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V4C3 3.46957 3.21071 2.96086 3.58579 2.58579C3.96086 2.21071 4.46957 2 5 2H9Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
-                <span className="font-['PT_Root_UI'] text-white text-base font-medium">
+                <span className="font-pt text-white text-base font-medium">
                   {subcategoriesCount} {t("common.sections") || "разделов"}
                 </span>
               </div>
@@ -203,7 +203,7 @@ export default function CategoriesPage() {
                     <path d="M2 12L12 17L22 12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
-                <span className="font-['PT_Root_UI'] text-white text-base font-medium">
+                <span className="font-pt text-white text-base font-medium">
                   {setsCount} {t("common.complexes") || "комплексов"}
                 </span>
               </div>
@@ -224,7 +224,7 @@ export default function CategoriesPage() {
                     className="w-[30px] h-[30px]"
                   />
                 </div>
-                <span className="font-['PT_Root_UI'] text-white text-base font-medium">
+                <span className="font-pt text-white text-base font-medium">
                   {exercisesCount} {t("common.exercises") || "упражнений"}
                 </span>
               </div>

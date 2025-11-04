@@ -38,6 +38,11 @@ const DesktopNavbar: React.FC<DesktopNavbarProps> = ({
       return "bg-[url('/assets/images/header44.png')] bg-cover bg-center h-[70px]";
     }
 
+    // Article pages should have static background
+    if (pathname.startsWith("/article/")) {
+      return "bg-[url('/assets/images/header22.png')] bg-cover bg-center h-[70px]";
+    }
+
     if (
       pathname === "/shoppingcard" ||
       pathname === "/contact" ||
@@ -69,14 +74,15 @@ const DesktopNavbar: React.FC<DesktopNavbarProps> = ({
     }
   };
 
-  console.log("Current Language:", language); // 👈 შეგიძლია შეამოწმო რომ აღარ იცვლება
+  // console.log("Current Language:", language);
 
   return (
     <header className="fixed font-[Bowler] top-0 left-0 right-0 z-50 my-4 w-full md:flex hidden justify-between px-10 py-5">
       <div
         className={`w-[780px] flex p-3.5 items-center rounded-[24px] ${getBackgroundStyle()} border border-white/10 relative`}
       >
-        <BackgroundImage imageUrl={data?.featuredImages?.[0]} />
+        {/* Only show BackgroundImage if NOT on article page */}
+        {!pathname.startsWith("/article/") && <BackgroundImage imageUrl={data?.featuredImages?.[0]} />}
         <Link href="/" className="hover:brightness-0 duration-700">
           <SimpleLogo />
         </Link>

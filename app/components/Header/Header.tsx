@@ -41,6 +41,15 @@ interface HeaderProps {
   description?: string;
 }
 
+// Function to get localized menu items
+export const getDefaultMenuItems = (t: (key: string) => string): MenuItem[] => [
+  { id: 1, name: t("navigation.all_complexes"), route: "/allComplex" },
+  { id: 2, name: t("navigation.about"), route: "/about" },
+  { id: 3, name: t("navigation.blog"), route: "/blog" },
+  { id: 4, name: t("navigation.contacts"), route: "/contact" },
+];
+
+// Deprecated: Use getDefaultMenuItems(t) instead
 export const defaultMenuItems: MenuItem[] = [
   { id: 1, name: "Все комплексы", route: "/allComplex" },
   { id: 2, name: "О нас", route: "/about" },

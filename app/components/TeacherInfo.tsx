@@ -4,7 +4,7 @@ import { PiStudent } from "react-icons/pi";
 import { FaCertificate } from "react-icons/fa6";
 import { MdOutlineWeb } from "react-icons/md";
 import DesktopNavbar from "./Navbar/DesktopNavbar";
-import { defaultMenuItems } from "./Header/Header";
+import { getDefaultMenuItems } from "./Header/Header";
 import { useI18n } from "../context/I18nContext";
 
 import Professional from "./Professional";
@@ -111,6 +111,7 @@ interface TeacherInfoProps {
 
 const TeacherInfo = ({ instructorId }: TeacherInfoProps) => {
   const { t, locale } = useI18n();
+  const menuItems = getDefaultMenuItems(t);
   const { instructor, loading, error } = useInstructor(instructorId || "");
 
   if (loading) return <div>{t("common.loading")}</div>;
@@ -188,7 +189,7 @@ const TeacherInfo = ({ instructorId }: TeacherInfoProps) => {
   return (
     <div className="min-h-screen bg-[#F9F7FE] py-6 px-2 md:px-8">
       <DesktopNavbar
-        menuItems={defaultMenuItems}
+        menuItems={menuItems}
         blogBg={false}
         allCourseBg={false}
       />

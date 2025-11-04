@@ -8,57 +8,38 @@ import Blog from "../components/Blog";
 import { FaBook, FaDumbbell, FaClock } from "react-icons/fa";
 import { useI18n } from "../context/I18nContext";
 import useStatistics from "../hooks/useStatistics";
-
-export const chapterSliderInfo = [
-  {
-    id: "1",
-    title: "Ортопедия",
-    description: "Улучшение динамики и подвижности грудного отдела",
-    price: "920 ₽/мес",
-    image: "/assets/images/workMan.png",
-    exerciseCount: 10,
-    categoryName: "Ортопедия",
-    monthlyPrice: 920,
-    categoryId: "orthopedics-1",
-  },
-  {
-    id: "2",
-    title: "Ортопедия",
-    description: "Улучшение динамики и подвижности грудного отдела",
-    price: "920 ₽/мес",
-    image: "/assets/images/workMan.png",
-    exerciseCount: 10,
-    categoryName: "Ортопедия",
-    monthlyPrice: 920,
-    categoryId: "orthopedics-2",
-  },
-  {
-    id: "3",
-    title: "Ортопедия",
-    description: "Улучшение динамики и подвижности грудного отдела",
-    price: "920 ₽/мес",
-    image: "/assets/images/workMan.png",
-    exerciseCount: 10,
-    categoryName: "Ортопедия",
-    monthlyPrice: 920,
-    categoryId: "orthopedics-3",
-  },
-  {
-    id: "4",
-    title: "Ортопедия",
-    description: "Улучшение динамики и подвижности грудного отдела",
-    price: "920 ₽/мес",
-    image: "/assets/images/workMan.png",
-    exerciseCount: 10,
-    categoryName: "Ортопедия",
-    monthlyPrice: 920,
-    categoryId: "orthopedics-4",
-  },
-];
+import { useAllSets } from "../hooks/useSets";
 
 const Chapter = () => {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const { statistics } = useStatistics();
+  const { sets, loading } = useAllSets();
+
+  // Helper to get localized text
+  const getLocalized = (value: unknown): string => {
+    if (typeof value === "string") return value;
+    if (
+      value &&
+      typeof value === "object" &&
+      locale in value &&
+      typeof (value as Record<string, unknown>)[locale] === "string"
+    ) {
+      return (value as Record<string, string>)[locale];
+    }
+    return "";
+  };
+
+  // Transform sets to WorksSlider format
+  const chapterSliderInfo = sets.slice(0, 4).map((set) => ({
+    id: set._id,
+    title: getLocalized(set.name),
+    description: getLocalized(set.description),
+    image: set.thumbnailImage || "/assets/images/workMan.png",
+    exerciseCount: set.totalExercises || 0,
+    categoryName: (set.category && getLocalized(set.category.name)) || "Category",
+    monthlyPrice: set.price?.monthly || 920,
+    categoryId: set.categoryId,
+  }));
 
     const statsData = [
       {
@@ -86,32 +67,40 @@ const Chapter = () => {
         stats={statsData as never[]}
         showArrows={true}
       />
-      <div className="mt-4 px-6">
-        <WorksSlider 
-          title="Популярные упражнения" 
-          works={chapterSliderInfo} 
-          fromMain={false} 
-          seeAll={false} 
-          scrollable={false} 
-        />
-      </div>
-      <div className="mt-10 px-6">
-        <WorksSlider
-          title="Шейный отдел позвоночника"
-          works={chapterSliderInfo}
-          fromMain={false} 
-          seeAll={false} 
-          scrollable={false}
-        />
-      </div>
-      <Subscribe />
-      <ReviewSlider title="" />
-      <Blog
-        withBanner={false}
-        withSlider={true}
-        layoutType="default"
-        title={""}
-      />
+      {loading ? (
+        <div className="flex justify-center items-center py-20">
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-purple-600 border-t-transparent"></div>
+        </div>
+      ) : (
+        <>
+          <div className="mt-4 px-6">
+            <WorksSlider 
+              title={t("chapter.popular_exercises") || "Popular Exercises"}
+              works={chapterSliderInfo} 
+              fromMain={false} 
+              seeAll={false} 
+              scrollable={false} 
+            />
+          </div>
+          <div className="mt-10 px-6">
+            <WorksSlider
+              title={t("chapter.more_exercises") || "More Exercises"}
+              works={chapterSliderInfo}
+              fromMain={false} 
+              seeAll={false} 
+              scrollable={false}
+            />
+          </div>
+          <Subscribe />
+          <ReviewSlider title="" />
+          <Blog
+            withBanner={false}
+            withSlider={true}
+            layoutType="default"
+            title={""}
+          />
+        </>
+      )}
     </div>
   );
 };

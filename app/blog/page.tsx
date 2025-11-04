@@ -1,6 +1,6 @@
 "use client";
 
-import { defaultMenuItems } from "../components/Header/Header";
+import { getDefaultMenuItems } from "../components/Header/Header";
 import Link from "next/link";
 import Image from "next/image";
 import DesktopNavbar from "../components/Navbar/DesktopNavbar";
@@ -44,6 +44,33 @@ const BlogCard = ({ article }: BlogCardProps) => {
     return field[locale as keyof typeof field] || field.ru || field.en || "";
   };
 
+  // Get category name
+  const getCategoryName = () => {
+    if (article.categories && article.categories.length > 0) {
+      return getLocalizedText(article.categories[0].name);
+    }
+    if (article.category?.name) {
+      return getLocalizedText(article.category.name);
+    }
+    // Check if categoryId is populated object (from backend populate)
+    if (article.categoryId && typeof article.categoryId === 'object' && !Array.isArray(article.categoryId)) {
+      const categoryObj = article.categoryId as any;
+      if (categoryObj.name) {
+        return getLocalizedText(categoryObj.name);
+      }
+    }
+    // Check if categoryId is array of populated objects
+    if (Array.isArray(article.categoryId) && article.categoryId.length > 0) {
+      const firstCategory = article.categoryId[0] as any;
+      if (firstCategory && typeof firstCategory === 'object' && firstCategory.name) {
+        return getLocalizedText(firstCategory.name);
+      }
+    }
+    return "";
+  };
+
+  const categoryName = getCategoryName();
+
   return (
     <Link href={`/article/${article._id}`}>
       <div className="bg-white rounded-[20px] p-5 flex flex-col justify-between h-full shadow-sm hover:shadow-lg transition-shadow duration-300 cursor-pointer">
@@ -51,14 +78,18 @@ const BlogCard = ({ article }: BlogCardProps) => {
           <h3 className="font-[Bowler] text-[#1A1A1A] text-xl font-semibold leading-tight line-clamp-2">
             {clampText(getLocalizedText(article.title), 90)}
           </h3>
-          <p className="font-['PT_Root_UI'] text-[#1A1A1A]/70 text-sm line-clamp-3">
+          <p className="font-pt text-[#1A1A1A]/70 text-sm line-clamp-3">
             {clampText(getLocalizedText(article.excerpt), 180)}
           </p>
         </div>
 
-        <div className="flex justify-between">
+        <div className="flex justify-between items-end">
           <div className="items-center flex">
-            
+            {categoryName && (
+              <span className="px-3 py-2 bg-[#E9DFF6] inline-block rounded-[6px] text-[#3D334A] text-[12px] font-bold leading-[90%] uppercase font-[Bowler]">
+                {categoryName}
+              </span>
+            )}
           </div>
           <div className="flex justify-end gap-4 mt-4">
             <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
@@ -126,6 +157,33 @@ const BigBlogCard = ({ article }: BigBlogCardProps) => {
     return field[locale as keyof typeof field] || field.ru || field.en || "";
   };
 
+  // Get category name
+  const getCategoryName = () => {
+    if (article.categories && article.categories.length > 0) {
+      return getLocalizedText(article.categories[0].name);
+    }
+    if (article.category?.name) {
+      return getLocalizedText(article.category.name);
+    }
+    // Check if categoryId is populated object (from backend populate)
+    if (article.categoryId && typeof article.categoryId === 'object' && !Array.isArray(article.categoryId)) {
+      const categoryObj = article.categoryId as any;
+      if (categoryObj.name) {
+        return getLocalizedText(categoryObj.name);
+      }
+    }
+    // Check if categoryId is array of populated objects
+    if (Array.isArray(article.categoryId) && article.categoryId.length > 0) {
+      const firstCategory = article.categoryId[0] as any;
+      if (firstCategory && typeof firstCategory === 'object' && firstCategory.name) {
+        return getLocalizedText(firstCategory.name);
+      }
+    }
+    return "";
+  };
+
+  const categoryName = getCategoryName();
+
   return (
     <Link href={`/article/${article._id}`}>
       <div className="rounded-[20px] h-full md:h-[500px] p-8 flex flex-col justify-between relative overflow-hidden bg-white shadow-sm hover:shadow-lg transition-shadow duration-300 cursor-pointer">
@@ -180,10 +238,15 @@ const BigBlogCard = ({ article }: BigBlogCardProps) => {
 
         {/* Existing text content */}
         <div className="flex flex-col gap-4 mt-auto relative z-10">
+          {categoryName && (
+            <span className="px-3 py-2 bg-[#E9DFF6] inline-block rounded-[6px] text-[#3D334A] text-[12px] font-bold leading-[90%] uppercase font-[Bowler] self-start">
+              {categoryName}
+            </span>
+          )}
           <h2 className="font-[Bowler] text-[#1A1A1A] text-lg md:text-xl font-semibold leading-tight line-clamp-2">
             {clampText(getLocalizedText(article.title), 110)}
           </h2>
-          <p className="font-['PT_Root_UI'] text-[#1A1A1A]/80 text-sm line-clamp-3">
+          <p className="font-pt text-[#1A1A1A]/80 text-sm line-clamp-3">
             {clampText(getLocalizedText(article.excerpt).slice(0, 100), 100)}
           </p>
           
@@ -211,7 +274,7 @@ const BlogHeader = ({ BlogCategory }: BlogHeaderProps) => {
 
       <Link
         href="/categories"
-        className="font-['PT_Root_UI'] text-[14px] md:text-[24px] uppercase text-[#D4BAFC] hover:text-[#734ea4] transition-colors duration-300"
+        className="font-pt text-[14px] md:text-[24px] uppercase text-[#D4BAFC] hover:text-[#734ea4] transition-colors duration-300"
       >
         {t("blog.view_all")}
       </Link>
@@ -224,11 +287,12 @@ const BlogRoute = () => {
   const { articles: allArticles } = useArticles({ isPublished: true, limit: 8 });
   const { articles: featuredArticles } = useArticles({ isFeatured: true, isPublished: true, limit: 4 });
   const { articles: popularArticles } = useArticles({ isPublished: true, limit: 6 });
+  const menuItems = getDefaultMenuItems(t);
 
   return (
     <div className="bg-[#F9F7FE]">
       <DesktopNavbar
-        menuItems={defaultMenuItems}
+        menuItems={menuItems}
         blogBg={true}
         allCourseBg={false}
       />

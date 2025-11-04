@@ -69,7 +69,7 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
           </h2>
           {seeAll && (
             <Link href={seeAllHref} className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer">
-              <span className="font-['PT_Root_UI'] text-[#D4BAFC] text-[24px] leading-[90%] uppercase mr-2">
+              <span className="font-pt text-[#D4BAFC] text-[24px] leading-[90%] uppercase mr-2">
                 {t("buttons.show_all") || "Смотреть все"}
               </span>
               <FaArrowRightLong color="#D4BAFC"/>
