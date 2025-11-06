@@ -10,7 +10,45 @@ import { FacebookIcon } from "./socialIcons/FacebookIcon";
 import { Xicon } from "./socialIcons/X";
 
 export const Footer: FC = () => {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
+
+  // Social media links based on language
+  const socialLinks = {
+    // Russian social networks
+    vk: "https://vk.com/ghrsgroup",
+    ok: "https://ok.ru/group/70000002767733",
+    dzen: "https://dzen.ru/ghrsgroup",
+    telegram: "https://t.me/ghrsgroup",
+    rutube: "https://rutube.ru/channel/45999134/",
+    // International
+    youtube: "https://www.youtube.com/@ghrsgroup",
+    // English social networks
+    instagram: "https://instagram.com/ghrs_group",
+    facebook: "https://www.facebook.com/ghrs.gr/",
+    twitter: "https://twitter.com/ghrs_group",
+    linkedin: "https://www.linkedin.com/in/ghrs-group",
+  };
+
+  // Footer links based on language
+  const footerLinks = {
+    en: {
+      userAgreement: "https://ghrs-group.com/rehab/user-agreement",
+      consent: "https://ghrs-group.com/consent",
+      privacyPolicy: "https://ghrs-group.com/rehab/privacy-policy",
+    },
+    ru: {
+      userAgreement: "https://ghrs-group.ru/polzovatelskoe-soglashenie",
+      dataProcessing: "https://ghrs-group.ru/obrabotka-personalnyh-dannyh",
+      privacyPolicy: "https://ghrs-group.ru/privacy-policy",
+    },
+    ka: {
+      userAgreement: "https://ghrs-group.com/rehab/user-agreement",
+      consent: "https://ghrs-group.com/consent",
+      privacyPolicy: "https://ghrs-group.com/rehab/privacy-policy",
+    },
+  };
+
+  const currentLinks = footerLinks[locale as keyof typeof footerLinks] || footerLinks.en;
 
   return (
     <div className="bg-[#F9F7FE] rounded-[20px] px-8 pt-8 pb-4 text-[#3D334A]">
@@ -75,43 +113,120 @@ export const Footer: FC = () => {
         </div>
 
         {/* სოციალური ღილაკები */}
-        <div className="flex gap-3 items-center justify-center mt-4">
+        <div className="flex gap-3 items-center justify-center mt-4 flex-wrap">
+          {/* YouTube - ყველა ენაზე */}
           <a
-            href="#"
-            className="hover:bg-[#B6A3D9]/30 rounded-full p-2 transition flex items-center justify-center"
-          >
-            <LinkedinIcon className="w-12 h-12" />
-          </a>
-          <a
-            href="#"
-            className="hover:bg-[#B6A3D9]/30 rounded-full p-2 transition flex items-center justify-center"
-          >
-            <InstagramIcon className="w-12 h-12" />
-          </a>
-          <a
-            href="#"
+            href={socialLinks.youtube}
+            target="_blank"
+            rel="noopener noreferrer"
             className="hover:bg-[#B6A3D9]/30 rounded-full p-2 transition flex items-center justify-center"
           >
             <YoutubeIcon className="w-12 h-12" />
           </a>
-          <a
-            href="#"
-            className="hover:bg-[#B6A3D9]/30 rounded-full p-2 transition flex items-center justify-center"
-          >
-            <VkIcon className="w-12 h-12" />
-          </a>
-          <a
-            href="#"
-            className="hover:bg-[#B6A3D9]/30 rounded-full p-2 transition flex items-center justify-center"
-          >
-            <FacebookIcon className="w-12 h-12" />
-          </a>
-          <a
-            href="#"
-            className="hover:bg-[#B6A3D9]/30 rounded-full p-2 transition flex items-center justify-center"
-          >
-            <Xicon className="w-12 h-12" />
-          </a>
+
+          {/* რუსული სოციალური ქსელები */}
+          {locale === "ru" && (
+            <>
+              <a
+                href={socialLinks.vk}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:bg-[#B6A3D9]/30 rounded-full p-2 transition flex items-center justify-center"
+              >
+                <VkIcon className="w-12 h-12" />
+              </a>
+              <a
+                href={socialLinks.telegram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:bg-[#B6A3D9]/30 rounded-full p-2 transition flex items-center justify-center"
+              >
+                <svg className="w-12 h-12" viewBox="0 0 48 48" fill="none">
+                  <circle cx="24" cy="24" r="24" fill="#29B6F6"/>
+                  <path d="M10.5 23.5L35.5 13.5L28.5 35.5L23.5 25.5L10.5 23.5Z" fill="white"/>
+                </svg>
+              </a>
+            </>
+          )}
+
+          {/* ინგლისური სოციალური ქსელები */}
+          {locale === "en" && (
+            <>
+              <a
+                href={socialLinks.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:bg-[#B6A3D9]/30 rounded-full p-2 transition flex items-center justify-center"
+              >
+                <InstagramIcon className="w-12 h-12" />
+              </a>
+              <a
+                href={socialLinks.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:bg-[#B6A3D9]/30 rounded-full p-2 transition flex items-center justify-center"
+              >
+                <FacebookIcon className="w-12 h-12" />
+              </a>
+              <a
+                href={socialLinks.twitter}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:bg-[#B6A3D9]/30 rounded-full p-2 transition flex items-center justify-center"
+              >
+                <Xicon className="w-12 h-12" />
+              </a>
+              <a
+                href={socialLinks.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:bg-[#B6A3D9]/30 rounded-full p-2 transition flex items-center justify-center"
+              >
+                <LinkedinIcon className="w-12 h-12" />
+              </a>
+            </>
+          )}
+
+          {/* ქართული - ყველა ლინკი */}
+          {locale === "ka" && (
+            <>
+              <a
+                href={socialLinks.vk}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:bg-[#B6A3D9]/30 rounded-full p-2 transition flex items-center justify-center"
+              >
+                <VkIcon className="w-12 h-12" />
+              </a>
+              <a
+                href={socialLinks.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:bg-[#B6A3D9]/30 rounded-full p-2 transition flex items-center justify-center"
+              >
+                <InstagramIcon className="w-12 h-12" />
+              </a>
+              <a
+                href={socialLinks.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:bg-[#B6A3D9]/30 rounded-full p-2 transition flex items-center justify-center"
+              >
+                <FacebookIcon className="w-12 h-12" />
+              </a>
+              <a
+                href={socialLinks.telegram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:bg-[#B6A3D9]/30 rounded-full p-2 transition flex items-center justify-center"
+              >
+                <svg className="w-12 h-12" viewBox="0 0 48 48" fill="none">
+                  <circle cx="24" cy="24" r="24" fill="#29B6F6"/>
+                  <path d="M10.5 23.5L35.5 13.5L28.5 35.5L23.5 25.5L10.5 23.5Z" fill="white"/>
+                </svg>
+              </a>
+            </>
+          )}
         </div>
       </div>
 
@@ -181,16 +296,42 @@ export const Footer: FC = () => {
       </div>
 
       {/* ქვედა ტექსტი */}
-      <div className="flex flex-col md:flex-row justify-between items-center text-sm text-[#8B7BAA] border-t border-[#E0D6F9] pt-2 text-center md:text-left px-16">
+      <div className="flex flex-col md:flex-row justify-between items-center text-sm text-[#8B7BAA] border-t border-[#E0D6F9] pt-2 text-center md:text-left px-16 gap-2">
         <span>{t("copyright")}</span>
-        <a href="#" className="hover:underline">
+        <a 
+          href={currentLinks.userAgreement} 
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:underline"
+        >
           {t("userAgreement")}
         </a>
-        <a href="#" className="hover:underline">
+        {locale === "ru" ? (
+          <a 
+            href={(currentLinks as typeof footerLinks.ru).dataProcessing} 
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline"
+          >
+            {t("dataProcessing")}
+          </a>
+        ) : (
+          <a 
+            href={(currentLinks as typeof footerLinks.en).consent} 
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline"
+          >
+            {t("consent")}
+          </a>
+        )}
+        <a 
+          href={currentLinks.privacyPolicy} 
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:underline"
+        >
           {t("privacyPolicy")}
-        </a>
-        <a href="#" className="hover:underline">
-          {t("dataProcessing")}
         </a>
       </div>
     </div>

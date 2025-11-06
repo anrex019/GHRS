@@ -63,9 +63,10 @@ const Home = () => {
           fromMain={true}
           customMargin="20px"
           customBorderRadius=""
-          seeAll={false}
+          seeAll={true}
           scrollable={true}
           totalCount={sets?.length || 0}
+          linkHref="/allComplex"
         />
         <Subscribe
           backgroundImage="/assets/images/categorySliderBgs/bg1.jpg"

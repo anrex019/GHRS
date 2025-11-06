@@ -211,7 +211,8 @@ const Works: React.FC<WorksProps> = ({
         works={works} 
         fromMain={fromMain} 
         sliderId={sliderId}
-        seeAllHref={linkHref} // ✅ დამატებული prop
+        seeAllHref={linkHref}
+        showTopLink={false} // Hide top "View all" link, show only bottom link
       />
       
       {/* ✅ ქვედა ლინკი */}
@@ -219,7 +220,7 @@ const Works: React.FC<WorksProps> = ({
         <div className="px-6 md:px-12 pb-8 md:pb-10">
           <Link
             href={linkHref}
-            className="text-[18px] md:text-[28px] font-normal leading-[110%] uppercase text-[#D4BAFC] hover:text-[#C4A6F1] transition-colors inline-block font-[Bowler]"
+            className="text-[20px] md:text-[32px] font-medium leading-[110%] uppercase text-[#D4BAFC] hover:text-[#C4A6F1] transition-colors inline-block"
           >
             {typeof t("works.all_sets", { count: (totalCount || works.length).toString() }) === "string"
               ? t("works.all_sets", { count: (totalCount || works.length).toString() })

@@ -291,11 +291,13 @@ const AllComplex = () => {
             fromMain={true}
             customMargin={""}
             customBorderRadius={""}
-            seeAll={false}
+            seeAll={true}
             scrollable={true}
             border={1}
             borderColor="#D4BAFC"
             sliderId={`category-slider-${category._id}`}
+            totalCount={categorySets.length}
+            linkHref="/allComplex"
           />
         );
       })}

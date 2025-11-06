@@ -166,24 +166,12 @@ export async function apiRequest<T>(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<T> {
-  // TEMPORARY FIX: Remove /api prefix for production Render backend until it's redeployed
-  // TODO: Remove this after backend is redeployed with global /api prefix
-  const isProduction = typeof window !== 'undefined' && 
-    window.location.hostname !== 'localhost' &&
-    API_CONFIG.BASE_URL.includes('render.com');
-  
-  let finalEndpoint = endpoint;
-  if (isProduction && endpoint.startsWith('/api/')) {
-    finalEndpoint = endpoint.replace('/api/', '/');
-    console.warn('⚠️ TEMP FIX: Removed /api prefix for Render backend compatibility');
-  }
-  
-  // Validate endpoint starts with /api (skip for temp production fix)
-  if (!isProduction && !endpoint.startsWith('/api/')) {
+  // Validate endpoint starts with /api
+  if (!endpoint.startsWith('/api/')) {
     console.warn(`⚠️ Warning: Endpoint missing /api prefix: ${endpoint}`);
   }
   
-  const url = `${API_CONFIG.BASE_URL}${finalEndpoint}`;
+  const url = `${API_CONFIG.BASE_URL}${endpoint}`;
 
   // ვიწყებთ base headers-ით
   const headers: Record<string, string> = {

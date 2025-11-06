@@ -28,7 +28,8 @@ interface WorksSliderProps {
   seeAll: boolean;
   scrollable: boolean;
   sliderId?: string;
-  seeAllHref?: string; // ✅ ახალი prop
+  seeAllHref?: string;
+  showTopLink?: boolean; // Control top "View all" link visibility
 }
 
 const WorksSlider: React.FC<WorksSliderProps> = ({
@@ -39,7 +40,8 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
   seeAll = true,
   scrollable = true,
   sliderId,
-  seeAllHref = "/allComplex", // ✅ default value
+  seeAllHref = "/allComplex",
+  showTopLink = true, // Default to true for backward compatibility
 }) => {
   const { t } = useI18n();
   const { language } = useLanguage();
@@ -63,10 +65,10 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
     <div className="px-10 py-[50px] rounded-[30px] bg-[#F9F7FE] mx-6 md:mb-10">
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-5">
-          <h2 className="text-[40px] text-[#3D334A] leading-[120%] tracking-[-3%] font-[Bowler]">
+          <h2 className="text-[48px] md:text-[64px] text-[#3D334A] leading-[100%] tracking-[-1%] font-bold font-[Bowler] uppercase">
             {title}
           </h2>
-          {seeAll && (
+          {seeAll && showTopLink && (
             <Link href={seeAllHref} className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer">
               <span className="font-pt text-[#D4BAFC] text-[24px] leading-[90%] uppercase">
                 {t("buttons.show_all") || "Смотреть все"}
