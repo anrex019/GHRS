@@ -98,7 +98,9 @@ export const I18nProvider: React.FC<I18nProviderProps> = ({ children }) => {
           "personalAccount",
           "footer",
           "contact",
-          "rehabilitation"
+          "rehabilitation",
+          "course",
+          "professional"
         ];
 
         // ჯერ ცალკე ფაილებიდან ჩატვირთვა

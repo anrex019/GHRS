@@ -1,0 +1,22 @@
+{
+  "course": {
+    "tabs": {
+      "description": "Описание",
+      "syllabus": "Учебный план",
+      "announcements": "Объявление",
+      "reviews": "Отзывы"
+    },
+    "lessons_count": "{{count}} уроков",
+    "lessons_label": "Количество уроков",
+    "not_specified": "Не указано",
+    "languages_label": "Языки курса",
+    "price_label": "Стоимость курса",
+    "short_description_title": "Краткое описание:",
+    "duration": "Продолжительность",
+    "duration_minutes": "{{duration}} минут",
+    "access_granted": "✓ У ВАС ЕСТЬ ДОСТУП",
+    "purchase_course": "КУПИТЬ КУРС",
+    "login_to_purchase": "ВОЙТИ ДЛЯ ПОКУПКИ",
+    "success_title": "Успех"
+  }
+}

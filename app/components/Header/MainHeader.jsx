@@ -17,6 +17,10 @@ function MainHeader({
   backgroundImage = "/assets/images/continueWatchingBanner.jpg",
   customTitle = null, // ახალი პროპი - რეაბილიტაციის სათაურისთვის
   customSubtitle = null, // ახალი პროპი - რეაბილიტაციის ქვესათაურისთვის
+  hideHeaderText = false, // ახალი პროპი - ტექსტის დასამალად
+  customBlockTitle = null, // ახალი პროპი - ბლოკის სათაურისთვის
+  customBlockDescription = null, // ახალი პროპი - ბლოკის აღწერისთვის
+  hideStats = false, // ახალი პროპი - stats-ების დასამალად
 }) {
   const { t, locale } = useI18n();
   const { statistics } = useStatistics();
@@ -131,7 +135,7 @@ function MainHeader({
 
       <div className="md:w-212 m-8 content-between md:grid">
         {/* თუ customTitle არის, მაშინ გამოაჩენე ის, თუარადა - ჩვეულებრივი */}
-        {customTitle ? (
+        {!hideHeaderText && (customTitle ? (
           <div className="mb-6 md:max-w-[888px]">
             <h1 className="text-2xl md:text-5xl font-bold text-white font-[Bowler] uppercase md:leading-[100%] leading-[120%] md:tracking-[-1%] tracking-[-3%]">
               {customTitle}
@@ -146,29 +150,31 @@ function MainHeader({
           <h1 className="text-2xl md:text-5xl font-bold text-white mb-6 hidden md:block">
             {t("header.ecosystem_title")}
           </h1>
-        )}
+        ))}
 
         <div
           className={`md:absolute bottom-8 block transform transition-all duration-500 ${
             isVisible ? "translate-x-0 opacity-100" : "-translate-x-10 opacity-0"
           }`}
         >
-          <div className="flex gap-4 flex-col md:flex-row mb-4 w-full justify-between">
-            {stats.map((stat, index) => (
-              <div
-                key={index}
-                className="bg-[#3d334a4d] w-full backdrop-blur-sm rounded-2xl p-3 flex items-center justify-center md:gap-2 transition-transform duration-300 hover:scale-105"
-              >
-                <span className="text-white/80">{stat.icon}</span>
-                <div className="flex flex-col items-center justify-center">
-                  <span className="text-xl font-bold text-white">
-                    {stat.value}
-                  </span>
-                  <span className="text-sm text-white/80">{stat.label}</span>
+          {!hideStats && (
+            <div className="flex gap-4 flex-col md:flex-row mb-4 w-full justify-between">
+              {stats.map((stat, index) => (
+                <div
+                  key={index}
+                  className="bg-[#3d334a4d] w-full backdrop-blur-sm rounded-2xl p-3 flex items-center justify-center md:gap-2 transition-transform duration-300 hover:scale-105"
+                >
+                  <span className="text-white/80">{stat.icon}</span>
+                  <div className="flex flex-col items-center justify-center">
+                    <span className="text-xl font-bold text-white">
+                      {stat.value}
+                    </span>
+                    <span className="text-sm text-white/80">{stat.label}</span>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
           <div className="bg-[#3d334a4d] rounded-3xl p-8 content-between grid max-w-212">
             {complexData ? (
               <>
@@ -179,10 +185,10 @@ function MainHeader({
               </>
             ):(
               <>
-                <h1 className="text-xl md:text-2xl font-bold text-[#3D334A] mb-8">
-                  {t("header.rehabilitation")}
+                <h1 className="text-[28px] md:text-[48px] font-bold text-white mb-6 md:mb-8 uppercase font-[Bowler] tracking-[-1%] leading-[100%]">
+                  {customBlockTitle || t("header.rehabilitation")}
                 </h1>
-                <p className="text-[18px] font-medium md:max-w-[1320px] md:text-[24px] leading-[120%] md:leading-[120%] mb-5 text-white">{t("header.rehabilitation_description")}</p>
+                <p className="text-[18px] md:text-[24px] font-medium text-white uppercase font-[Bowler] leading-[120%] tracking-[-1%]">{customBlockDescription || t("header.rehabilitation_description")}</p>
               </>
             )}
           </div>

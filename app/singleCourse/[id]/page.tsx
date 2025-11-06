@@ -123,8 +123,13 @@ export default function SingleCourse() {
   const sliderRef = useRef<HTMLDivElement>(null);
 
   const rightCardImage = "/assets/images/reklamos.png";
-  const tabs = ["Описание", "Учебный план", "Объявление", "Отзывы"];
-  const [activeTab, setActiveTab] = useState("Описание");
+  const tabs = [
+    t("course.tabs.description"),
+    t("course.tabs.syllabus"),
+    t("course.tabs.announcements"),
+    t("course.tabs.reviews")
+  ];
+  const [activeTab, setActiveTab] = useState(0);
 
   const scrollLeft = () => {
     sliderRef.current?.scrollBy({ left: -300, behavior: "smooth" });
@@ -348,11 +353,11 @@ export default function SingleCourse() {
               <div className="flex flex-col">
                 <span className="font-semibold text-[18px] text-[rgba(132,111,160,1)]">
                   {course.syllabus
-                    ? `${course.syllabus.length} уроков`
-                    : "Не указано"}
+                    ? t("course.lessons_count", { count: course.syllabus.length.toString() })
+                    : t("course.not_specified")}
                 </span>
                 <span className="text-sm text-[#A9A6B4]">
-                  Количество уроков
+                  {t("course.lessons_label")}
                 </span>
               </div>
             </div>
@@ -377,7 +382,7 @@ export default function SingleCourse() {
                         </span>
                       ))}
                     </div>
-                    <span className="text-sm text-[#A9A6B4]">Языки курса</span>
+                    <span className="text-sm text-[#A9A6B4]">{t("course.languages_label")}</span>
                   </div>
                 </div>
               </>
@@ -393,7 +398,7 @@ export default function SingleCourse() {
                   $
                 </span>
               </div>
-              <div className="text-[#A9A6B4] text-sm">Стоимость курса</div>
+              <div className="text-[#A9A6B4] text-sm">{t("course.price_label")}</div>
             </div>
             {/* Purchase Button or Access Indicator */}
             {accessLoading ? (
@@ -465,16 +470,16 @@ export default function SingleCourse() {
                 <div className="relative group flex-1 min-w-[90px]" key={idx}>
                   <button
                     type="button"
-                    onClick={() => setActiveTab(tab)}
+                    onClick={() => setActiveTab(idx)}
                     className={`block w-full text-[rgba(132,111,160,1)] md:text-[16px] text-[14px] leading-[90%] md:leading-[120%] tracking-[0%] uppercase text-center transition group-hover:text-[rgba(61,51,74,1)] ${
-                      activeTab === tab ? "text-[rgba(61,51,74,1)]" : ""
+                      activeTab === idx ? "text-[rgba(61,51,74,1)]" : ""
                     }`}
                   >
                     {tab}
                   </button>
                   <div
                     className={`absolute left-0 -bottom-[8px] h-[2px] w-full bg-[rgba(61,51,74,1)] transition-transform ${
-                      activeTab === tab
+                      activeTab === idx
                         ? "scale-x-100"
                         : "scale-x-0 group-hover:scale-x-100"
                     } origin-left`}
@@ -483,7 +488,7 @@ export default function SingleCourse() {
               ))}
             </div>
             <div className="flex flex-col gap-4 order-4 md:order-2">
-              {activeTab === "Описание" && (
+              {activeTab === 0 && (
                 <div>
                   <article className="bg-white rounded-2xl shadow-[0_7px_32px_0_rgba(141,126,243,0.13)] px-4 md:px-8 py-6 md:py-10 flex flex-col gap-6">
                     <h1 className="text-2xl font-bold uppercase text-[#302A3A]">
@@ -494,7 +499,7 @@ export default function SingleCourse() {
                     {course.shortDescription && (
                       <div className="bg-[#F1EEFF] p-4 rounded-lg">
                         <h3 className="font-semibold text-[#8D7EF3] mb-2">
-                          Краткое описание:
+                          {t("course.short_description_title")}
                         </h3>
                         <div
                           className="text-[#8D7EF3]"
@@ -550,7 +555,7 @@ export default function SingleCourse() {
                     {course.languages && course.languages.length > 0 && (
                       <div className="flex items-center gap-2">
                         <span className="font-semibold text-[#302A3A]">
-                          Языки курса:
+                          {t("course.languages_label")}:
                         </span>
                         <div className="flex gap-2">
                           {course.languages.map((lang, index) => (
@@ -616,7 +621,7 @@ export default function SingleCourse() {
                   )}
                 </div>
               )}
-              {activeTab === "Учебный план" && course.syllabus && (
+              {activeTab === 1 && course.syllabus && (
                 <div>
                   <div className="flex flex-col gap-2">
                     {course.syllabus.map((item, index) => (
@@ -700,7 +705,7 @@ export default function SingleCourse() {
                   )}
                 </div>
               )}
-              {activeTab === "Объявление" && course.announcements && (
+              {activeTab === 2 && course.announcements && (
                 <div>
                   <div className="flex flex-col gap-2">
                     {course.announcements
@@ -756,7 +761,7 @@ export default function SingleCourse() {
                   )}
                 </div>
               )}
-              {activeTab === "Отзывы" && (
+              {activeTab === 3 && (
                 <div>
                   <div className="bg-white rounded-2xl px-6 py-4 flex flex-col gap-2">
                     <div className="font-bold text-[#302A3A] text-[15px] mb-4">

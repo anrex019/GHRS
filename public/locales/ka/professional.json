@@ -1,0 +1,9 @@
+{
+  "professional": {
+    "courses": {
+      "title": "კურსები",
+      "all_courses": "ყველა {{count}} კურსი →",
+      "error": "კურსების ჩატვირთვის შეცდომა"
+    }
+  }
+}

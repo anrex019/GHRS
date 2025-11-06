@@ -6,7 +6,6 @@ import React from "react";
 import SliderArrows from "./SliderArrows";
 import Link from "next/link";
 import { useI18n, useLanguage } from "../context/I18nContext";
-import { FaArrowRightLong } from "react-icons/fa6";
 
 interface WorkItem {
   id: string;
@@ -69,10 +68,9 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
           </h2>
           {seeAll && (
             <Link href={seeAllHref} className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer">
-              <span className="font-pt text-[#D4BAFC] text-[24px] leading-[90%] uppercase mr-2">
+              <span className="font-pt text-[#D4BAFC] text-[24px] leading-[90%] uppercase">
                 {t("buttons.show_all") || "Смотреть все"}
               </span>
-              <FaArrowRightLong color="#D4BAFC"/>
             </Link>
           )}
         </div>

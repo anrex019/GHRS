@@ -163,7 +163,7 @@ const ReviewSlider = ({title}: {title: string}) => {
   };
 
   return (
-      <div className="bg-[#F9F7FE] md:mx-5 md:rounded-5 pb-10">
+      <div className="bg-[#F9F7FE] md:mx-5 md:rounded-5 pb-5 md:pb-8">
       <div className="flex items-center justify-between py-5 px-6 md:py-[50px] md:px-8">
         <h1 className="text-[20px] leading-[120%] text-[#3D334A] md:text-[40px] md:tracking-[-3%] font-bold">
           {title || t("reviews.title")}
@@ -175,10 +175,10 @@ const ReviewSlider = ({title}: {title: string}) => {
           canScrollRight={canScrollRight}
         />
       </div>
-      <div className="px-4 md:px-5 rounded-8 w-full overflow-hidden">
+      <div className="px-4 md:px-8 rounded-8 w-full overflow-hidden">
         <div
           ref={scrollContainerRef}
-          className="flex gap-5 overflow-x-auto scroll-smooth scrollbar-hide"
+          className="flex gap-3 md:gap-5 overflow-x-auto scroll-smooth scrollbar-hide"
           style={{
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
@@ -194,7 +194,7 @@ const ReviewSlider = ({title}: {title: string}) => {
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="rounded-[15px] object-cover w-[220px] h-[320px] md:w-[300px] md:h-[420px] lg:w-[349px] lg:h-[496px]"
+                  className="rounded-[15px] object-cover w-[220px] h-[380px] md:w-[300px] md:h-[500px] lg:w-[349px] lg:h-[580px]"
                 />
               )}
               
@@ -203,7 +203,7 @@ const ReviewSlider = ({title}: {title: string}) => {
                 <video
                   ref={(el) => { videoRefs.current[index] = el; }}
                   src={item.video}
-                  className={`rounded-[15px] object-cover w-[220px] h-[320px] md:w-[300px] md:h-[420px] lg:w-[349px] lg:h-[496px] ${
+                  className={`rounded-[15px] object-cover w-[220px] h-[380px] md:w-[300px] md:h-[500px] lg:w-[349px] lg:h-[580px] ${
                     playingVideo === index ? 'block' : 'hidden'
                   }`}
                   controls

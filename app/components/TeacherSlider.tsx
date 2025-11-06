@@ -121,8 +121,8 @@ const TeacherSlider: React.FC<TeacherSliderProps> = ({ teachers = [] }) => {
 
   return (
     <div className="w-full px-4 md:px-6 md:mx-5 py-12 bg-[#F9F7FE] rounded-[30px] overflow-hidden">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-[32px] md:text-[40px] text-[#3D334A] font-bold">
+      <div className="flex justify-between items-center mb-8">
+        <h2 className="text-[24px] md:text-[48px] text-[#3D334A] font-[Bowler] uppercase tracking-[-1%] leading-[100%]">
           НАШИ ПРЕПОДАВАТЕЛИ
         </h2>
         <div className="md:mx-5">
@@ -132,13 +132,13 @@ const TeacherSlider: React.FC<TeacherSliderProps> = ({ teachers = [] }) => {
 
       <Link
         href="/teachers"
-        className="text-[#D4BAFC] text-lg block mb-10 font-semibold hover:underline"
+        className="text-[#D4BAFC] text-[14px] md:text-[24px] font-[Bowler] uppercase leading-[90%] block mb-10 hover:opacity-80 transition-opacity"
       >
-        СМОТРЕТЬ ВСЕ →
+        СМОТРЕТЬ ВСЕ
       </Link>
 
-      <div className="bg-white rounded-[20px] shadow-md overflow-hidden">
-        <div className="flex flex-col md:flex-row gap-8 p-4">
+      <div className="bg-white rounded-[20px] shadow-lg overflow-hidden">
+        <div className="flex flex-col md:flex-row gap-6 md:gap-8 p-6 md:p-8">
           <div className="w-full md:w-[400px] h-[400px] relative rounded-lg overflow-hidden shrink-0">
             <Image
               src={teacher.imageUrl}
@@ -149,25 +149,25 @@ const TeacherSlider: React.FC<TeacherSliderProps> = ({ teachers = [] }) => {
             />
           </div>
           <div className="flex-1 flex flex-col pt-2 md:pt-4">
-            <h3 className="text-[28px] md:text-[40px] text-[#3D334A] font-bold mb-2 leading-snug">
+            <h3 className="text-[24px] md:text-[40px] text-[#3D334A] font-[Bowler] uppercase tracking-[-1%] leading-[100%] mb-4">
               {teacher.name}
             </h3>
 
-            <div className="mb-4 md:mb-6 space-y-1">
-              <div className="text-[18px] md:text-[20px] text-[#3D334A] font-medium">
+            <div className="mb-4 md:mb-6 space-y-2">
+              <div className="text-[16px] md:text-[20px] text-[#3D334A] font-['PT_Root_UI'] font-medium">
                 {teacher.position}
               </div>
-              <div className="text-[18px] md:text-[20px] text-[#3D334A]">
+              <div className="text-[14px] md:text-[18px] text-[#846FA0] font-['PT_Root_UI']">
                 {teacher.institution}
               </div>
             </div>
 
-            <div className="text-[16px] text-[#3D334A] mb-4 md:mb-6">
+            <div className="text-[14px] md:text-[16px] text-[#846FA0] font-['PT_Root_UI'] mb-4 md:mb-6 leading-[120%]">
               {teacher.credentials}
             </div>
 
             <div
-              className="space-y-3 text-[16px] text-[#846FA0] leading-relaxed max-w-[750px] prose prose-sm max-w-none"
+              className="space-y-3 text-[14px] md:text-[16px] text-[#846FA0] font-['PT_Root_UI'] leading-[140%] max-w-[750px] prose prose-sm max-w-none"
               dangerouslySetInnerHTML={{
                 __html: truncateHtmlContent(
                   teacher.htmlContent.ru || teacher.htmlContent.en || ""
@@ -177,7 +177,7 @@ const TeacherSlider: React.FC<TeacherSliderProps> = ({ teachers = [] }) => {
 
             <Link
               href={`/teachers/${teacher.id}`}
-              className="text-[#D4BAFC] text-lg pl-10 mt-auto text-end items-end w-full mr-10 font-medium hover:underline pt-4"
+              className="text-[#D4BAFC] text-[14px] md:text-[24px] font-[Bowler] uppercase leading-[90%] mt-6 text-end hover:opacity-80 transition-opacity"
             >
               ПОДРОБНЕЕ
             </Link>

@@ -245,7 +245,7 @@ const CourseSlider: React.FC<CourseSliderProps> = ({
         {displayCourses.map((course) => (
           <div
             key={`course-${course.id}`}
-            className="flex-shrink-0 w-[80vw] md:w-[45%]"
+            className="flex-shrink-0 w-[85vw] md:w-[48%] lg:w-[32%]"
           >
             <CourseCard course={course} />
           </div>
@@ -289,23 +289,23 @@ const CourseCard = ({ course }: { course: Course }) => {
       href={`/singleCourse/${course.id}`}
       className="block w-full transition-transform duration-300 hover:scale-[1.02]"
     >
-      <div className="bg-white rounded-[20px] p-1.5 pb-4 w-full">
-        <div className="h-[418px]">
+      <div className="bg-white rounded-[20px] p-1.5 pb-4 w-full h-full">
+        <div className="flex flex-col h-full">
           <Image
             src={course.image}
             width={674}
             height={249}
             alt={`${course.title} course image`}
-            className="mb-5 w-full h-[233px] object-cover rounded-[16px]"
+            className="mb-4 w-full h-[233px] object-cover rounded-[16px]"
           />
-          <h5 className="text-[#3D334A] px-4 md:text-[20px] mb-2 mt-4 md:mb-5 leading-[120%]">
+          <h5 className="text-[#3D334A] font-['PT_Root_UI'] font-medium px-4 text-[16px] md:text-[20px] mb-2 leading-[120%]">
             {course.title}
           </h5>
-          <p className="text-[#846FA0] px-4 text-[14px] mb-[14px] leading-[120%] line-clamp-1">
+          <p className="text-[#846FA0] font-['PT_Root_UI'] px-4 text-[12px] md:text-[14px] mb-4 leading-[140%] line-clamp-2">
             {truncateText(course.shortDescription || course.description)}
           </p>
-          <div className="w-full flex justify-end items-end pr-4 md:mt-5">
-            <button className="bg-[#D4BAFC] py-[5px] px-4 rounded-[3px] md:mt-[19px] md:rounded-[10px] text-[12px] md:text-[18px] leading-[100%] text-white">
+          <div className="w-full flex justify-end items-end pr-4 mt-auto">
+            <button className="bg-[#D4BAFC] py-2 px-5 rounded-[10px] text-[14px] md:text-[18px] font-['PT_Root_UI'] font-medium leading-[100%] text-white hover:bg-[#C4A6F1] transition-colors">
               {course.price}
             </button>
           </div>

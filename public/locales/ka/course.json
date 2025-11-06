@@ -1,0 +1,22 @@
+{
+  "course": {
+    "tabs": {
+      "description": "აღწერა",
+      "syllabus": "სასწავლო გეგმა",
+      "announcements": "განცხადება",
+      "reviews": "მიმოხილვები"
+    },
+    "lessons_count": "{{count}} გაკვეთილი",
+    "lessons_label": "გაკვეთილების რაოდენობა",
+    "not_specified": "არ არის მითითებული",
+    "languages_label": "კურსის ენები",
+    "price_label": "კურსის ფასი",
+    "short_description_title": "მოკლე აღწერა:",
+    "duration": "ხანგრძლივობა",
+    "duration_minutes": "{{duration}} წუთი",
+    "access_granted": "✓ თქვენ გაქვთ წვდომა",
+    "purchase_course": "კურსის შეძენა",
+    "login_to_purchase": "შესვლა შესაძენად",
+    "success_title": "წარმატება"
+  }
+}

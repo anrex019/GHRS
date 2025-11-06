@@ -67,7 +67,14 @@ const About = () => {
   return (
     <div>
       {/* <Header variant="about" /> */}
-      <MainHeader ShowBlock={false} OptionalComponent={null} stats={[]} showArrows={false}/>
+      <MainHeader 
+        ShowBlock={false} 
+        OptionalComponent={null} 
+        stats={[]} 
+        showArrows={false}
+        useVideo={false}
+        backgroundImage="/assets/images/bluebg.jpg"
+      />
       <div className="mt-40">
         <Rehabilitation />
         <Category bgColor="#F9F7FE" customRounded="30px" customMx="20px" />

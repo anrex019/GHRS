@@ -233,17 +233,31 @@ const Professional = () => {
 
   return (
     <div>
-      <MainHeader
-        ShowBlock={true}
-        stats={statsData as never[]}
-        OptionalComponent={null}
-        useVideo={false}
-        backgroundImage="/assets/images/bluebg.jpg"
-      />
+      <div className="relative">
+        <MainHeader
+          ShowBlock={false}
+          stats={statsData as never[]}
+          hideHeaderText={true}
+          hideStats={true}
+          customBlockTitle="ПРОФЕССИОНАЛЬНОЕ РАЗВИТИЕ"
+          customBlockDescription="Раздел обучение и проф-развитие в области реабилитации, физиотерапии и лечебно-восстановительного массажа - это коллаборация с Израильскими центрами обучения."
+          useVideo={false}
+          backgroundImage="/assets/images/bluebg.jpg"
+        />
+        
+        <div className="absolute bottom-0 right-0 hidden md:flex gap-4 bg-[#F9F7FE] rounded-tl-[80px] p-6 pb-8 z-10 items-end">
+          <Link 
+            href="/allCourse"
+            className="text-white bg-[#3D334A] rounded-[40px] w-[246px] h-[222px] flex items-start justify-start p-8 transition-transform duration-300 hover:scale-105 cursor-pointer font-bold uppercase text-lg shadow-2xl leading-tight"
+          >
+            Наши курсы
+          </Link>
+        </div>
+      </div>
       
       <div className="mt-10 md:px-5">
-        <div className="flex flex-col md:flex-row justify-center items-center gap-5 md:gap-5 md:justify-between px-4 md:px-0">
-          <div className="md:w-[500px] w-full max-w-[359px] relative bg-[url('/assets/images/bluebg.jpg')] bg-cover h-[288px] rounded-[20px]">
+        <div className="flex flex-col md:flex-row items-center gap-5 md:gap-5 px-4 md:px-0">
+          <div className="md:flex-1 w-full max-w-[359px] md:max-w-none relative bg-[url('/assets/images/bluebg.jpg')] bg-cover h-[288px] md:h-[400px] rounded-[20px]">
             <Image
               src={"/assets/images/medal.png"}
               width={202}
@@ -259,7 +273,7 @@ const Professional = () => {
             </div>
           </div>
 
-          <div className="md:w-[453px] w-full max-w-[359px] relative bg-[url('/assets/images/bluebg.jpg')] bg-cover h-[288px] rounded-[20px]">
+          <div className="md:flex-1 w-full max-w-[359px] md:max-w-none relative bg-[url('/assets/images/bluebg.jpg')] bg-cover h-[288px] md:h-[400px] rounded-[20px]">
             <Image
               src={"/assets/images/book.png"}
               width={202}
@@ -273,7 +287,7 @@ const Professional = () => {
             </div>
           </div>
           
-          <div className="md:w-[453px] w-full max-w-[359px] relative bg-[url('/assets/images/bluebg.jpg')] bg-cover h-[288px] rounded-[20px]">
+          <div className="md:flex-1 w-full max-w-[359px] md:max-w-none relative bg-[url('/assets/images/bluebg.jpg')] bg-cover h-[288px] md:h-[400px] rounded-[20px]">
             <Image
               src={"/assets/images/laptop.png"}
               width={202}
@@ -296,10 +310,10 @@ const Professional = () => {
         <div className="bg-[#F9F7FE] mt-4 md:mt-[50px] md:mx-5 md:mb-[45px] rounded-[30px]">
           <div className="p-5">
             <div className="flex items-center justify-between md:mb-[10px]">
-              <h1 className="text-[20px] md:text-[40px] md:tracking-[-3%] text-[#3D334A] leading-[120%] mb-2.5 md:mb-5">
+              <h1 className="text-[24px] md:text-[64px] font-[Bowler] uppercase tracking-[-1%] text-[#3D334A] leading-[100%] mb-2.5 md:mb-5">
                 {typeof t("professional.courses.title") === "string"
                   ? t("professional.courses.title")
-                  : "Courses"}
+                  : "КУРСЫ"}
               </h1>
               <SliderArrows
                 onScrollLeft={scrollLeft}
@@ -331,7 +345,7 @@ const Professional = () => {
 
             <Link
               href={"/allCourse"}
-              className="md:text-[24px] leading-[90%] uppercase text-[#D4BAFC] block"
+              className="text-[14px] md:text-[24px] font-[Bowler] uppercase leading-[90%] text-[#D4BAFC] hover:opacity-80 transition-opacity block"
             >
               {typeof t("professional.courses.all_courses", {
                 count: courses?.length.toString() || "0",

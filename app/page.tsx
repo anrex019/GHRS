@@ -63,7 +63,7 @@ const Home = () => {
           fromMain={true}
           customMargin="20px"
           customBorderRadius=""
-          seeAll={true}
+          seeAll={false}
           scrollable={true}
           totalCount={sets?.length || 0}
         />

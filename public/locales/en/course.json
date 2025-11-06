@@ -1,0 +1,22 @@
+{
+  "course": {
+    "tabs": {
+      "description": "Description",
+      "syllabus": "Syllabus",
+      "announcements": "Announcements",
+      "reviews": "Reviews"
+    },
+    "lessons_count": "{{count}} lessons",
+    "lessons_label": "Number of lessons",
+    "not_specified": "Not specified",
+    "languages_label": "Course languages",
+    "price_label": "Course price",
+    "short_description_title": "Short description:",
+    "duration": "Duration",
+    "duration_minutes": "{{duration}} minutes",
+    "access_granted": "✓ YOU HAVE ACCESS",
+    "purchase_course": "PURCHASE COURSE",
+    "login_to_purchase": "LOGIN TO PURCHASE",
+    "success_title": "Success"
+  }
+}

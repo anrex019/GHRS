@@ -1,0 +1,9 @@
+{
+  "professional": {
+    "courses": {
+      "title": "COURSES",
+      "all_courses": "ALL {{count}} COURSES →",
+      "error": "Error loading courses"
+    }
+  }
+}

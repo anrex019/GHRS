@@ -1,0 +1,9 @@
+{
+  "professional": {
+    "courses": {
+      "title": "КУРСЫ",
+      "all_courses": "ВСЕ {{count}} КУРСОВ →",
+      "error": "Ошибка загрузки курсов"
+    }
+  }
+}
