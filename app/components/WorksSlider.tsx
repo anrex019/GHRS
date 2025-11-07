@@ -118,7 +118,7 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
                   className="w-full h-[250px] object-cover rounded-2xl mb-6"
                 />
                 <div className="mb-2.5 mx-4">
-                  <span className="p-3 bg-[#E9DFF6] inline-block rounded-[6px] text-[#3D334A] text-[14px] font-bold leading-[90%] uppercase max-w-[120px] font-[Bowler]">
+                  <span className="px-3 py-2 bg-[#E9DFF6] inline-block rounded-[6px] text-[#3D334A] text-[11px] font-bold leading-[110%] uppercase max-w-full font-[Bowler] break-words">
                     {work.categoryName}
                   </span>
                 </div>

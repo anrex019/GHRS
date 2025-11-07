@@ -11,7 +11,6 @@ import { useState, useRef, useEffect } from "react";
 import ReactPlayer from "react-player";
 import { CiLock } from "react-icons/ci";
 import Blog from "../../components/Blog";
-import { useCategoryComplete } from "../../hooks/useCategoryComplete";
 import { useSet } from "../../hooks/useSet";
 import { useI18n } from "../../context/I18nContext";
 import Link from "next/link";
@@ -35,50 +34,26 @@ const Complex = ({ params }: ComplexPageProps) => {
   const resolvedParams = React.use(params);
   const setId = resolvedParams.id;
   const { t } = useI18n();
-  const searchParams = useSearchParams();
-  const categoryIdFromUrl = searchParams.get("categoryId");
 
-  // თუ არ არის categoryId URL-ში, მაშინ პირდაპირ set-ს ვიღებთ
-  const shouldUseCategoryComplete = !!categoryIdFromUrl;
-
-  // Hook-ები conditionally
-  const {
-    categoryData,
-    loading: categoryLoading,
-    error: categoryError,
-  } = useCategoryComplete(shouldUseCategoryComplete ? categoryIdFromUrl : "");
-
-
-  console.log(categoryData, "კატეგორიის დატა");
-
-  // ალტერნატიული: პირდაპირ set-ის მოძიება
+  // ყოველთვის პირდაპირ set-ს ვიღებთ ID-ით
   const {
     set: directSet,
     loading: setLoading,
     error: setError,
-  } = useSet(shouldUseCategoryComplete ? "" : setId);
+  } = useSet(setId);
 
   // საბოლოო loading და error states
-  const loading = shouldUseCategoryComplete ? categoryLoading : setLoading;
-  const error = shouldUseCategoryComplete ? categoryError : setError;
+  const loading = setLoading;
+  const error = setError;
 
-  // Set-ის მონაცემების მიღება
-  let rawSetData;
-  if (shouldUseCategoryComplete && categoryData) {
-    // კატეგორიიდან ვეძებთ set-ს
-    rawSetData = categoryData.sets?.find((set) => set._id === setId);
-  } else if (!shouldUseCategoryComplete && directSet) {
-    // პირდაპირ set
-    rawSetData = directSet;
-  }
+  // Set-ის მონაცემები
+  const rawSetData = directSet;
 
   // ვიღებთ სავარჯიშოებს
   const { exercises, loading: exercisesLoading } = useExercisesBySet(setId);
 
   // ვამოწმებთ user-ის access-ს
   const { hasAccess } = useUserAccess(setId);
-
-  // Debug info
 
   // Helper ფუნქცია - უნდა ჩანდეს play ღილაკი თუ არა
   const shouldShowPlayButton = (difficulty: string) => {
