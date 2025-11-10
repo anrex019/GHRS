@@ -18,8 +18,8 @@ function MainHeader({
   customTitle = null, // ახალი პროპი - რეაბილიტაციის სათაურისთვის
   customSubtitle = null, // ახალი პროპი - რეაბილიტაციის ქვესათაურისთვის
   hideHeaderText = false, // ახალი პროპი - ტექსტის დასამალად
-  customBlockTitle = null, // ახალი პროპი - ბლოკის სათაურისთვის
-  customBlockDescription = null, // ახალი პროპი - ბლოკის აღწერისთვის
+  customBlockTitle, // ახალი პროპი - ბლოკის სათაურისთვის
+  customBlockDescription, // ახალი პროპი - ბლოკის აღწერისთვის
   hideStats = false, // ახალი პროპი - stats-ების დასამალად
 }) {
   const { t, locale } = useI18n();
@@ -38,6 +38,20 @@ function MainHeader({
 
   const isVisible = !showArrows || showContent;
 
+  // ენის მიხედვით ვიდეოს არჩევა
+  const getVideoSource = () => {
+    switch (locale) {
+      case "ka":
+        return "/videos/heroKa.mp4";
+      case "en":
+        return "/videos/heroEn.mp4";
+      case "ru":
+        return "/videos/hero.mp4";
+      default:
+        return "/videos/hero.mp4";
+    }
+  };
+
   return (
     <div className="relative rounded-[20px] h-[100vh] md:h-[85vh] md:m-6 overflow-hidden">
       <DesktopNavbar
@@ -51,13 +65,14 @@ function MainHeader({
       {/* ვიდეო ან სურათი */}
       {useVideo ? (
         <video
+          key={locale}
           autoPlay
           muted
           loop
           playsInline
           className="video-bg absolute h-full w-full object-cover z-[-1] md:rounded-[20px]"
         >
-          <source src="/videos/hero.mp4" type="video/mp4" />
+          <source src={getVideoSource()} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       ) : (
