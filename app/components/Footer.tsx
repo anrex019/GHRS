@@ -29,22 +29,22 @@ export const Footer: FC = () => {
     linkedin: "https://www.linkedin.com/in/ghrs-group",
   };
 
-  // Footer links based on language
+  // Footer links - now pointing to internal pages
   const footerLinks = {
     en: {
-      userAgreement: "https://ghrs-group.com/rehab/user-agreement",
-      consent: "https://ghrs-group.com/consent",
-      privacyPolicy: "https://ghrs-group.com/rehab/privacy-policy",
+      userAgreement: "/user-agreement",
+      consent: "/consent",
+      privacyPolicy: "/privacy-policy",
     },
     ru: {
-      userAgreement: "https://ghrs-group.ru/polzovatelskoe-soglashenie",
-      dataProcessing: "https://ghrs-group.ru/obrabotka-personalnyh-dannyh",
-      privacyPolicy: "https://ghrs-group.ru/privacy-policy",
+      userAgreement: "/user-agreement",
+      dataProcessing: "/consent",
+      privacyPolicy: "/privacy-policy",
     },
     ka: {
-      userAgreement: "https://ghrs-group.com/rehab/user-agreement",
-      consent: "https://ghrs-group.com/consent",
-      privacyPolicy: "https://ghrs-group.com/rehab/privacy-policy",
+      userAgreement: "/user-agreement",
+      consent: "/consent",
+      privacyPolicy: "/privacy-policy",
     },
   };
 
@@ -232,46 +232,46 @@ export const Footer: FC = () => {
 
       <hr className="my-6 border-[#E0D6F9]" />
 
-{/* ლინკები */}
-<div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8 px-16 text-[#846FA0]">
-  <div className="flex flex-col gap-3">
-    <a href="#">{t("links.home")}</a>
-    <a href="#">{t("links.rehabilitation")}</a>
-    <a href="#">{t("links.development")}</a>
-    <a href="#">{t("links.blog")}</a>
-  </div>
-  <div className="flex flex-col gap-3">
-    <a href="#">{t("links.about")}</a>
-    <a href="#">{t("links.faq")}</a>
-    <a href="#">{t("links.userGuide")}</a>
-  </div>
-  <div className="flex flex-col gap-3">
-    <a href="#">{t("links.allSets")}</a>
-    <a href="#">{t("links.orthopedics")}</a>
-    <ul className="flex flex-col gap-2 pl-4">
-      <li><a href="#">{t("links.cervical")}</a></li>
-      <li><a href="#">{t("links.thoracic")}</a></li>
-      <li><a href="#">{t("links.lumbar")}</a></li>
-      <li><a href="#">{t("links.upperLimbs")}</a></li>
-      <li><a href="#">{t("links.lowerLimbs")}</a></li>
-      <li><a href="#">{t("links.posture")}</a></li>
-    </ul>
-    <a href="#">{t("links.neurology")}</a>
-    <ul className="flex flex-col gap-2 pl-4">
-      <li><a href="#">{t("links.parkinsons")}</a></li>
-      <li><a href="#">{t("links.stroke")}</a></li>
-      <li><a href="#">{t("links.facialNerve")}</a></li>
-      <li><a href="#">{t("links.multipleSclerosis")}</a></li>
-    </ul>
-  </div>
-  <div className="flex flex-col gap-3">
-    <a href="#">{t("links.aphasia")}</a>
-    <a href="#">{t("links.obesity")}</a>
-    <a href="#">{t("links.gaitRehab")}</a>
-    <a href="#">{t("links.elderlyRehab")}</a>
-    <a href="#">{t("links.covidRehab")}</a>
-  </div>
-</div>
+      {/* ლინკები */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8 px-16 text-[#846FA0]">
+        <div className="flex flex-col gap-3">
+          <a href="#">{t("links.home")}</a>
+          <a href="#">{t("links.rehabilitation")}</a>
+          <a href="#">{t("links.development")}</a>
+          <a href="#">{t("links.blog")}</a>
+        </div>
+        <div className="flex flex-col gap-3">
+          <a href="#">{t("links.about")}</a>
+          <a href="#">{t("links.faq")}</a>
+          <a href="#">{t("links.userGuide")}</a>
+        </div>
+        <div className="flex flex-col gap-3">
+          <a href="#">{t("links.allSets")}</a>
+          <a href="#">{t("links.orthopedics")}</a>
+          <ul className="flex flex-col gap-2 pl-4">
+            <li><a href="#">{t("links.cervical")}</a></li>
+            <li><a href="#">{t("links.thoracic")}</a></li>
+            <li><a href="#">{t("links.lumbar")}</a></li>
+            <li><a href="#">{t("links.upperLimbs")}</a></li>
+            <li><a href="#">{t("links.lowerLimbs")}</a></li>
+            <li><a href="#">{t("links.posture")}</a></li>
+          </ul>
+          <a href="#">{t("links.neurology")}</a>
+          <ul className="flex flex-col gap-2 pl-4">
+            <li><a href="#">{t("links.parkinsons")}</a></li>
+            <li><a href="#">{t("links.stroke")}</a></li>
+            <li><a href="#">{t("links.facialNerve")}</a></li>
+            <li><a href="#">{t("links.multipleSclerosis")}</a></li>
+          </ul>
+        </div>
+        <div className="flex flex-col gap-3">
+          <a href="#">{t("links.aphasia")}</a>
+          <a href="#">{t("links.obesity")}</a>
+          <a href="#">{t("links.gaitRehab")}</a>
+          <a href="#">{t("links.elderlyRehab")}</a>
+          <a href="#">{t("links.covidRehab")}</a>
+        </div>
+      </div>
 
       {/* ქვედა ლოგოები */}
       <div className="flex flex-col md:flex-row justify-between items-center mb-4 px-16 gap-5">
@@ -300,38 +300,30 @@ export const Footer: FC = () => {
         <span>{t("copyright")}</span>
         <a 
           href={currentLinks.userAgreement} 
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:underline"
+          className="hover:underline transition-colors"
         >
-          {t("userAgreement")}
+          {t("footerUserAgreement")}
         </a>
         {locale === "ru" ? (
           <a 
             href={(currentLinks as typeof footerLinks.ru).dataProcessing} 
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:underline"
+            className="hover:underline transition-colors"
           >
-            {t("dataProcessing")}
+            {t("footerDataProcessing")}
           </a>
         ) : (
           <a 
             href={(currentLinks as typeof footerLinks.en).consent} 
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:underline"
+            className="hover:underline transition-colors"
           >
-            {t("consent")}
+            {t("footerConsent")}
           </a>
         )}
         <a 
           href={currentLinks.privacyPolicy} 
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:underline"
+          className="hover:underline transition-colors"
         >
-          {t("privacyPolicy")}
+          {t("footerPrivacyPolicy")}
         </a>
       </div>
     </div>

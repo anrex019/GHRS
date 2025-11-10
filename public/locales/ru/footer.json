@@ -39,7 +39,8 @@
       "covidRehab": "Реабилитация после Covid-19"
     },
     "copyright": "Copyright © 2023 GHRS LLC",
-    "userAgreement": "Пользовательское соглашение",
-    "privacyPolicy": "Политика конфиденциальности",
-    "dataProcessing": "Обработка персональных данных"
+    "footerUserAgreement": "Пользовательское соглашение",
+    "footerConsent": "Согласие на обработку персональных данных",
+    "footerPrivacyPolicy": "Политика конфиденциальности",
+    "footerDataProcessing": "Обработка персональных данных"
   }

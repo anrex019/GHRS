@@ -39,7 +39,8 @@
       "covidRehab": "Post-COVID-19 Rehabilitation"
     },
     "copyright": "Copyright © 2023 GHRS LLC",
-    "userAgreement": "User Agreement",
-    "privacyPolicy": "Privacy Policy",
-    "dataProcessing": "Personal Data Processing"
+    "footerUserAgreement": "User Agreement",
+    "footerConsent": "Consent to Personal Data Processing",
+    "footerPrivacyPolicy": "Privacy Policy",
+    "footerDataProcessing": "Personal Data Processing"
   }

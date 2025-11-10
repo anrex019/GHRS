@@ -39,7 +39,8 @@
       "covidRehab": "Covid-19-ის შემდგომი რეაბილიტაცია"
     },
     "copyright": "Copyright © 2023 GHRS LLC",
-    "userAgreement": "მომხმარებლის შეთანხმება",
-    "privacyPolicy": "კონფიდენციალურობის პოლიტიკა",
-    "dataProcessing": "პერსონალური მონაცემების დამუშავება"
+    "footerUserAgreement": "მომხმარებლის შეთანხმება",
+    "footerConsent": "თანხმობა პერსონალური მონაცემების დამუშავებაზე",
+    "footerPrivacyPolicy": "კონფიდენციალურობის პოლიტიკა",
+    "footerDataProcessing": "პერსონალური მონაცემების დამუშავება"
   }

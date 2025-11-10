@@ -100,7 +100,8 @@ export const I18nProvider: React.FC<I18nProviderProps> = ({ children }) => {
           "contact",
           "rehabilitation",
           "course",
-          "professional"
+          "professional",
+          "legal"
         ];
 
         // ჯერ ცალკე ფაილებიდან ჩატვირთვა
@@ -120,13 +121,11 @@ export const I18nProvider: React.FC<I18nProviderProps> = ({ children }) => {
         // შემდეგ სცადე მთავარი locale ფაილის ჩატვირთვა (ru.json, ka.json, en.json)
         try {
           const mainLocaleFile = await fetch(`/locales/${locale}.json`).then(res => res.json());
-          console.log(`✅ Loaded main locale file for ${locale}:`, mainLocaleFile);
           mergedTranslations = deepMerge(mergedTranslations, mainLocaleFile as Record<string, unknown>);
         } catch (error) {
-          console.log(`ℹ️ No main locale file found for ${locale}, using split files only`);
+          // No main locale file found, using split files only
         }
 
-        console.log(`🌍 Final translations for ${locale}:`, mergedTranslations);
         setTranslationData(mergedTranslations);
       } catch (error) {
         console.error("Failed to load translations:", error);
