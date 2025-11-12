@@ -43,6 +43,10 @@ export class TestResponse {
 
   @Prop()
   ipAddress: string;
+
+  createdAt?: Date;
+  
+  updatedAt?: Date;
 }
 
 export const TestResponseSchema = SchemaFactory.createForClass(TestResponse);
