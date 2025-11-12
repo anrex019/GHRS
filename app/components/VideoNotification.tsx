@@ -33,7 +33,7 @@ const VideoNotification = ({ variant }: VideoNotificationProps) => {
               ? t("video_notification.exercise_complexes.title")
               : "Exercise Complexes"}
           </h3>
-          <p className="font-['PT_Root_UI'] md:text-[18px] font-medium text-[14px] text-[rgba(255,255,255,1)] tracking-[-3%]  leading-[120%]">
+          <p className="font-pt md:text-[18px] font-medium text-[14px] text-[rgba(255,255,255,1)] tracking-[-3%]  leading-[120%] normal-case">
             {typeof t("video_notification.exercise_complexes.description") ===
             "string"
               ? t("video_notification.exercise_complexes.description")
@@ -51,7 +51,7 @@ const VideoNotification = ({ variant }: VideoNotificationProps) => {
               ? t("video_notification.for_children.title")
               : "For Children"}
           </h3>
-          <p className="font-['PT_Root_UI'] md:text-[18px] font-medium text-[14px] text-[rgba(255,255,255,1)] tracking-[-3%] leading-[120%]">
+          <p className="font-pt md:text-[18px] font-medium text-[14px] text-[rgba(255,255,255,1)] tracking-[-3%] leading-[120%] normal-case">
             {typeof t("video_notification.for_children.description") ===
             "string"
               ? t("video_notification.for_children.description")
@@ -84,7 +84,7 @@ const VideoNotification = ({ variant }: VideoNotificationProps) => {
               ? t("video_notification.articles.title")
               : "Articles"}
           </h3>
-          <p className="font-['PT_Root_UI'] md:text-[18px] font-medium text-[14px] text-[rgba(255,255,255,1)] tracking-[-3%]  leading-[120%]">
+          <p className="font-pt md:text-[18px] font-medium text-[14px] text-[rgba(255,255,255,1)] tracking-[-3%]  leading-[120%] normal-case">
             {typeof t("video_notification.articles.description") === "string"
               ? t("video_notification.articles.description")
               : ""}

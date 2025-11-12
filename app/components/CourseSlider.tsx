@@ -297,10 +297,10 @@ const CourseCard = ({ course }: { course: Course }) => {
           alt={`${course.title} course image`}
           className="mb-3 w-full h-[180px] md:h-[200px] object-cover rounded-[16px] flex-shrink-0"
         />
-        <h5 className="text-[#1A1A1A] font-bowler font-semibold text-[18px] md:text-[22px] mb-2 leading-tight line-clamp-2 min-h-[3.5rem]">
+        <h5 className="text-[#1A1A1A] font-pt font-extrabold text-[18px] md:text-[22px] mb-2 leading-tight line-clamp-2 min-h-[3.5rem]">
           {course.title}
         </h5>
-        <p className="text-[#1A1A1A]/70 font-pt text-sm mb-3 leading-[140%] line-clamp-2 flex-grow">
+        <p className="text-[#1A1A1A]/70 font-pt font-semibold text-sm mb-3 leading-[140%] line-clamp-2 flex-grow">
           {truncateText(course.shortDescription || course.description, 120)}
         </p>
         <div className="w-full flex justify-end items-end mt-auto">

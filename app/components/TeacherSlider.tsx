@@ -154,20 +154,20 @@ const TeacherSlider: React.FC<TeacherSliderProps> = ({ teachers = [] }) => {
             </h3>
 
             <div className="mb-4 md:mb-6 space-y-2">
-              <div className="text-[16px] md:text-[20px] text-[#3D334A] font-['PT_Root_UI'] font-medium">
+              <div className="text-[16px] md:text-[20px] text-[#3D334A] font-pt font-medium">
                 {teacher.position}
               </div>
-              <div className="text-[14px] md:text-[18px] text-[#846FA0] font-['PT_Root_UI']">
+              <div className="text-[14px] md:text-[18px] text-[#846FA0] font-pt">
                 {teacher.institution}
               </div>
             </div>
 
-            <div className="text-[14px] md:text-[16px] text-[#846FA0] font-['PT_Root_UI'] mb-4 md:mb-6 leading-[120%]">
+            <div className="text-[14px] md:text-[16px] text-[#846FA0] font-pt mb-4 md:mb-6 leading-[120%]">
               {teacher.credentials}
             </div>
 
             <div
-              className="space-y-3 text-[14px] md:text-[16px] text-[#846FA0] font-['PT_Root_UI'] leading-[140%] max-w-[750px] prose prose-sm max-w-none"
+              className="space-y-3 text-[14px] md:text-[16px] text-[#846FA0] font-pt leading-[140%] max-w-[750px] prose prose-sm max-w-none"
               dangerouslySetInnerHTML={{
                 __html: truncateHtmlContent(
                   teacher.htmlContent.ru || teacher.htmlContent.en || ""

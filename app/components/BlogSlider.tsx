@@ -151,7 +151,7 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
                       {getLocalizedText(featuredBlog.title)?.trim()}
                     </div>
                   </h3>
-                  <p className="text-[#1A1A1A]/70 text-sm font-medium leading-[120%] line-clamp-3 font-pt">
+                  <p className="text-[#1A1A1A]/70 text-sm leading-[120%] line-clamp-3 font-pt">
                     {getLocalizedText(featuredBlog.excerpt) || getLocalizedText(featuredBlog.description) || ""}
                   </p>
                 </div>

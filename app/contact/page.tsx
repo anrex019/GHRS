@@ -15,6 +15,7 @@ interface ContactText {
   title: string;
   working_hours: string;
   working_mode: string;
+  phone: string;
   hotline: string;
   email_info: string;
   form_title: string;
@@ -83,7 +84,7 @@ const Contact = () => {
           <div className="bg-[#f7f4ff] rounded-2xl flex-1 flex flex-col justify-between p-4 gap-4 min-h-[192px]">
             <FaPhoneAlt className="w-5 h-7 md:w-8 md:h-8 text-[#3D334A]" />
             <div>
-              <div className="font-bold text-lg md:text-xl text-[#3D334A]">+7 (916) 856-11-45</div>
+              <div className="font-bold text-lg md:text-xl text-[#3D334A]">{text.phone}</div>
               <div className="text-[#898989] text-sm md:text-base">{text.hotline}</div>
             </div>
           </div>

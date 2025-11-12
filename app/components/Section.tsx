@@ -66,7 +66,7 @@ const Section = ({
             {t("common.sections_title") || "Разделы"}
           </h1>
           <Link href="/subcategories" className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer">
-            <span className="font-['PT_Root_UI'] text-[#D4BAFC] text-[24px] leading-[90%] uppercase mr-2">
+            <span className="font-pt text-[#D4BAFC] text-[24px] leading-[90%] uppercase mr-2">
               {t("buttons.show_all") || "Смотреть все"}
             </span>
             <FaArrowRightLong color="#D4BAFC"/>
@@ -106,10 +106,10 @@ const Section = ({
               className="w-full h-[181px] object-cover rounded-4"
             />
             <div className="flex items-end justify-between mt-[22px] relative">
-              <h1 className="font-['PT_Root_UI'] text-[#3D334A] w-[342px] text-[22px] leading-[120%] break-words truncate">
+              <h1 className="font-pt text-[#3D334A] w-[342px] text-[22px] leading-[120%] break-words truncate">
                 {getLocalizedText(subcat.description)}
               </h1>
-              <span className="font-['PT_Root_UI'] text-[#D4BAFC] absolute -bottom-0 right-0 leading-[120%]">
+              <span className="font-pt text-[#D4BAFC] absolute -bottom-0 right-0 leading-[120%]">
                 {subcat.sets?.length || 0} комплексов
               </span>
             </div>
