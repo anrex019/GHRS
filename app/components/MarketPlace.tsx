@@ -19,7 +19,7 @@ const MarketPlace = () => {
             ? t("marketplace.description")
             : ""}
         </p>
-        <span className="text-[#846FA0] md:items-end w-full  items-end flex md:justify-end md:pr-10 md:pb-10 md:text-[32px] md:leading-[90%] font-[Bowler]">
+        <span className="text-[#846FA0] md:items-end w-full  items-end flex md:justify-end md:pr-10 md:pb-10 md:text-[32px] md:leading-[90%] font-bowler">
           {typeof t("marketplace.status") === "string"
             ? t("marketplace.status")
             : ""}

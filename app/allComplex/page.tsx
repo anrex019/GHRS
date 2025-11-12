@@ -161,7 +161,7 @@ const AllComplex = () => {
       />
       <MobileNavbar />
 
-      <h1 className="font-[Bowler] text-[32px] md:text-[64px] md:px-10 px-5 pt-8 md:pt-10 leading-[120%] tracking-[-3%] text-[#3D334A]">
+      <h1 className="font-bowler text-[32px] md:text-[64px] md:px-10 px-5 pt-8 md:pt-10 leading-[120%] tracking-[-3%] text-[#3D334A]">
         {pageTexts.title[locale as keyof typeof pageTexts.title] ||
           pageTexts.title.ru}
       </h1>

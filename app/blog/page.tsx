@@ -75,7 +75,7 @@ const BlogCard = ({ article }: BlogCardProps) => {
     <Link href={`/article/${article._id}`}>
       <div className="bg-white rounded-[20px] p-5 flex flex-col justify-between h-full shadow-sm hover:shadow-lg transition-shadow duration-300 cursor-pointer">
         <div className="flex flex-col gap-3">
-          <h3 className="font-[Bowler] text-[#1A1A1A] text-xl font-semibold leading-tight line-clamp-2">
+          <h3 className="font-bowler text-[#1A1A1A] text-xl font-semibold leading-tight line-clamp-2">
             {clampText(getLocalizedText(article.title), 90)}
           </h3>
           <p className="font-pt text-[#1A1A1A]/70 text-sm line-clamp-3">
@@ -86,7 +86,7 @@ const BlogCard = ({ article }: BlogCardProps) => {
         <div className="flex justify-between items-end">
           <div className="items-center flex">
             {categoryName && (
-              <span className="px-3 py-2 bg-[#E9DFF6] inline-block rounded-[6px] text-[#3D334A] text-[12px] font-bold leading-[90%] uppercase font-[Bowler]">
+              <span className="px-3 py-2 bg-[#E9DFF6] inline-block rounded-[6px] text-[#3D334A] text-[12px] font-bold leading-[90%] uppercase font-bowler">
                 {categoryName}
               </span>
             )}
@@ -239,11 +239,11 @@ const BigBlogCard = ({ article }: BigBlogCardProps) => {
         {/* Existing text content */}
         <div className="flex flex-col gap-4 mt-auto relative z-10">
           {categoryName && (
-            <span className="px-3 py-2 bg-[#E9DFF6] inline-block rounded-[6px] text-[#3D334A] text-[12px] font-bold leading-[90%] uppercase font-[Bowler] self-start">
+            <span className="px-3 py-2 bg-[#E9DFF6] inline-block rounded-[6px] text-[#3D334A] text-[12px] font-bold leading-[90%] uppercase font-bowler self-start">
               {categoryName}
             </span>
           )}
-          <h2 className="font-[Bowler] text-[#1A1A1A] text-lg md:text-xl font-semibold leading-tight line-clamp-2">
+          <h2 className="font-bowler text-[#1A1A1A] text-lg md:text-xl font-semibold leading-tight line-clamp-2">
             {clampText(getLocalizedText(article.title), 110)}
           </h2>
           <p className="font-pt text-[#1A1A1A]/80 text-sm line-clamp-3">
@@ -266,7 +266,7 @@ const BlogHeader = ({ BlogCategory }: BlogHeaderProps) => {
   return (
     <div className="bg-[#F9F7FE] md:mx-5 md:px-10 px-4 md:pb-10">
       <div className="flex items-center justify-between">
-        <h1 className="font-[Bowler] text-[20px] mt-5 md:text-[40px] pt-10 text-[#3D334A] md:mb-5 leading-[120%] tracking-[-3%]">
+        <h1 className="font-bowler text-[20px] mt-5 md:text-[40px] pt-10 text-[#3D334A] md:mb-5 leading-[120%] tracking-[-3%]">
           {BlogCategory}
         </h1>
         <div className="md:mt-16"></div>

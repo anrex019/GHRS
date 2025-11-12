@@ -138,7 +138,7 @@ const Professional = ({
       <div className="md:p-10 px-5">
         {withProfText && (
           <div className="">
-            <h1 className="text-[20px] md:mt-10 md:text-[40px] md:tracking-[-3%] text-[#3D334A] leading-[120%] mb-2.5 md:mb-5 font-[Bowler]">
+            <h1 className="text-[20px] md:mt-10 md:text-[40px] md:tracking-[-3%] text-[#3D334A] leading-[120%] mb-2.5 md:mb-5 font-bowler">
               {typeof t("professional.title") === "string"
                 ? t("professional.title")
                 : "Professional Development"}
@@ -149,7 +149,7 @@ const Professional = ({
                 : ""}
             </p>
             <Link
-              className="text-[14px] md:text-[24px] leading-[90%] uppercase text-[#D4BAFC] font-[Bowler]"
+              className="text-[14px] md:text-[24px] leading-[90%] uppercase text-[#D4BAFC] font-bowler"
               href="/professional"
             >
               {typeof t("professional.learn_more") === "string"
@@ -164,7 +164,7 @@ const Professional = ({
           className="bg-red-500 w-full mt-4 md:mt-[50px] md:mb-[45px] rounded-2xl"
         >
           <div className="flex items-center justify-between md:mb-[10px] ">
-            <h1 className="text-[20px] md:text-[40px] md:tracking-[-3%] text-[#3D334A] leading-[120%] mb-2.5 md:mb-5 font-[Bowler]">
+            <h1 className="text-[20px] md:text-[40px] md:tracking-[-3%] text-[#3D334A] leading-[120%] mb-2.5 md:mb-5 font-bowler">
               {typeof t("professional.courses.title") === "string"
                 ? t("professional.courses.title")
                 : "Courses"}
@@ -189,19 +189,20 @@ const Professional = ({
               <CourseSlider
                 courses={courses.map((course) => ({
                   id: course._id,
-                  title: course.title.en,
-                  shortDescription: course.description.en,
+                  title: course.title,
+                  shortDescription: course.shortDescription || course.description,
                   price: course.price,
-                  currency: "USD", // Replace with actual currency if available
+                  currency: "USD",
                   imageUrl: course.thumbnail,
                   instructorName: course.instructor.name,
-                  description: course.description.en, // Assuming description is required
-                  categoryId: "default-category", // Replace with actual categoryId if available
-                  level: "beginner", // Replace with actual level if available
-                  isActive: true, // Assuming courses are active
-                  createdAt: new Date().toISOString(), // Replace with actual createdAt if available
-                  updatedAt: new Date().toISOString(), // Replace with actual updatedAt if available
-                  isFeatured: false, // Add default value for isFeatured
+                  description: course.description,
+                  categoryId: course.categoryId || "default-category",
+                  level: course.level || "beginner",
+                  isActive: true,
+                  createdAt: course.createdAt || new Date().toISOString(),
+                  updatedAt: course.updatedAt || new Date().toISOString(),
+                  isFeatured: false,
+                  thumbnail: course.thumbnail,
                 }))}
               />
             </div>
@@ -209,7 +210,7 @@ const Professional = ({
 
           <Link
             href={"/allCourse"}
-            className="md:text-[24px] md:mx-6 leading-[90%] uppercase text-[#D4BAFC] font-[Bowler]"
+            className="md:text-[24px] md:mx-6 leading-[90%] uppercase text-[#D4BAFC] font-bowler"
           >
             {typeof t("professional.courses.all_courses", {
               count: courses.length.toString(),

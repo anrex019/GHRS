@@ -146,12 +146,12 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
               </div>
               <div className="flex-1 flex flex-col justify-between mt-4">
                 <div>
-                  <h3 className="text-[#3D334A] text-[24px] leading-[120%] font-semibold mb-2 font-[Bowler]">
+                  <h3 className="text-[#1A1A1A] text-[24px] leading-tight font-semibold mb-2 font-bowler">
                     <div className="line-clamp-2">
                       {getLocalizedText(featuredBlog.title)?.trim()}
                     </div>
                   </h3>
-                  <p className="text-[#846FA0] font-medium leading-[120%] line-clamp-2 font-[Bowler]">
+                  <p className="text-[#1A1A1A]/70 text-sm font-medium leading-[120%] line-clamp-3 font-pt">
                     {getLocalizedText(featuredBlog.excerpt) || getLocalizedText(featuredBlog.description) || ""}
                   </p>
                 </div>
@@ -167,7 +167,7 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
               {getCurrentBlogs().map((blog) => (
                 <Link key={blog._id} href={getBlogLink(blog)}>
                   <div className="h-[249px] p-5 bg-white flex flex-col justify-between rounded-[20px] hover:shadow-lg duration-300 transition-shadow">
-                    <h3 className="text-[#3D334A] text-[24px] leading-[120%] line-clamp-3 font-bold font-[Bowler]">
+                    <h3 className="text-[#1A1A1A] text-xl leading-tight line-clamp-2 font-semibold font-bowler">
                       {getLocalizedText(blog.title)}
                     </h3>
                     <div className="flex justify-end items-center gap-1.5">
@@ -198,7 +198,7 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
                     alt={getLocalizedText(blog.title)}
                     className="rounded-[10px]"
                   />
-                  <p className="text-[#3D334A] text-[14px] leading-[120%] mt-2 line-clamp-2 font-[Bowler]">
+                  <p className="text-[#1A1A1A] text-sm leading-tight mt-2 line-clamp-2 font-semibold font-bowler">
                     {getLocalizedText(blog.title)}
                   </p>
                   <div className="flex justify-end items-center gap-1.5 mt-2">
@@ -217,7 +217,7 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
       </div>
       <Link
         href="/blog"
-        className="text-[#D4BAFC] leading-[90%] text-[15px] md:text-[24px] md:px-5 px-0 cursor-pointer hover:text-[#734ea4] transition-colors duration-300 font-[Bowler]"
+        className="text-[#D4BAFC] leading-[90%] text-[15px] md:text-[24px] md:px-5 px-0 cursor-pointer hover:text-[#734ea4] transition-colors duration-300 font-bowler"
       >
         {t("blog.see_all")} {blogs?.length} {t("navigation.rightArrow")}
       </Link>

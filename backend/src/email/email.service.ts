@@ -143,6 +143,24 @@ export class EmailService {
     }
   }
 
+  async sendEmail(options: { to: string; subject: string; html: string }): Promise<void> {
+    const mailOptions = {
+      from: `"GHRS Group" <${this.configService.get<string>('GMAIL_USER')}>`,
+      to: options.to,
+      subject: options.subject,
+      html: options.html,
+    };
+
+    try {
+      const info = await this.transporter.sendMail(mailOptions);
+      console.log('✅ Email sent to:', options.to);
+      console.log('📧 Message ID:', info.messageId);
+    } catch (error) {
+      console.error('❌ Failed to send email:', error);
+      throw new Error('Failed to send email');
+    }
+  }
+
   async sendWelcomeEmail(email: string, name: string): Promise<void> {
     const mailOptions = {
       from: `"GRS Platform" <${this.configService.get<string>('GMAIL_USER')}>`,

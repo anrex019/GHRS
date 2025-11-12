@@ -65,7 +65,7 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
     <div className="px-10 py-[50px] rounded-[30px] bg-[#F9F7FE] mx-6 md:mb-10">
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-5">
-          <h2 className="text-[48px] md:text-[64px] text-[#3D334A] leading-[100%] tracking-[-1%] font-bold font-[Bowler] uppercase">
+          <h2 className="text-[48px] md:text-[64px] text-[#3D334A] leading-[100%] tracking-[-1%] font-bold font-bowler uppercase">
             {title}
           </h2>
           {seeAll && showTopLink && (
@@ -118,12 +118,12 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
                   className="w-full h-[250px] object-cover rounded-2xl mb-6"
                 />
                 <div className="mb-2.5 mx-4">
-                  <span className="px-3 py-2 bg-[#E9DFF6] inline-block rounded-[6px] text-[#3D334A] text-[11px] font-bold leading-[110%] uppercase max-w-full font-[Bowler] break-words">
+                  <span className="px-3 py-2 bg-[#E9DFF6] inline-block rounded-[6px] text-[#3D334A] text-[11px] font-bold leading-[110%] uppercase max-w-full font-bowler break-words">
                     {work.categoryName}
                   </span>
                 </div>
                 <h3
-                  className="text-[#3D334A] font-[1000] text-[18px] leading-[120%] mx-4 line-clamp-2 overflow-hidden font-[Bowler]"
+                  className="text-[#3D334A] font-[1000] text-[18px] leading-[120%] mx-4 line-clamp-2 overflow-hidden font-bowler"
                   style={{
                     display: "-webkit-box",
                     WebkitBoxOrient: "vertical",
@@ -133,7 +133,7 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
                   {work.title}
                 </h3>
                 <p
-                  className="line-clamp-3 text-[#846FA0] leading-[120%] text-sm mx-4 overflow-hidden font-[Bowler]"
+                  className="line-clamp-3 text-[#846FA0] leading-[120%] text-sm mx-4 overflow-hidden font-pt"
                   style={{
                     display: "-webkit-box",
                     WebkitBoxOrient: "vertical",
@@ -144,7 +144,7 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
                 </p>
               </div>
               <div className="flex items-center justify-end absolute -bottom-2 right-0">
-                <span className="px-5 py-3 bg-[#D4BAFC] rounded-lg text-white text-[18px] leading-[100%] font-bold mb-8 mr-8 mt-6 font-[Bowler]">
+                <span className="px-5 py-3 bg-[#D4BAFC] rounded-lg text-white text-[18px] leading-[100%] font-bold mb-8 mr-8 mt-6 font-bowler">
                   {work.monthlyPrice}
                   {language === "ka" ? "₾" : language === "ru" ? "₽" : "$"}/
                   {t("common.month")}

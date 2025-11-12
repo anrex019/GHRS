@@ -138,7 +138,7 @@ const Blog: React.FC<BlogProps> = ({
       <div className="py-5 md:px-6">
         {withSlider && articles?.length > 0 && (
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-[20px] leading-[120%] md:my-5 md:mx-3 text-[#3D334A] md:text-[40px] md:tracking-[-3%] font-[Bowler]">
+            <h2 className="text-[20px] leading-[120%] md:my-5 md:mx-3 text-[#3D334A] md:text-[40px] md:tracking-[-3%] font-bowler">
               {title || t("navigation.blog")}
             </h2>
             <SliderArrows
@@ -182,7 +182,7 @@ const Blog: React.FC<BlogProps> = ({
           return (
             <div key={category?._id} className="mt-10">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-[20px] leading-[120%] md:my-5 md:mx-3 text-[#3D334A] md:text-[40px] md:tracking-[-3%] font-[Bowler]">
+                <h2 className="text-[20px] leading-[120%] md:my-5 md:mx-3 text-[#3D334A] md:text-[40px] md:tracking-[-3%] font-bowler">
                   {getLocalizedText(category?.name)}
                 </h2>
               </div>

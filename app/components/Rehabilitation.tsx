@@ -18,7 +18,7 @@ const Rehabilitation = () => {
       />
       <div className="md:p-10 px-4">
         <Link
-          className="text-[14px] md:text-[24px] leading-[90%] uppercase text-[#D4BAFC] hover:text-[#C4A6F1] transition-colors inline-block font-[Bowler]"
+          className="text-[14px] md:text-[24px] leading-[90%] uppercase text-[#D4BAFC] hover:text-[#C4A6F1] transition-colors inline-block font-bowler"
           href={"/rehabilitation"}
         >
           {typeof t("rehabilitation.learn_more") === "string"

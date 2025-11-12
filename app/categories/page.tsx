@@ -237,7 +237,7 @@ export default function CategoriesPage() {
             <div className="absolute inset-0 bg-[#3D334A]/30 backdrop-blur-[20px] rounded-[20px]"></div>
             {/* Content */}
             <div className="relative w-full h-full px-6 py-3 flex items-center">
-              <h1 className="font-[Bowler] text-white text-3xl md:text-4xl uppercase tracking-wide">
+              <h1 className="font-bowler text-white text-3xl md:text-4xl uppercase tracking-wide">
                 {categoryTitle}
               </h1>
             </div>

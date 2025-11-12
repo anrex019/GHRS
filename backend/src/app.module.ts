@@ -19,6 +19,9 @@ import { CourseModuleModule } from './course-module/course-module.module';
 import { ReviewModule } from './review/review.module';
 import { StatisticsModule } from './statistics/statistics.module';
 import { EmailModule } from './email/email.module'; // ← დამატებული
+import { LegalModule } from './legal/legal.module';
+import { ConsultationModule } from './consultation/consultation.module';
+import { TestModule } from './test/test.module';
 
 @Module({
   imports: [
@@ -42,6 +45,9 @@ import { EmailModule } from './email/email.module'; // ← დამატებ
     CourseModuleModule,
     ReviewModule,
     StatisticsModule,
+    LegalModule,
+    ConsultationModule,
+    TestModule,
   ],
   controllers: [AppController],
   providers: [AppService],
