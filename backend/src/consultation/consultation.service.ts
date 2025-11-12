@@ -79,7 +79,7 @@ export class ConsultationService {
           <h2>Thank you for your request!</h2>
           <p>Dear ${request.name},</p>
           <p>We have received your consultation request and will contact you shortly.</p>
-          <p>Our working hours: 9:00 AM - 7:00 PM MSK</p>
+          <p><strong>Please note our working hours: 9:00 AM - 7:00 PM (Tel Aviv time zone)</strong></p>
           <p>Best regards,<br>GHRS Team</p>
         `,
       },
@@ -117,7 +117,7 @@ export class ConsultationService {
           <h2>მადლობა თქვენი განაცხადისთვის!</h2>
           <p>ძვირფასო ${request.name},</p>
           <p>ჩვენ მივიღეთ თქვენი განაცხადი კონსულტაციისთვის და მალე დაგიკავშირდებით.</p>
-          <p>ჩვენი სამუშაო საათები: 9:00 - 19:00 მოსკოვის დროით</p>
+          <p><strong>გთხოვთ გაითვალისწინოთ ჩვენი სამუშაო საათები: 9:00 - 19:00 (თელ-ავივის დროითი სარტყელი)</strong></p>
           <p>პატივისცემით,<br>GHRS გუნდი</p>
         `,
       },
