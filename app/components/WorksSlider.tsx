@@ -118,7 +118,7 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
                   className="w-full h-[250px] object-cover rounded-2xl mb-6"
                 />
                 <div className="mb-2.5 mx-4">
-                  <span className="px-3 py-2 bg-[#E9DFF6] inline-block rounded-[6px] text-[#3D334A] text-[11px] font-bold leading-[110%] uppercase max-w-full font-bowler break-words">
+                  <span className="px-3 py-2 bg-[#E9DFF6] inline-block rounded-[6px] text-[#3D334A] text-[11px] font-bold leading-[110%] uppercase max-w-full font-['PT_Root_UI'] break-words">
                     {work.categoryName}
                   </span>
                 </div>
@@ -133,7 +133,7 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
                   {work.title}
                 </h3>
                 <p
-                  className="line-clamp-3 text-[#846FA0] leading-[120%] text-sm mx-4 overflow-hidden font-pt"
+                  className="line-clamp-3 text-[#846FA0] leading-[120%] text-sm mx-4 overflow-hidden font-['PT_Root_UI']"
                   style={{
                     display: "-webkit-box",
                     WebkitBoxOrient: "vertical",

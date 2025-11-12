@@ -7,6 +7,11 @@ const LanguageSelector: React.FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { locale, setLocale } = useI18n();
 
+  useEffect(() => {
+    console.log("🔍 LanguageSelector mounted, current locale:", locale);
+    console.log("💾 localStorage locale:", localStorage.getItem("locale"));
+  }, [locale]);
+
   const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
 
   const languages = [
@@ -16,16 +21,11 @@ const LanguageSelector: React.FC = () => {
   ];
 
   const handleLanguageChange = (langCode: "ka" | "ru" | "en") => {
+    console.log("🌍 Language changing from", locale, "to:", langCode);
     setLocale(langCode);
     setIsDropdownOpen(false);
+    console.log("💾 After setLocale, localStorage:", localStorage.getItem("locale"));
   };
-
-  useEffect(() => {
-    const savedLocale = localStorage.getItem("locale") as "ka" | "ru" | "en";
-    if (savedLocale && savedLocale !== locale) {
-      setLocale(savedLocale);
-    }
-  }, []);
 
   return (
     <div className="relative font-pt">

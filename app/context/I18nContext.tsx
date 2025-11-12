@@ -73,9 +73,14 @@ export const I18nProvider: React.FC<I18nProviderProps> = ({ children }) => {
   const [locale, setLocaleState] = useState<Locale>(() => {
     if (typeof window !== "undefined") {
       const savedLocale = localStorage.getItem("locale") as Locale;
+      console.log("🔍 I18nProvider initializing, savedLocale:", savedLocale);
       if (savedLocale && ["ka", "ru", "en"].includes(savedLocale)) {
+        console.log("✅ Using saved locale:", savedLocale);
         return savedLocale;
       }
+      // თუ არ არის შენახული, დავაყენოთ default და შევინახოთ
+      console.log("⚠️ No saved locale, setting default to 'ka'");
+      localStorage.setItem("locale", "ka");
     }
     return "ka";
   });
@@ -84,6 +89,7 @@ export const I18nProvider: React.FC<I18nProviderProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    console.log("📚 Loading translations for locale:", locale);
     const loadTranslations = async () => {
       setIsLoading(true);
       try {
@@ -120,15 +126,19 @@ export const I18nProvider: React.FC<I18nProviderProps> = ({ children }) => {
 
         // შემდეგ სცადე მთავარი locale ფაილის ჩატვირთვა (ru.json, ka.json, en.json)
         try {
-          const mainLocaleFile = await fetch(`/locales/${locale}.json`).then(res => res.json());
-          mergedTranslations = deepMerge(mergedTranslations, mainLocaleFile as Record<string, unknown>);
+          const mainLocaleResponse = await fetch(`/locales/${locale}.json`);
+          if (mainLocaleResponse.ok) {
+            const mainLocaleFile = await mainLocaleResponse.json();
+            mergedTranslations = deepMerge(mergedTranslations, mainLocaleFile as Record<string, unknown>);
+          }
         } catch (error) {
           // No main locale file found, using split files only
         }
 
+        console.log("✅ Translations loaded for:", locale);
         setTranslationData(mergedTranslations);
       } catch (error) {
-        console.error("Failed to load translations:", error);
+        console.error("❌ Failed to load translations:", error);
       } finally {
         setIsLoading(false);
       }
@@ -138,9 +148,14 @@ export const I18nProvider: React.FC<I18nProviderProps> = ({ children }) => {
   }, [locale]);
 
   const setLocale = (newLocale: Locale) => {
+    console.log("🌍 setLocale called:", { current: locale, new: newLocale });
     if (newLocale !== locale) {
+      console.log("✅ Updating locale to:", newLocale);
       setLocaleState(newLocale);
       localStorage.setItem("locale", newLocale);
+      console.log("💾 Locale saved to localStorage:", newLocale);
+    } else {
+      console.log("⏭️ Locale unchanged, skipping update");
     }
   };
 

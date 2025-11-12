@@ -2,7 +2,7 @@
 
 import React, { useRef, useEffect, useState } from "react";
 import DesktopNavbar from "../components/Navbar/DesktopNavbar";
-import { defaultMenuItems } from "../components/Header/Header";
+import { getDefaultMenuItems } from "../components/Header/Header";
 import MobileNavbar from "../components/Navbar/MobileNavbar";
 import Category from "../components/Category";
 import { CiSearch } from "react-icons/ci";
@@ -27,6 +27,7 @@ interface Subcategory {
 const AllComplex = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { locale, t } = useI18n();
+  const menuItems = getDefaultMenuItems(t);
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
   // const [visibleWorksCount, setVisibleWorksCount] = useState(1); // რამდენი Works გამოჩნდეს
@@ -155,7 +156,7 @@ const AllComplex = () => {
   return (
     <div className="bg-[#F9F7FE]">
       <DesktopNavbar
-        menuItems={defaultMenuItems}
+        menuItems={menuItems}
         blogBg={false}
         allCourseBg={false}
       />

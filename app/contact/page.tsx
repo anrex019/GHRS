@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import DesktopNavbar from "../components/Navbar/DesktopNavbar";
 import MobileNavbar from "../components/Navbar/MobileNavbar";
-import { defaultMenuItems } from "../components/Header/Header";
+import { getDefaultMenuItems } from "../components/Header/Header";
 import { FaPhoneAlt } from "react-icons/fa";
 import { CiMail } from "react-icons/ci";
 import Image from "next/image";
@@ -40,18 +40,22 @@ const ClockIcon = () => (
 );
 
 const Contact = () => {
-  const { locale } = useI18n();
+  const { locale, t } = useI18n();
   const [text, setText] = useState<ContactText | null>(null);
+  const menuItems = getDefaultMenuItems(t);
 
   useEffect(() => {
+    console.log("📞 Contact page - current locale:", locale);
 
     const fetchText = async () => {
       try {
+        console.log("📥 Fetching contact translations for:", locale);
         const res = await fetch(`/locales/${locale}/contact.json`);
         const data: ContactText = await res.json();
+        console.log("✅ Contact translations loaded:", data);
         setText(data);
       } catch (err) {
-        console.error("Failed to load contact translations", err);
+        console.error("❌ Failed to load contact translations", err);
       }
     };
 
@@ -64,7 +68,7 @@ const Contact = () => {
 
   return (
     <div>
-      <DesktopNavbar menuItems={defaultMenuItems} blogBg={false} allCourseBg={false} />
+      <DesktopNavbar menuItems={menuItems} blogBg={false} allCourseBg={false} />
       <MobileNavbar />
       <section className="px-2 md:px-8 py-4">
         <h2 className="font-medium text-xl md:text-2xl mb-2 md:mb-4">{text.title}</h2>
