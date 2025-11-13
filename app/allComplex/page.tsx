@@ -97,6 +97,8 @@ const AllComplex = () => {
           `${API_CONFIG.BASE_URL}${endpoint}`
         );
         const data = await response.json();
+        console.log('📋 Subcategories from API:', data);
+        console.log('📋 First subcategory:', data[0]);
         setSubcategories(data);
       } catch (error) {
         console.error("Error fetching subcategories:", error);
@@ -179,7 +181,7 @@ const AllComplex = () => {
           <input
             type="text"
             placeholder={pageTexts.searchPlaceholder[locale as keyof typeof pageTexts.searchPlaceholder] || pageTexts.searchPlaceholder.ru}
-            className="w-full font-pt bg-white text-[#846FA0] text-[16px] md:text-[19px] font-medium ml-2 md:ml-4 outline-none"
+            className="w-full font-bowler bg-white text-[#846FA0] text-[16px] md:text-[19px] font-medium ml-2 md:ml-4 outline-none"
           />
         </div>
 
@@ -193,7 +195,7 @@ const AllComplex = () => {
             return (
               <div key={cat._id} className="relative">
                 <button
-                  className={`font-pt text-[#3D334A] text-[14px] md:text-[18px] tracking-wide font-medium rounded-[12px] px-4 md:px-5 py-2 md:py-3 min-h-[40px] transition-colors whitespace-nowrap flex items-center gap-2
+                  className={`font-bowler text-[#3D334A] text-[14px] md:text-[18px] tracking-wide font-medium rounded-[12px] px-4 md:px-5 py-2 md:py-3 min-h-[40px] transition-colors whitespace-nowrap flex items-center gap-2
                   ${idx === 0 ? "bg-[#E9DDFB]" : "bg-white"}
                   hover:bg-[#E9DDFB]
                   ${isOpen ? "ring-2 ring-[#D4BAFC] bg-[#E9DDFB]" : ""}
@@ -232,7 +234,7 @@ const AllComplex = () => {
                         return (
                           <div
                             key={i}
-                            className="font-pt px-4 py-3 hover:bg-[#E9DDFB] cursor-pointer text-[#3D334A] text-[14px] md:text-[16px] transition-colors"
+                            className="font-bowler px-4 py-3 hover:bg-[#E9DDFB] cursor-pointer text-[#3D334A] text-[14px] md:text-[16px] transition-colors"
                           >
                             {subcategoryName}
                           </div>
@@ -247,7 +249,7 @@ const AllComplex = () => {
         </div>
       </div>
 
-      <Section border={1} borderColor="#D4BAFC" subcategories={subcategories} />
+      <Section border={1} borderColor="#D4BAFC" subcategories={subcategories} categories={categories} />
 
       {/* <Works title={"Sets"} sets={sets} border={1} borderColor="#D4BAFC" /> */}
       {/* <Works title={"Популярные комплексы "} />

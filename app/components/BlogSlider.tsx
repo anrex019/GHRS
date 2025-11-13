@@ -25,7 +25,21 @@ interface Blog {
     ka?: string;
   };
   imageUrl: string;
-  categoryId: string;
+  categoryId: string | any;
+  category?: {
+    name: {
+      en: string;
+      ru: string;
+      ka?: string;
+    };
+  };
+  categories?: Array<{
+    name: {
+      en: string;
+      ru: string;
+      ka?: string;
+    };
+  }>;
   tags: string[];
   isPublished: boolean;
   isFeatured: boolean;
@@ -80,6 +94,34 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
     return field[language] || field.ru || field.en || "";
   };
 
+  const getCategoryName = (blog: Blog): string => {
+    if (blog.categories && blog.categories.length > 0) {
+      return getLocalizedText(blog.categories[0].name);
+    }
+    if (blog.category?.name) {
+      return getLocalizedText(blog.category.name);
+    }
+    if (blog.categoryId && typeof blog.categoryId === 'object' && !Array.isArray(blog.categoryId)) {
+      const categoryObj = blog.categoryId as any;
+      if (categoryObj.name) {
+        return getLocalizedText(categoryObj.name);
+      }
+    }
+    if (Array.isArray(blog.categoryId) && blog.categoryId.length > 0) {
+      const firstCategory = blog.categoryId[0] as any;
+      if (firstCategory && typeof firstCategory === 'object' && firstCategory.name) {
+        return getLocalizedText(firstCategory.name);
+      }
+    }
+    return "";
+  };
+
+  const clampText = (text: string, max: number): string => {
+    if (!text) return "";
+    const trimmed = text.trim();
+    return trimmed.length > max ? `${trimmed.slice(0, max).trimEnd()}…` : trimmed;
+  };
+
   const getCurrentBlogs = () => {
     const startIndex = currentPage * blogsPerPage;
     const endIndex = startIndex + blogsPerPage;
@@ -122,39 +164,39 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
         {/* Featured Blog */}
         {featuredBlog && isDesktop && (
           <Link href={getBlogLink(featuredBlog)} className="flex-1">
-            <div className="bg-white p-5 hover:shadow-lg duration-300 transition-shadow h-[518px] rounded-[20px] flex flex-col justify-between">
-              <div className="relative w-full">
+            <div className="bg-white p-8 hover:shadow-lg duration-300 transition-shadow h-[518px] rounded-[20px] flex flex-col justify-between relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-full h-[45%] overflow-hidden">
                 <Image
                   src={
                     featuredBlog.featuredImages?.[0] ||
                     featuredBlog.imageUrl ||
-                    ""
+                    "/assets/images/blogbg.jpg"
                   }
-                  width={694}
-                  height={232}
+                  fill
                   alt={getLocalizedText(featuredBlog.title)}
-                  className="w-full h-[232px] object-cover rounded-[20px]"
+                  className="object-cover opacity-80"
                 />
-                <div className="absolute top-2 right-2 flex flex-col gap-1.5">
-                  <div className="w-10 h-10 bg-[#F9F7FE]/30 backdrop-blur-sm rounded-[6px] flex justify-center items-center hover:bg-[#F9F7FE]/50 transition-all">
-                    <CiBookmark className="w-[14.2px] h-[18.68px] text-white" />
-                  </div>
-                  <div className="w-10 h-10 bg-[#F9F7FE]/30 backdrop-blur-sm rounded-[6px] flex justify-center items-center hover:bg-[#F9F7FE]/50 transition-all">
-                    <IoIosShareAlt className="w-[14.2px] h-[18.68px] text-white" />
-                  </div>
-                </div>
               </div>
-              <div className="flex-1 flex flex-col justify-between mt-4">
-                <div>
-                  <h3 className="text-[#1A1A1A] text-[24px] leading-tight font-semibold mb-2 font-bowler">
-                    <div className="line-clamp-2">
-                      {getLocalizedText(featuredBlog.title)?.trim()}
-                    </div>
-                  </h3>
-                  <p className="text-[#1A1A1A]/70 text-sm leading-[120%] line-clamp-3 font-pt">
-                    {getLocalizedText(featuredBlog.excerpt) || getLocalizedText(featuredBlog.description) || ""}
-                  </p>
-                </div>
+              <div className="absolute top-8 right-8 flex flex-col gap-4 z-10">
+                <button className="p-2 hover:bg-white/10 rounded-full transition-colors">
+                  <CiBookmark className="w-6 h-6 text-white" />
+                </button>
+                <button className="p-2 hover:bg-white/10 rounded-full transition-colors">
+                  <IoIosShareAlt className="w-6 h-6 text-white" />
+                </button>
+              </div>
+              <div className="flex flex-col gap-4 mt-auto relative z-10">
+                {getCategoryName(featuredBlog) && (
+                  <span className="px-3 py-2 bg-[#E9DFF6] inline-block rounded-[6px] text-[#3D334A] text-[12px] font-bold leading-[90%] uppercase font-bowler self-start">
+                    {getCategoryName(featuredBlog)}
+                  </span>
+                )}
+                <h2 className="font-bowler text-[#1A1A1A] text-lg md:text-xl font-semibold leading-tight">
+                  {clampText(getLocalizedText(featuredBlog.title), 110)}
+                </h2>
+                <p className="font-pt text-[#1A1A1A]/80 text-sm line-clamp-3">
+                  {clampText(getLocalizedText(featuredBlog.excerpt) || getLocalizedText(featuredBlog.description) || "", 100)}
+                </p>
               </div>
             </div>
           </Link>
@@ -167,15 +209,29 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
               {getCurrentBlogs().map((blog) => (
                 <Link key={blog._id} href={getBlogLink(blog)}>
                   <div className="h-[249px] p-5 bg-white flex flex-col justify-between rounded-[20px] hover:shadow-lg duration-300 transition-shadow">
-                    <h3 className="text-[#1A1A1A] text-xl leading-tight line-clamp-2 font-semibold font-bowler">
-                      {getLocalizedText(blog.title)}
-                    </h3>
-                    <div className="flex justify-end items-center gap-1.5">
-                      <div className="w-10 h-10 bg-[#F9F7FE] rounded-[6px] flex justify-center items-center hover:bg-[#E9DFF6] transition-all">
-                        <CiBookmark className="w-[14.2px] h-[18.68px] text-black" />
+                    <div className="flex flex-col gap-3">
+                      <h3 className="font-bowler text-[#1A1A1A] text-xl font-semibold leading-tight">
+                        {clampText(getLocalizedText(blog.title), 90)}
+                      </h3>
+                      <p className="font-pt text-[#1A1A1A]/70 text-sm line-clamp-3">
+                        {clampText(getLocalizedText(blog.excerpt) || getLocalizedText(blog.description) || "", 180)}
+                      </p>
+                    </div>
+                    <div className="flex justify-between items-end">
+                      <div className="items-center flex">
+                        {getCategoryName(blog) && (
+                          <span className="px-3 py-2 bg-[#E9DFF6] inline-block rounded-[6px] text-[#3D334A] text-[12px] font-bold leading-[90%] uppercase font-bowler">
+                            {getCategoryName(blog)}
+                          </span>
+                        )}
                       </div>
-                      <div className="w-10 h-10 bg-[#F9F7FE] rounded-[6px] flex justify-center items-center hover:bg-[#E9DFF6] transition-all">
-                        <IoIosShareAlt className="w-[14.2px] h-[18.68px] text-black" />
+                      <div className="flex justify-end gap-4">
+                        <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                          <CiBookmark className="w-6 h-6 text-[#667085]" />
+                        </button>
+                        <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                          <IoIosShareAlt className="w-6 h-6 text-[#667085]" />
+                        </button>
                       </div>
                     </div>
                   </div>

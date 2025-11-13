@@ -43,6 +43,7 @@
     "error": "Error",
     "subscription_plans": "Subscription plans",
     "default_category": "Orthopedics",
+    "orthopedics": "Orthopedics",
     "category_loading": "Category loading...",
     "category_error": "Error!",
     "category_not_found": "Category not found",

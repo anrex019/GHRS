@@ -133,17 +133,10 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
                     {work.categoryName}
                   </span>
                 </div>
-                <h3
-                  className="text-[#3D334A] font-extrabold text-[18px] leading-[120%] mx-4 line-clamp-2 overflow-hidden font-pt"
-                  style={{
-                    display: "-webkit-box",
-                    WebkitBoxOrient: "vertical",
-                    WebkitLineClamp: 2,
-                  }}
-                >
+                <h3 className="text-[#3D334A] font-extrabold text-[18px] leading-[120%] mx-4 font-pt">
                   {work.title}
                 </h3>
-                <p className="text-[#3D334A] leading-[120%] text-sm mx-4 font-pt font-bold mb-4">
+                <p className="text-[#000000] leading-[120%] text-sm mx-4 font-pt font-bold mb-4">
                   {cleanDescription(work.description)}
                 </p>
               </div>

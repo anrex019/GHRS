@@ -203,7 +203,7 @@ function MainHeader({
                 <h1 className="text-[28px] md:text-[48px] font-bold text-white mb-6 md:mb-8 uppercase font-[Bowler] tracking-[-1%] leading-[100%]">
                   {customBlockTitle || t("header.rehabilitation")}
                 </h1>
-                <p className="text-[18px] md:text-[24px] font-medium text-white uppercase font-pt leading-[120%] tracking-[-1%]">{customBlockDescription || t("header.rehabilitation_description")}</p>
+                <p className="text-[18px] md:text-[24px] font-medium text-white font-pt leading-[120%] tracking-[-1%]">{customBlockDescription || t("header.rehabilitation_description")}</p>
               </>
             )}
           </div>

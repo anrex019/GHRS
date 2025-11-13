@@ -19,16 +19,37 @@ interface Subcategory {
   };
   image?: string;
   sets?: any[];
+  categoryId?: string;
+  category?: {
+    _id: string;
+    name: {
+      ka: string;
+      en: string;
+      ru: string;
+    };
+  };
+}
+
+interface Category {
+  _id: string;
+  name: {
+    ka: string;
+    en: string;
+    ru: string;
+  };
+  subcategories?: string[];
 }
 
 const Section = ({
   border = 0,
   borderColor = "transparent",
   subcategories = [],
+  categories = [],
 }: {
   border?: number;
   borderColor?: string;
   subcategories?: Subcategory[];
+  categories?: Category[];
 }) => {
   const scrollRef = useRef(null);
   const { locale, t } = useI18n();
@@ -66,7 +87,7 @@ const Section = ({
             {t("common.sections_title") || "Разделы"}
           </h1>
           <Link href="/subcategories" className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer">
-            <span className="font-pt text-[#D4BAFC] text-[24px] leading-[90%] uppercase mr-2">
+            <span className="font-bowler text-[#D4BAFC] text-[24px] leading-[90%] mr-2">
               {t("buttons.show_all") || "Смотреть все"}
             </span>
             <FaArrowRightLong color="#D4BAFC"/>
@@ -89,14 +110,28 @@ const Section = ({
           msOverflowStyle: 'none',
         }}
       >
-        {subcategories.map((subcat) => (
+        {subcategories.map((subcat) => {
+          // Find parent category by checking which category contains this subcategory
+          const parentCategory = categories.find(cat => 
+            cat.subcategories?.includes(subcat._id)
+          );
+          const categoryId = subcat.categoryId || subcat.category?._id || parentCategory?._id;
+          const categoryName = subcat.category?.name 
+            ? getLocalizedText(subcat.category.name) 
+            : parentCategory?.name 
+            ? getLocalizedText(parentCategory.name)
+            : (t("common.orthopedics") || "Ортопедия");
+          
+          return (
           <Link
             key={subcat._id}
-            href={`/subcategories/${subcat._id}`}
+            href={categoryId ? `/categories/${categoryId}` : `/subcategories/${subcat._id}`}
             className="min-w-[558px] h-[283px] relative bg-white p-2 rounded-5 hover:shadow-lg transition-all cursor-pointer my-2 block"
           >
-            <div className="absolute top-1 z-10">
-              <CustomBadge text={getLocalizedText(subcat.name)} margin="m-3" />
+            <div className="absolute top-4 left-4 z-10 bg-[#E9DFF6] px-3 py-1 rounded-md">
+              <span className="font-bowler text-[#3D334A] text-[14px] uppercase">
+                {categoryName}
+              </span>
             </div>
             <img
               src={subcat.image || "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=542&h=181&fit=crop&crop=center"}
@@ -105,16 +140,17 @@ const Section = ({
               alt={`subcategory-${subcat._id}`}
               className="w-full h-[181px] object-cover rounded-4"
             />
-            <div className="flex items-end justify-between mt-[22px] relative">
-              <h1 className="font-pt text-[#3D334A] w-[342px] text-[22px] leading-[120%] break-words truncate">
-                {getLocalizedText(subcat.description)}
+            <div className="flex items-start justify-between mt-[22px] relative">
+              <h1 className="font-bowler text-[#3D334A] w-[342px] text-[22px] leading-[120%] break-words">
+                {getLocalizedText(subcat.name)}
               </h1>
-              <span className="font-pt text-[#D4BAFC] absolute -bottom-0 right-0 leading-[120%]">
+              <span className="font-bowler text-[#D4BAFC] absolute -bottom-0 right-0 leading-[120%]">
                 {subcat.sets?.length || 0} комплексов
               </span>
             </div>
           </Link>
-        ))}
+          );
+        })}
       </div>
 
       <style jsx>{`
