@@ -81,7 +81,7 @@ const Rehabilitation = () => {
                 height={54}
               />
             </div>
-            <p className="text-[rgba(255,255,255,1)] font-[Bowler] text-[14px] md:text-[18px] tracking-[0%] leading-[120%] font-medium md:max-w-[413px] w-full md:mt-5 mt-[60px]">
+            <p className="text-[rgba(255,255,255,1)] font-pt text-[14px] md:text-[18px] tracking-[0%] leading-[120%] font-medium md:max-w-[413px] w-full md:mt-5 mt-[60px]">
               {typeof t(
                 "rehabilitation.page.subscription.payment.description"
               ) === "string"
@@ -110,7 +110,7 @@ const Rehabilitation = () => {
                     height={54}
                   />
                 </div>
-                <p className="text-white font-[Bowler] text-[14px] md:text-[18px] tracking-[0%] leading-[120%] font-medium md:max-w-[413px] w-full mt-[60px] md:mt-5">
+                <p className="text-white font-pt text-[14px] md:text-[18px] tracking-[0%] leading-[120%] font-medium md:max-w-[413px] w-full mt-[60px] md:mt-5">
                   {typeof t(
                     "rehabilitation.page.subscription.planning.description"
                   ) === "string"
@@ -136,7 +136,7 @@ const Rehabilitation = () => {
                     height={54}
                   />
                 </div>
-                <p className="text-white font-[Bowler] text-[14px] md:text-[18px] tracking-[0%] leading-[120%] font-medium md:max-w-[413px] w-full mt-[60px] md:mt-5">
+                <p className="text-white font-pt text-[14px] md:text-[18px] tracking-[0%] leading-[120%] font-medium md:max-w-[413px] w-full mt-[60px] md:mt-5">
                   {typeof t(
                     "rehabilitation.page.subscription.trial.description"
                   ) === "string"
@@ -166,7 +166,7 @@ const Rehabilitation = () => {
                     height={54}
                   />
                 </div>
-                <p className="text-white font-[Bowler] text-[14px] md:text-[18px] tracking-[0%] leading-[120%] font-medium md:max-w-[413px] w-full mt-[60px] md:mt-5">
+                <p className="text-white font-pt text-[14px] md:text-[18px] tracking-[0%] leading-[120%] font-medium md:max-w-[413px] w-full mt-[60px] md:mt-5">
                   {typeof t(
                     "rehabilitation.page.subscription.course_access.description"
                   ) === "string"
@@ -204,7 +204,7 @@ const Rehabilitation = () => {
                     />
                   </svg>
                 </div>
-                <p className="text-white font-[Bowler] text-[14px] md:text-[18px] tracking-[0%] leading-[120%] font-medium md:max-w-[413px] w-full mt-[60px] md:mt-5">
+                <p className="text-white font-pt text-[14px] md:text-[18px] tracking-[0%] leading-[120%] font-medium md:max-w-[413px] w-full mt-[60px] md:mt-5">
                   {typeof t(
                     "rehabilitation.page.subscription.cancellation.description"
                   ) === "string"

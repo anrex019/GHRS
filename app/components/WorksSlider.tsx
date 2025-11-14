@@ -53,9 +53,11 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
     if (!description) return "";
     // Remove patterns like "The set consists of X exercises" in any language
     return description
-      .replace(/The set consists of \d+ exercises?\.?/gi, "")
+      .replace(/The (set|complex) consists of \d+ exercises?\.?/gi, "")
       .replace(/Набор состоит из \d+ упражнени[йя]\.?/gi, "")
+      .replace(/Комплекс состоит из \d+ упражнени[йя]\.?/gi, "")
       .replace(/სეტი შედგება \d+ ვარჯიშისგან\.?/gi, "")
+      .replace(/კომპლექსი შედგება \d+ ვარჯიშისგან\.?/gi, "")
       .trim();
   };
 
@@ -133,10 +135,10 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
                     {work.categoryName}
                   </span>
                 </div>
-                <h3 className="text-[#3D334A] font-extrabold text-[18px] leading-[120%] mx-4 font-pt">
+                <h3 className="text-[#3D334A] font-bold text-[18px] leading-[120%] mx-4 font-pt">
                   {work.title}
                 </h3>
-                <p className="text-[#000000] leading-[120%] text-sm mx-4 font-pt font-bold mb-4">
+                <p className="text-[#000] leading-[120%] text-sm mx-4 font-pt mb-4">
                   {cleanDescription(work.description)}
                 </p>
               </div>
