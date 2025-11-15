@@ -2,7 +2,7 @@
 import React from "react";
 import DesktopNavbar from "../components/Navbar/DesktopNavbar";
 import MobileNavbar from "../components/Navbar/MobileNavbar";
-import { defaultMenuItems } from "../components/Header/Header";
+import { getDefaultMenuItems } from "../components/Header/Header";
 import { Footer } from "../components/Footer";
 import { useI18n } from "../context/I18nContext";
 import { useLegalDocument } from "../hooks/useLegalDocument";
@@ -10,12 +10,13 @@ import { useLegalDocument } from "../hooks/useLegalDocument";
 const UserAgreement = () => {
   const { t, locale } = useI18n();
   const { document, loading, error } = useLegalDocument('user-agreement', locale);
+  const menuItems = getDefaultMenuItems(t);
 
   return (
     <>
       <div className="bg-[#F9F7FE] min-h-screen">
         <DesktopNavbar
-          menuItems={defaultMenuItems}
+          menuItems={menuItems}
           blogBg={false}
           allCourseBg={false}
         />

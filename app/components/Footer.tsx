@@ -445,16 +445,18 @@ export const Footer: FC = () => {
           height={48}
         />
         <Image
-          src="/assets/images/services/asuta.png"
-          alt="Assuta"
+          src="/assets/images/ichilov.jpeg"
+          alt="Ichilov Medical Center"
           width={400}
           height={48}
+          className="opacity-80 mix-blend-multiply"
         />
         <Image
-          src="/assets/images/services/asuta.png"
-          alt="Assuta"
+          src="/assets/images/sheba.png"
+          alt="Sheba Medical Center"
           width={400}
           height={48}
+          className="opacity-80 mix-blend-multiply"
         />
       </div>
 

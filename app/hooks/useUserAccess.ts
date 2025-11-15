@@ -19,8 +19,15 @@ export function useUserAccess(setId?: string, courseId?: string): UseUserAccessR
   const { isAuthenticated, user } = useAuth();
 
   const checkAccess = async (targetSetId: string) => {
-    if (!isAuthenticated || !user) {
-      console.log('👤 User not authenticated, skipping access check');
+    // Check if token exists in localStorage
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+    
+    if (!isAuthenticated || !user || !token) {
+      console.log('👤 User not authenticated or no token, skipping access check', {
+        isAuthenticated,
+        hasUser: !!user,
+        hasToken: !!token
+      });
       setHasAccess(false);
       setLoading(false);
       return;
@@ -37,20 +44,29 @@ export function useUserAccess(setId?: string, courseId?: string): UseUserAccessR
       setHasAccess(response);
       console.log('✅ Access check result:', response);
     } catch (err) {
-      // Only log error if user is authenticated (unexpected error)
-      if (isAuthenticated) {
+      // Silently handle 401 errors (user not authorized for this content)
+      if (err instanceof Error && err.message.includes('401')) {
+        console.log('🔒 User does not have access to this content');
+      } else {
         console.error('❌ Error checking user access:', err);
-        setError('შეცდომა access-ის შემოწმებისას');
       }
       setHasAccess(false);
+      setError(null); // Don't show error to user for access checks
     } finally {
       setLoading(false);
     }
   };
 
   const checkCourseAccess = async (targetCourseId: string) => {
-    if (!isAuthenticated || !user) {
-      console.log('👤 User not authenticated, skipping course access check');
+    // Check if token exists in localStorage
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+    
+    if (!isAuthenticated || !user || !token) {
+      console.log('👤 User not authenticated or no token, skipping course access check', {
+        isAuthenticated,
+        hasUser: !!user,
+        hasToken: !!token
+      });
       setHasAccess(false);
       setLoading(false);
       return;
@@ -67,18 +83,27 @@ export function useUserAccess(setId?: string, courseId?: string): UseUserAccessR
       setHasAccess(response);
       console.log('✅ Course access check result:', response);
     } catch (err) {
-      // Only log error if user is authenticated (unexpected error)
-      if (isAuthenticated) {
+      // Silently handle 401 errors (user not authorized for this content)
+      if (err instanceof Error && err.message.includes('401')) {
+        console.log('🔒 User does not have access to this course');
+      } else {
         console.error('❌ Error checking course access:', err);
-        setError('შეცდომა course access-ის შემოწმებისას');
       }
       setHasAccess(false);
+      setError(null); // Don't show error to user for access checks
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
+    // Only check access if user is authenticated
+    if (!isAuthenticated || !user) {
+      setHasAccess(false);
+      setLoading(false);
+      return;
+    }
+
     if (setId) {
       checkAccess(setId);
     } else if (courseId) {

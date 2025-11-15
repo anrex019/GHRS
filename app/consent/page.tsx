@@ -2,13 +2,14 @@
 import React from "react";
 import DesktopNavbar from "../components/Navbar/DesktopNavbar";
 import MobileNavbar from "../components/Navbar/MobileNavbar";
-import { defaultMenuItems } from "../components/Header/Header";
+import { getDefaultMenuItems } from "../components/Header/Header";
 import { Footer } from "../components/Footer";
 import { useI18n } from "../context/I18nContext";
 import { useLegalDocument } from "../hooks/useLegalDocument";
 
 const Consent = () => {
   const { t, locale } = useI18n();
+  const menuItems = getDefaultMenuItems(t);
 
   // For Russian, use "data-processing" type instead of "consent"
   const documentType = locale === "ru" ? "data-processing" : "consent";
@@ -22,7 +23,7 @@ const Consent = () => {
     <>
       <div className="bg-[#F9F7FE] min-h-screen">
         <DesktopNavbar
-          menuItems={defaultMenuItems}
+          menuItems={menuItems}
           blogBg={false}
           allCourseBg={false}
         />

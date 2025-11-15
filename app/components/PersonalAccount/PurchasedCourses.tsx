@@ -160,8 +160,14 @@ export default function PurchasedCourses() {
         );
         setCourses(response);
       } catch (err) {
-        setError("შეცდომა კურსების ჩატვირთვისას");
-        console.error("Error fetching purchased courses:", err);
+        // If user not authenticated (401), silently handle
+        if (err instanceof Error && err.message.includes('401')) {
+          console.log('📚 User not authenticated, no purchased courses to display');
+          setCourses([]);
+        } else {
+          setError("შეცდომა კურსების ჩატვირთვისას");
+          console.error("Error fetching purchased courses:", err);
+        }
       } finally {
         setLoading(false);
       }

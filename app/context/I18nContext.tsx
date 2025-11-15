@@ -125,6 +125,7 @@ export const I18nProvider: React.FC<I18nProviderProps> = ({ children }) => {
         );
 
         // შემდეგ სცადე მთავარი locale ფაილის ჩატვირთვა (ru.json, ka.json, en.json)
+        // ეს არის optional და არ არის აუცილებელი
         try {
           const mainLocaleResponse = await fetch(`/locales/${locale}.json`);
           if (mainLocaleResponse.ok) {
@@ -132,7 +133,7 @@ export const I18nProvider: React.FC<I18nProviderProps> = ({ children }) => {
             mergedTranslations = deepMerge(mergedTranslations, mainLocaleFile as Record<string, unknown>);
           }
         } catch (error) {
-          // No main locale file found, using split files only
+          // No main locale file found, using split files only - this is expected
         }
 
         console.log("✅ Translations loaded for:", locale);

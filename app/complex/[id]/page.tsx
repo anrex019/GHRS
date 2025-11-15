@@ -211,22 +211,18 @@ const Complex = ({ params }: ComplexPageProps) => {
     );
   }
 
-  // Just update the selection, don't add to cart yet
-  const handleSubscriptionSelect = (period: string, price: number) => {
-    console.log("✅ Selection updated", { period, price });
-    
-    // Update selected period and price
-    setSelectedPeriod(period);
-    setSelectedPrice(price);
-    
-    // Close popover
-    setPopoverOpen(false);
-  };
+  // Add to cart helper – always uses currently selected period and price
+  function handleAddToCart() {
+    const finalPeriod = selectedPeriod;
+    const finalPrice = selectedPrice;
 
-  // Add to cart when user clicks the buy button
-  const handleAddToCart = () => {
-    console.log("🛒 Adding to cart", { selectedPeriod, selectedPrice, setId, setData });
-    
+    console.log("🛒 Adding to cart", {
+      period: finalPeriod,
+      price: finalPrice,
+      setId,
+      setData,
+    });
+
     if (!setData) {
       console.error("❌ No setData available");
       return;
@@ -244,8 +240,8 @@ const Complex = ({ params }: ComplexPageProps) => {
         itemType: "set",
         name: setData.name, // multilingual object {ru, en, ka}
         title: setData.name?.ru || setData.name?.en || "", // fallback title
-        price: selectedPrice,
-        period: selectedPeriod,
+        price: finalPrice,
+        period: finalPeriod,
         image: setData.thumbnailImage || "/assets/images/course.png",
         img: setData.thumbnailImage || "/assets/images/course.png",
         description: setData.description, // multilingual object
@@ -285,6 +281,18 @@ const Complex = ({ params }: ComplexPageProps) => {
       console.error("❌ Error adding to cart:", error);
       alert("Failed to add item to cart. Please try again.");
     }
+  }
+
+  // Update selection only; BUY button will add to cart with selected plan
+  const handleSubscriptionSelect = (period: string, price: number) => {
+    console.log("✅ Selection updated", { period, price });
+
+    // Update selected period and price for UI
+    setSelectedPeriod(period);
+    setSelectedPrice(price);
+
+    // Close popover
+    setPopoverOpen(false);
   };
 
   const statsData = [

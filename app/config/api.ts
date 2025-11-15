@@ -252,24 +252,36 @@ export async function apiRequest<T>(
     if (!response.ok) {
       // Try to get error details from response body
       let errorDetails = '';
-      console.error('❌ API Error:');
-      console.error('  Status:', response.status);
-      console.error('  Status Text:', response.statusText);
-      console.error('  URL:', url);
-      console.error('  Headers:', Object.fromEntries(response.headers.entries()));
+      
+      // Only log errors for non-401/404 status codes (these are expected in some cases)
+      const shouldLogError = response.status !== 401 && response.status !== 404;
+      
+      if (shouldLogError) {
+        console.error('❌ API Error:');
+        console.error('  Status:', response.status);
+        console.error('  Status Text:', response.statusText);
+        console.error('  URL:', url);
+        console.error('  Headers:', Object.fromEntries(response.headers.entries()));
+      }
       
       try {
         const errorBody = await response.json();
         errorDetails = errorBody.message || errorBody.error || JSON.stringify(errorBody);
-        console.error('❌ API Error Response Body:', errorBody);
+        if (shouldLogError) {
+          console.error('❌ API Error Response Body:', errorBody);
+        }
       } catch (e) {
         // Response body is not JSON
         try {
           errorDetails = await response.text();
-          console.error('❌ API Error Response Text:', errorDetails);
+          if (shouldLogError) {
+            console.error('❌ API Error Response Text:', errorDetails);
+          }
         } catch (textError) {
           errorDetails = response.statusText;
-          console.error('❌ Could not parse error response');
+          if (shouldLogError) {
+            console.error('❌ Could not parse error response');
+          }
         }
       }
       

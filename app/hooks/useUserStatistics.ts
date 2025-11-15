@@ -34,11 +34,9 @@ export function useUserStatistics(): UseUserStatisticsReturn {
       const data = await apiRequest<UserStatistics>('/users/me/statistics');
       setStatistics(data);
     } catch (err) {
-      console.error('❌ Error fetching user statistics:', err);
-      
       // If user is not authenticated or endpoint doesn't exist, set default values
       if (err instanceof Error && (err.message.includes('401') || err.message.includes('404'))) {
-        console.warn('⚠️ User statistics not available, using defaults');
+        console.log('📊 User statistics not available, using defaults');
         setStatistics({
           totalTimeSpent: 0,
           totalExercisesCompleted: 0,
@@ -53,6 +51,7 @@ export function useUserStatistics(): UseUserStatisticsReturn {
         });
         setError(null);
       } else {
+        console.error('❌ Error fetching user statistics:', err);
         setError(err instanceof Error ? err.message : 'Failed to load statistics');
       }
     } finally {

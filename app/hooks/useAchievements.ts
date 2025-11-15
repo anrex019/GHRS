@@ -49,11 +49,9 @@ export function useAchievements() {
       setAchievements(response);
       setError(null);
     } catch (err) {
-      console.error('Error fetching achievements:', err);
-      
-      // If endpoint doesn't exist (404), use mock data
-      if (err instanceof Error && err.message.includes('404')) {
-        console.warn('⚠️ Achievements endpoint not implemented yet, using mock data');
+      // If endpoint doesn't exist (404) or user not authenticated (401), use mock data
+      if (err instanceof Error && (err.message.includes('404') || err.message.includes('401'))) {
+        console.log('🏆 Achievements not available, using mock data');
         
         // Mock achievements data matching the Figma design
         const mockAchievements: Achievement[] = [
