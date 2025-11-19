@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from "react";
+import Link from "next/link";
 import DesktopNavbar from "../components/Navbar/DesktopNavbar";
 import { getDefaultMenuItems } from "../components/Header/Header";
 import MobileNavbar from "../components/Navbar/MobileNavbar";
@@ -190,36 +191,37 @@ const AllComplex = () => {
           className="w-full px-4 md:px-10 min-h-[64px] bg-[#F9F7FE] rounded-[20px] mb-6 p-4 flex flex-wrap gap-2 md:gap-3 items-center"
         >
           {categories.map((cat, idx) => {
-            const isDropdown = !!cat.subcategories;
+            const hasSubcategories = !!cat.subcategories && cat.subcategories.length > 0;
             const isOpen = openDropdownId === cat._id;
+            
             return (
               <div key={cat._id} className="relative">
-                <button
+                <Link
+                  href={`/categories/${cat._id}`}
                   className={`font-bowler text-[#3D334A] text-[14px] md:text-[18px] tracking-wide font-medium rounded-[12px] px-4 md:px-5 py-2 md:py-3 min-h-[40px] transition-colors whitespace-nowrap flex items-center gap-2
                   ${idx === 0 ? "bg-[#E9DDFB]" : "bg-white"}
                   hover:bg-[#E9DDFB]
                   ${isOpen ? "ring-2 ring-[#D4BAFC] bg-[#E9DDFB]" : ""}
                 `}
-                  onClick={() => {
-                    if (isDropdown) {
-                      setOpenDropdownId(isOpen ? null : cat._id);
-                    }
-                  }}
-                  type="button"
                 >
                   {getLocalizedText(cat.name)}
-                  {isDropdown && (
+                  {hasSubcategories && (
                     <span
-                      className={`ml-1 text-sm  transition-transform p-1 bg-[#E9D9FF] rounded-sm ${
+                      className={`ml-1 text-sm transition-transform p-1 bg-[#E9D9FF] rounded-sm ${
                         isOpen ? "rotate-180" : ""
                       }`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setOpenDropdownId(isOpen ? null : cat._id);
+                      }}
                     >
                       <IoIosArrowDown />
                     </span>
                   )}
-                </button>
+                </Link>
 
-                {isDropdown && isOpen && (
+{hasSubcategories && isOpen && (
                   <div className="absolute left-0 top-full mt-1 z-20 bg-white rounded-[10px] shadow-lg min-w-[160px] py-2 animate-fade-in">
                     {cat.subcategories.map(
                       (subcategoryId: string, i: number) => {
@@ -232,12 +234,13 @@ const AllComplex = () => {
                           : subcategoryId;
 
                         return (
-                          <div
+                          <Link
                             key={i}
-                            className="font-bowler px-4 py-3 hover:bg-[#E9DDFB] cursor-pointer text-[#3D334A] text-[14px] md:text-[16px] transition-colors"
+                            href={`/categories/section?categoryId=${cat._id}&subcategoryId=${subcategoryId}`}
+                            className="font-bowler px-4 py-3 hover:bg-[#E9DDFB] cursor-pointer text-[#3D334A] text-[14px] md:text-[16px] transition-colors block"
                           >
                             {subcategoryName}
-                          </div>
+                          </Link>
                         );
                       }
                     )}
