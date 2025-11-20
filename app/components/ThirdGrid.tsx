@@ -93,8 +93,8 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
                 <p className="mt-0 text-[#846FA0] font-pt font-medium leading-[120%] tracking-[0%] px-3">
                   {orderedBlogs[0].excerpt[language]}
                 </p>
-                <div className="px-3 pb-3 font-[Bowler] mt-2">
-                  <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%] bg-[#E9DFF6] rounded-[6px] text-[14px] uppercase">
+                <div className="px-3 pb-3 font-bowler mt-2">
+                  <span className="text-[#3D334A] font-bowler p-1.5 leading-[90%] bg-[#E9DFF6] rounded-[6px] text-[14px] uppercase">
                     {orderedBlogs[0]?.articles?.length} სტატია
                   </span>
                 </div>
@@ -111,8 +111,8 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
                 <p className="text-[#3D334A] font-pt tracking-[0%] mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
                   {orderedBlogs[1].title[language]}
                 </p>
-                <div className="px-3 pb-3 font-[Bowler] mt-1">
-                  <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%]  rounded-[6px] text-[14px] uppercase">
+                <div className="px-3 pb-3 font-bowler mt-1">
+                  <span className="text-[#3D334A] font-bowler p-1.5 leading-[90%]  rounded-[6px] text-[14px] uppercase">
                     {orderedBlogs[1]?.articles?.length} სტატია
                   </span>
                 </div>
@@ -129,8 +129,8 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
                 <p className="text-[#3D334A] font-pt tracking-[0%] mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
                   {orderedBlogs[2].title[language]}
                 </p>
-                <div className="px-3 pb-3 font-[Bowler] mt-1">
-                  <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%]  rounded-[6px] text-[14px] uppercase">
+                <div className="px-3 pb-3 font-bowler mt-1">
+                  <span className="text-[#3D334A] font-bowler p-1.5 leading-[90%]  rounded-[6px] text-[14px] uppercase">
                     {orderedBlogs[2]?.articles?.length} სტატია
                   </span>
                 </div>
@@ -147,8 +147,8 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
                 <p className="text-[#3D334A] font-pt tracking-[0%] mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
                   {orderedBlogs[3].title[language]}
                 </p>
-                <div className="px-3 pb-3 font-[Bowler] mt-1">
-                  <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%]  rounded-[6px] text-[14px] uppercase">
+                <div className="px-3 pb-3 font-bowler mt-1">
+                  <span className="text-[#3D334A] font-bowler p-1.5 leading-[90%]  rounded-[6px] text-[14px] uppercase">
                     {orderedBlogs[3]?.articles?.length} სტატია
                   </span>
                 </div>
@@ -175,8 +175,8 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
                 <p className="mt-0 text-[#846FA0] font-medium font-pt leading-[120%] tracking-[0%] px-3">
                   {orderedBlogs[4].excerpt[language]}
                 </p>
-                <div className="px-3 pb-3 font-[Bowler] mt-1">
-                  <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%] rounded-[6px] text-[14px] uppercase">
+                <div className="px-3 pb-3 font-bowler mt-1">
+                  <span className="text-[#3D334A] font-bowler p-1.5 leading-[90%] rounded-[6px] text-[14px] uppercase">
                     {orderedBlogs[4]?.articles?.length} სტატია
                   </span>
                 </div>
@@ -193,8 +193,8 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
                 <p className="text-[#3D334A] font-pt tracking-[0%] mt-0 mb-2 text-[16px] md:text-[24px] leading-[120%] font-semibold px-3">
                   {orderedBlogs[5].title[language]}
                 </p>
-                <div className="px-3 pb-3 font-[Bowler] mt-1">
-                  <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%] rounded-[6px] text-[14px] uppercase">
+                <div className="px-3 pb-3 font-bowler mt-1">
+                  <span className="text-[#3D334A] font-bowler p-1.5 leading-[90%] rounded-[6px] text-[14px] uppercase">
                     {orderedBlogs[5]?.articles?.length} სტატია
                   </span>
                 </div>
@@ -218,7 +218,7 @@ const ThirdGrid: React.FC<ThirdGridProps> = ({ blogs, language }) => {
               <p className="text-[#3D334A] text-[18px] leading-[120%] line-clamp-2 font-bold">
                 {blog.title[language]}
               </p>
-              <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%] rounded-[6px] text-[14px] uppercase mt-2 inline-block">
+              <span className="text-[#3D334A] font-bowler p-1.5 leading-[90%] rounded-[6px] text-[14px] uppercase mt-2 inline-block">
                 {blog?.articles?.length} სტატია
               </span>
               <div className="flex items-center gap-1.5 mt-3">

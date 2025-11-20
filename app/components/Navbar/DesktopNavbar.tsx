@@ -77,7 +77,7 @@ const DesktopNavbar: React.FC<DesktopNavbarProps> = ({
   // console.log("Current Language:", language);
 
   return (
-    <header className="fixed font-[Bowler] top-0 left-0 right-0 z-50 my-4 w-full md:flex hidden justify-between px-10 py-5">
+    <header className="fixed font-bowler top-0 left-0 right-0 z-50 my-4 w-full md:flex hidden justify-between px-10 py-5">
       <div
         className={`w-[780px] flex p-3.5 items-center rounded-[24px] ${getBackgroundStyle()} border border-white/10 relative`}
       >

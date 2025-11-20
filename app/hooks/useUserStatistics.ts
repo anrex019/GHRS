@@ -31,7 +31,8 @@ export function useUserStatistics(): UseUserStatisticsReturn {
       setLoading(true);
       setError(null);
       
-      const data = await apiRequest<UserStatistics>('/users/me/statistics');
+      const { API_CONFIG } = await import('../config/api');
+      const data = await apiRequest<UserStatistics>(API_CONFIG.ENDPOINTS.STATISTICS.USER);
       setStatistics(data);
     } catch (err) {
       // If user is not authenticated or endpoint doesn't exist, set default values

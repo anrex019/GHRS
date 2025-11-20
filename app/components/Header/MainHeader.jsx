@@ -135,13 +135,13 @@ function MainHeader({
         <div className="absolute bottom-0 right-0 hidden md:flex gap-4 bg-[#F9F7FE] rounded-tl-[80px] p-6 pb-8 z-10 items-end">
           <Link 
             href="/about"
-            className="text-white bg-[#3D334A] rounded-[40px] w-[246px] h-[222px] flex items-start justify-start p-8 transition-transform duration-300 hover:scale-105 cursor-pointer font-bold uppercase text-lg shadow-2xl leading-tight"
+            className="text-white bg-[#3D334A] rounded-[40px] w-[246px] h-[222px] flex items-start justify-start p-8 transition-transform duration-300 hover:scale-105 cursor-pointer font-bold uppercase text-lg shadow-2xl leading-tight font-bowler"
           >
             {t("header.learn_more") || "Изучить подробнее"}
           </Link>
           <Link 
             href="/allComplex"
-            className="text-white bg-gradient-to-br from-[#D4BAFC] via-[#C4A6F1] to-[#B794E8] rounded-[40px] w-[246px] h-[222px] flex items-start justify-start p-8 transition-transform duration-300 hover:scale-105 cursor-pointer font-bold uppercase text-lg shadow-2xl leading-tight"
+            className="text-white bg-gradient-to-br from-[#D4BAFC] via-[#C4A6F1] to-[#B794E8] rounded-[40px] w-[246px] h-[222px] flex items-start justify-start p-8 transition-transform duration-300 hover:scale-105 cursor-pointer font-bold uppercase text-lg shadow-2xl leading-tight font-bowler"
           >
             {t("header.to_catalog") || "В каталог"}
           </Link>
@@ -152,17 +152,17 @@ function MainHeader({
         {/* თუ customTitle არის, მაშინ გამოაჩენე ის, თუარადა - ჩვეულებრივი */}
         {!hideHeaderText && (customTitle ? (
           <div className="mb-6 md:max-w-[888px]">
-            <h1 className="text-2xl md:text-5xl font-bold text-white font-[Bowler] uppercase md:leading-[100%] leading-[120%] md:tracking-[-1%] tracking-[-3%]">
+            <h1 className="text-2xl md:text-5xl font-bold text-white font-bowler uppercase md:leading-[100%] leading-[120%] md:tracking-[-1%] tracking-[-3%]">
               {customTitle}
             </h1>
             {customSubtitle && (
-              <p className="text-base md:text-2xl text-white font-[Bowler] font-medium mt-4 md:leading-[120%] leading-[120%]">
+              <p className="text-base md:text-2xl text-white font-bowler font-medium mt-4 md:leading-[120%] leading-[120%]">
                 {customSubtitle}
               </p>
             )}
           </div>
         ) : (
-          <h1 className="text-2xl md:text-5xl font-bold text-white mb-6 hidden md:block">
+          <h1 className="text-2xl md:text-5xl font-bold text-white mb-6 hidden md:block font-bowler">
             {t("header.ecosystem_title")}
           </h1>
         ))}
@@ -181,10 +181,10 @@ function MainHeader({
                 >
                   <span className="text-white/80">{stat.icon}</span>
                   <div className="flex flex-col items-center justify-center">
-                    <span className="text-xl font-bold text-white">
+                    <span className="text-xl font-bold text-white font-pt">
                       {stat.value}
                     </span>
-                    <span className="text-sm text-white/80">{stat.label}</span>
+                    <span className="text-sm text-white/80 font-pt">{stat.label}</span>
                   </div>
                 </div>
               ))}
@@ -193,14 +193,14 @@ function MainHeader({
           <div className="bg-[#3d334a4d] rounded-3xl p-8 content-between grid max-w-212">
             {complexData ? (
               <>
-                <h1 className="text-xl md:text-2xl font-bold text-white mb-8 font-[Bowler]">
+                <h1 className="text-xl md:text-2xl font-bold text-white mb-8 font-bowler">
                   {complexData?.name?.[locale] || complexData?.name?.ru || complexData?.name?.en || complexData?.name?.ka}
                 </h1>
                 <p className="text-sm md:text-lg text-white font-pt">{complexData?.description?.[locale] || complexData?.description?.ru || complexData?.description?.en || complexData?.description?.ka}</p>
               </>
             ):(
               <>
-                <h1 className="text-[28px] md:text-[48px] font-bold text-white mb-6 md:mb-8 uppercase font-[Bowler] tracking-[-1%] leading-[100%]">
+                <h1 className="text-[28px] md:text-[48px] font-bold text-white mb-6 md:mb-8 uppercase font-bowler tracking-[-1%] leading-[100%]">
                   {customBlockTitle || t("header.rehabilitation")}
                 </h1>
                 <p className="text-[18px] md:text-[24px] font-medium text-white font-pt leading-[120%] tracking-[-1%]">{customBlockDescription || t("header.rehabilitation_description")}</p>

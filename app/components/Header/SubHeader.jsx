@@ -23,13 +23,13 @@ function SubHeader({ ShowText = true, ShowIcons = true }) {
             <h2 className="hidden md:flex text-white text-[40px] leading-[120%] tracking-[-3%] md:w-[945px] w-[327px]">
               {t("blog.banner.title")}
             </h2>
-            <h2 className="flex md:hidden font-[Bowler] text-white text-[18px] leading-[120%] tracking-[-3%] mb-2.5">
+            <h2 className="flex md:hidden font-bowler text-white text-[18px] leading-[120%] tracking-[-3%] mb-2.5">
               {t("blog.banner.mobile_title")}
             </h2>
             <p className="mt-[66px] mb-[28px] hidden md:flex font-bold leading-[120%] w-[650px]">
               {t("blog.banner.description")}
             </p>
-            <span className="text-[#3D334A] p-2 rounded-[8px] bg-[#E9DFF6] text-[18px] leading-[90%] uppercase font-[Bowler]">
+            <span className="text-[#3D334A] p-2 rounded-[8px] bg-[#E9DFF6] text-[18px] leading-[90%] uppercase font-bowler">
               {t("blog.banner.category")}
             </span>
           </div>

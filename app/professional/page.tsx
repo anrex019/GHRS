@@ -179,10 +179,10 @@ const Professional = () => {
         .map((instructor) => ({
           id: instructor._id,
           name: instructor.name,
-          position: instructor.profession || "Преподаватель",
+          position: instructor.profession || "Teacher",
           institution: "«Колледжа медицинского массажа»",
           credentials: `${instructor.name}, ${
-            instructor.profession || "Преподаватель"
+            instructor.profession || "Teacher"
           }`,
           education: [
             instructor.bio?.en || "",
@@ -248,9 +248,9 @@ const Professional = () => {
         <div className="absolute bottom-0 right-0 hidden md:flex gap-4 bg-[#F9F7FE] rounded-tl-[80px] p-6 pb-8 z-10 items-end">
           <Link 
             href="/allCourse"
-            className="text-white bg-[#3D334A] rounded-[40px] w-[246px] h-[222px] flex items-start justify-start p-8 transition-transform duration-300 hover:scale-105 cursor-pointer font-bold uppercase text-lg shadow-2xl leading-tight"
+            className="text-white bg-[#3D334A] rounded-[40px] w-[246px] h-[222px] flex items-start justify-start p-8 transition-transform duration-300 hover:scale-105 cursor-pointer font-bold uppercase text-lg shadow-2xl leading-tight font-bowler"
           >
-            Наши курсы
+            {t("professional.our_courses") || "Наши курсы"}
           </Link>
         </div>
       </div>
@@ -310,7 +310,7 @@ const Professional = () => {
         <div className="bg-[#F9F7FE] mt-4 md:mt-[50px] md:mx-5 md:mb-[45px] rounded-[30px]">
           <div className="p-5">
             <div className="flex items-center justify-between md:mb-[10px]">
-              <h1 className="text-[24px] md:text-[64px] font-[Bowler] uppercase tracking-[-1%] text-[#3D334A] leading-[100%] mb-2.5 md:mb-5">
+              <h1 className="text-[24px] md:text-[64px] font-bowler uppercase tracking-[-1%] text-[#3D334A] leading-[100%] mb-2.5 md:mb-5">
                 {typeof t("professional.courses.title") === "string"
                   ? t("professional.courses.title")
                   : "КУРСЫ"}
@@ -345,7 +345,7 @@ const Professional = () => {
 
             <Link
               href={"/allCourse"}
-              className="text-[14px] md:text-[24px] font-[Bowler] uppercase leading-[90%] text-[#D4BAFC] hover:opacity-80 transition-opacity block"
+              className="text-[14px] md:text-[24px] font-bowler uppercase leading-[90%] text-[#D4BAFC] hover:opacity-80 transition-opacity block"
             >
               {typeof t("professional.courses.all_courses", {
                 count: courses?.length.toString() || "0",

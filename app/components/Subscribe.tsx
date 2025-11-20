@@ -56,7 +56,7 @@ const Subscribe = ({
       >
         <div>
           <h1
-            className={`mb-5 text-[#3D334A] text-[20px] md:text-[64px] md:max-w-[1308px] md:pr-[52px] tracking-[-3%] md:pt-[48px] leading-[100%] font-[Bowler] ${titleStyles}`}
+            className={`mb-5 text-[#3D334A] text-[20px] md:text-[64px] md:max-w-[1308px] md:pr-[52px] tracking-[-3%] md:pt-[48px] leading-[100%] font-bowler ${titleStyles}`}
           >
             {titleKey && typeof t(titleKey) === "string" ? t(titleKey) : title}
           </h1>
@@ -77,7 +77,7 @@ const Subscribe = ({
           }}
         >
           <button
-            className={`w-full py-[13px] text-[32px]  md:w-[562px] font-medium hover:opacity-80 font-[Bowler] ${buttonStyles}`}
+            className={`w-full py-[13px] text-[32px]  md:w-[562px] font-medium hover:opacity-80 font-bowler ${buttonStyles}`}
           >
             {buttonTextKey ? t(buttonTextKey) : buttonText}
           </button>

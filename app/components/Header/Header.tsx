@@ -319,20 +319,18 @@ const Header: React.FC<HeaderProps> = ({
               alt="blogBg"
               className="md:h-[518px] md:w-full h-[217px] w-[359px] bg-cover bg-center rounded-[20px] relative"
             />
-            <div className="pt-[27px] md:pl-[32px] pl-4 pr-[20px] md:pb-[20px] pb-3 md:bg-[#3D334A4D] md:backdrop-blur-sm absolute bottom-0 md:bottom-5 md:ml-5 rounded-[20px]">
-              <h2 className="hidden md:flex text-white text-[40px] leading-[120%] tracking-[-3%] md:w-[945px] w-[327px]">
-                {info?.title ||
-                  "Курсы и мастер-классы для опытных терапевтов. Практикум по лечению ортопедических проблем"}
+            <div className="pt-[27px] md:pl-[32px] pl-4 pr-[20px] md:pb-[20px] pb-3 md:bg-[#3D334A4D] md:backdrop-blur-sm absolute bottom-0 md:bottom-5 md:ml-5 rounded-[20px] font-pt">
+              <h2 className="hidden md:flex text-white text-[40px] leading-[120%] tracking-[-3%] md:w-[945px] w-[327px] font-bowler">
+                {info?.title || t("blog.default_title")}
               </h2>
-              <h2 className="flex md:hidden font-[Bowler] text-white text-[18px] leading-[120%] tracking-[-3%] mb-2.5">
-                БОЛЬ В СПИНЕ И ШЕЕ:КАК УЛУЧШИТЬ ОСАНКУ ЕСТЕСТВЕННО.
+              <h2 className="flex md:hidden font-bowler text-white text-[18px] leading-[120%] tracking-[-3%] mb-2.5">
+                {info?.title || t("blog.default_mobile_title")}
               </h2>
-              <p className="mt-[66px] mb-[28px] hidden md:flex font-bold leading-[120%] w-[650px]">
-                С советами по безопасности, которым нужно следовать до и после
-                перелома Кристен Гасник
+              <p className="mt-[66px] mb-[28px] hidden md:flex font-bold leading-[120%] w-[650px] font-pt">
+                {info?.excerpt || t("blog.default_description")}
               </p>
-              <span className="text-[#3D334A] p-2 rounded-[8px] bg-[#E9DFF6] text-[18px] leading-[90%] uppercase font-[Bowler]">
-                Ортопедия
+              <span className="text-[#3D334A] p-2 rounded-[8px] bg-[#E9DFF6] text-[18px] leading-[90%] uppercase font-bowler">
+                {info?.category || t("common.orthopedics")}
               </span>
             </div>
             <div className="absolute md:top-5 top-2 md:right-5 right-2 mr-5 flex flex-col gap-2">
@@ -416,14 +414,14 @@ const Header: React.FC<HeaderProps> = ({
 
             {/* HeroTitle */}
             {variant == "default" && (
-              <h2 className="mx-5  hidden md:flex text-[64px] mt-20 leading-[100%]  tracking-[-3%] max-w-[994px]">
+              <h2 className="mx-5  hidden md:flex text-[64px] mt-20 leading-[100%]  tracking-[-3%] max-w-[994px] font-bowler">
                 {t("header.ecosystem_title")}
               </h2>
             )}
 
             {variant == "rehabilitation" && (
               <div className="flex flex-col gap-0 px-5">
-                <h2 className="mx-5 text-[#3D334A]   hidden md:flex text-[64px] md:mt-[40px] leading-[100%] tracking-[-3%] max-w-[994px]">
+                <h2 className="mx-5 text-[#3D334A]   hidden md:flex text-[64px] md:mt-[40px] leading-[100%] tracking-[-3%] max-w-[994px] font-bowler">
                   {t("header.rehabilitation_title")}
                 </h2>
                 {currentSlide === 1 && (
@@ -434,15 +432,15 @@ const Header: React.FC<HeaderProps> = ({
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.6, ease: "easeOut" }}
                       exit={{ opacity: 0, x: -100 }}
-                      className="leading-[120%] hidden md:flex md:px-5 text-[32px] font-medium  md:mt-[92px] md:max-w-[592px] "
+                      className="leading-[120%] hidden md:flex md:px-5 text-[32px] font-medium  md:mt-[92px] md:max-w-[592px] font-pt"
                     >
                       {t("header.rehabilitation_subtitle")}
                     </motion.p>
                     <div className="flex md:hidden flex-col items-end justify-end h-[680px]">
-                      <p className="text-[32px] leading-[100%] tracking-[-3%] text-white font-medium">
+                      <p className="text-[32px] leading-[100%] tracking-[-3%] text-white font-medium font-bowler">
                         {t("header.rehabilitation_title")}
                       </p>
-                      <span className="font-medium leading-[100%]">
+                      <span className="font-medium leading-[100%] font-pt">
                         {t("header.rehabilitation_subtitle")}
                       </span>
                     </div>
@@ -484,7 +482,7 @@ const Header: React.FC<HeaderProps> = ({
                                 />
                               </div>
 
-                              <h3 className="text-white text-sm font-medium">
+                              <h3 className="text-white text-sm font-medium font-pt">
                                 {homePageHeaderItems[0].text}
                               </h3>
                             </motion.div>
@@ -515,7 +513,7 @@ const Header: React.FC<HeaderProps> = ({
                                       height={30}
                                     />
                                   </div>
-                                  <h3 className="text-white text-sm font-medium">
+                                  <h3 className="text-white text-sm font-medium font-pt">
                                     {item.text}
                                   </h3>
                                 </motion.div>
@@ -526,10 +524,10 @@ const Header: React.FC<HeaderProps> = ({
 
                         <section className="mx-2 md:mt-5 md:mx-5 max-w-[750px]">
                           <div className="bg-[rgba(61,51,74,0.3)]  rounded-[20px] md:gap-[73.2px] gap-5 flex flex-col pl-[30px] pt-[30px] pb-[31px] mt-2">
-                            <h2 className="text-[20px] md:text-[40px] leading-[120%] tracking-[-3%]">
+                            <h2 className="text-[20px] md:text-[40px] leading-[120%] tracking-[-3%] font-bowler">
                               {t("header.rehabilitation")}
                             </h2>
-                            <p className="leading-[120%] font-medium md:max-w-[719px] text-[24px] ">
+                            <p className="leading-[120%] font-medium md:max-w-[719px] text-[24px] font-pt">
                               {t("header.rehabilitation_description")}
                             </p>
                           </div>
@@ -592,7 +590,7 @@ const Header: React.FC<HeaderProps> = ({
 
                 <section className="mx-2 md:mt-5 md:mx-5 max-w-[729px]">
                   <div className="bg-[rgba(61,51,74,0.3)]  rounded-[20px] md:gap-[73.2px] gap-5 flex flex-col pl-[30px] pt-[30px] pb-[90px] mt-2">
-                    <h2 className="text-[20px] md:text-[40px] font-pt leading-[120%] tracking-[-3%]">
+                    <h2 className="text-[20px] md:text-[40px] font-bowler leading-[120%] tracking-[-3%]">
                       {t("header.neck_spine")}
                     </h2>
                   </div>
@@ -671,10 +669,10 @@ const Header: React.FC<HeaderProps> = ({
 
                 <section className="mx-2 md:mt-5 md:mx-5 max-w-[729px]">
                   <div className="bg-[rgba(61,51,74,0.3)]  rounded-[20px] gap-5 flex flex-col pl-[30px] pt-[30px] pb-[90px] mt-2">
-                    <h2 className="text-[20px] md:text-[40px] leading-[120%] tracking-[-3%]">
+                    <h2 className="text-[20px] md:text-[40px] leading-[120%] tracking-[-3%] font-bowler">
                       {title}
                     </h2>
-                    <p>{t("header.category_description")}</p>
+                    <p className="font-pt">{t("header.category_description")}</p>
                   </div>
                 </section>
               </div>
@@ -752,7 +750,7 @@ const Header: React.FC<HeaderProps> = ({
 
                 <section className="mx-2 md:mt-5 md:mx-5 max-w-[729px]">
                   <div className="bg-[rgba(61,51,74,0.3)]  rounded-[20px] md:gap-[73.2px] gap-5 flex flex-col pl-[30px] pt-[30px] pb-[90px] mt-2">
-                    <h2 className="text-[20px] md:text-[40px] font-pt leading-[120%] tracking-[-3%]">
+                    <h2 className="text-[20px] md:text-[40px] font-bowler leading-[120%] tracking-[-3%]">
                       {title}
                     </h2>
                   </div>
@@ -835,7 +833,7 @@ const Header: React.FC<HeaderProps> = ({
                     >
                       {getLocalizedText(setData?.name, locale)}
                     </h2>
-                    <p className="md:mt-[10px] text-[24px] leading-[120%] font-pt break-words line-clamp-3  font-bold mt-20">
+                    <p className="md:mt-[10px] text-[24px] leading-[120%] font-pt break-words line-clamp-3 font-bold mt-20">
                       {t("header.rehabilitation_description")}
                     </p>
                   </div>
@@ -847,7 +845,7 @@ const Header: React.FC<HeaderProps> = ({
               <div className="mb-5 md:mb-0 mx-auto md:mt-[385px]">
                 <section className="mx-2 md:mt-5 md:mx-5 max-w-[729px]">
                   <div className="bg-[rgba(61,51,74,0.3)]  rounded-[20px] md:gap-[11.2px] gap-5 flex flex-col pl-[30px] pt-[30px] pb-[90px] mt-2">
-                    <h2 className="text-[20px] md:text-[40px] font-pt max-w-[598px] leading-[120%] tracking-[-3%]">
+                    <h2 className="text-[20px] md:text-[40px] font-bowler max-w-[598px] leading-[120%] tracking-[-3%]">
                       {getLocalizedText(setData?.name, locale)}
                     </h2>
                     <p className="md:mt-[10px] text-[24px] max-w-[719px] font-medium leading-[120%] font-pt break-words line-clamp-3">
@@ -862,7 +860,7 @@ const Header: React.FC<HeaderProps> = ({
               <div className="mb-5 md:mb-0 mx-auto md:mt-[375px]">
                 <section className="mx-2 md:mt-5 md:mx-5 max-w-[837px]">
                   <div className="bg-[rgba(61,51,74,0.3)]  rounded-[20px] md:gap-[11.2px] gap-5 flex flex-col pl-[30px] pt-[30px] pb-[90px] mt-2">
-                    <h2 className="text-[20px] md:text-[40px] font-pt max-w-[598px] leading-[120%] tracking-[-3%]">
+                    <h2 className="text-[20px] md:text-[40px] font-bowler max-w-[598px] leading-[120%] tracking-[-3%]">
                       {getLocalizedText(setData?.name, locale)}
                     </h2>
                     <p className="md:mt-[10px] text-[18px] max-w-[779px] font-medium leading-[120%] font-pt ">
@@ -876,11 +874,11 @@ const Header: React.FC<HeaderProps> = ({
             {variant == "default" && (
               <div className="flex md:hidden mt-60 mx-auto items-center justify-center gap-2">
                 <Link href={"/rehabilitation"}>
-                  <div className="bg-[#3D334A] p-4 rounded-[20px] w-[176px] h-[166px]">
+                  <div className="bg-[#3D334A] p-4 rounded-[20px] w-[176px] h-[166px] font-bowler">
                     {t("header.learn_more")}
                   </div>
                 </Link>
-                <div className="bg-[url('/assets/images/categorySliderBgs/bg4.jpg')] bg-cover bg-center p-4 rounded-[20px] w-[176px] h-[166px] ">
+                <div className="bg-[url('/assets/images/categorySliderBgs/bg4.jpg')] bg-cover bg-center p-4 rounded-[20px] w-[176px] h-[166px] font-bowler">
                   {t("header.to_catalog")}
                 </div>
               </div>
@@ -933,7 +931,7 @@ const Header: React.FC<HeaderProps> = ({
                                   <div
                                     className={`bg-[#3D334A] p-5 -mt-8 hover:scale-105 duration-700`}
                                   >
-                                    <h3 className="text-[24px] ">
+                                    <h3 className="text-[24px] font-bowler">
                                       {t("header.learn_more")}
                                     </h3>
                                   </div>
@@ -946,7 +944,7 @@ const Header: React.FC<HeaderProps> = ({
                                     <div
                                       className={`bg-[#3D334A] p-5 -mt-8 hover:scale-105 duration-700`}
                                     >
-                                      <h3 className="text-[24px] ">
+                                      <h3 className="text-[24px] font-bowler">
                                         {t("header.learn_more")}
                                       </h3>
                                     </div>
@@ -956,7 +954,7 @@ const Header: React.FC<HeaderProps> = ({
                               {variant == "default" && (
                                 <Link href={"/chapter"}>
                                   <div className="bg-[url('/assets/images/marketPlace.png')] hover:scale-105 duration-700 bg-cover bg-center p-5 -mt-8">
-                                    <h3 className="text-[24px]">В каталог</h3>
+                                    <h3 className="text-[24px] font-bowler">В каталог</h3>
                                   </div>
                                 </Link>
                               )}
@@ -965,7 +963,7 @@ const Header: React.FC<HeaderProps> = ({
                                   className="bg-[url('/assets/images/categoryHeader.png')] hover:scale-105 duration-700 p-5 -mt-8 cursor-pointer"
                                   onClick={onPriceClick}
                                 >
-                                  <h3 className="text-[42px] leading-[90%] uppercase">
+                                  <h3 className="text-[42px] leading-[90%] uppercase font-bowler">
                                     {getLocalizedPrice(
                                       setData?.price?.monthly || 500,
                                       setData?.priceEn || null,
@@ -979,7 +977,7 @@ const Header: React.FC<HeaderProps> = ({
                                   <span className="text-[18px] md:mb-[99px] md:mt-1.5 leading-[90%] uppercase">
                                     {t("header.per_month")}
                                   </span>
-                                  <h2 className="text-[26px] md:mt-[99px] leading-[90%] uppercase">
+                                  <h2 className="text-[26px] md:mt-[99px] leading-[90%] uppercase font-bowler">
                                     {t("header.purchase")}
                                   </h2>
                                 </div>

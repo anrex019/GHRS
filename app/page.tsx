@@ -52,6 +52,8 @@ const Home = () => {
         stats={statsData as never[]}
         useVideo={true}
         backgroundImage="/assets/images/main-header-bg.jpg"
+        customBlockTitle=""
+        customBlockDescription=""
       />
       <div>
         <Rehabilitation />

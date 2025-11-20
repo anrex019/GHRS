@@ -280,7 +280,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
         {/* Left Sidebar - Table of Contents */}
         {(tableOfContents || []).length > 0 && (
           <div className="sticky top-24 p-6 bg-[rgba(255,255,255,1)] rounded-5 max-w-[335px] hidden md:block shadow-lg">
-            <h2 className="text-xl font-bold mb-6 text-[#3D334A] border-b pb-4">
+            <h2 className="text-xl font-bold mb-6 text-[#3D334A] border-b pb-4 font-bowler">
               {t("article.table_of_contents")}
             </h2>
 
@@ -297,7 +297,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
 
                   {/* Content */}
                   <div className="flex-1">
-                    <span className={`block text-[#3D334A] tracking-[-0.5px] ${item.level === 3
+                    <span className={`block text-[#3D334A] tracking-[-0.5px] font-pt ${item.level === 3
                       ? 'text-sm font-medium hover:text-purple-600'
                       : 'text-base font-semibold hover:text-purple-700'
                       }`}>
@@ -317,7 +317,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
               <div className="flex justify-between items-center">
                 <div className="flex flex-wrap gap-2">
                   {getCategoryNames(article).map((categoryName, index) => (
-                    <button key={index} className="bg-[rgba(233,223,246,1)] rounded-[6px] p-[8px] text-[18px] uppercase leading-[90%]">
+                    <button key={index} className="bg-[rgba(233,223,246,1)] rounded-[6px] p-[8px] text-[18px] uppercase leading-[90%] font-bowler">
                       {categoryName}
                     </button>
                   ))}
@@ -332,19 +332,19 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
                 </div>
               </div>
               <section>
-                <h2 className="text-[rgba(61,51,74,1)] leading-[120%] tracking-[0%] text-[32px]">
+                <h2 className="text-[rgba(61,51,74,1)] leading-[120%] tracking-[0%] text-[32px] font-bowler">
                   {article.title[language]}
                 </h2>
-                <p className="text-[rgba(61,51,74,1)] leading-[120%] tracking-[0%] text-[16px] pt-6">
+                <p className="text-[rgba(61,51,74,1)] leading-[120%] tracking-[0%] text-[16px] pt-6 font-pt">
                   {article.excerpt[language]}
                 </p>
                 <div className="flex items-center gap-[30px] pt-[30px]">
-                  <span className="text-[rgba(61,51,74,1)] leading-[120%] tracking-[0%] text-[16px] font-medium">
+                  <span className="text-[rgba(61,51,74,1)] leading-[120%] tracking-[0%] text-[16px] font-medium font-pt">
                     {t("article.comment_count", {
                       count: String(article.commentsCount || 0),
                     })}
                   </span>
-                  <span className="text-[rgba(61,51,74,1)] leading-[120%] tracking-[0%] text-[16px] font-medium">
+                  <span className="text-[rgba(61,51,74,1)] leading-[120%] tracking-[0%] text-[16px] font-medium font-pt">
                     {t("article.read_time", { time: String(dynamicReadTime) })}
                   </span>
                 </div>
@@ -690,7 +690,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
 
           {/* Rating Section */}
           <section className="w-full px-5 pt-5 md:pb-[40px] pb-6 bg-[rgba(255,255,255,1)] rounded-[20px] mt-5">
-            <h2 className="md:text-2xl text-[18px] text-[rgba(61,51,74,1)] leading-[100%] tracking-[-1%] md:mb-[40px] mb-5">
+            <h2 className="md:text-2xl text-[18px] text-[rgba(61,51,74,1)] leading-[100%] tracking-[-1%] md:mb-[40px] mb-5 font-bowler">
               {t("article.rate_article")}
             </h2>
             <div className="flex items-center gap-5">
@@ -705,10 +705,10 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
                 ))}
               </div>
               <div className="flex flex-col md:justify-center items-center gap-[4.16px]">
-                <h4 className="md:text-[32px] text-lg text-[rgba(61,51,74,1)] leading-[100%] tracking-[-1%]">
+                <h4 className="md:text-[32px] text-lg text-[rgba(61,51,74,1)] leading-[100%] tracking-[-1%] font-bowler">
                   4.7
                 </h4>
-                <span className="md:text-[16px] text-[10px] text-[rgba(213,209,219,1)] leading-[100%] tracking-[-1%]">
+                <span className="md:text-[16px] text-[10px] text-[rgba(213,209,219,1)] leading-[100%] tracking-[-1%] font-pt">
                   {t("article.ratings", { count: "26" })}
                 </span>
               </div>
@@ -717,7 +717,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
 
           {/* Comments Section */}
           <section className="w-full px-5 pt-5 md:pb-[40px] pb-6 bg-[rgba(255,255,255,1)] rounded-[20px] mt-5">
-            <h2 className="md:text-2xl text-[18px] text-[rgba(61,51,74,1)] leading-[100%] tracking-[-1%] md:mb-[40px] mb-5">
+            <h2 className="md:text-2xl text-[18px] text-[rgba(61,51,74,1)] leading-[100%] tracking-[-1%] md:mb-[40px] mb-5 font-bowler">
               {t("article.comments")}
             </h2>
             <form className="max-w-[650px] mx-auto relative" onSubmit={async (e) => {
@@ -731,7 +731,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
                 value={commentText}
                 onChange={(e) => setCommentText(e.target.value)}
                 placeholder={t("article.write_comment")}
-                className="w-full p-4 text-lg font-medium border-2 rounded-lg outline-none border-[rgba(249,247,254,1)] transition-colors bg-transparent leading-none tracking-normal placeholder:text-[rgba(226,204,255,1)]"
+                className="w-full p-4 text-lg font-medium border-2 rounded-lg outline-none border-[rgba(249,247,254,1)] transition-colors bg-transparent leading-none tracking-normal placeholder:text-[rgba(226,204,255,1)] font-pt"
               />
               <button
                 type="submit"
@@ -776,7 +776,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
                     </div>
                     <div className="flex-1">
                       <div className="mb-3">
-                        <h3 className="text-[rgba(61,51,74,1)] text-sm md:text-[18px] font-medium">
+                        <h3 className="text-[rgba(61,51,74,1)] text-sm md:text-[18px] font-medium font-pt">
                           {comment.userName}
                         </h3>
                         <p className="text-gray-500 text-xs">
@@ -787,12 +787,12 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
                           })}
                         </p>
                       </div>
-                      <p className="md:text-[18px] text-[16px] text-[rgba(132,111,160,1)] md:leading-[140%] leading-[160%] tracking-[-1%]">
+                      <p className="md:text-[18px] text-[16px] text-[rgba(132,111,160,1)] md:leading-[140%] leading-[160%] tracking-[-1%] font-pt">
                         {comment.content}
                       </p>
                       <button 
                         onClick={() => toggleLike(comment._id)}
-                        className="mt-3 text-sm text-[rgba(132,111,160,1)] hover:text-[rgba(212,186,252,1)] transition-colors flex items-center gap-1"
+                        className="mt-3 text-sm text-[rgba(132,111,160,1)] hover:text-[rgba(212,186,252,1)] transition-colors flex items-center gap-1 font-pt"
                       >
                         ❤️ {comment.likes}
                       </button>
@@ -800,14 +800,14 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
                   </div>
                 ))
               ) : (
-                <p className="text-center text-[rgba(132,111,160,1)] py-8">
+                <p className="text-center text-[rgba(132,111,160,1)] py-8 font-pt">
                   {t("article.no_comments")}
                 </p>
               )}
             </div>
           </section>
           <div className="w-full pr-40 flex flex-col items-center mt-10 md:mb-20 gap-8">
-            <h1 className="text-[18px] leading-[100%] tracking-[-1%] text-[#3D334A]">{t("blog.share_social")}</h1>
+            <h1 className="text-[18px] leading-[100%] tracking-[-1%] text-[#3D334A] font-bowler">{t("blog.share_social")}</h1>
             <div className="flex gap-10">
               <div className="w-14 h-14 bg-white rounded-[5px] items-center justify-center flex cursor-pointer hover:scale-105 duration-300">
                 <FaFacebookF color="black" size={30} />
@@ -830,7 +830,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
 
         {/* Right Sidebar */}
         <div className="p-5 bg-[rgba(255,255,255,1)] min-h-[700px] h-[700px] rounded-[20px] max-w-[335px] hidden md:block">
-          <h2 className="text-lg font-semibold mb-4 text-[rgba(61,51,74,1)]">
+          <h2 className="text-lg font-semibold mb-4 text-[rgba(61,51,74,1)] font-bowler">
             {t("common.similar_articles")}
           </h2>
           <div className="space-y-4">
@@ -860,7 +860,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1 flex-wrap">
                       {getCategoryNames(similarArticle).slice(0, 2).map((categoryName, index) => (
-                        <span key={index} className="text-xs text-[rgba(132,111,160,1)] bg-[rgba(249,247,254,1)] px-2 py-1 rounded-full">
+                        <span key={index} className="text-xs text-[rgba(132,111,160,1)] bg-[rgba(249,247,254,1)] px-2 py-1 rounded-full font-pt">
                           {categoryName}
                         </span>
                       ))}
@@ -870,10 +870,10 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
                         </span>
                       )}
                     </div>
-                    <h3 className="text-[rgba(61,51,74,1)] text-sm font-medium mb-2">
+                    <h3 className="text-[rgba(61,51,74,1)] text-sm font-medium mb-2 font-bowler">
                       {similarArticle.title[language]}
                     </h3>
-                    <p className="text-[rgba(132,111,160,1)] text-xs line-clamp-2">
+                    <p className="text-[rgba(132,111,160,1)] text-xs line-clamp-2 font-pt">
                       {similarArticle.excerpt[language]}
                     </p>
                   </div>

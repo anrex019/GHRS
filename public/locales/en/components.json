@@ -48,16 +48,23 @@
     "view_all": "View all →"
   },
   "works": {
-    "all_sets": "All {{count}} sets →"
+    "all_sets": "All {{count}} sets →",
+    "სამუშაოები": "სამუშაოები",
+    "ყველა_სეტი": "ყველა {{count}} სეტი →"
   },
   "professional": {
     "title": "Professional Development",
     "description": "The department of education and professional development in rehabilitation, physiotherapy, and therapeutic massage - this is a collaboration with Israeli specialists and training centers, such as the Medical Massage College, founded and directed by Dr. Aaron Yakobi.",
     "learn_more": "Learn more →",
+    "our_courses": "Our Courses",
+    "პროფესიონალური_განვითარება": "პროფესიონალური განვითარება",
+    "ჩვენი_კურსები": "ჩვენი კურსები",
     "courses": {
       "title": "Courses",
       "error": "Error loading courses",
-      "all_courses": "All {{count}} courses →"
+      "all_courses": "All {{count}} courses →",
+      "კურსები": "კურსები",
+      "ყველა_კურსი": "ყველა {{count}} კურსი →"
     }
   },
   "marketplace": {
@@ -71,7 +78,12 @@
     "recent_articles": "Recent Articles",
     "all_articles": "All Articles",
     "view_all": "View All",
+    "see_all": "See all {{count}}",
+    "share_social": "Share on social media",
     "category": "Category",
+    "default_title": "Courses and masterclasses for experienced therapists. Workshop on treating orthopedic problems",
+    "default_mobile_title": "BACK AND NECK PAIN: HOW TO IMPROVE POSTURE NATURALLY.",
+    "default_description": "With safety tips to follow before and after a fracture by Kristen Gasnik",
     "banner": {
       "title": "Courses and masterclasses for experienced therapists. Workshop on treating orthopedic problems",
       "mobile_title": "BACK AND NECK PAIN: HOW TO IMPROVE POSTURE NATURALLY.",
@@ -91,8 +103,16 @@
     "ratings": "({{count}} ratings)",
     "write_comment": "Write a comment",
     "show_more_comments": "Show more",
+    "no_comments": "No comments yet"
+  },
+  "common": {
     "similar_articles": "Similar articles",
-    "no_similar_articles": "No similar articles found"
+    "no_similar_articles": "No similar articles found",
+    "orthopedics": "Orthopedics",
+    "sections_title": "Sections"
+  },
+  "teachers": {
+    "our_teachers": "OUR TEACHERS"
   },
   "course": {
     "duration": "Duration",

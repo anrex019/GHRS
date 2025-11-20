@@ -1,4 +1,6 @@
+"use client";
 import React from "react";
+import { useI18n } from "../context/I18nContext";
 
 type StatisticItem = {
   label: string;
@@ -11,10 +13,12 @@ type Props = {
 };
 
 const Statistics: React.FC<Props> = ({ statistics }) => {
+  const { t } = useI18n();
+  
   return (
     <div className="bg-[#F9F7FE] p-4 md:p-10 md:px-10 md:mx-10 rounded-[20px] mt-2 md:mt-5">
-      <h1 className="text-[#3D334A] text-[18px] md:mb-10 mb-4 leading-[120%] tracking-[-3%] md:text-[40px]">
-        Статистика
+      <h1 className="text-[#3D334A] text-[18px] md:mb-10 mb-4 leading-[120%] tracking-[-3%] md:text-[40px] font-bowler">
+        {t("personal_account.statistics") || "Статистика"}
       </h1>
       <div className="grid md:grid-cols-4 grid-cols-1 gap-6">
         {statistics.map((item, index) => {

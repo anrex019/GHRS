@@ -10,6 +10,7 @@ import { useInstructors } from "../hooks/useInstructor";
 import Image from "next/image";
 import Banner from "../components/Banner";
 import MainHeader from "../components/Header/MainHeader";
+import { useI18n } from "../context/I18nContext";
 
 interface Teacher {
   id: string;
@@ -36,6 +37,7 @@ interface Certificate {
 }
 
 const About = () => {
+  const { t } = useI18n();
   const { instructors, loading } = useInstructors();
 
   // instructors მონაცემების კონვერტაცია Teacher format-ში
@@ -67,13 +69,15 @@ const About = () => {
   return (
     <div>
       {/* <Header variant="about" /> */}
-      <MainHeader 
-        ShowBlock={false} 
-        OptionalComponent={null} 
-        stats={[]} 
+      <MainHeader
+        ShowBlock={false}
+        OptionalComponent={null}
+        stats={[] as never[]}
         showArrows={false}
         useVideo={false}
         backgroundImage="/assets/images/bluebg.jpg"
+        customBlockTitle=""
+        customBlockDescription=""
       />
       <div className="mt-40">
         <Rehabilitation />
@@ -130,8 +134,8 @@ const About = () => {
         />
         {/* ინსტრუქტორების სექცია */}
         <div className="w-full px-4 md:px-6 md:mx-5 py-12 bg-[#F9F7FE] rounded-[30px] overflow-hidden">
-          <h2 className="text-[32px] md:text-[40px] text-[#3D334A] font-light mb-6">
-            НАШИ ПРЕПОДАВАТЕЛИ
+          <h2 className="text-[32px] md:text-[40px] text-[#3D334A] font-light mb-6 font-bowler">
+            {t("teachers.our_teachers") || "НАШИ ПРЕПОДАВАТЕЛИ"}
           </h2>
 
           <div className="space-y-8">

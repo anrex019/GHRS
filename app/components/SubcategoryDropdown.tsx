@@ -112,7 +112,7 @@ const SubcategoryDropdown = ({
             group
           `}
         >
-          <span className="text-[#3D334A]  text-sm md:text-base group-hover:text-[#734ea4] transition-colors duration-200 font-[Bowler]">
+          <span className="text-[#3D334A]  text-sm md:text-base group-hover:text-[#734ea4] transition-colors duration-200 font-bowler">
             {getLocalizedText(subcategory.name, locale)}
           </span>
           <svg

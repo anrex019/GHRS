@@ -27,7 +27,7 @@ const VideoNotification = ({ variant }: VideoNotificationProps) => {
             backgroundImage: "url('/assets/images/background-reh.png')",
           }}
         >
-          <h3 className="font-[Bowler] md:pb-[34px] pb-8 md:text-[40px] text-4xl text-[rgba(255,255,255,1)] tracking-[-3%] leading-[120%]">
+          <h3 className="font-bowler md:pb-[34px] pb-8 md:text-[40px] text-4xl text-[rgba(255,255,255,1)] tracking-[-3%] leading-[120%]">
             {typeof t("video_notification.exercise_complexes.title") ===
             "string"
               ? t("video_notification.exercise_complexes.title")
@@ -46,7 +46,7 @@ const VideoNotification = ({ variant }: VideoNotificationProps) => {
             backgroundImage: "url('/assets/images/background-reh.png')",
           }}
         >
-          <h3 className="font-[Bowler] md:pb-[34px] pb-8 md:text-[40px] text-4xl text-[rgba(255,255,255,1)] tracking-[-3%] leading-[120%]">
+          <h3 className="font-bowler md:pb-[34px] pb-8 md:text-[40px] text-4xl text-[rgba(255,255,255,1)] tracking-[-3%] leading-[120%]">
             {typeof t("video_notification.for_children.title") === "string"
               ? t("video_notification.for_children.title")
               : "For Children"}
@@ -79,7 +79,7 @@ const VideoNotification = ({ variant }: VideoNotificationProps) => {
             backgroundImage: "url('/assets/images/background-reh.png')",
           }}
         >
-          <h3 className="font-[Bowler] md:pb-[34px] pb-8 md:text-[40px] text-4xl text-[rgba(255,255,255,1)] tracking-[-3%] leading-[120%]">
+          <h3 className="font-bowler md:pb-[34px] pb-8 md:text-[40px] text-4xl text-[rgba(255,255,255,1)] tracking-[-3%] leading-[120%]">
             {typeof t("video_notification.articles.title") === "string"
               ? t("video_notification.articles.title")
               : "Articles"}

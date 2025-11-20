@@ -219,7 +219,7 @@ const ShoppingCard = () => {
                         </svg>
                       </button>
                       {dropdownOpen === item.id && (
-                        <div className="absolute font-[Bowler] z-10 top-10 left-0 bg-white rounded-[16px] shadow-lg py-2 w-[180px] flex flex-col animate-fade-in border border-[#E2D6F9]">
+                        <div className="absolute font-bowler z-10 top-10 left-0 bg-white rounded-[16px] shadow-lg py-2 w-[180px] flex flex-col animate-fade-in border border-[#E2D6F9]">
                           {subscriptionOptions.map((option) => (
                             <button
                               key={option.value}

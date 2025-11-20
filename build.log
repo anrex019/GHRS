@@ -1,0 +1,72 @@
+
+> grs_frontend@0.1.0 build
+> next build
+
+ ⚠ i18n configuration in next.config.ts is unsupported in App Router.
+Learn more about internationalization in App Router: https://nextjs.org/docs/app/building-your-application/routing/internationalization
+   ▲ Next.js 15.3.3
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 3.0s
+   Skipping validation of types
+   Skipping linting
+   Collecting page data ...
+   Generating static pages (0/36) ...
+   Generating static pages (9/36) 
+   Generating static pages (18/36) 
+   Generating static pages (27/36) 
+ ✓ Generating static pages (36/36)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    7.24 kB         216 kB
+├ ○ /_not-found                            981 B         102 kB
+├ ○ /about                               4.76 kB         197 kB
+├ ○ /allComplex                          11.1 kB         200 kB
+├ ○ /allCourse                           3.23 kB         191 kB
+├ ƒ /allCourse/[id]                      3.43 kB         184 kB
+├ ○ /article                             1.36 kB         207 kB
+├ ƒ /article/[id]                          796 B         213 kB
+├ ○ /auth/login                          2.18 kB         140 kB
+├ ○ /auth/register                       1.74 kB         139 kB
+├ ○ /auth/register/steps                 6.82 kB         137 kB
+├ ○ /blog                                3.33 kB         191 kB
+├ ƒ /blog/[id]                           2.09 kB         190 kB
+├ ○ /categories                          9.74 kB         165 kB
+├ ƒ /categories/[categoryId]             5.08 kB         210 kB
+├ ○ /categories/section                  7.39 kB         212 kB
+├ ○ /chapter                             7.37 kB         202 kB
+├ ○ /complex                             4.09 kB         205 kB
+├ ƒ /complex/[id]                        8.61 kB         219 kB
+├ ○ /consent                             1.34 kB         189 kB
+├ ○ /contact                             1.58 kB         192 kB
+├ ○ /editprofile                         1.59 kB         185 kB
+├ ○ /personalAccount                       223 B         233 kB
+├ ƒ /personalAccount/[id]/edit           2.22 kB         185 kB
+├ ƒ /personalAccount/users/[id]            223 B         233 kB
+├ ○ /player                              8.78 kB         190 kB
+├ ○ /privacy-policy                      1.31 kB         189 kB
+├ ○ /professional                        11.3 kB         206 kB
+├ ○ /rehabilitation                      8.24 kB         198 kB
+├ ○ /section                             6.27 kB         208 kB
+├ ƒ /sets/[id]                           5.41 kB         130 kB
+├ ○ /shoppingcard                        10.7 kB         203 kB
+├ ƒ /singleCourse/[id]                   8.17 kB         209 kB
+├ ƒ /subcategories/[subcategoryId]       2.03 kB         200 kB
+├ ○ /teachers                              233 B         201 kB
+├ ƒ /teachers/[id]                         216 B         201 kB
+├ ○ /test-payment                        4.91 kB         131 kB
+└ ○ /user-agreement                      1.31 kB         189 kB
++ First Load JS shared by all             101 kB
+  ├ chunks/1684-d5bcf509d1041690.js      45.9 kB
+  ├ chunks/4bd1b696-f774ad2caa00290c.js  53.2 kB
+  └ other shared chunks (total)          2.31 kB
+
+
+ƒ Middleware                             33.1 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

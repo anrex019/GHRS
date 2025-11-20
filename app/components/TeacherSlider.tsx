@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import SliderArrows from "./SliderArrows";
+import { useI18n } from "../context/I18nContext";
 
 interface Teacher {
   id: string;
@@ -30,6 +31,15 @@ interface TeacherSliderProps {
 }
 
 const TeacherSlider: React.FC<TeacherSliderProps> = ({ teachers = [] }) => {
+  const { t } = useI18n();
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [allTeachers, setAllTeachers] = useState<Teacher[]>([]);
+
+  useEffect(() => {
+    if (teachers && teachers.length > 0) {
+      setAllTeachers(teachers);
+    }
+  }, [teachers]);
   
   // Function to clean and format HTML content
   const cleanHtmlContent = (htmlContent: string) => {
@@ -86,9 +96,6 @@ const TeacherSlider: React.FC<TeacherSliderProps> = ({ teachers = [] }) => {
     return `<p class="mb-4 leading-relaxed">${truncatedText}</p>`;
   };
 
-  const allTeachers = teachers.length > 0 ? teachers : [];
-  const [currentIndex, setCurrentIndex] = useState(0);
-
   const scrollLeft = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex > 0 ? prevIndex - 1 : allTeachers.length - 1
@@ -109,7 +116,7 @@ const TeacherSlider: React.FC<TeacherSliderProps> = ({ teachers = [] }) => {
       <div className="w-full px-4 md:px-6 md:mx-5 py-12 bg-[#F9F7FE] rounded-[30px] overflow-hidden">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-[32px] md:text-[40px] text-[#3D334A] font-bold">
-            НАШИ ПРЕПОДАВАТЕЛИ
+            {t("teachers.our_teachers") || "НАШИ ПРЕПОДАВАТЕЛИ"}
           </h2>
         </div>
         <div className="text-center py-10">
@@ -122,8 +129,8 @@ const TeacherSlider: React.FC<TeacherSliderProps> = ({ teachers = [] }) => {
   return (
     <div className="w-full px-4 md:px-6 md:mx-5 py-12 bg-[#F9F7FE] rounded-[30px] overflow-hidden">
       <div className="flex justify-between items-center mb-8">
-        <h2 className="text-[24px] md:text-[48px] text-[#3D334A] font-[Bowler] uppercase tracking-[-1%] leading-[100%]">
-          НАШИ ПРЕПОДАВАТЕЛИ
+        <h2 className="text-[24px] md:text-[48px] text-[#3D334A] font-bowler uppercase tracking-[-1%] leading-[100%]">
+          {t("teachers.our_teachers") || "НАШИ ПРЕПОДАВАТЕЛИ"}
         </h2>
         <div className="md:mx-5">
           <SliderArrows onScrollLeft={scrollLeft} onScrollRight={scrollRight} />
@@ -132,7 +139,7 @@ const TeacherSlider: React.FC<TeacherSliderProps> = ({ teachers = [] }) => {
 
       <Link
         href="/teachers"
-        className="text-[#D4BAFC] text-[14px] md:text-[24px] font-[Bowler] uppercase leading-[90%] block mb-10 hover:opacity-80 transition-opacity"
+        className="text-[#D4BAFC] text-[14px] md:text-[24px] font-bowler uppercase leading-[90%] block mb-10 hover:opacity-80 transition-opacity"
       >
         СМОТРЕТЬ ВСЕ
       </Link>
@@ -149,7 +156,7 @@ const TeacherSlider: React.FC<TeacherSliderProps> = ({ teachers = [] }) => {
             />
           </div>
           <div className="flex-1 flex flex-col pt-2 md:pt-4">
-            <h3 className="text-[24px] md:text-[40px] text-[#3D334A] font-[Bowler] uppercase tracking-[-1%] leading-[100%] mb-4">
+            <h3 className="text-[24px] md:text-[40px] text-[#3D334A] font-bowler uppercase tracking-[-1%] leading-[100%] mb-4">
               {teacher.name}
             </h3>
 
@@ -177,7 +184,7 @@ const TeacherSlider: React.FC<TeacherSliderProps> = ({ teachers = [] }) => {
 
             <Link
               href={`/teachers/${teacher.id}`}
-              className="text-[#D4BAFC] text-[14px] md:text-[24px] font-[Bowler] uppercase leading-[90%] mt-6 text-end hover:opacity-80 transition-opacity"
+              className="text-[#D4BAFC] text-[14px] md:text-[24px] font-bowler uppercase leading-[90%] mt-6 text-end hover:opacity-80 transition-opacity"
             >
               ПОДРОБНЕЕ
             </Link>

@@ -3,6 +3,7 @@
     "loading": "Loading...",
     "user_not_found": "User not found",
     "auth_required": "Authorization required",
+    "statistics": "Statistics",
     "tabs": {
       "description": "Description",
       "additional": "Additional",

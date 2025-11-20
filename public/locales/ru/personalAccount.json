@@ -3,6 +3,7 @@
     "loading": "Загрузка...",
     "user_not_found": "Пользователь не найден",
     "auth_required": "Необходима авторизация",
+    "statistics": "Статистика",
     "tabs": {
       "description": "Описание",
       "additional": "Дополнительно",

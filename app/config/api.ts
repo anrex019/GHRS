@@ -153,6 +153,11 @@ export const API_CONFIG = {
       COURSES: (id: string) => `/api/instructors/${id}/courses`,
       STATS: (id: string) => `/api/instructors/${id}/stats`,
     },
+    STATISTICS: {
+      GLOBAL: "/api/statistics/global",
+      USER: "/api/users/me/statistics",
+      ACTIVITY: "/api/users/me/activity",
+    },
   },
 
   HEADERS: {

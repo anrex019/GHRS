@@ -112,8 +112,8 @@ const OtherGrid: React.FC<OtherGridProps> = ({ blogs, language, showHeader = tru
                     <IoIosShareAlt className="md:w-[14.2px] md:h-[18.68px]" />
                   </div>
                 </div>
-                <div className="px-3 pb-3 font-[Bowler] mt-2">
-                  <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%] bg-[#E9DFF6] rounded-[6px] text-[14px] uppercase">
+                <div className="px-3 pb-3 font-bowler mt-2">
+                  <span className="text-[#3D334A] font-bowler p-1.5 leading-[90%] bg-[#E9DFF6] rounded-[6px] text-[14px] uppercase">
                     {orderedBlogs[0]?.articles?.length} სტატია
                   </span>
                 </div>
@@ -147,8 +147,8 @@ const OtherGrid: React.FC<OtherGridProps> = ({ blogs, language, showHeader = tru
                     <IoIosShareAlt className="md:w-[14.2px] md:h-[18.68px]" />
                   </div>
                 </div>
-                <div className="px-3 pb-3 font-[Bowler] mt-1">
-                  <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%] bg-[#E9DFF6] rounded-[6px] text-[14px] uppercase">
+                <div className="px-3 pb-3 font-bowler mt-1">
+                  <span className="text-[#3D334A] font-bowler p-1.5 leading-[90%] bg-[#E9DFF6] rounded-[6px] text-[14px] uppercase">
                     {orderedBlogs[1]?.articles?.length} სტატია
                   </span>
                 </div>
@@ -175,8 +175,8 @@ const OtherGrid: React.FC<OtherGridProps> = ({ blogs, language, showHeader = tru
                     <IoIosShareAlt className="md:w-[14.2px] md:h-[18.68px]" />
                   </div>
                 </div>
-                <div className="px-3 pb-3 font-[Bowler] mt-4">
-                  <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%] bg-[#E9DFF6] rounded-[6px] text-[14px] uppercase">
+                <div className="px-3 pb-3 font-bowler mt-4">
+                  <span className="text-[#3D334A] font-bowler p-1.5 leading-[90%] bg-[#E9DFF6] rounded-[6px] text-[14px] uppercase">
                     {orderedBlogs[2]?.articles?.length} სტატია
                   </span>
                 </div>
@@ -209,8 +209,8 @@ const OtherGrid: React.FC<OtherGridProps> = ({ blogs, language, showHeader = tru
                     <IoIosShareAlt className="md:w-[14.2px] md:h-[18.68px]" />
                   </div>
                 </div>
-                <div className="px-3 pb-3 font-[Bowler] mt-4">
-                  <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%] bg-[#E9DFF6] rounded-[6px] text-[14px] uppercase">
+                <div className="px-3 pb-3 font-bowler mt-4">
+                  <span className="text-[#3D334A] font-bowler p-1.5 leading-[90%] bg-[#E9DFF6] rounded-[6px] text-[14px] uppercase">
                     {orderedBlogs[3]?.articles?.length} სტატია
                   </span>
                 </div>
@@ -243,8 +243,8 @@ const OtherGrid: React.FC<OtherGridProps> = ({ blogs, language, showHeader = tru
                     <IoIosShareAlt className="md:w-[14.2px] md:h-[18.68px]" />
                   </div>
                 </div>
-                <div className="px-3 pb-3 font-[Bowler] mt-4">
-                  <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%] bg-[#E9DFF6] rounded-[6px] text-[14px] uppercase">
+                <div className="px-3 pb-3 font-bowler mt-4">
+                  <span className="text-[#3D334A] font-bowler p-1.5 leading-[90%] bg-[#E9DFF6] rounded-[6px] text-[14px] uppercase">
                     {orderedBlogs[4]?.articles?.length} სტატია
                   </span>
                 </div>
@@ -289,8 +289,8 @@ const OtherGrid: React.FC<OtherGridProps> = ({ blogs, language, showHeader = tru
                   <IoIosShareAlt className="md:w-[14.2px] md:h-[18.68px]" />
                 </div>
               </div>
-              <div className="px-3 pb-3 font-[Bowler] mt-4">
-                <span className="text-[#3D334A] font-[Bowler] p-1.5 leading-[90%] bg-[#E9DFF6] rounded-[6px] text-[14px] uppercase">
+              <div className="px-3 pb-3 font-bowler mt-4">
+                <span className="text-[#3D334A] font-bowler p-1.5 leading-[90%] bg-[#E9DFF6] rounded-[6px] text-[14px] uppercase">
                   {blog?.articles?.length} სტატია
                 </span>
               </div>

@@ -83,7 +83,7 @@ const Section = ({
     >
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-5">
-          <h1 className="font-[Bowler] text-[#3D334A] text-[40px] leading-[120%] tracking-[-3%]">
+          <h1 className="font-bowler text-[#3D334A] text-[40px] leading-[120%] tracking-[-3%]">
             {t("common.sections_title") || "Разделы"}
           </h1>
           <Link href="/subcategories" className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer">
