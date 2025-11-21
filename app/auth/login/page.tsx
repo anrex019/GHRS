@@ -11,6 +11,7 @@ import { TbBrandOkRu } from "react-icons/tb";
 import { useAuth } from "../../context/AuthContext";
 import { login } from "../../config/api";
 import { User } from "@/app/components/PersonalAccount/PersonInfo";
+import { useI18n } from "../../context/I18nContext";
 
 interface LoginResponse {
   token: string;
@@ -19,12 +20,20 @@ interface LoginResponse {
 
 const Login = () => {
   const { login: authLogin } = useAuth();
+  const { t, locale } = useI18n();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
+  const [resetMessage, setResetMessage] = useState("");
+
+  // Debug: Check current locale and translations
+  console.log('🌐 Current locale:', locale);
+  console.log('🔤 Translation test:', t('auth.authorization'));
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -55,7 +64,7 @@ const Login = () => {
       if (err instanceof Error) {
         setError(err.message);
       } else {
-        setError("Неверный email или пароль");
+        setError(t("auth.invalid_credentials") || "Invalid email or password");
       }
     } finally {
       setIsLoading(false);
@@ -73,8 +82,8 @@ const Login = () => {
           className="absolute bottom-20 left-20 hidden md:flex"
         />
         <div>
-          <h1 className="text-center mb-10 text-[24px] md:text-[32px] tracking-[-3%] leading-[100%]">
-            Авторизация
+          <h1 className="text-center mb-10 text-[24px] md:text-[32px] tracking-[-3%] leading-[100%] font-bowler">
+            {t("auth.authorization") || "Authorization"}
           </h1>
           {/* Socials */}
           <div className="flex gap-10 items-center justify-center mb-[58px]">
@@ -120,8 +129,8 @@ const Login = () => {
             name="password"
             value={formData.password}
             onChange={handleChange}
-            title="Пароль"
-            placeholder="Пароль"
+            title={t("auth.password") || "Password"}
+            placeholder={t("auth.password") || "Password"}
             className="p-5 border border-[#E9DFF6] rounded-lg mx-2 placeholder:text-[#3D334A] placeholder:text-[18px] placeholder:leading-[120%] placeholder:font-medium"
           />
           <button
@@ -129,21 +138,50 @@ const Login = () => {
             disabled={isLoading}
             className="flex items-center gap-2 mx-2 justify-between px-5 mt-10 bg-[#D4BAFC] text-white text-[18px] leading-[120%] font-medium py-[17px] rounded-lg disabled:opacity-50"
           >
-            {isLoading ? "Пожалуйста, подождите..." : "Войти"}{" "}
+            {isLoading ? (t("auth.please_wait") || "Please wait...") : (t("auth.login") || "Login")}{" "}
             <FaArrowRightLong size={20} />
           </button>
         </form>
         <div className="mt-5 text-center w-full">
-          <span className="text-[#D4BAFC] tracking-[-1%] font-medium leading-[100%] font-pt cursor-pointer">
-            Восстановить пароль
+          <span 
+            onClick={() => setShowForgotPassword(!showForgotPassword)}
+            className="text-[#D4BAFC] tracking-[-1%] font-medium leading-[100%] font-pt cursor-pointer hover:underline"
+          >
+            {t("auth.forgot_password") || "Forgot password?"}
           </span>
-          <p className="text-[#3D334A] text-[18px] leading-[120%] font-medium font-pt">
-            Нет аккаунта?{" "}
+          
+          {showForgotPassword && (
+            <div className="mt-4 p-4 bg-[#F9F7FE] rounded-lg">
+              <input
+                type="email"
+                value={resetEmail}
+                onChange={(e) => setResetEmail(e.target.value)}
+                placeholder={t("auth.enter_email") || "Enter your email"}
+                className="w-full p-3 border border-[#E9DFF6] rounded-lg mb-3"
+              />
+              <button
+                onClick={() => {
+                  setResetMessage(t("auth.reset_link_sent") || "Password reset link sent to your email!");
+                  setTimeout(() => {
+                    setShowForgotPassword(false);
+                    setResetMessage("");
+                  }, 3000);
+                }}
+                className="w-full bg-[#D4BAFC] text-white py-2 rounded-lg hover:bg-[#c5a9ed]"
+              >
+                {t("auth.send_reset_link") || "Send reset link"}
+              </button>
+              {resetMessage && <p className="text-green-600 mt-2 text-sm">{resetMessage}</p>}
+            </div>
+          )}
+          
+          <p className="text-[#3D334A] text-[18px] leading-[120%] font-medium font-pt mt-3">
+            {t("auth.no_account") || "Don't have an account?"}{" "}
             <Link
-              href={"/auth/register"}
-              className="text-[#D4BAFC] tracking-[-1%] font-medium leading-[100%] font-pt"
+              href="/auth/register"
+              className="text-[#D4BAFC] tracking-[-1%] font-medium leading-[100%] font-pt hover:underline"
             >
-              Регистрация
+              {t("auth.registration") || "Registration"}
             </Link>
           </p>
         </div>

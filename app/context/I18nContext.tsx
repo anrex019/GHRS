@@ -163,6 +163,15 @@ export const I18nProvider: React.FC<I18nProviderProps> = ({ children }) => {
   const t = (key: string, options?: Record<string, string>): string => {
     let translation = getNestedValue(translationData, key);
 
+    // Debug specific auth keys
+    if (key.startsWith('auth.')) {
+      console.log(`🔍 Translation lookup for "${key}":`, {
+        locale,
+        found: translation !== key,
+        value: translation
+      });
+    }
+
     if (translation === key) return key;
 
     if (typeof translation === "object" && translation !== null) {

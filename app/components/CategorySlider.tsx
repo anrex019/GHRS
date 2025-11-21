@@ -60,11 +60,14 @@ interface CategorySliderProps {
 
 const CategorySlider = forwardRef<HTMLDivElement, CategorySliderProps>(
   ({ onCategoryClick }, ref) => {
-    const { categories, loading, error } = useCategories();
+    const { categories: allCategories, loading, error } = useCategories();
     const [clickedCategory, setClickedCategory] = useState<string | null>(null);
 
     // Get current locale from i18n context
     const { locale } = useI18n();
+
+    // ✅ Filter to show only main categories (not subcategories)
+    const categories = allCategories.filter(cat => !cat.parentId);
 
 
 

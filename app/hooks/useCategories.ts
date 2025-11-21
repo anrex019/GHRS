@@ -153,18 +153,17 @@ export function useCategories(): UseCategoriesReturn {
 
       console.log("✅ Using raw backend data without transformation");
 
-      // ვფილტრავთ მხოლოდ მთავარ კატეგორიებს (საბკატეგორიები ცალკე იჩენება დამოკიდებულ კომპონენტებში)
-      const mainCategories = backendCategories.filter(category => !category.parentId);
-      
-      console.log("🔍 Filtered main categories:", {
+      // ✅ Return ALL categories (both main and subcategories)
+      // Components can filter them as needed
+      console.log("🔍 All categories:", {
         totalCategories: backendCategories.length,
-        mainCategories: mainCategories.length,
-        subcategories: backendCategories.length - mainCategories.length,
-        filteredCategories: mainCategories
+        mainCategories: backendCategories.filter(c => !c.parentId).length,
+        subcategories: backendCategories.filter(c => c.parentId).length,
+        allCategories: backendCategories
       });
 
-      // მხოლოდ მთავარ კატეგორიებს ვყენებთ
-      setCategories(mainCategories);
+      // ✅ Set all categories (not just main ones)
+      setCategories(backendCategories);
       
     } catch (err: unknown) {
       console.error("❌ Error fetching categories:", err);

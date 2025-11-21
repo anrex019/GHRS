@@ -169,5 +169,25 @@
       "title": "MODERN ISRAELI REHABILITATION METHODS",
       "subtitle": "For restoring and maintaining mobility and work capacity"
     }
+  },
+  "auth": {
+    "registration": "Registration",
+    "authorization": "Authorization",
+    "login": "Login",
+    "password": "Password",
+    "email": "Email",
+    "continue": "Continue",
+    "sending": "Sending...",
+    "please_wait": "Please wait...",
+    "already_have_account": "Already have an account?",
+    "no_account": "Don't have an account?",
+    "forgot_password": "Forgot password?",
+    "enter_email": "Enter your email",
+    "send_reset_link": "Send reset link",
+    "reset_link_sent": "Password reset link sent to your email!",
+    "invalid_email": "Please enter a valid Gmail address",
+    "invalid_credentials": "Invalid email or password",
+    "password_min_length": "Password must be at least 4 characters",
+    "error_occurred": "An error occurred, please try again"
   }
 }

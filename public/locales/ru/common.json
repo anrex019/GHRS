@@ -203,5 +203,25 @@
         "button": " ЗАписаться на прием"
       }
     }
+  },
+  "auth": {
+    "registration": "Регистрация",
+    "authorization": "Авторизация",
+    "login": "Войти",
+    "password": "Пароль",
+    "email": "Email",
+    "continue": "Продолжить",
+    "sending": "Отправляется...",
+    "please_wait": "Пожалуйста, подождите...",
+    "already_have_account": "Уже есть аккаунт?",
+    "no_account": "Нет аккаунта?",
+    "forgot_password": "Забыли пароль?",
+    "enter_email": "Введите ваш email",
+    "send_reset_link": "Отправить ссылку для сброса",
+    "reset_link_sent": "Ссылка для сброса пароля отправлена на ваш email!",
+    "invalid_email": "Пожалуйста, введите правильный Gmail адрес",
+    "invalid_credentials": "Неверный email или пароль",
+    "password_min_length": "Пароль должен содержать минимум 4 символа",
+    "error_occurred": "Произошла ошибка, попробуйте снова"
   }
 }

@@ -275,7 +275,7 @@ const BlogSlider: React.FC<BlogSliderProps> = ({
         href="/blog"
         className="text-[#D4BAFC] leading-[90%] text-[15px] md:text-[24px] md:px-5 px-0 cursor-pointer hover:text-[#734ea4] transition-colors duration-300 font-bowler"
       >
-        {t("blog.see_all")} {blogs?.length} {t("navigation.rightArrow")}
+        {t("blog.see_all", { count: blogs?.length.toString() })} →
       </Link>
     </div>
   );

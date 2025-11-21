@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import WorksSlider from "./WorksSlider";
 import { useI18n } from "../context/I18nContext";
-import { Set } from "../types/category";
+import type { Set } from "../types/category";
 
 interface LocalizedString {
   ka: string;
@@ -149,6 +149,18 @@ const Works: React.FC<WorksProps> = ({
 
   let works: WorkItem[] = [];
 
+  // Helper function to deduplicate items by ID
+  const deduplicateById = (items: WorkItem[]): WorkItem[] => {
+    const seen = new Set<string>();
+    return items.filter(item => {
+      if (seen.has(item.id)) {
+        return false;
+      }
+      seen.add(item.id);
+      return true;
+    });
+  };
+
   if (exercises.length > 0) {
     works = exercises.map((exercise) => {
       const result = {
@@ -170,7 +182,7 @@ const Works: React.FC<WorksProps> = ({
       return result;
     });
   } else if (items.length > 0) {
-    works = items.map((set) => ({
+    works = deduplicateById(items.map((set) => ({
       id: set._id,
       title: getLocalized(set.name),
       description: getLocalized(set.description),
@@ -180,9 +192,9 @@ const Works: React.FC<WorksProps> = ({
         (set.category && getLocalized(set.category.name)) || "ორთოპედია",
       monthlyPrice: set.price.monthly || 920,
       categoryId: set.categoryId || "",
-    }));
+    })));
   } else if (sets.length > 0) {
-    works = sets.map((set) => ({
+    works = deduplicateById(sets.map((set) => ({
       id: set._id,
       title: getLocalized(set.name),
       description: getLocalized(set.description),
@@ -193,7 +205,7 @@ const Works: React.FC<WorksProps> = ({
       monthlyPrice: (set.price && set.price.monthly) || 920,
       categoryId: set.categoryId || "",
       subcategoryId: set.subCategoryId,
-    }));
+    })));
   } else {
     console.log("⚠️ No exercises, items, or sets to process!");
   }

@@ -11,7 +11,7 @@ import { Footer } from "../components/Footer";
 import { useAllSets } from "../hooks/useSets";
 import { useModal } from "../context/ModalContext";
 import { useI18n } from "../context/I18nContext";
-import { convertRUBtoUSD, formatPriceWithConversion } from "../utils/currency";
+import { convertRUBtoUSD, formatPriceByLocale } from "../utils/currency";
 
 const subscriptionOptions = [
   { label: "1 МЕСЯЦ", value: 1 },
@@ -64,7 +64,7 @@ const ShoppingCard = () => {
 
   const { sets } = useAllSets();
   const { showSuccess } = useModal();
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
 
   useEffect(() => {
     try {
@@ -271,7 +271,7 @@ const ShoppingCard = () => {
             <div className="flex items-center justify-between">
               <h5 className="text-[#846FA0] font-pt">Всего на сумму</h5>
               <span className="text-[#3D334A] text-[18px] font-bold font-pt">
-                {formatPriceWithConversion(totalAmountRUB, 'USD')}
+                {formatPriceByLocale(totalAmountRUB, locale)}
               </span>
             </div>
             <div className="flex items-center justify-between">

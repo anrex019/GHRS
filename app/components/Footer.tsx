@@ -104,7 +104,7 @@ export const Footer: FC = () => {
   };
 
   return (
-    <div className="bg-[#F9F7FE] rounded-[20px] px-8 pt-8 pb-4 text-[#3D334A]">
+    <div className="bg-[#F9F7FE] rounded-[20px] px-8 pt-8 pb-4 font-pt">
       {/* კონსულტაციის ფორმა */}
       <div className="mb-8 px-16">
         <h2 className="text-4xl font-bold text-[#3D334A] mb-8 font-bowler">
@@ -202,21 +202,21 @@ export const Footer: FC = () => {
             {locale === "ru" ? (
               <a
                 href="tel:+79168561145"
-                className="text-2xl font-bold text-[#3D334A] hover:text-[#D4BAFC] transition-colors font-pt"
+                className="text-2xl font-bold text-[#8B7BAA] hover:text-[#D4BAFC] transition-colors font-pt"
               >
                 +7 (916) 856—11—45
               </a>
             ) : (
               <a
                 href="tel:+972539617579"
-                className="text-2xl font-bold text-[#3D334A] hover:text-[#D4BAFC] transition-colors font-pt"
+                className="text-2xl font-bold text-[#8B7BAA] hover:text-[#D4BAFC] transition-colors font-pt"
               >
                 +972 53-9617579
               </a>
             )}
             <a
               href="mailto:office@ghrs-group.com"
-              className="text-[#D4BAFC] text-sm hover:underline font-pt"
+              className="text-[#8B7BAA] text-sm hover:text-[#D4BAFC] hover:underline font-pt"
             >
               office@ghrs-group.com
             </a>
@@ -396,43 +396,43 @@ export const Footer: FC = () => {
       <hr className="my-6 border-[#E0D6F9]" />
 
       {/* ლინკები */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8 px-16 text-[#846FA0] font-pt">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8 px-16 text-[#8B7BAA] font-pt">
         <div className="flex flex-col gap-3">
           <a href="/" className="hover:text-[#D4BAFC] transition-colors font-pt">{t("links.home")}</a>
-          <a href="/rehabilitation" className="hover:text-[#D4BAFC] transition-colors">{t("links.rehabilitation")}</a>
-          <a href="/professional" className="hover:text-[#D4BAFC] transition-colors">{t("links.development")}</a>
-          <a href="/blog" className="hover:text-[#D4BAFC] transition-colors">{t("links.blog")}</a>
+          <a href="/rehabilitation" className="hover:text-[#D4BAFC] transition-colors font-pt">{t("links.rehabilitation")}</a>
+          <a href="/professional" className="hover:text-[#D4BAFC] transition-colors font-pt">{t("links.development")}</a>
+          <a href="/blog" className="hover:text-[#D4BAFC] transition-colors font-pt">{t("links.blog")}</a>
         </div>
         <div className="flex flex-col gap-3">
-          <a href="/about" className="hover:text-[#D4BAFC] transition-colors">{t("links.about")}</a>
-          <a href="/faq" className="hover:text-[#D4BAFC] transition-colors">{t("links.faq")}</a>
-          <a href="/user-guide" className="hover:text-[#D4BAFC] transition-colors">{t("links.userGuide")}</a>
+          <a href="/about" className="hover:text-[#D4BAFC] transition-colors font-pt">{t("links.about")}</a>
+          <a href="/faq" className="hover:text-[#D4BAFC] transition-colors font-pt">{t("links.faq")}</a>
+          <a href="/user-guide" className="hover:text-[#D4BAFC] transition-colors font-pt">{t("links.userGuide")}</a>
         </div>
         <div className="flex flex-col gap-3">
-          <a href="/categories" className="hover:text-[#D4BAFC] transition-colors">{t("links.allSets")}</a>
-          <a href="/categories" className="hover:text-[#D4BAFC] transition-colors">{t("links.orthopedics")}</a>
+          <a href="/categories" className="hover:text-[#D4BAFC] transition-colors font-pt">{t("links.allSets")}</a>
+          <a href="/categories" className="hover:text-[#D4BAFC] transition-colors font-pt">{t("links.orthopedics")}</a>
           <ul className="flex flex-col gap-2 pl-4">
-            <li><a href="/categories" className="hover:text-[#D4BAFC] transition-colors">{t("links.cervical")}</a></li>
-            <li><a href="/categories" className="hover:text-[#D4BAFC] transition-colors">{t("links.thoracic")}</a></li>
-            <li><a href="/categories" className="hover:text-[#D4BAFC] transition-colors">{t("links.lumbar")}</a></li>
-            <li><a href="/categories" className="hover:text-[#D4BAFC] transition-colors">{t("links.upperLimbs")}</a></li>
-            <li><a href="/categories" className="hover:text-[#D4BAFC] transition-colors">{t("links.lowerLimbs")}</a></li>
-            <li><a href="/categories" className="hover:text-[#D4BAFC] transition-colors">{t("links.posture")}</a></li>
+            <li><a href="/categories" className="hover:text-[#D4BAFC] transition-colors font-pt">{t("links.cervical")}</a></li>
+            <li><a href="/categories" className="hover:text-[#D4BAFC] transition-colors font-pt">{t("links.thoracic")}</a></li>
+            <li><a href="/categories" className="hover:text-[#D4BAFC] transition-colors font-pt">{t("links.lumbar")}</a></li>
+            <li><a href="/categories" className="hover:text-[#D4BAFC] transition-colors font-pt">{t("links.upperLimbs")}</a></li>
+            <li><a href="/categories" className="hover:text-[#D4BAFC] transition-colors font-pt">{t("links.lowerLimbs")}</a></li>
+            <li><a href="/categories" className="hover:text-[#D4BAFC] transition-colors font-pt">{t("links.posture")}</a></li>
           </ul>
-          <a href="/categories" className="hover:text-[#D4BAFC] transition-colors">{t("links.neurology")}</a>
+          <a href="/categories" className="hover:text-[#D4BAFC] transition-colors font-pt">{t("links.neurology")}</a>
           <ul className="flex flex-col gap-2 pl-4">
-            <li><a href="/categories" className="hover:text-[#D4BAFC] transition-colors">{t("links.parkinsons")}</a></li>
-            <li><a href="/categories" className="hover:text-[#D4BAFC] transition-colors">{t("links.stroke")}</a></li>
-            <li><a href="/categories" className="hover:text-[#D4BAFC] transition-colors">{t("links.facialNerve")}</a></li>
-            <li><a href="/categories" className="hover:text-[#D4BAFC] transition-colors">{t("links.multipleSclerosis")}</a></li>
+            <li><a href="/categories" className="hover:text-[#D4BAFC] transition-colors font-pt">{t("links.parkinsons")}</a></li>
+            <li><a href="/categories" className="hover:text-[#D4BAFC] transition-colors font-pt">{t("links.stroke")}</a></li>
+            <li><a href="/categories" className="hover:text-[#D4BAFC] transition-colors font-pt">{t("links.facialNerve")}</a></li>
+            <li><a href="/categories" className="hover:text-[#D4BAFC] transition-colors font-pt">{t("links.multipleSclerosis")}</a></li>
           </ul>
         </div>
         <div className="flex flex-col gap-3">
-          <a href="/categories" className="hover:text-[#D4BAFC] transition-colors">{t("links.aphasia")}</a>
-          <a href="/categories" className="hover:text-[#D4BAFC] transition-colors">{t("links.obesity")}</a>
-          <a href="/categories" className="hover:text-[#D4BAFC] transition-colors">{t("links.gaitRehab")}</a>
-          <a href="/categories" className="hover:text-[#D4BAFC] transition-colors">{t("links.elderlyRehab")}</a>
-          <a href="/categories" className="hover:text-[#D4BAFC] transition-colors">{t("links.covidRehab")}</a>
+          <a href="/categories" className="hover:text-[#D4BAFC] transition-colors font-pt">{t("links.aphasia")}</a>
+          <a href="/categories" className="hover:text-[#D4BAFC] transition-colors font-pt">{t("links.obesity")}</a>
+          <a href="/categories" className="hover:text-[#D4BAFC] transition-colors font-pt">{t("links.gaitRehab")}</a>
+          <a href="/categories" className="hover:text-[#D4BAFC] transition-colors font-pt">{t("links.elderlyRehab")}</a>
+          <a href="/categories" className="hover:text-[#D4BAFC] transition-colors font-pt">{t("links.covidRehab")}</a>
         </div>
       </div>
 
@@ -445,7 +445,7 @@ export const Footer: FC = () => {
           height={48}
         />
         <Image
-          src="/assets/images/ichilov.jpeg"
+          src="/assets/images/ichilov.png"
           alt="Ichilov Medical Center"
           width={400}
           height={48}

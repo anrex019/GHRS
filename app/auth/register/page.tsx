@@ -9,6 +9,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
 import { TbBrandOkRu } from "react-icons/tb";
 import { sendVerificationCode } from "../../config/api";
+import { useI18n } from "../../context/I18nContext";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -17,6 +18,11 @@ const Register = () => {
   const [passwordError, setPasswordError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { t, locale } = useI18n();
+
+  // Debug: Check current locale and translations
+  console.log('🌐 Current locale:', locale);
+  console.log('🔤 Translation test:', t('auth.registration'));
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -30,11 +36,11 @@ const Register = () => {
     setPasswordError("");
 
     if (!validateEmail(email)) {
-      setEmailError("Пожалуйста, введите правильный Gmail адрес");
+      setEmailError(t("auth.invalid_email") || "Please enter a valid Gmail address");
       valid = false;
     }
     if (password.length < 4) {
-      setPasswordError("Пароль должен содержать минимум 4 символа");
+      setPasswordError(t("auth.password_min_length") || "Password must be at least 4 characters");
       valid = false;
     }
     if (!valid) return;
@@ -59,7 +65,7 @@ const Register = () => {
       if (error instanceof Error) {
         setEmailError(error.message);
       } else {
-        setEmailError("Произошла ошибка, попробуйте снова");
+        setEmailError(t("auth.error_occurred") || "An error occurred, please try again");
       }
     } finally {
       setIsLoading(false);
@@ -77,8 +83,8 @@ const Register = () => {
           className="absolute bottom-20 left-20 hidden md:flex"
         />
         <div>
-          <h1 className="text-center mb-10 text-[24px] md:text-[32px] tracking-[-3%] leading-[100%]">
-            Регистрация
+          <h1 className="text-center mb-10 text-[24px] md:text-[32px] tracking-[-3%] leading-[100%] font-bowler">
+            {t("auth.registration") || "Registration"}
           </h1>
           {/* Socials */}
           <div className="flex gap-10 items-center justify-center mb-[58px]">
@@ -124,7 +130,7 @@ const Register = () => {
           <input
             type="password"
             title="Password"
-            placeholder="Пароль"
+            placeholder={t("auth.password") || "Password"}
             className="p-5 border border-[#E9DFF6] rounded-lg mx-2 placeholder:text-[#3D334A] placeholder:text-[18px] placeholder:leading-[120%] placeholder:font-medium"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -138,7 +144,7 @@ const Register = () => {
             className="flex items-center gap-2 mx-2 justify-between px-5 mt-10 bg-[#D4BAFC] text-white text-[18px] leading-[120%] font-medium py-[17px] rounded-lg disabled:opacity-50"
             disabled={isLoading}
           >
-            {isLoading ? "Отправляется..." : "Продолжить"}{" "}
+            {isLoading ? (t("auth.sending") || "Sending...") : (t("auth.continue") || "Continue")}{" "}
             <FaArrowRightLong size={20} />
           </button>
         </form>
@@ -148,9 +154,9 @@ const Register = () => {
             className="text-[#D4BAFC] tracking-[-1%] font-medium leading-[100%] font-pt"
           >
             <p className="text-[#3D334A] text-[18px] leading-[120%] font-medium font-pt">
-              Уже есть аккаунт?{" "}
+              {t("auth.already_have_account") || "Already have an account?"}{" "}
               <span className="text-[#D4BAFC] tracking-[-1%] font-medium leading-[100%] font-pt">
-                Войти
+                {t("auth.login") || "Login"}
               </span>
             </p>
           </Link>

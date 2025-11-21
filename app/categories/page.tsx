@@ -32,66 +32,54 @@ export default function CategoriesPage() {
     return "";
   };
 
-  // Get all subcategories (categories with parentId) and transform them
-  const allSubcategories = categories
-    .filter((cat: any) => cat.parentId)
+  // Get all subcategories in two ways:
+  // 1. Categories with parentId (if backend has them)
+  const subcategoriesWithParentId = categories.filter((cat: any) => cat.parentId);
+  
+  // 2. Get subcategory IDs from main categories' subcategories array
+  const mainCategories = categories.filter((cat: any) => !cat.parentId);
+  const subcategoryIdsFromMain = mainCategories.flatMap((cat: any) => cat.subcategories || []);
+  
+  // Find actual subcategory objects by ID
+  const subcategoriesFromIds = categories.filter((cat: any) => 
+    subcategoryIdsFromMain.includes(cat._id)
+  );
+  
+  // Combine both methods (deduplicate by ID)
+  const allSubcategoriesRaw = [...subcategoriesWithParentId, ...subcategoriesFromIds];
+  const uniqueSubcategoryIds = new Set<string>();
+  const allSubcategories = allSubcategoriesRaw
+    .filter((cat: any) => {
+      if (uniqueSubcategoryIds.has(cat._id)) return false;
+      uniqueSubcategoryIds.add(cat._id);
+      return true;
+    })
     .map((cat: any) => ({
       _id: cat._id,
       name: cat.name,
       description: cat.description,
-      image: cat.image || undefined, // Convert null to undefined
+      image: cat.image || undefined,
       sets: cat.sets || [],
+      categoryId: cat.parentId || cat.categoryId,
     }));
 
   console.log("🔍 Subcategories Analysis:");
+  console.log("  Total categories from API:", categories.length);
   console.log("  Categories with parentId:", categories.filter((cat: any) => cat.parentId).length);
+  console.log("  Categories WITHOUT parentId:", categories.filter((cat: any) => !cat.parentId).length);
   console.log("  Transformed subcategories:", allSubcategories.length);
   console.log("  Subcategories data:", allSubcategories);
+  console.log("  All categories:", categories);
 
-  // TEMPORARY: Mock subcategories for testing (remove when backend has real data)
-  const mockSubcategories = allSubcategories.length === 0 ? [
-    {
-      _id: "mock-sub-1",
-      name: { ru: "Шейный отдел позвоночника", en: "Cervical Spine", ka: "ყელის მალა" },
-      description: { ru: "Упражнения для улучшения подвижности и укрепления шейного отдела позвоночника", en: "Exercises to improve mobility and strengthen the cervical spine", ka: "ვარჯიშები ყელის მალის მობილურობის გასაუმჯობესებლად" },
-      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=542&h=181&fit=crop",
-      sets: ["1", "2", "3"]
-    },
-    {
-      _id: "mock-sub-2",
-      name: { ru: "Грудной отдел позвоночника", en: "Thoracic Spine", ka: "გულმკერდის მალა" },
-      description: { ru: "Комплекс упражнений для грудного отдела позвоночника и улучшения осанки", en: "Exercise complex for thoracic spine and posture improvement", ka: "ვარჯიშები გულმკერდის მალისთვის" },
-      image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=542&h=181&fit=crop",
-      sets: ["4", "5"]
-    },
-    {
-      _id: "mock-sub-3",
-      name: { ru: "Поясничный отдел позвоночника", en: "Lumbar Spine", ka: "წელის მალა" },
-      description: { ru: "Упражнения для укрепления поясничного отдела и профилактики болей в спине", en: "Exercises to strengthen lumbar spine and prevent back pain", ka: "ვარჯიშები წელის მალის გასაძლიერებლად" },
-      image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=542&h=181&fit=crop",
-      sets: ["6", "7", "8"]
-    },
-    {
-      _id: "mock-sub-4",
-      name: { ru: "Плечевой сустав", en: "Shoulder Joint", ka: "მხრის სახსარი" },
-      description: { ru: "Упражнения для восстановления и укрепления плечевого сустава", en: "Exercises for shoulder joint recovery and strengthening", ka: "ვარჯიშები მხრის სახსრის აღდგენისთვის" },
-      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=542&h=181&fit=crop",
-      sets: ["9", "10"]
-    },
-    {
-      _id: "mock-sub-5",
-      name: { ru: "Коленный сустав", en: "Knee Joint", ka: "მუხლის სახსარი" },
-      description: { ru: "Реабилитация и профилактика травм коленного сустава", en: "Knee joint rehabilitation and injury prevention", ka: "მუხლის სახსრის რეაბილიტაცია" },
-      image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=542&h=181&fit=crop",
-      sets: ["11", "12", "13"]
-    }
-  ] : [];
-
-  // Use real subcategories if they exist, otherwise use mock data
-  const displaySubcategories = allSubcategories.length > 0 ? allSubcategories : mockSubcategories;
+  // ✅ Use real subcategories from API, or show message if none exist
+  const displaySubcategories = allSubcategories;
   
-  console.log("📌 Displaying subcategories:", displaySubcategories.length, "items");
-  console.log("📌 Using:", allSubcategories.length > 0 ? "REAL backend data" : "MOCK data (backend has no subcategories)");
+  console.log("📌 Displaying subcategories:", displaySubcategories.length, "items (REAL API data only)");
+  
+  // If no subcategories, show a message to admin
+  if (displaySubcategories.length === 0) {
+    console.warn("⚠️ No subcategories found in database. Please create subcategories in admin panel.");
+  }
 
   // Transform sets data for WorksSlider
   const transformedSets = sets.map((set: any) => ({

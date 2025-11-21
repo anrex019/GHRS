@@ -114,6 +114,33 @@ export function formatPriceWithConversion(
 }
 
 /**
+ * Format price based on locale WITHOUT conversion text
+ * @param amountInRUB - Original amount in RUB
+ * @param locale - Current locale (ka, ru, en)
+ * @returns Formatted string based on locale
+ */
+export function formatPriceByLocale(
+  amountInRUB: number,
+  locale: 'ka' | 'ru' | 'en' = 'ru'
+): string {
+  switch (locale) {
+    case 'ru':
+      // Russian: Show in Rubles (but payment will be in USD)
+      return `${amountInRUB.toLocaleString('ru-RU')} ₽`;
+    case 'en':
+      // English: Show in Dollars
+      const usdAmount = convertRUBtoUSD(amountInRUB);
+      return `$${usdAmount.toFixed(2)}`;
+    case 'ka':
+      // Georgian: Show in Lari
+      const gelAmount = convertRUBtoGEL(amountInRUB);
+      return `${gelAmount.toFixed(2)} ₾`;
+    default:
+      return `${amountInRUB.toLocaleString('ru-RU')} ₽`;
+  }
+}
+
+/**
  * Get exchange rate for a currency pair
  * @param from - Source currency
  * @param to - Target currency

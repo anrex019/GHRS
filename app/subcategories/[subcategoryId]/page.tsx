@@ -2,7 +2,8 @@
 
 import { use } from "react";
 import Link from "next/link";
-import { useCategoryComplete } from "../../hooks/useCategoryComplete";
+import { useCategories } from "../../hooks/useCategories";
+import { useAllSets } from "../../hooks/useSets";
 import Header from "../../components/Header/Header";
 import WorksSlider from "../../components/WorksSlider";
 import Subscribe from "../../components/Subscribe";
@@ -18,21 +19,23 @@ export default function SubcategoryPage({
   params: Promise<{ subcategoryId: string }>;
 }) {
   const { subcategoryId } = use(params);
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
 
-  // ვიყენებთ categoryComplete hook-ს subcategory-სთვისაც
-  // ეს კოდი უნდა შეიცვალოს subcategory-ს hook-ით
-  const { categoryData, loading, error } = useCategoryComplete(subcategoryId);
+  // ✅ Use real API hooks like complex page does
+  const { categories, loading: categoriesLoading } = useCategories();
+  const { sets, loading: setsLoading } = useAllSets();
 
-  // ვპოულობთ ამ კონკრეტულ subcategory-ს
-  const selectedSubcategory = categoryData?.subcategories?.find(
-    (sub) => sub._id === subcategoryId
-  );
+  const loading = categoriesLoading || setsLoading;
 
-  // ვპოულობთ ამ subcategory-ს სეტებს
-  const subcategorySets =
-    categoryData?.sets?.filter((set) => set.subCategoryId === subcategoryId) ||
-    [];
+  // Find the subcategory from categories
+  const selectedSubcategory = categories
+    .flatMap(cat => (cat.subcategories || []) as any[])
+    .find((sub: any) => sub._id === subcategoryId);
+
+  // Find sets for this subcategory
+  const subcategorySets = sets.filter(set => set.subCategoryId === subcategoryId);
+
+  const error = !selectedSubcategory && !loading ? "Subcategory not found" : null;
 
   if (loading) {
     return (
@@ -69,20 +72,9 @@ export default function SubcategoryPage({
     );
   }
 
-  // ვიღებთ ენის პარამეტრს
-  const getLocale = () => {
-    if (typeof window !== "undefined") {
-      const storedLocale = localStorage.getItem("locale");
-      return storedLocale && ["ka", "ru", "en"].includes(storedLocale)
-        ? storedLocale
-        : "ru";
-    }
-    return "ru";
-  };
-
+  // Helper function to get localized text
   const getLocalizedText = (
-    field: { ka: string; en: string; ru: string } | undefined,
-    locale: string = "ru"
+    field: { ka: string; en: string; ru: string } | undefined
   ): string => {
     if (!field) return "";
     return (
@@ -94,8 +86,6 @@ export default function SubcategoryPage({
     );
   };
 
-  const locale = getLocale();
-
   // ამოვიღოთ რაოდენობები
   const setsCount = subcategorySets.length;
   const exercisesCount = subcategorySets.reduce(
@@ -106,14 +96,11 @@ export default function SubcategoryPage({
   // გარდავქმნით სეტებს WorksSlider-ის ფორმატში
   const formattedSets = subcategorySets.map((set) => ({
     id: set._id,
-    title: getLocalizedText(set?.name, locale),
-    description: getLocalizedText(set?.description, locale),
+    title: getLocalizedText(set?.name),
+    description: getLocalizedText(set?.description),
     image: set.thumbnailImage || "/assets/images/workMan.png",
     exerciseCount: set.exercises?.length || 0,
-    categoryName: getLocalizedText(
-      selectedSubcategory?.name as { ka: string; en: string; ru: string },
-      locale
-    ),
+    categoryName: getLocalizedText(selectedSubcategory?.name),
     price: `${set.price?.monthly || 920}₾/თვე`,
     monthlyPrice: set.price?.monthly || 920,
     categoryId: set.categoryId || "",
@@ -124,10 +111,7 @@ export default function SubcategoryPage({
     <div className="">
       <Header
         variant="categories"
-        title={getLocalizedText(
-          selectedSubcategory?.name as { ka: string; en: string; ru: string },
-          locale
-        )}
+        title={getLocalizedText(selectedSubcategory?.name)}
         info={{
           setsCount,
           subcategoriesCount: 0, // subcategory-ს ქვეკატეგორიები არ აქვს
