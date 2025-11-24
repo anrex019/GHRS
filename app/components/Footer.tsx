@@ -58,16 +58,14 @@ export const Footer: FC = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     
-    // Phone validation - only allow numbers, +, -, (, ), and spaces
     if (name === 'phone') {
       const phoneRegex = /^[0-9+\-()\s]*$/;
       if (!phoneRegex.test(value)) {
-        return; // Don't update if invalid characters
+        return; 
       }
     }
     
     setFormData(prev => ({ ...prev, [name]: value }));
-    // Clear error when user starts typing
     if (submitStatus === 'error') {
       setSubmitStatus('idle');
     }

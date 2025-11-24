@@ -90,26 +90,17 @@ export default function CategoriesPage({
 
   const locale = getLocale();
 
-  // ტექნიკურად ვფილტრავთ სეტებს წყაროს მიხედვით
-  const directSets =
-    categoryData?.sets?.filter((set) => !set.subCategoryId) || [];
-  const subcategorySets =
-    categoryData?.sets?.filter((set) => set.subCategoryId) || [];
-
-  // ვაერთიანებთ ყველა სეტს ერთ სიაში
-  const allSets = [...directSets, ...subcategorySets];
-
   // ამოვიღოთ რაოდენობები
-  // const setsCount = categoryData?.sets?.length || 0;
+  const setsCount = categoryData?.sets?.length || 0;
   const subcategoriesCount = categoryData?.subcategories?.length || 0;
-  // const exercisesCount =
-  //   categoryData?.sets?.reduce(
-  //     (total, set) => total + (set.exercises?.length || 0),
-  //     0
-  //   ) || 0;
+  const exercisesCount =
+    categoryData?.sets?.reduce(
+      (total, set) => total + (set.exercises?.length || 0),
+      0
+    ) || 0;
 
-  // გარდავქმნით ყველა სეტს WorksSlider-ის ფორმატში
-  const formattedSets = allSets.map((set) => ({
+  // ფორმატირების ფუნქცია
+  const formatSet = (set: any) => ({
     id: set._id,
     title: getLocalizedText(set?.name, locale),
     description: getLocalizedText(set?.description, locale),
@@ -120,7 +111,30 @@ export default function CategoriesPage({
     monthlyPrice: set.price?.monthly || 920,
     categoryId: categoryId,
     subcategoryId: set.subCategoryId || "",
-  }));
+    isPopular: set.isPopular || false,
+  });
+
+  // პოპულარული სეტები
+  const popularSets = categoryData?.sets
+    ?.filter((set: any) => set.isPopular)
+    .map(formatSet) || [];
+
+  // დაჯგუფება ქვეკატეგორიების მიხედვით
+  const setsBySubcategory = categoryData?.subcategories?.map((subcategory: any) => {
+    const subcategorySets = categoryData?.sets
+      ?.filter((set: any) => set.subCategoryId === subcategory._id)
+      .map(formatSet) || [];
+    
+    return {
+      subcategory,
+      sets: subcategorySets,
+    };
+  }).filter((group: any) => group.sets.length > 0) || [];
+
+  // სეტები რომლებსაც არ აქვთ ქვეკატეგორია
+  const directSets = categoryData?.sets
+    ?.filter((set: any) => !set.subCategoryId && !set.isPopular)
+    .map(formatSet) || [];
 
   return (
     <div className="">
@@ -134,7 +148,50 @@ export default function CategoriesPage({
           exercisesCount,
         }}
       /> */}
-      <MainHeader ShowBlock={false} stats={[]} showArrows={false} complexData={null}/>
+      <MainHeader 
+        ShowBlock={false} 
+        stats={[
+          {
+            icon: (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M2 17L12 22L22 17" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M2 12L12 17L22 12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            ),
+            value: setsCount,
+            label: t("common.complexes")
+          },
+          {
+            icon: (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="3" width="7" height="7" rx="1" stroke="white" strokeWidth="2"/>
+                <rect x="14" y="3" width="7" height="7" rx="1" stroke="white" strokeWidth="2"/>
+                <rect x="3" y="14" width="7" height="7" rx="1" stroke="white" strokeWidth="2"/>
+                <rect x="14" y="14" width="7" height="7" rx="1" stroke="white" strokeWidth="2"/>
+              </svg>
+            ),
+            value: subcategoriesCount,
+            label: t("common.subcategories")
+          },
+          {
+            icon: (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="2"/>
+                <path d="M12 6V12L16 14" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
+            ),
+            value: exercisesCount,
+            label: t("common.exercises")
+          }
+        ]} 
+        showArrows={false} 
+        complexData={null}
+        useVideo={false}
+        backgroundImage={selectedCategory?.image || "/assets/images/continueWatchingBanner.jpg"}
+        customBlockTitle={getLocalizedText(selectedCategory?.name, locale)?.toUpperCase()}
+        customBlockDescription={getLocalizedText(selectedCategory?.description, locale)}
+      />
       <div className="md:pt-[100px] pt-[400px]">
         {subcategoriesCount > 0 && (
         <div className="px-10 py-[50px] rounded-[30px] bg-[#F9F7FE] md:mb-10 mx-6">
@@ -202,9 +259,9 @@ export default function CategoriesPage({
                   </h1>
                   <span className="text-[#D4BAFC] leading-[120%] font-medium">
                     {
-                      subcategorySets.filter(
-                        (set) => set.subCategoryId === subcategory._id
-                      ).length
+                      categoryData?.sets?.filter(
+                        (set: any) => set.subCategoryId === subcategory._id
+                      ).length || 0
                     }{" "}
                     {t("common.sets")}
                   </span>
@@ -215,16 +272,56 @@ export default function CategoriesPage({
         </div>
         )}
 
-        {Array.isArray(formattedSets) && formattedSets.length > 0 && (
+        {/* პოპულარული ვარჯიშები */}
+        {popularSets.length > 0 && (
           <div className="mt-10 mb-10">
             <WorksSlider
-              works={formattedSets}
+              works={popularSets}
               linkType="complex"
-              title={t("common.complexes")}
-              seeAll={true}
+              title={t("common.popular_exercises") || "ПОПУЛЯРНЫЕ УПРАЖНЕНИЯ"}
+              seeAll={false}
               categoryData={categoryData?.category?._id}
               fromMain={false}
               scrollable={true}
+              sliderId="popular-exercises-slider"
+              showTopLink={false}
+            />
+          </div>
+        )}
+
+        {/* ქვეკატეგორიების მიხედვით დაჯგუფებული სეტები */}
+        {setsBySubcategory.map((group: any, index: number) => (
+          <div key={group.subcategory._id} className="mt-10 mb-10">
+            <WorksSlider
+              works={group.sets}
+              linkType="complex"
+              title={getLocalizedText(
+                group.subcategory.name as { ka: string; en: string; ru: string },
+                locale
+              ).toUpperCase()}
+              seeAll={false}
+              categoryData={categoryData?.category?._id}
+              fromMain={false}
+              scrollable={true}
+              sliderId={`subcategory-${group.subcategory._id}-slider`}
+              showTopLink={false}
+            />
+          </div>
+        ))}
+
+        {/* პირდაპირი სეტები (ქვეკატეგორიის გარეშე) */}
+        {directSets.length > 0 && (
+          <div className="mt-10 mb-10">
+            <WorksSlider
+              works={directSets}
+              linkType="complex"
+              title={t("common.other_complexes") || "ДРУГИЕ КОМПЛЕКСЫ"}
+              seeAll={false}
+              categoryData={categoryData?.category?._id}
+              fromMain={false}
+              scrollable={true}
+              sliderId="direct-sets-slider"
+              showTopLink={false}
             />
           </div>
         )}

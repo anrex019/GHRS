@@ -7,6 +7,28 @@ import MobileNavbar from "../Navbar/MobileNavbar";
 import useStatistics from "../../hooks/useStatistics";
 import Link from "next/link";
 
+interface Stat {
+  icon: React.ReactNode;
+  value: number;
+  label: string;
+}
+
+interface MainHeaderProps {
+  ShowBlock?: boolean;
+  OptionalComponent?: React.ReactNode;
+  stats?: Stat[];
+  showArrows?: boolean;
+  complexData?: any;
+  useVideo?: boolean;
+  backgroundImage?: string;
+  customTitle?: string | null;
+  customSubtitle?: string | null;
+  hideHeaderText?: boolean;
+  customBlockTitle?: string;
+  customBlockDescription?: string;
+  hideStats?: boolean;
+}
+
 function MainHeader({
   ShowBlock = false,
   OptionalComponent = null,
@@ -15,13 +37,13 @@ function MainHeader({
   complexData = null,
   useVideo = true,
   backgroundImage = "/assets/images/continueWatchingBanner.jpg",
-  customTitle = null, // ახალი პროპი - რეაბილიტაციის სათაურისთვის
-  customSubtitle = null, // ახალი პროპი - რეაბილიტაციის ქვესათაურისთვის
-  hideHeaderText = false, // ახალი პროპი - ტექსტის დასამალად
-  customBlockTitle, // ახალი პროპი - ბლოკის სათაურისთვის
-  customBlockDescription, // ახალი პროპი - ბლოკის აღწერისთვის
-  hideStats = false, // ახალი პროპი - stats-ების დასამალად
-}) {
+  customTitle = null,
+  customSubtitle = null,
+  hideHeaderText = false,
+  customBlockTitle,
+  customBlockDescription,
+  hideStats = false,
+}: MainHeaderProps) {
   const { t, locale } = useI18n();
   const { statistics } = useStatistics();
   const [showContent, setShowContent] = useState(false);
@@ -60,7 +82,7 @@ function MainHeader({
         allCourseBg={false}
         complexData={complexData}
       />
-      <MobileNavbar menuItems={localizedMenuItems} />
+      <MobileNavbar />
 
       {/* ვიდეო ან სურათი */}
       {useVideo ? (
