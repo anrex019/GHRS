@@ -57,6 +57,15 @@ export const Footer: FC = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    
+    // Phone validation - only allow numbers, +, -, (, ), and spaces
+    if (name === 'phone') {
+      const phoneRegex = /^[0-9+\-()\s]*$/;
+      if (!phoneRegex.test(value)) {
+        return; // Don't update if invalid characters
+      }
+    }
+    
     setFormData(prev => ({ ...prev, [name]: value }));
     // Clear error when user starts typing
     if (submitStatus === 'error') {
@@ -119,7 +128,7 @@ export const Footer: FC = () => {
               value={formData.name}
               onChange={handleInputChange}
               placeholder={t("form.name")}
-              className="flex-1 rounded-lg px-4 py-3 bg-white/80 outline-none focus:ring-2 focus:ring-[#B6A3D9] transition font-pt"
+              className="flex-1 rounded-lg px-4 py-3 bg-white text-[#3D334A] placeholder:text-[#8B7BAA] outline-none focus:ring-2 focus:ring-[#B6A3D9] transition font-pt"
               required
               disabled={isSubmitting}
             />
@@ -129,9 +138,11 @@ export const Footer: FC = () => {
               value={formData.phone}
               onChange={handleInputChange}
               placeholder={t("form.phone")}
-              className="flex-1 rounded-lg px-4 py-3 bg-white/80 outline-none focus:ring-2 focus:ring-[#B6A3D9] transition font-pt"
+              className="flex-1 rounded-lg px-4 py-3 bg-white text-[#3D334A] placeholder:text-[#8B7BAA] outline-none focus:ring-2 focus:ring-[#B6A3D9] transition font-pt"
               required
               disabled={isSubmitting}
+              pattern="[0-9+\-()\s]+"
+              title="Please enter a valid phone number (numbers, +, -, (), spaces only)"
             />
             <input
               type="email"
@@ -139,7 +150,7 @@ export const Footer: FC = () => {
               value={formData.email}
               onChange={handleInputChange}
               placeholder={t("form.email")}
-              className="flex-1 rounded-lg px-4 py-3 bg-white/80 outline-none focus:ring-2 focus:ring-[#B6A3D9] transition font-pt"
+              className="flex-1 rounded-lg px-4 py-3 bg-white text-[#3D334A] placeholder:text-[#8B7BAA] outline-none focus:ring-2 focus:ring-[#B6A3D9] transition font-pt"
               required
               disabled={isSubmitting}
             />
