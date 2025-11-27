@@ -16,7 +16,7 @@ const Advantages = () => {
                 ? t("advantages.personal_support.title")
                 : ""}
             </h3>
-            <p className="font-pt md:text-[18px] text-[14px] text-[rgba(132,111,160,1)]  tracking-[0%] leading-[120%] font-medium md:mt-[59px] mt-8" style={{ fontFamily: "'Pt', sans-serif" }}>
+            <p className="font-pt md:text-[18px] text-[14px] text-[rgba(132,111,160,1)]  tracking-[0%] leading-[120%] font-medium md:mt-[59px] mt-8">
               {typeof t("advantages.personal_support.description") === "string"
                 ? t("advantages.personal_support.description")
                 : ""}
@@ -28,7 +28,7 @@ const Advantages = () => {
                 ? t("advantages.inspiration.title")
                 : ""}
             </h3>
-            <p className="font-pt md:text-[18px] text-[14px] text-[rgba(132,111,160,1)] tracking-[0%] leading-[120%] font-medium md:mt-[75px] mt-8" style={{ fontFamily: "'Pt', sans-serif" }}>
+            <p className="font-pt md:text-[18px] text-[14px] text-[rgba(132,111,160,1)] tracking-[0%] leading-[120%] font-medium md:mt-[75px] mt-8">
               {typeof t("advantages.inspiration.description") === "string"
                 ? t("advantages.inspiration.description")
                 : ""}
@@ -41,7 +41,7 @@ const Advantages = () => {
                   ? t("advantages.exercise_count.title")
                   : ""}
               </h3>
-              <p className="font-pt md:text-[18px] text-[14px] text-[rgba(132,111,160,1)]  tracking-[0%] leading-[120%] font-medium md:mt-[26px] mt-[122px]" style={{ fontFamily: "'Pt', sans-serif" }}>
+              <p className="font-pt md:text-[18px] text-[14px] text-[rgba(132,111,160,1)]  tracking-[0%] leading-[120%] font-medium md:mt-[26px] mt-[122px]">
                 {typeof t("advantages.exercise_count.description") === "string"
                   ? t("advantages.exercise_count.description")
                   : ""}
@@ -53,7 +53,7 @@ const Advantages = () => {
                   ? t("advantages.accessibility.title")
                   : ""}
               </h3>
-              <p className="font-pt md:text-[18px] text-[14px] text-[rgba(132,111,160,1)]  tracking-[0%] leading-[120%] font-medium md:mt-[96px] mt-[168px]" style={{ fontFamily: "'Pt', sans-serif" }}>
+              <p className="font-pt md:text-[18px] text-[14px] text-[rgba(132,111,160,1)]  tracking-[0%] leading-[120%] font-medium md:mt-[96px] mt-[168px]">
                 {typeof t("advantages.accessibility.description") === "string"
                   ? t("advantages.accessibility.description")
                   : ""}
@@ -68,7 +68,7 @@ const Advantages = () => {
                 ? t("advantages.informativeness.title")
                 : ""}
             </h3>
-            <p className="font-pt md:text-[18px] text-[14px] text-[rgba(132,111,160,1)]  tracking-[0%] leading-[120%] font-medium  md:mt-[130px] mt-[117px]" style={{ fontFamily: "'Pt', sans-serif" }}>
+            <p className="font-pt md:text-[18px] text-[14px] text-[rgba(132,111,160,1)]  tracking-[0%] leading-[120%] font-medium  md:mt-[130px] mt-[117px]">
               {typeof t("advantages.informativeness.description") === "string"
                 ? t("advantages.informativeness.description")
                 : ""}
@@ -81,7 +81,7 @@ const Advantages = () => {
                   ? t("advantages.train_anywhere.title")
                   : ""}
               </h3>
-              <p className="font-pt md:text-[18px] text-[14px] text-[rgba(132,111,160,1)]  tracking-[0%] leading-[120%] font-medium md:mt[230px] mt-[71px]" style={{ fontFamily: "'Pt', sans-serif" }}>
+              <p className="font-pt md:text-[18px] text-[14px] text-[rgba(132,111,160,1)]  tracking-[0%] leading-[120%] font-medium md:mt[230px] mt-[71px]">
                 {typeof t("advantages.train_anywhere.description") === "string"
                   ? t("advantages.train_anywhere.description")
                   : ""}
@@ -93,7 +93,7 @@ const Advantages = () => {
                   ? t("advantages.video_count.title")
                   : ""}
               </h3>
-              <p className="font-pt md:text-[18px] text-[14px] text-[rgba(132,111,160,1)]  tracking-[0%] leading-[120%] font-medium md:mt-[230px] mt-[105px]" style={{ fontFamily: "'Pt', sans-serif" }}>
+              <p className="font-pt md:text-[18px] text-[14px] text-[rgba(132,111,160,1)]  tracking-[0%] leading-[120%] font-medium md:mt-[230px] mt-[105px]">
                 {typeof t("advantages.video_count.description") === "string"
                   ? t("advantages.video_count.description")
                   : ""}

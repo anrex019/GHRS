@@ -450,7 +450,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
 
               /* Article Paragraphs */
               .article-content p {
-                font-family: "PT", sans-serif !important;
+                font-family: "Pt", sans-serif !important;
                 font-size: 1.125rem !important;
                 line-height: 1.7 !important;
                 color: #846FA0 !important;
@@ -461,7 +461,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
               /* Article Lists */
               .article-content ul,
               .article-content ol {
-                font-family: "PT", sans-serif !important;
+                font-family: "Pt", sans-serif !important;
                 font-size: 1.125rem !important;
                 line-height: 1.7 !important;
                 color: #846FA0 !important;
@@ -560,7 +560,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
 
               /* Article Blockquotes */
               .article-content blockquote {
-                font-family: "PT", sans-serif !important;
+                font-family: "Pt", sans-serif !important;
                 font-size: 1.25rem !important;
                 line-height: 1.6 !important;
                 color: #6D28D9 !important;
@@ -614,7 +614,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
 
               .article-content th,
               .article-content td {
-                font-family: "PT", sans-serif !important;
+                font-family: "Pt", sans-serif !important;
                 padding: 0.75rem 1rem !important;
                 text-align: left !important;
                 border-bottom: 1px solid #E9DFF6 !important;
