@@ -102,8 +102,17 @@ export const Footer: FC = () => {
     setSubmitStatus('idle');
     setErrorMessage('');
 
+    const requestUrl = `${API_CONFIG.BASE_URL}/api/consultation`;
+    console.log('🔍 Consultation Request Details:', {
+      url: requestUrl,
+      baseUrl: API_CONFIG.BASE_URL,
+      endpoint: '/api/consultation',
+      formData,
+      locale
+    });
+
     try {
-      const response = await fetch(`${API_CONFIG.BASE_URL}/api/consultation`, {
+      const response = await fetch(requestUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -113,6 +122,8 @@ export const Footer: FC = () => {
           locale,
         }),
       });
+
+      console.log('📡 Response Status:', response.status, response.statusText);
 
       if (!response.ok) {
         const errorData = await response.json();

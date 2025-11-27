@@ -351,6 +351,20 @@ export const api = axios.create({
   },
 });
 
+// Add request interceptor to ensure all endpoints have /api prefix
+api.interceptors.request.use(
+  (config) => {
+    // Ensure URL has /api prefix
+    if (config.url && !config.url.startsWith('/api/') && !config.url.startsWith('http')) {
+      config.url = `/api${config.url.startsWith('/') ? '' : '/'}${config.url}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 // Courses
 export const fetchCourses = async (params?: {
   page?: number;
