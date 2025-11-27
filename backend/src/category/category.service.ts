@@ -2,17 +2,19 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Category, CategoryDocument } from '../schemas/category.schema';
+import { Set, SetDocument } from '../schemas/set.schema';
 
 @Injectable()
 export class CategoryService {
   constructor(
     @InjectModel(Category.name) private categoryModel: Model<CategoryDocument>,
+    @InjectModel(Set.name) private setModel: Model<SetDocument>,
   ) {}
 
   async create(createCategoryDto: any): Promise<Category> {
     const category = new this.categoryModel(createCategoryDto);
     return category.save();
-  }
+  } 
 
   async findAll(): Promise<Category[]> {
     return this.categoryModel.find()
@@ -285,9 +287,33 @@ export class CategoryService {
     return category;
   }
 
-  async findAllSubcategories(): Promise<Category[]> {
-    return this.categoryModel.find({ parentId: { $exists: true, $ne: null }, isActive: true })
-      .populate('sets')
+  async findAllSubcategories(): Promise<any[]> {
+    const subcategories = await this.categoryModel.find({ 
+      parentId: { $exists: true, $ne: null }, 
+      isActive: true 
+    })
+      .populate('parentId', 'name _id')
+      .lean()
       .exec();
+
+    // For each subcategory, count the sets
+    const subcategoriesWithSets = await Promise.all(
+      subcategories.map(async (subcat) => {
+        const sets = await this.setModel.find({ 
+          subCategoryId: subcat._id,
+          isActive: true 
+        })
+          .select('_id name thumbnailImage totalExercises totalDuration price')
+          .lean()
+          .exec();
+        
+        return {
+          ...subcat,
+          sets
+        };
+      })
+    );
+
+    return subcategoriesWithSets;
   }
 } 

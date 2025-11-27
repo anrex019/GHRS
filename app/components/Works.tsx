@@ -67,6 +67,7 @@ interface WorksProps {
   scrollable: boolean;
   sliderId?: string;
   totalCount?: number; // Total count for dynamic display
+  showTopLink?: boolean; // Show "View All" link at top
 }
 
 const Works: React.FC<WorksProps> = ({
@@ -85,6 +86,7 @@ const Works: React.FC<WorksProps> = ({
   scrollable = true,
   sliderId,
   totalCount,
+  showTopLink = false,
 }) => {
   const { t, locale } = useI18n();
 
@@ -224,11 +226,11 @@ const Works: React.FC<WorksProps> = ({
         fromMain={fromMain} 
         sliderId={sliderId}
         seeAllHref={linkHref}
-        showTopLink={false} // Hide top "View all" link, show only bottom link
+        showTopLink={showTopLink}
       />
       
-      {/* ✅ ქვედა ლინკი */}
-      {seeAll && (
+      {/* ✅ ქვედა ლინკი - Hide when showTopLink is true */}
+      {seeAll && !showTopLink && (
         <div className="px-6 md:px-12 pb-8 md:pb-10">
           <Link
             href={linkHref}

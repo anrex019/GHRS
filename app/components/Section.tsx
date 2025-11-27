@@ -20,6 +20,14 @@ interface Subcategory {
   image?: string;
   sets?: any[];
   categoryId?: string;
+  parentId?: {
+    _id: string;
+    name: {
+      ka: string;
+      en: string;
+      ru: string;
+    };
+  };
   category?: {
     _id: string;
     name: {
@@ -83,8 +91,8 @@ const Section = ({
     >
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-5">
-          <h1 className="font-bowler text-[#3D334A] text-[40px] leading-[120%] tracking-[-3%]">
-            {t("common.sections_title") || "Разделы"}
+          <h1 className="text-[48px] md:text-[64px] text-[#3D334A] leading-[100%] tracking-[-1%] font-bold font-bowler uppercase">
+            {t("common.popular_sections_title") || "Популярные разделы"}
           </h1>
           <Link href="/subcategories" className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer">
             <span className="font-bowler text-[#D4BAFC] text-[24px] leading-[90%] mr-2">
@@ -111,21 +119,26 @@ const Section = ({
         }}
       >
         {subcategories.map((subcat) => {
-          // Find parent category by checking which category contains this subcategory
-          const parentCategory = categories.find(cat => 
+          // Get parent category from populated parentId or find it in categories array
+          const parentCategory = subcat.parentId || categories.find(cat => 
             cat.subcategories?.includes(subcat._id)
           );
-          const categoryId = subcat.categoryId || subcat.category?._id || parentCategory?._id;
-          const categoryName = subcat.category?.name 
+          const categoryId = subcat.parentId?._id || subcat.categoryId || subcat.category?._id || parentCategory?._id;
+          const categoryName = subcat.parentId?.name
+            ? getLocalizedText(subcat.parentId.name)
+            : subcat.category?.name 
             ? getLocalizedText(subcat.category.name) 
             : parentCategory?.name 
             ? getLocalizedText(parentCategory.name)
             : (t("common.orthopedics") || "Ортопедия");
           
+          const setsCount = Array.isArray(subcat.sets) ? subcat.sets.length : 0;
+          const complexText = locale === 'ka' ? 'კომპლექსი' : locale === 'en' ? 'complexes' : 'комплексов';
+          
           return (
           <Link
             key={subcat._id}
-            href={categoryId ? `/categories/${categoryId}` : `/subcategories/${subcat._id}`}
+            href={categoryId ? `/categories/section?categoryId=${categoryId}&subcategoryId=${subcat._id}` : `/subcategories/${subcat._id}`}
             className="min-w-[558px] h-[283px] relative bg-white p-2 rounded-5 hover:shadow-lg transition-all cursor-pointer my-2 block"
           >
             <div className="absolute top-4 left-4 z-10 bg-[#E9DFF6] px-3 py-1 rounded-md">
@@ -140,12 +153,12 @@ const Section = ({
               alt={`subcategory-${subcat._id}`}
               className="w-full h-[181px] object-cover rounded-4"
             />
-            <div className="flex items-start justify-between mt-[22px] relative">
-              <h1 className="font-bowler text-[#3D334A] w-[342px] text-[22px] leading-[120%] break-words">
+            <div className="flex items-center justify-between mt-[22px] px-2">
+              <h1 className="font-bowler text-[#3D334A] text-[22px] leading-[120%] break-words flex-1 pr-4">
                 {getLocalizedText(subcat.name)}
               </h1>
-              <span className="font-bowler text-[#D4BAFC] absolute -bottom-0 right-0 leading-[120%]">
-                {subcat.sets?.length || 0} комплексов
+              <span className="font-bowler text-[#D4BAFC] text-[18px] leading-[120%] whitespace-nowrap">
+                {setsCount} {complexText}
               </span>
             </div>
           </Link>

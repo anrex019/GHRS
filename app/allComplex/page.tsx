@@ -15,6 +15,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { Footer } from "../components/Footer";
 import { API_CONFIG } from "../config/api";
 import Works from "../components/Works";
+import OrthopedicsGrid from "../components/OrthopedicsGrid";
 
 interface Subcategory {
   _id: string;
@@ -279,34 +280,84 @@ const AllComplex = () => {
         sliderId="popular-complexes-slider"
         totalCount={sets.length}
         linkHref="/allComplex"
+        showTopLink={true}
       />
 
-      {/* Dynamic Works components for each category */}
-      {categories.map((category) => {
-        const categorySets = sets.filter(
-          (set) => set.categoryId === category._id
-        );
-        // Only render if category has sets
-        if (categorySets.length === 0) return null;
+      {/* Orthopedics category - Slider */}
+      {categories
+        .filter((category) => {
+          const categoryName = getLocalizedText(category.name).toLowerCase();
+          return categoryName.includes('orthopedics') || 
+                 categoryName.includes('ортопедия') || 
+                 categoryName.includes('ორთოპედია');
+        })
+        .map((category) => {
+          const categorySets = sets.filter(
+            (set) => set.categoryId === category._id
+          );
+          // Only render if category has sets
+          if (categorySets.length === 0) return null;
 
-        return (
-          <Works
-            key={category._id}
-            title={getLocalizedText(category.name)}
-            sets={categorySets}
-            fromMain={true}
-            customMargin={""}
-            customBorderRadius={""}
-            seeAll={true}
-            scrollable={true}
-            border={1}
-            borderColor="#D4BAFC"
-            sliderId={`category-slider-${category._id}`}
-            totalCount={categorySets.length}
-            linkHref="/allComplex"
-          />
-        );
-      })}
+          return (
+            <React.Fragment key={category._id}>
+              {/* Slider Section */}
+              <Works
+                title={getLocalizedText(category.name)}
+                sets={categorySets}
+                fromMain={true}
+                customMargin={""}
+                customBorderRadius={""}
+                seeAll={true}
+                scrollable={true}
+                border={1}
+                borderColor="#D4BAFC"
+                sliderId={`category-slider-${category._id}`}
+                totalCount={categorySets.length}
+                linkHref="/allComplex"
+                showTopLink={true}
+              />
+              
+              {/* Grid Section Below */}
+              <OrthopedicsGrid
+                title={getLocalizedText(category.name)}
+                sets={categorySets}
+              />
+            </React.Fragment>
+          );
+        })}
+
+      {/* Hidden: All other categories - kept for future use */}
+      {/* {categories
+        .filter((category) => {
+          const categoryName = getLocalizedText(category.name).toLowerCase();
+          return !(categoryName.includes('orthopedics') || 
+                   categoryName.includes('ортопедия') || 
+                   categoryName.includes('ორთოპედია'));
+        })
+        .map((category) => {
+          const categorySets = sets.filter(
+            (set) => set.categoryId === category._id
+          );
+          if (categorySets.length === 0) return null;
+
+          return (
+            <Works
+              key={category._id}
+              title={getLocalizedText(category.name)}
+              sets={categorySets}
+              fromMain={true}
+              customMargin={""}
+              customBorderRadius={""}
+              seeAll={true}
+              scrollable={true}
+              border={1}
+              borderColor="#D4BAFC"
+              sliderId={`category-slider-${category._id}`}
+              totalCount={categorySets.length}
+              linkHref="/allComplex"
+            />
+          );
+        })} */}
       {/* Works components with real data */}
       {/* <Works
         title={pageTexts.sections.popularSections[locale as keyof typeof pageTexts.sections.popularSections] || pageTexts.sections.popularSections.ru}

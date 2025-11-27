@@ -82,9 +82,9 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
             {title}
           </h2>
           {seeAll && showTopLink && (
-            <Link href={seeAllHref} className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer">
-              <span className="font-pt text-[#D4BAFC] text-[24px] leading-[90%] uppercase">
-                {t("buttons.show_all") || "Смотреть все"}
+            <Link href={seeAllHref} className="hover:opacity-80 transition-opacity cursor-pointer">
+              <span className="font-bowler text-[#D4BAFC] text-[20px] md:text-[24px] leading-[90%] uppercase">
+                {t("buttons.show_all") || "Смотреть все"} →
               </span>
             </Link>
           )}
@@ -131,7 +131,7 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
                   className="w-full h-[250px] object-cover rounded-2xl mb-6"
                 />
                 <div className="mb-2.5 mx-4">
-                  <span className="px-3 py-2 bg-[#E9DFF6] inline-block rounded-[6px] text-[#3D334A] text-[11px] font-extrabold leading-[110%] uppercase max-w-full font-pt break-words">
+                  <span className="px-3 py-2 bg-[#E9DFF6] inline-block rounded-[6px] text-[#3D334A] text-[14px] font-medium leading-[110%] uppercase max-w-full font-bowler break-words">
                     {work.categoryName.toUpperCase()}
                   </span>
                 </div>
