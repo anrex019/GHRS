@@ -138,13 +138,19 @@ const CategorySlider = forwardRef<HTMLDivElement, CategorySliderProps>(
     }
 
     if (error) {
-      return (
-        <div className="relative md:mt-10">
-          <div className="text-red-500 text-center p-4">
-            Error loading categories: {error}
+      console.error("🔴 CategorySlider Error:", error);
+      // Don't show error to user, use fallback categories instead
+      // The useCategories hook already provides fallback data
+      if (categories.length === 0) {
+        return (
+          <div className="relative md:mt-10">
+            <div className="text-gray-500 text-center p-4">
+              Loading categories...
+            </div>
           </div>
-        </div>
-      );
+        );
+      }
+      // If we have fallback categories, continue rendering
     }
 
     return (

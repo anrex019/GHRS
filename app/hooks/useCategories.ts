@@ -176,7 +176,9 @@ export function useCategories(): UseCategoriesReturn {
       const fallbackCategories = getFallbackCategories();
       console.log("🔄 Using fallback categories:", fallbackCategories);
       setCategories(fallbackCategories);
-      setError(err instanceof Error ? err.message : "API Error - using fallback data");
+      // Don't set error if we have fallback data - just log it
+      console.warn("⚠️ API failed but fallback data is available");
+      setError(null); // Clear error since we have fallback data
     } finally {
       setLoading(false);
       console.log("🏁 fetchCategories completed");
