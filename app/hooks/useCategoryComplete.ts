@@ -2,7 +2,19 @@
 import { useState, useEffect } from 'react';
 import { apiRequest } from '../config/api';
 import { MultiLanguageField, Subcategory } from '../types/category';
-import { BackendSet } from '../types/exercise';
+
+// BackendSet type definition (moved from exercise.ts)
+export interface BackendSet {
+  _id: string;
+  name: MultiLanguageField;
+  description?: MultiLanguageField;
+  thumbnailImage?: string;
+  categoryId: string;
+  subCategoryId?: string;
+  isActive: boolean;
+  isPublished: boolean;
+  sortOrder: number;
+}
 
 export interface CategoryCompleteData {
   category: {
@@ -34,6 +46,29 @@ export function useCategoryComplete(categoryId: string): UseCategoryCompleteRetu
 
   const fetchCategoryComplete = async () => {
     if (!categoryId) return;
+
+    // ✅ Check if this is a fallback category ID
+    if (categoryId.startsWith('fallback_')) {
+      console.log("⚠️ Fallback category detected:", categoryId);
+      console.log("⚠️ Skipping API call for fallback category");
+      
+      // Create empty fallback data structure
+      setCategoryData({
+        category: {
+          _id: categoryId,
+          name: { ka: '', en: '', ru: '' },
+          subcategories: [],
+          sets: [],
+          isActive: true,
+          sortOrder: 0,
+          isPublished: true,
+        },
+        sets: [],
+        subcategories: [],
+      });
+      setLoading(false);
+      return;
+    }
 
     try {
       setLoading(true);
