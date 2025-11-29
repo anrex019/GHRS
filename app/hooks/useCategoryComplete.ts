@@ -47,12 +47,7 @@ export function useCategoryComplete(categoryId: string): UseCategoryCompleteRetu
   const fetchCategoryComplete = async () => {
     if (!categoryId) return;
 
-    // ✅ Check if this is a fallback category ID
     if (categoryId.startsWith('fallback_')) {
-      console.log("⚠️ Fallback category detected:", categoryId);
-      console.log("⚠️ Skipping API call for fallback category");
-      
-      // Create empty fallback data structure
       setCategoryData({
         category: {
           _id: categoryId,
@@ -74,21 +69,11 @@ export function useCategoryComplete(categoryId: string): UseCategoryCompleteRetu
       setLoading(true);
       setError(null);
 
-      console.log("🔗 Fetching complete category data for ID:", categoryId);
-      
       const endpoint = `/api/categories/${categoryId}/complete`;
-      console.log("🔗 API endpoint:", endpoint);
-      console.log("🔗 Full URL will be:", `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'}${endpoint}`);
-
       const response = await apiRequest<CategoryCompleteData>(endpoint);
       
-      console.log("✅ Category complete data received:", response);
       setCategoryData(response);
     } catch (err) {
-      console.error("❌ Error fetching category complete data:", err);
-      console.error("❌ Error type:", err instanceof Error ? 'Error object' : typeof err);
-      console.error("❌ Error message:", err instanceof Error ? err.message : String(err));
-      console.error("❌ Category ID that failed:", categoryId);
       setError(err instanceof Error ? err.message : 'Unknown error occurred');
     } finally {
       setLoading(false);

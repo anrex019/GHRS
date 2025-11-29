@@ -2,7 +2,6 @@
 "use client";
 import React from "react";
 import { CiPlay1 } from "react-icons/ci";
-// import Header from "../../components/Header/Header";
 import Subscribe from "../../components/Subscribe";
 import ReviewSlider from "../../components/ReviewSlider";
 import Tabs from "../../components/Tabs";
