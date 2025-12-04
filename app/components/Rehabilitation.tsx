@@ -17,14 +17,14 @@ const Rehabilitation = () => {
         description=""
       />
       <div className="px-4 md:px-10 pb-6 md:pb-10 pt-4 md:pt-6">
-        <h2 className="text-[#3D334A] text-[28px] md:text-[48px] font-bold leading-[100%] tracking-[0%] mb-4 md:mb-6 font-bowler uppercase">
+        <h2 className="text-[#3D334A] text-[32px] md:text-[64px] font-medium leading-[100%] tracking-[0%] mb-4 md:mb-6 font-bowler uppercase md:max-w-[1340px]" style={{ fontWeight: 500, color: '#3D334A' }}>
           {typeof t("rehabilitation.title") === "string" ? t("rehabilitation.title") : "Реабилитация"}
         </h2>
-        <p className="text-[#846FA0] text-[14px] md:text-[20px] font-medium leading-[100%] tracking-[0%] mb-6 md:mb-8 font-pt">
+        <p className="text-[#846FA0] text-[16px] md:text-[24px] font-medium leading-[120%] tracking-[0%] mb-6 md:mb-8 font-pt md:max-w-[1340px]">
           {typeof t("rehabilitation.description") === "string" ? t("rehabilitation.description") : "Современные израильские методики реабилитации для восстановления и поддержания подвижности и трудоспособности"}
         </p>
         <Link
-          className="text-[16px] md:text-[20px] leading-[90%] tracking-[0%] uppercase text-[#D4BAFC] hover:text-[#C4A6F1] transition-colors inline-block font-bowler"
+          className="text-[18px] md:text-[24px] leading-[90%] tracking-[0%] uppercase text-[#D4BAFC] hover:text-[#C4A6F1] transition-colors inline-block font-bowler"
           href={"/rehabilitation"}
         >
           {typeof t("rehabilitation.learn_more") === "string"

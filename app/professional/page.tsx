@@ -116,17 +116,17 @@ const Professional = () => {
     {
       icon: <FaBook size={24} />,
       value: "50+",
-      label: "Courses",
+      label: t("professional.stats.courses") || "Courses",
     },
     {
       icon: <FaDumbbell size={24} />,
       value: "20+",
-      label: "Instructors",
+      label: t("professional.stats.instructors") || "Instructors",
     },
     {
       icon: <FaClock size={24} />,
       value: "1000+",
-      label: "Students",
+      label: t("professional.stats.students") || "Students",
     },
   ];
 

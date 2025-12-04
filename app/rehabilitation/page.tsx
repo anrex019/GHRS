@@ -8,31 +8,35 @@ import { Footer } from "../components/Footer";
 import { useI18n } from "../context/I18nContext";
 import MainHeader from "../components/Header/MainHeader";
 import { FaBook, FaDumbbell, FaClock } from "react-icons/fa";
+import useStatistics from "../hooks/useStatistics";
 
 const Rehabilitation = () => {
   const { t, locale } = useI18n();
-   console.log('=== REHABILITATION DEBUG ===');
+  const { statistics } = useStatistics();
+  
+  console.log('=== REHABILITATION DEBUG ===');
   console.log('Current locale:', locale);
   console.log('Title translation:', t("rehabilitation.header.title"));
   console.log('Subtitle translation:', t("rehabilitation.header.subtitle"));
   console.log('All exercises:', t("rehabilitation.all_exercises"));
+  console.log('Statistics:', statistics);
   console.log('============================');
   
   const statsData = [
     {
       icon: <FaBook size={24} />,
-      value: "20 sets",
-      label: "Training sets",
+      value: statistics ? `${statistics.total.sets}` : "Loading...",
+      label: t("header.sets_count", { count: String(statistics?.total.sets || 0) }).replace(/\d+\s*/, ""),
     },
     {
       icon: <FaDumbbell size={24} />,
-      value: "181 exercises",
-      label: "Total exercises",
+      value: statistics ? `${statistics.total.exercises}` : "Loading...",
+      label: t("header.exercises_count", { count: String(statistics?.total.exercises || 0) }).replace(/\d+\s*/, ""),
     },
     {
       icon: <FaClock size={24} />,
-      value: "null hours",
-      label: "Duration",
+      value: statistics ? `${statistics.total.hours}` : "Loading...",
+      label: t("header.hours_count", { count: String(statistics?.total.hours || 0) }).replace(/\d+\s*/, ""),
     },
   ];
 

@@ -11,7 +11,7 @@ interface OrthopedicsGridProps {
 }
 
 const OrthopedicsGrid: React.FC<OrthopedicsGridProps> = ({ sets, title }) => {
-  const { locale } = useI18n();
+  const { locale, t } = useI18n();
   const [visibleCount, setVisibleCount] = useState(8);
 
   const getLocalizedText = (
@@ -46,7 +46,7 @@ const OrthopedicsGrid: React.FC<OrthopedicsGridProps> = ({ sets, title }) => {
             : title;
           const setName = getLocalizedText(set.name);
           const monthlyPrice = set.price?.monthly || 920;
-          const duration = set.totalDuration || "42 мин.";
+          const duration = set.totalDuration || t("header.duration_minutes", { duration: "42" }) || "42 мин.";
 
           return (
             <Link

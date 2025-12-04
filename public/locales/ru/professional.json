@@ -4,6 +4,11 @@
       "title": "КУРСЫ",
       "all_courses": "ВСЕ {{count}} КУРСОВ →",
       "error": "Ошибка загрузки курсов"
+    },
+    "stats": {
+      "courses": "курсов",
+      "instructors": "инструкторов",
+      "students": "студентов"
     }
   }
 }
