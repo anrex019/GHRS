@@ -320,10 +320,10 @@ const Header: React.FC<HeaderProps> = ({
               className="md:h-[518px] md:w-full h-[217px] w-[359px] bg-cover bg-center rounded-[20px] relative"
             />
             <div className="pt-[27px] md:pl-[32px] pl-4 pr-[20px] md:pb-[20px] pb-3 md:bg-[#3D334A4D] md:backdrop-blur-sm absolute bottom-0 md:bottom-5 md:ml-5 rounded-[20px] font-pt">
-              <h2 className="hidden md:flex text-white text-[40px] leading-[120%] tracking-[-3%] md:w-[945px] w-[327px] font-bowler">
+              <h2 className="hidden md:flex text-white text-[40px] leading-[120%] tracking-[-3%] md:w-[945px] w-[327px] font-bowler" style={{ wordSpacing: 'normal', hyphens: 'none' }}>
                 {info?.title || t("blog.default_title")}
               </h2>
-              <h2 className="flex md:hidden font-bowler text-white text-[18px] leading-[120%] tracking-[-3%] mb-2.5">
+              <h2 className="flex md:hidden font-bowler text-white text-[18px] leading-[120%] tracking-[-3%] mb-2.5" style={{ wordSpacing: 'normal', hyphens: 'none' }}>
                 {info?.title || t("blog.default_mobile_title")}
               </h2>
               <p className="mt-[66px] mb-[28px] hidden md:flex font-bold leading-[120%] w-[650px] font-pt">

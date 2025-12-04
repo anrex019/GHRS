@@ -158,12 +158,14 @@ function MainHeader({
           <Link 
             href="/about"
             className="text-white bg-[#3D334A] rounded-[40px] w-[246px] h-[222px] flex items-start justify-start p-8 transition-transform duration-300 hover:scale-105 cursor-pointer font-bold uppercase text-lg shadow-2xl leading-tight font-bowler"
+            style={{ wordSpacing: 'normal', hyphens: 'none' }}
           >
             {t("header.learn_more") || "Изучить подробнее"}
           </Link>
           <Link 
             href="/allComplex"
             className="text-white bg-gradient-to-br from-[#D4BAFC] via-[#C4A6F1] to-[#B794E8] rounded-[40px] w-[246px] h-[222px] flex items-start justify-start p-8 transition-transform duration-300 hover:scale-105 cursor-pointer font-bold uppercase text-lg shadow-2xl leading-tight font-bowler"
+            style={{ wordSpacing: 'normal', hyphens: 'none' }}
           >
             {t("header.to_catalog") || "В каталог"}
           </Link>
@@ -174,17 +176,17 @@ function MainHeader({
         {/* თუ customTitle არის, მაშინ გამოაჩენე ის, თუარადა - ჩვეულებრივი */}
         {!hideHeaderText && (customTitle ? (
           <div className="mb-6 md:max-w-[888px]">
-            <h1 className="text-2xl md:text-5xl font-bold text-white font-bowler uppercase md:leading-[100%] leading-[120%] md:tracking-[-1%] tracking-[-3%]">
+            <h1 className="text-2xl md:text-5xl font-bold text-white font-bowler uppercase md:leading-[100%] leading-[120%] md:tracking-[-1%] tracking-[-3%]" style={{ wordSpacing: 'normal', hyphens: 'none' }}>
               {customTitle}
             </h1>
             {customSubtitle && (
-              <p className="text-base md:text-2xl text-white font-bowler font-medium mt-4 md:leading-[120%] leading-[120%]">
+              <p className="text-base md:text-2xl text-white font-bowler font-medium mt-4 md:leading-[120%] leading-[120%]" style={{ wordSpacing: 'normal', hyphens: 'none' }}>
                 {customSubtitle}
               </p>
             )}
           </div>
         ) : (
-          <h1 className="text-2xl md:text-5xl font-bold text-white mb-6 hidden md:block font-bowler">
+          <h1 className="text-2xl md:text-5xl font-bold text-white mb-6 hidden md:block font-bowler" style={{ wordSpacing: 'normal', hyphens: 'none' }}>
             {t("header.ecosystem_title")}
           </h1>
         ))}

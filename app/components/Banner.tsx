@@ -7,6 +7,8 @@ interface BannerProps {
   icon?: string;
   iconWidth?: number;
   iconHeight?: number;
+  title?: string;
+  description?: string;
 }
 
 const Banner: React.FC<BannerProps> = ({
@@ -15,6 +17,8 @@ const Banner: React.FC<BannerProps> = ({
   icon,
   iconWidth = 269,
   iconHeight = 32,
+  title,
+  description,
 }) => {
   return (
     <div className="bg-[#F9F7FE] pt-5 md:pt-0 mx-2 md:mx-0">
@@ -48,6 +52,21 @@ const Banner: React.FC<BannerProps> = ({
           className="items-end justify-end md:ml-48 ml-[150px] -mt-4"
         />
       </div>
+      {/* Display title and description if provided */}
+      {(title || description) && (
+        <div className="px-4 md:px-10 py-4 md:py-6">
+          {title && (
+            <h2 className="text-[#3D334A] text-[24px] md:text-[32px] font-bold leading-[110%] mb-2 font-bowler uppercase">
+              {title}
+            </h2>
+          )}
+          {description && (
+            <p className="text-[#3D334A] text-[14px] md:text-[18px] leading-[120%] font-pt">
+              {description}
+            </p>
+          )}
+        </div>
+      )}
     </div>
   );
 };

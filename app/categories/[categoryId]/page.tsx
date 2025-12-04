@@ -4,6 +4,7 @@ import { use } from "react";
 import { useCategoryComplete } from "../../hooks/useCategoryComplete";
 import Image from "next/image";
 import Link from "next/link";
+// import Header from "../../components/Header/Header";
 import SliderArrows from "../../components/SliderArrows";
 import WorksSlider from "../../components/WorksSlider";
 import Subscribe from "../../components/Subscribe";
@@ -13,6 +14,7 @@ import Blog from "@/app/components/Blog";
 import { useI18n } from "../../context/I18nContext";
 import { Footer } from "@/app/components/Footer";
 import MainHeader from "@/app/components/Header/MainHeader";
+// import DesktopNavbar from "@/app/components/Navbar/DesktopNavbar";
 
 export default function CategoriesPage({
   params,

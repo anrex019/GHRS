@@ -6,12 +6,14 @@ import { Exercise, ExerciseSchema } from '../schemas/exercise.schema';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+import { SetModule } from '../set/set.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: Exercise.name, schema: ExerciseSchema }
     ]),
+    SetModule,
     MulterModule.register({
       storage: diskStorage({
         destination: './uploads',

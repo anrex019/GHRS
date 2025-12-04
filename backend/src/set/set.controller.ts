@@ -203,4 +203,37 @@ export class SetController {
       throw new BadRequestException(error.message);
     }
   }
+
+  @Post(':id/update-statistics')
+  async updateStatistics(@Param('id') id: string) {
+    console.log('📊 Updating statistics for set ID:', id);
+    
+    try {
+      await this.setService.updateSetStatistics(id);
+      return { message: 'Statistics updated successfully', setId: id };
+    } catch (error) {
+      console.error('❌ Statistics update error:', error);
+      throw new BadRequestException(error.message);
+    }
+  }
+
+  @Post('update-all-statistics')
+  async updateAllStatistics() {
+    console.log('📊 Updating statistics for all sets');
+    
+    try {
+      const sets = await this.setService.findAll({});
+      const updatePromises = sets.map(set => 
+        this.setService.updateSetStatistics(set._id.toString())
+      );
+      await Promise.all(updatePromises);
+      return { 
+        message: 'All set statistics updated successfully', 
+        count: sets.length 
+      };
+    } catch (error) {
+      console.error('❌ Bulk statistics update error:', error);
+      throw new BadRequestException(error.message);
+    }
+  }
 }

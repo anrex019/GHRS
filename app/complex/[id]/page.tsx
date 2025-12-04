@@ -2,6 +2,7 @@
 "use client";
 import React from "react";
 import { CiPlay1 } from "react-icons/ci";
+// import Header from "../../components/Header/Header";
 import Subscribe from "../../components/Subscribe";
 import ReviewSlider from "../../components/ReviewSlider";
 import Tabs from "../../components/Tabs";
@@ -89,6 +90,9 @@ const Complex = ({ params }: ComplexPageProps) => {
   const formattedTotalDuration = `${Math.floor(
     totalDurationInMinutes
   )}:${String(Math.round((totalDurationInMinutes % 1) * 60)).padStart(2, "0")}`;
+
+  // ვითვლით საათებს სტატისტიკისთვის
+  const totalHours = Math.round(totalDurationInMinutes / 60);
 
   // ვამატებთ დათვლილ მონაცემებს setData-ში
   const setData = rawSetData
@@ -298,17 +302,17 @@ const Complex = ({ params }: ComplexPageProps) => {
     {
       icon: <FaBook size={24} />,
       value: setData?.totalExercises || exercises?.length || 0,
-      label: t("complex_exercises") || "Exercises",
+      label: t("header.sets_count", { count: String(setData?.totalExercises || exercises?.length || 0) }).replace(/\d+\s*/, "") || "комплексов",
     },
     {
       icon: <FaDumbbell size={24} />,
       value: exercises?.length || setData?.totalExercises || 0,
-      label: t("complex_total_exercises") || "Total exercises",
+      label: t("header.exercises_count", { count: String(exercises?.length || setData?.totalExercises || 0) }).replace(/\d+\s*/, "") || "упражнений",
     },
     {
       icon: <FaClock size={24} />,
-      value: formattedTotalDuration || setData?.totalDuration || "0:00",
-      label: t("complex_duration") || "Duration",
+      value: totalHours || 0,
+      label: t("header.hours_count", { count: String(totalHours || 0) }).replace(/\d+\s*/, "") || "часов",
     },
   ];
 

@@ -56,7 +56,13 @@ const Subscribe = ({
       >
         <div>
           <h1
-            className={`mb-5 text-[#3D334A] text-[20px] md:text-[64px] md:max-w-[1308px] md:pr-[52px] tracking-[-3%] md:pt-[48px] leading-[100%] font-bowler ${titleStyles}`}
+            className={`mb-5 text-[#3D334A] text-[20px] md:text-[64px] md:max-w-[1308px] md:pr-[52px] tracking-[-3%] md:pt-[48px] leading-[110%] md:leading-[100%] font-bowler ${titleStyles}`}
+            style={{ 
+              wordSpacing: 'normal',
+              whiteSpace: 'normal',
+              overflowWrap: 'break-word',
+              hyphens: 'none'
+            }}
           >
             {titleKey && typeof t(titleKey) === "string" ? t(titleKey) : title}
           </h1>

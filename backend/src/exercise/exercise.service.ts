@@ -1,13 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Inject, forwardRef } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Exercise, ExerciseDocument } from '../schemas/exercise.schema';
 import { CreateExerciseDto } from './dto/create-exercise.dto';
+import { SetService } from '../set/set.service';
 
 @Injectable()
 export class ExerciseService {
   constructor(
-    @InjectModel(Exercise.name) private exerciseModel: Model<ExerciseDocument>
+    @InjectModel(Exercise.name) private exerciseModel: Model<ExerciseDocument>,
+    @Inject(forwardRef(() => SetService)) private setService: SetService
   ) {}
 
   async create(createExerciseDto: CreateExerciseDto): Promise<Exercise> {
@@ -28,6 +30,11 @@ export class ExerciseService {
     const saved = await exercise.save();
 
     console.log('--- [SERVICE] Saved:', saved);
+
+    // Update set statistics after creating exercise
+    if (saved.setId) {
+      await this.setService.updateSetStatistics(saved.setId.toString());
+    }
 
     return saved;
   }
@@ -100,14 +107,28 @@ export class ExerciseService {
       throw new NotFoundException(`Exercise with ID ${id} not found`);
     }
 
+    // Update set statistics after updating exercise
+    if (exercise.setId) {
+      await this.setService.updateSetStatistics(exercise.setId.toString());
+    }
+
     return exercise;
   }
 
   async remove(id: string): Promise<void> {
-    const result = await this.exerciseModel.findByIdAndDelete(id).exec();
+    const exercise = await this.exerciseModel.findById(id).exec();
     
-    if (!result) {
+    if (!exercise) {
       throw new NotFoundException(`Exercise with ID ${id} not found`);
+    }
+
+    const setId = exercise.setId;
+    
+    await this.exerciseModel.findByIdAndDelete(id).exec();
+    
+    // Update set statistics after deleting exercise
+    if (setId) {
+      await this.setService.updateSetStatistics(setId.toString());
     }
   }
 

@@ -194,4 +194,64 @@ export class SetService {
     const duplicatedSet = new this.setModel(duplicatedSetData);
     return duplicatedSet.save();
   }
+
+  /**
+   * Recalculate and update totalDuration and totalExercises for a set
+   * based on its exercises
+   */
+  async updateSetStatistics(setId: string): Promise<void> {
+    try {
+      // Get all exercises for this set
+      const Exercise = this.setModel.db.model('Exercise');
+      const exercises = await Exercise.find({ 
+        setId: new Types.ObjectId(setId),
+        isActive: true 
+      }).exec();
+
+      // Calculate total exercises
+      const totalExercises = exercises.length;
+
+      // Calculate total duration
+      let totalMinutes = 0;
+      let totalSeconds = 0;
+
+      exercises.forEach((exercise: any) => {
+        if (exercise.duration) {
+          const [mins, secs] = exercise.duration.split(':').map(Number);
+          if (!isNaN(mins) && !isNaN(secs)) {
+            totalMinutes += mins;
+            totalSeconds += secs;
+          }
+        }
+      });
+
+      // Convert excess seconds to minutes
+      totalMinutes += Math.floor(totalSeconds / 60);
+      totalSeconds = totalSeconds % 60;
+
+      // Format as MM:SS or HH:MM:SS if over 60 minutes
+      let totalDuration: string;
+      if (totalMinutes >= 60) {
+        const hours = Math.floor(totalMinutes / 60);
+        const mins = totalMinutes % 60;
+        totalDuration = `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(totalSeconds).padStart(2, '0')}`;
+      } else {
+        totalDuration = `${String(totalMinutes).padStart(2, '0')}:${String(totalSeconds).padStart(2, '0')}`;
+      }
+
+      // Update the set
+      await this.setModel.findByIdAndUpdate(
+        setId,
+        {
+          totalExercises,
+          totalDuration
+        },
+        { new: true }
+      ).exec();
+
+      console.log(`✅ Updated set ${setId} statistics: ${totalExercises} exercises, ${totalDuration} duration`);
+    } catch (error) {
+      console.error(`❌ Error updating set statistics for ${setId}:`, error);
+    }
+  }
 } 
