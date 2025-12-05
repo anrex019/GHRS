@@ -684,7 +684,7 @@ const Complex = ({ params }: ComplexPageProps) => {
                   <h3
                     className={`md:text-2xl text-[18px] leading-[120%] tracking-[-3%] uppercase ${
                       shouldShowPlayButton("hard")
-                        ? "text-[rgba(255,255,255,1)]"
+                        ? "text-[rgba(132,111,160,1)]"
                         : "text-[rgba(132,111,160,1)]"
                     }`}
                   >
@@ -697,7 +697,7 @@ const Complex = ({ params }: ComplexPageProps) => {
                   </span>
                   {shouldShowLockIcon("hard") && (
                     <CiLock
-                      color="#text-[rgba(132,111,160,1)]"
+                      color="#2D1B3D"
                       className="absolute right-8"
                       size={28}
                     />
