@@ -21,6 +21,7 @@ import { FaBook, FaDumbbell, FaClock } from "react-icons/fa";
 import { Footer } from "@/app/components/Footer";
 import WorksSlider from "@/app/components/WorksSlider";
 import MainHeader from "@/app/components/Header/MainHeader";
+import { formatPriceByLocale } from "@/app/utils/currency";
 
 interface Params {
   id: string;
@@ -344,7 +345,7 @@ const Complex = ({ params }: ComplexPageProps) => {
         >
           {/* Price */}
           <p className="text-white font-bold text-4xl leading-[90%] uppercase">
-            {selectedPrice} ₽
+            {formatPriceByLocale(selectedPrice, locale as 'ka' | 'ru' | 'en')}
           </p>
 
           {/* Duration */}
