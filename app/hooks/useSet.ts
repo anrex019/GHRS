@@ -147,14 +147,16 @@ export function useSet(setId: string): UseSetReturn {
       console.log("🏃‍♂️ Starting fetchSet...", { setId });
 
       const { apiRequest, API_CONFIG } = await import("../config/api");
-      const endpoint = `${API_CONFIG.ENDPOINTS.SETS.ALL}/${setId}`;
+      // Ensure lowercase endpoint
+      const endpoint = `/api/sets/${setId}`.toLowerCase();
 
       console.log("📡 Set API Request Details:", {
         endpoint,
         baseUrl: API_CONFIG.BASE_URL,
         fullUrl: `${API_CONFIG.BASE_URL}${endpoint}`,
         setId,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        endpointIsLowercase: endpoint === endpoint.toLowerCase()
       });
 
       const backendSet: BackendSet = await apiRequest<BackendSet>(endpoint);

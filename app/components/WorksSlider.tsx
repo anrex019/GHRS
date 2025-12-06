@@ -103,9 +103,11 @@ const WorksSlider: React.FC<WorksSliderProps> = ({
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
+          display: 'flex',
+          flexWrap: 'nowrap',
         }}
       >
-        <div className="flex gap-4">
+        <div className="flex flex-row gap-4" style={{ display: 'flex', flexWrap: 'nowrap' }}>
           {works.map((work) => (
             <Link
               key={work.id}

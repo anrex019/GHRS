@@ -24,11 +24,12 @@ const SetDetails = () => {
     const fetchSet = async () => {
       try {
         setLoading(true);
+        // Use API_CONFIG endpoint builder for consistency
         const endpoint = `/api/sets/${params.id}`;
+        console.log('🔍 Fetching set from:', endpoint);
         const data = await apiRequest<Set>(endpoint);
+        console.log('✅ Set data received:', data);
         setSet(data);
-        
-        // Set data loaded successfully
       } catch (err) {
         console.error("❌ Error fetching set:", err);
         setError(t('errors.failed_to_load'));
