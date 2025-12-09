@@ -13,8 +13,18 @@ export class StatisticsService {
 
   private convertDurationToMinutes(duration: string): number {
     if (!duration) return 0;
-    const [minutes, seconds] = duration.split(':').map(Number);
-    return minutes + seconds / 60;
+    // Handle formats: "HH:MM:SS" or "MM:SS"
+    const parts = duration.split(':').map(Number);
+    if (parts.length === 3) {
+      // HH:MM:SS format
+      const [hours, minutes, seconds] = parts;
+      return hours * 60 + minutes + seconds / 60;
+    } else if (parts.length === 2) {
+      // MM:SS format
+      const [minutes, seconds] = parts;
+      return minutes + seconds / 60;
+    }
+    return 0;
   }
 
   async getGlobalStatistics() {
@@ -24,10 +34,10 @@ export class StatisticsService {
     // Get total exercises
     const totalExercises = await this.exerciseModel.countDocuments({ isActive: true });
 
-    // Calculate total hours from sets
-    const sets = await this.setModel.find({ isActive: true }, 'duration');
+    // Calculate total hours from sets using totalDuration field
+    const sets = await this.setModel.find({ isActive: true }, 'totalDuration');
     const totalMinutes = sets.reduce((acc, set) => {
-      return acc + this.convertDurationToMinutes(set.duration);
+      return acc + this.convertDurationToMinutes(set.totalDuration);
     }, 0);
     
     const totalHours = Math.round((totalMinutes / 60) * 10) / 10; // Round to 1 decimal place

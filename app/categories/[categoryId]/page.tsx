@@ -14,6 +14,8 @@ import Blog from "@/app/components/Blog";
 import { useI18n } from "../../context/I18nContext";
 import { Footer } from "@/app/components/Footer";
 import MainHeader from "@/app/components/Header/MainHeader";
+import Section from "../../components/Section";
+import Works from "../../components/Works";
 // import DesktopNavbar from "@/app/components/Navbar/DesktopNavbar";
 
 export default function CategoriesPage({
@@ -193,16 +195,19 @@ export default function CategoriesPage({
         customBlockDescription={getLocalizedText(selectedCategory?.description, locale)}
       />
       <div className="md:pt-[100px] pt-[400px]">
+        {/* SHOW: Subcategories section */}
         {subcategoriesCount > 0 && (
         <div className="px-10 py-[50px] rounded-[30px] bg-[#F9F7FE] md:mb-10 mx-6">
           <div className="flex items-center justify-between mb-[20px]">
             <div className="flex flex-col gap-5">
-              <h1 className="text-[#3D334A] text-[40px] leading-[120%] tracking-[-3%]">
+              <h1 className="text-[#3D334A] text-[48px] md:text-[64px] leading-[100%] tracking-[-1%] font-bold font-bowler uppercase">
                 {t("common.subcategories")}
               </h1>
-              <span className="text-[#D4BAFC] text-[24px] leading-[90%] uppercase">
-                {subcategoriesCount} {t("common.subcategory")}
-              </span>
+              <Link href="/subcategories" className="hover:opacity-80 transition-opacity cursor-pointer">
+                <span className="font-bowler text-[#D4BAFC] text-[20px] md:text-[24px] leading-[90%] uppercase">
+                  {t("buttons.show_all") || "Смотреть все"} →
+                </span>
+              </Link>
             </div>
             <div>
               <SliderArrows
@@ -272,6 +277,22 @@ export default function CategoriesPage({
         </div>
         )}
 
+        {/* ✅ КАТЕГОРИИ Section - All Sets/Complexes */}
+        {categoryData?.sets && categoryData.sets.length > 0 && (
+          <Works
+            title={t("navigation.categories") || "КАТЕГОРИИ"}
+            sets={categoryData.sets as any}
+            fromMain={false}
+            customMargin=""
+            customBorderRadius=""
+            seeAll={true}
+            scrollable={true}
+            totalCount={categoryData.sets.length}
+            linkHref="/allComplex"
+            showTopLink={true}
+          />
+        )}
+
         {/* პოპულარული ვარჯიშები */}
         {popularSets.length > 0 && (
           <div className="mt-10 mb-10">
@@ -289,8 +310,8 @@ export default function CategoriesPage({
           </div>
         )}
 
-        {/* ქვეკატეგორიების მიხედვით დაჯგუფებული სეტები */}
-        {setsBySubcategory.map((group: any, index: number) => (
+        {/* ✅ HIDDEN: ქვეკატეგორიების მიხედვით დაჯგუფებული სეტები - დამალულია */}
+        {/* {setsBySubcategory.map((group: any, index: number) => (
           <div key={group.subcategory._id} className="mt-10 mb-10">
             <WorksSlider
               works={group.sets}
@@ -307,10 +328,10 @@ export default function CategoriesPage({
               showTopLink={false}
             />
           </div>
-        ))}
+        ))} */}
 
-        {/* პირდაპირი სეტები (ქვეკატეგორიის გარეშე) */}
-        {directSets.length > 0 && (
+        {/* ✅ HIDDEN: პირდაპირი სეტები (ქვეკატეგორიის გარეშე) - დამალულია */}
+        {/* {directSets.length > 0 && (
           <div className="mt-10 mb-10">
             <WorksSlider
               works={directSets}
@@ -324,7 +345,7 @@ export default function CategoriesPage({
               showTopLink={false}
             />
           </div>
-        )}
+        )} */}
 
         <Subscribe
           backgroundImage="/assets/images/categorySliderBgs/bg1.jpg"
@@ -345,6 +366,7 @@ export default function CategoriesPage({
           withSlider={true}
           layoutType="default"
           title={"GRS МЕДИА"}
+          showCategories={false}
         />
         <div className="mt-10">
           <Professional

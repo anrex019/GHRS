@@ -173,7 +173,7 @@ const Works: React.FC<WorksProps> = ({
         exerciseCount: 1,
         categoryName: exercise.category
           ? getLocalizedFromExercise(exercise.category.name)
-          : "ორთოპედია",
+          : (t("common.orthopedics") || "Orthopedics"),
         monthlyPrice: 920,
         difficulty: exercise.difficulty,
         duration: exercise.duration,
@@ -191,7 +191,7 @@ const Works: React.FC<WorksProps> = ({
       image: "/assets/images/workMan.png",
       exerciseCount: Array.isArray(set.exercises) ? set.exercises.length : 0,
       categoryName:
-        (set.category && getLocalized(set.category.name)) || "ორთოპედია",
+        (set.category && getLocalized(set.category.name)) || (t("common.orthopedics") || "Orthopedics"),
       monthlyPrice: set.price.monthly || 920,
       categoryId: set.categoryId || "",
     })));
@@ -203,7 +203,7 @@ const Works: React.FC<WorksProps> = ({
       image: set.thumbnailImage || "/assets/images/workMan.png",
       exerciseCount: Array.isArray(set.exercises) ? set.exercises.length : set.totalExercises || 0,
       categoryName:
-        (set.category && getLocalized(set.category.name)) || "ორთოპედია",
+        (set.category && getLocalized(set.category.name)) || (t("common.orthopedics") || "Orthopedics"),
       monthlyPrice: (set.price && set.price.monthly) || 920,
       categoryId: set.categoryId || "",
       subcategoryId: set.subCategoryId,

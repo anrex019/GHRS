@@ -25,22 +25,55 @@ const Home = () => {
   console.log('📊 Total sets fetched:', sets?.length);
   console.log('📦 Sets data:', sets);
 
-  // Add stats data using real API data
+  // Calculate real total hours from sets
+  const calculateTotalHours = React.useMemo(() => {
+    if (!sets || sets.length === 0) return 0;
+    
+    const totalMinutes = sets.reduce((acc, set) => {
+      if (!set.totalDuration) return acc;
+      
+      // Parse duration format "HH:MM:SS" or "MM:SS"
+      const parts = set.totalDuration.split(':').map(Number);
+      let minutes = 0;
+      
+      if (parts.length === 3) {
+        // HH:MM:SS format
+        const [hours, mins, secs] = parts;
+        minutes = hours * 60 + mins + secs / 60;
+      } else if (parts.length === 2) {
+        // MM:SS format
+        const [mins, secs] = parts;
+        minutes = mins + secs / 60;
+      }
+      
+      return acc + minutes;
+    }, 0);
+    
+    return Math.round((totalMinutes / 60) * 10) / 10; // Round to 1 decimal
+  }, [sets]);
+
+  // Calculate total exercises from sets
+  const totalExercises = React.useMemo(() => {
+    if (!sets || sets.length === 0) return 0;
+    return sets.reduce((acc, set) => acc + (set.totalExercises || 0), 0);
+  }, [sets]);
+
+  // Add stats data using real calculated data
   const statsData = [
     {
       icon: <FaBook size={24} />,
-      value: statistics ? `${statistics.total.sets}` : "Loading...",
-      label: t("header.sets_count", { count: String(statistics?.total.sets || 0) }).replace(/\d+\s*/, ""),
+      value: sets ? `${sets.length}` : "Loading...",
+      label: t("header.sets_count", { count: String(sets?.length || 0) }).replace(/\d+\s*/, ""),
     },
     {
       icon: <FaDumbbell size={24} />,
-      value: statistics ? `${statistics.total.exercises}` : "Loading...",
-      label: t("header.exercises_count", { count: String(statistics?.total.exercises || 0) }).replace(/\d+\s*/, ""),
+      value: sets ? `${totalExercises}` : "Loading...",
+      label: t("header.exercises_count", { count: String(totalExercises) }).replace(/\d+\s*/, ""),
     },
     {
       icon: <FaClock size={24} />,
-      value: statistics ? `${statistics.total.hours}` : "Loading...",
-      label: t("header.hours_count", { count: String(statistics?.total.hours || 0) }).replace(/\d+\s*/, ""),
+      value: sets ? `${calculateTotalHours}` : "Loading...",
+      label: t("header.hours_count", { count: String(calculateTotalHours) }).replace(/\d+\s*/, ""),
     },
   ];
 
