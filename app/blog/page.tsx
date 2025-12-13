@@ -276,9 +276,9 @@ const BlogHeader = ({ BlogCategory, totalCount }: BlogHeaderProps) => {
       {totalCount && (
         <Link
           href="/categories"
-          className="font-pt text-[20px] md:text-[32px] uppercase text-[#D4BAFC] hover:text-[#734ea4] transition-colors duration-300 inline-block mt-4 font-medium leading-[110%]"
+          className="font-pt text-[20px] md:text-[32px] uppercase text-[#D4BAFC] hover:text-[#C4A6F1] transition-colors inline-block mt-4 font-medium leading-[110%]"
         >
-          {t("blog.see_all")} {totalCount} {t("blog.articles_count", { count: totalCount.toString() })} →
+          {t("blog.see_all")} →
         </Link>
       )}
     </div>
