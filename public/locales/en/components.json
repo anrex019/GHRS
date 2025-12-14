@@ -103,7 +103,8 @@
     "ratings": "({{count}} ratings)",
     "write_comment": "Write a comment",
     "show_more_comments": "Show more",
-    "no_comments": "No comments yet"
+    "no_comments": "No comments yet",
+    "login_to_comment": "Please log in to leave a comment"
   },
   "common": {
     "similar_articles": "Similar articles",
