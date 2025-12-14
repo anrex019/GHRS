@@ -97,7 +97,8 @@
     "ratings": "({{count}} оценок)",
     "write_comment": "Написать комментарий",
     "show_more_comments": "Показать больше",
-    "no_comments": "Пока нет комментариев"
+    "no_comments": "Пока нет комментариев",
+    "login_to_comment": "Пожалуйста, войдите, чтобы оставить комментарий"
   },
   "common": {
     "similar_articles": "Похожие статьи",

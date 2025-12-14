@@ -96,7 +96,8 @@
     "ratings": "({{count}} შეფასება)",
     "write_comment": "დაწერეთ კომენტარი",
     "show_more_comments": "მეტის ჩვენება",
-    "no_comments": "ჯერ არ არის კომენტარები"
+    "no_comments": "ჯერ არ არის კომენტარები",
+    "login_to_comment": "გთხოვთ შეხვიდეთ კომენტარის დასატოვებლად"
   },
   "common": {
     "similar_articles": "მსგავსი სტატიები",
